@@ -1,0 +1,65 @@
+Extension { #name : #Object }
+
+{ #category : #'*Ficus' }
+Object >> asFicusPath [
+	
+	^ FiPath root / self
+]
+
+{ #category : #'*Ficus' }
+Object >> differenceFrom: other [
+
+	^ self == other 
+		ifTrue: [ self noEdit ]
+		ifFalse: [ other replaceBy: self ]
+]
+
+{ #category : #'*Ficus' }
+Object >> ficusDeepCollect: aBlock [
+
+	^ aBlock value: self
+]
+
+{ #category : #'*Ficus' }
+Object >> ficusDeepDo: aBlock [
+
+	^ aBlock value: self
+]
+
+{ #category : #'*Ficus' }
+Object >> ficusDeepDo: aBlock basePath: aPath [
+
+	^ aBlock 
+		value: self 
+		value: aPath
+]
+
+{ #category : #'*Ficus' }
+Object >> isShot [
+
+	^ false
+]
+
+{ #category : #'*Ficus' }
+Object >> noEdit [
+	
+	^ FiNoEdit new
+]
+
+{ #category : #'*Ficus' }
+Object >> pruned [
+	
+	^ self
+]
+
+{ #category : #'*Ficus' }
+Object >> replaceBy: aValue [
+
+	^ FiEqual value: aValue
+]
+
+{ #category : #'*Ficus' }
+Object >> resultOf: anEdit [ 
+
+	^ anEdit resultOn: self
+]

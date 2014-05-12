@@ -91,12 +91,20 @@ FiDictionary >> ficusDeepCollect: aBlock [
 	^ aBlock value: copy
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 FiDictionary >> initialize [
 
 	super initialize.
 
 	valueByKey := Dictionary new.
+]
+
+{ #category : #initialization }
+FiDictionary >> initializeFromStepsAndValues: aCollection [ 
+	
+	self initialize.
+	
+	valueByKey := aCollection.
 ]
 
 { #category : #printing }

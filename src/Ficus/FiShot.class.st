@@ -12,6 +12,14 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
+{ #category : #'instance creation' }
+FiShot class >> newFromStepsAndValues: aCollection [ 
+	
+	^ self basicNew
+		initializeFromStepsAndValues: aCollection;
+		yourself
+]
+
 { #category : #comparing }
 FiShot >> = another [
 	

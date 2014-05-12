@@ -3,6 +3,8 @@ Class {
 	#superclass : #FiBehavior,
 	#instVars : [
 		'theName',
+		'metaclass',
+		'superclass',
 		'classPool',
 		'sharedPools',
 		'category',
@@ -69,6 +71,22 @@ FiClass >> initialize [
 	traitComposition := nil.
 ]
 
+{ #category : #testing }
+FiClass >> isMeta [
+
+	^ false
+]
+
+{ #category : #accessing }
+FiClass >> metaclass [
+	^ metaclass
+]
+
+{ #category : #accessing }
+FiClass >> metaclass: anObject [
+	metaclass := anObject
+]
+
 { #category : #printing }
 FiClass >> printOn: aStream [
 
@@ -90,6 +108,18 @@ FiClass >> sharedPools [
 FiClass >> sharedPools: anObject [
 	
 	sharedPools := anObject
+]
+
+{ #category : #accessing }
+FiClass >> superclass [
+	
+	^ superclass
+]
+
+{ #category : #accessing }
+FiClass >> superclass: anObject [
+	
+	superclass := anObject
 ]
 
 { #category : #accessing }

@@ -2,12 +2,17 @@ Class {
 	#name : #FiBehavior,
 	#superclass : #FiShot,
 	#instVars : [
-		'superclass',
 		'layout',
 		'methods'
 	],
 	#category : #'Ficus-Model-Meta'
 }
+
+{ #category : #testing }
+FiBehavior >> isMeta [
+
+	^ self subclassResponsibility
+]
 
 { #category : #accessing }
 FiBehavior >> layout [
@@ -31,16 +36,4 @@ FiBehavior >> methods [
 FiBehavior >> methods: anObject [
 	
 	methods := anObject
-]
-
-{ #category : #accessing }
-FiBehavior >> superclass [
-	
-	^ superclass
-]
-
-{ #category : #accessing }
-FiBehavior >> superclass: anObject [
-	
-	superclass := anObject
 ]

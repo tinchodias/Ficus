@@ -154,6 +154,14 @@ FiShot >> hash [
 	^ hash
 ]
 
+{ #category : #initialization }
+FiShot >> initializeFromStepsAndValues: aDictionary [
+
+	aDictionary 
+		keysAndValuesDo: [ :slotName :value |
+			self instVarNamed: slotName put: value ]
+]
+
 { #category : #testing }
 FiShot >> isProxy [
 	

@@ -15,6 +15,12 @@ FiMetaclass class >> named: aString [
 		
 ]
 
+{ #category : #testing }
+FiMetaclass >> isMeta [
+
+	^ true
+]
+
 { #category : #accessing }
 FiMetaclass >> traitComposition [
 	

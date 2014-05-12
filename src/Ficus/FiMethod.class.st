@@ -3,7 +3,8 @@ Class {
 	#superclass : #FiShot,
 	#instVars : [
 		'protocol',
-		'sourceCode'
+		'sourceCode',
+		'selector'
 	],
 	#category : #'Ficus-Model-Meta'
 }
@@ -27,6 +28,16 @@ FiMethod >> protocol [
 FiMethod >> protocol: aString [ 
 
 	protocol := aString
+]
+
+{ #category : #accessing }
+FiMethod >> selector [
+	^ selector
+]
+
+{ #category : #accessing }
+FiMethod >> selector: anObject [
+	selector := anObject
 ]
 
 { #category : #accessing }

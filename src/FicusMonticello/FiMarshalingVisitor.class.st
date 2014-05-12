@@ -165,3 +165,10 @@ FiMarshalingVisitor >> visitMethodDefinition: aMCMethodDefinition [
 		ifAbsentPut: [ Set new ])
 		add: aMCMethodDefinition 
 ]
+
+{ #category : #visitor }
+FiMarshalingVisitor >> visitOrganizationDefinition: aMCOrganizationDefinition [ 
+	"Just ignore"
+	
+	self flag: #fix. "?"
+]

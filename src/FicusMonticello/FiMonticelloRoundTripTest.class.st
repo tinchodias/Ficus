@@ -21,6 +21,12 @@ FiMonticelloRoundTripTest >> assertRoundTripEquals: someMCDefinitions [
 ]
 
 { #category : #running }
+FiMonticelloRoundTripTest >> expectedFailures [
+
+	^ #(test04Organization)
+]
+
+{ #category : #running }
 FiMonticelloRoundTripTest >> marshaled: aMCSnapshot [
 	
 	^ marshaler marshaled: aMCSnapshot
@@ -49,7 +55,8 @@ FiMonticelloRoundTripTest >> setUpUnmarshaler [
 FiMonticelloRoundTripTest >> test01Class [
 
 	self assertRoundTripEquals: { 
-		self mockClassB asClassDefinition }
+		self mockClassA asClassDefinition.
+		self mockClassB asClassDefinition. }
 ]
 
 { #category : #tests }
@@ -76,6 +83,14 @@ FiMonticelloRoundTripTest >> test03ClassMethod [
 			source: 'one ^2' 
 			meta: true.
 		 }
+]
+
+{ #category : #tests }
+FiMonticelloRoundTripTest >> test04Organization [
+
+	self assertRoundTripEquals: { 
+		self mockClassB asClassDefinition.
+		MCOrganizationDefinition categories: { self mockClassB category } }
 ]
 
 { #category : #running }

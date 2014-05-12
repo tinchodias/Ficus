@@ -19,13 +19,11 @@ FiMarshalingVisitor >> ficusClassFor: aMCClassDefinition [
 			at: #superclass put: aMCClassDefinition superclassName;
 			at: #layout put: (self ficusLayoutFor: aMCClassDefinition);
 			at: #methods put: (self ficusMethodsFor: aMCClassDefinition);
-
-			at: #traitComposition put: aMCClassDefinition traitComposition;
+			at: #traitComposition put: aMCClassDefinition traitCompositionString;
 			at: #category put: aMCClassDefinition category;
 			at: #classPool put: (self ficusClassPoolFor: aMCClassDefinition);
 			at: #sharedPools put: (self ficusSharedPoolsFor: aMCClassDefinition);
 			at: #comment put: aMCClassDefinition comment;
-			"etc"
 			yourself)
 ]
 
@@ -52,6 +50,7 @@ FiMarshalingVisitor >> ficusMetaclassFor: aMCClassDefinition [
 		(Dictionary new
 			at: #methods put: (self ficusMetaclassMethodsFor: aMCClassDefinition);
 			at: #layout put: (self ficusMetaclassLayoutFor: aMCClassDefinition);
+			at: #traitComposition put: aMCClassDefinition classTraitCompositionString;
 			yourself)
 ]
 

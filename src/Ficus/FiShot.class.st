@@ -157,6 +157,8 @@ FiShot >> hash [
 { #category : #initialization }
 FiShot >> initializeFromStepsAndValues: aDictionary [
 
+	self initialize.
+	
 	aDictionary 
 		keysAndValuesDo: [ :slotName :value |
 			self instVarNamed: slotName put: value ]

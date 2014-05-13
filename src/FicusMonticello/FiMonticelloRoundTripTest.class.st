@@ -5,7 +5,7 @@ Class {
 		'marshaler',
 		'unmarshaler'
 	],
-	#category : #FicusMonticello
+	#category : #'FicusMonticello-Marshaling'
 }
 
 { #category : #running }

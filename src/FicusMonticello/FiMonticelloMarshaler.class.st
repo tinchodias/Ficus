@@ -1,7 +1,7 @@
 Class {
 	#name : #FiMonticelloMarshaler,
 	#superclass : #Object,
-	#category : #FicusMonticello
+	#category : #'FicusMonticello-Marshaling'
 }
 
 { #category : #marshaling }

@@ -6,7 +6,7 @@ Class {
 		'monticelloMethodsByClassName',
 		'monticelloMetaclassMethodsByClassName'
 	],
-	#category : #FicusMonticello
+	#category : #'FicusMonticello-Marshaling'
 }
 
 { #category : #private }

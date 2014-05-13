@@ -7,19 +7,19 @@ Class {
 { #category : #private }
 FiMonticelloUnmarshaler >> classInstVarNamesFrom: aFiClass [ 
 	
-	^ aFiClass metaclass layout slotNames
+	^ aFiClass metaclass layout slotNames values
 ]
 
 { #category : #private }
 FiMonticelloUnmarshaler >> classVarNamesFrom: aFiClass [ 
 	
-	^ aFiClass classPool
+	^ aFiClass classPool values
 ]
 
 { #category : #private }
 FiMonticelloUnmarshaler >> instVarNamesFrom: aFiClass [ 
 	
-	^ aFiClass layout slotNames
+	^ aFiClass layout slotNames values
 ]
 
 { #category : #private }
@@ -28,11 +28,11 @@ FiMonticelloUnmarshaler >> monticelloClassDefinitionFrom: aFiClass [
 	^ MCClassDefinition
 		name: aFiClass theName
 		superclassName: aFiClass superclass
-		traitComposition: '{}' "TODO"
-		classTraitComposition: '{}'
+		traitComposition: aFiClass traitComposition
+		classTraitComposition: aFiClass metaclass traitComposition
 		category: aFiClass category
 		instVarNames: (self instVarNamesFrom: aFiClass)
-		classVarNames: (self classVarNamesFrom: aFiClass) values
+		classVarNames: (self classVarNamesFrom: aFiClass) 
 		poolDictionaryNames: aFiClass sharedPools values
 		classInstVarNames: (self classInstVarNamesFrom: aFiClass)
 		type: (self typeOfClassFrom: aFiClass)

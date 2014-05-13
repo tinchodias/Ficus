@@ -30,8 +30,7 @@ FiMarshalingVisitor >> ficusClassFor: aMCClassDefinition [
 { #category : #private }
 FiMarshalingVisitor >> ficusClassPoolFor: aMCClassDefinition [ 
 
-	self flag: #fix. 
-	^ FiSet new values: (aMCClassDefinition classVarNames collect: #asSymbol as: Set) 
+	^ self ficusSymbolSetFor: aMCClassDefinition classVarNames 
 ]
 
 { #category : #private }
@@ -39,7 +38,7 @@ FiMarshalingVisitor >> ficusLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout newFromStepsAndValues: 
 		(Dictionary new
-			at: #slotNames put: aMCClassDefinition instVarNames;
+			at: #slotNames put: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
 			yourself)
 ]
 
@@ -59,7 +58,7 @@ FiMarshalingVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout newFromStepsAndValues: 
 		(Dictionary new
-			at: #slotNames put: aMCClassDefinition classInstVarNames;
+			at: #slotNames put: (self ficusSymbolSetFor: aMCClassDefinition classInstVarNames);
 			yourself)
 ]
 
@@ -111,8 +110,13 @@ FiMarshalingVisitor >> ficusMethodsForAll: monticelloMethods [
 { #category : #private }
 FiMarshalingVisitor >> ficusSharedPoolsFor: aMCClassDefinition [ 
 
-	self flag: #fix. 
-	^ FiSet new values: (aMCClassDefinition poolDictionaries collect: #asSymbol as: Set) 
+	^ self ficusSymbolSetFor: aMCClassDefinition poolDictionaries
+]
+
+{ #category : #private }
+FiMarshalingVisitor >> ficusSymbolSetFor: aCollection [
+
+	^ FiSet new values: (aCollection collect: #asSymbol as: Set) 
 ]
 
 { #category : #initialization }

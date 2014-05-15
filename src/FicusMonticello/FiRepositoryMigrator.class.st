@@ -34,7 +34,7 @@ FiRepositoryMigrator class >> example1 [
 		migrate.
 ]
 
-{ #category : #migrating }
+{ #category : #private }
 FiRepositoryMigrator >> doMigrate: aVersionNode branch: aBranchPath [
 
 	^ YrCommitMarshaler new
@@ -42,43 +42,48 @@ FiRepositoryMigrator >> doMigrate: aVersionNode branch: aBranchPath [
 		reference: aBranchPath;
 		userName: (self gitAuthorFor: aVersionNode);
 		userEmail: (self gitEmailFor: aVersionNode);
+		signatureDateAndTime: (self gitDateAndTimeFor: aVersionNode);
 		message: (self gitMessageFor: aVersionNode);
 		parents: (self gitParentsFor: aVersionNode branch: aBranchPath);
 		commit: (self ficusModelFor: aVersionNode).
 ]
 
-{ #category : #migrating }
+{ #category : #private }
 FiRepositoryMigrator >> ficusModelFor: aVersionNode [
 		
 	^ FiMonticelloMarshaler new marshaled: (self snapshotFor: aVersionNode)
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiRepositoryMigrator >> gitAuthorFor: aVersionNode [ 
 
-	AUTHORS add: (aVersionNode author).
-	
-^ (aVersionNode author)
+	^ aVersionNode author
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+FiRepositoryMigrator >> gitDateAndTimeFor: aVersionNode [
+
+	^ aVersionNode versionInfo timeStamp
+]
+
+{ #category : #private }
 FiRepositoryMigrator >> gitEmailFor: aVersionNode [ 
 
-	^ aVersionNode author asLowercase, '@gmail.com'
+	^ aVersionNode author asLowercase, '@fake.mail.com'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiRepositoryMigrator >> gitMessageFor: aVersionNode [ 
 
 	^ String streamContents: [ :stream |
 		stream 
-			nextPutAll: '# Ficus migration #'; cr; cr;
-			nextPutAll: 'Original commit: '; cr; cr;
+			nextPutAll: aVersionNode versionInfo message; cr; cr;
+			nextPutAll: '# Original MCVersion summary #'; cr; cr;
 			nextPutAll: aVersionNode versionInfo summary; cr ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiRepositoryMigrator >> gitParentsFor: aVersionNode branch: aBranchPath [
 	"Answer git parents, ensuring each one ancestor is migrated."
 
@@ -141,7 +146,7 @@ FiRepositoryMigrator >> packageName: aString [
 	packageName := aString
 ]
 
-{ #category : #migrating }
+{ #category : #private }
 FiRepositoryMigrator >> snapshotFor: aVersionNode [
 		
 	^ (monticelloRepository 

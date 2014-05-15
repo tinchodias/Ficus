@@ -175,3 +175,10 @@ FiMarshalingVisitor >> visitOrganizationDefinition: aMCOrganizationDefinition [
 	
 	self flag: #fix. "?"
 ]
+
+{ #category : #visitor }
+FiMarshalingVisitor >> visitTraitDefinition: aMCTraitDefinition [ 
+	
+	
+	"self shouldBeImplemented.   TODO"
+]

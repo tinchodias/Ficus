@@ -193,12 +193,6 @@ FiMonticelloVersionGraphBuilder >> build [
 
 ]
 
-{ #category : #accessing }
-FiMonticelloVersionGraphBuilder >> buildAndBrowse [
-	self build.
-	self browse.
-]
-
 { #category : #initialization }
 FiMonticelloVersionGraphBuilder >> initialize [
 	super initialize.
@@ -257,6 +251,12 @@ FiMonticelloVersionGraphBuilder >> nodeForVersionInfoNamed: aName [
 { #category : #accessing }
 FiMonticelloVersionGraphBuilder >> nodes [ 
 	^ nodeByVersionName values
+]
+
+{ #category : #accessing }
+FiMonticelloVersionGraphBuilder >> orphanNodes [
+	
+	^ self nodes select: [ :each | each ancestors isEmpty ]
 ]
 
 { #category : #private }

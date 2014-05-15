@@ -115,7 +115,10 @@ ConfigurationOfFicus >> baseline01: spec [
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
 		spec repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main/'.
-		spec package: #Ficus. ].
+		spec 
+			package: #Ficus;
+			package: #FicusMonticello with: [
+				spec requires: #(#Ficus ). ]. ].
 
 ]
 

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'monticelloClasses',
 		'monticelloMethodsByClassName',
-		'monticelloMetaclassMethodsByClassName'
+		'monticelloMetaclassMethodsByClassName',
+		'monticelloTraits'
 	],
 	#category : #'FicusMonticello-Marshaling'
 }
@@ -119,12 +120,26 @@ FiMarshalingVisitor >> ficusSymbolSetFor: aCollection [
 	^ FiSet new values: (aCollection collect: #asSymbol as: Set) 
 ]
 
+{ #category : #private }
+FiMarshalingVisitor >> ficusTraitFor: aMCTraitDefinition [ 
+
+	^ FiTrait newFromStepsAndValues: 
+		(Dictionary new
+			at: #theName put: aMCTraitDefinition className;
+			at: #methods put: (self ficusMethodsFor: aMCTraitDefinition);
+			at: #traitComposition put: aMCTraitDefinition traitCompositionString;
+			at: #category put: aMCTraitDefinition category;
+			at: #comment put: aMCTraitDefinition comment;
+			yourself)
+]
+
 { #category : #initialization }
 FiMarshalingVisitor >> initialize [
 
 	super initialize.
 	
 	monticelloClasses := Set new.
+	monticelloTraits := Set new.
 	monticelloMethodsByClassName := Dictionary new.
 	monticelloMetaclassMethodsByClassName := Dictionary new.
 ]
@@ -132,15 +147,20 @@ FiMarshalingVisitor >> initialize [
 { #category : #building }
 FiMarshalingVisitor >> result [
 	
-	| classByName |
-	classByName := Dictionary new.
+	| classOrTraitByName |
+	classOrTraitByName := Dictionary new.
 
 	monticelloClasses do: [ :each |
-		classByName 
+		classOrTraitByName 
 			at: each className
 			put: (self ficusClassFor: each) ].
+
+	monticelloTraits do: [ :each |
+		classOrTraitByName 
+			at: each className
+			put: (self ficusTraitFor: each) ].
 	
-	^ FiDictionary newFromStepsAndValues: classByName
+	^ FiDictionary newFromStepsAndValues: classOrTraitByName
 ]
 
 { #category : #visitor }
@@ -179,6 +199,5 @@ FiMarshalingVisitor >> visitOrganizationDefinition: aMCOrganizationDefinition [
 { #category : #visitor }
 FiMarshalingVisitor >> visitTraitDefinition: aMCTraitDefinition [ 
 	
-	
-	"self shouldBeImplemented.   TODO"
+	monticelloTraits add: aMCTraitDefinition
 ]

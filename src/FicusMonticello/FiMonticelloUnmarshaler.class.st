@@ -41,16 +41,26 @@ FiMonticelloUnmarshaler >> monticelloClassDefinitionFrom: aFiClass [
 ]
 
 { #category : #private }
+FiMonticelloUnmarshaler >> monticelloClassDefinitionsFrom: aFiClass [
+
+	^ Array streamContents: [ :stream | 
+		stream 
+			nextPut: (self monticelloClassDefinitionFrom: aFiClass);
+			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass className: aFiClass theName classIsMeta: false);
+			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass metaclass className: aFiClass theName classIsMeta: true) ]
+]
+
+{ #category : #private }
 FiMonticelloUnmarshaler >> monticelloDefinitionsFrom: aFiDictionary [ 
 
 	| definitions |
 	definitions := Set new.
 	
-	aFiDictionary stepsAndValuesDo: [ :className :aFicusClass |
-		definitions 
-			add: (self monticelloClassDefinitionFrom: aFicusClass);
-			addAll: (self monticelloMethodDefinitionsFrom: aFicusClass className: aFicusClass theName classIsMeta: false);
-			addAll: (self monticelloMethodDefinitionsFrom: aFicusClass metaclass className: aFicusClass theName classIsMeta: true) ].
+	aFiDictionary stepsAndValuesDo: [ :className :aFicusShot |
+		definitions addAll: 
+			(aFicusShot isTrait
+				ifTrue: [ self monticelloTraitDefinitionsFrom: aFicusShot ]
+				ifFalse: [ self monticelloClassDefinitionsFrom: aFicusShot ]) ].
 	
 	^ definitions
 ]
@@ -73,6 +83,27 @@ FiMonticelloUnmarshaler >> monticelloMethodDefinitionsFrom: aFicusBehavior class
 	
 	^ methods
 
+]
+
+{ #category : #private }
+FiMonticelloUnmarshaler >> monticelloTraitDefinitionFrom: aFiTrait [
+
+	^ MCTraitDefinition
+		name: aFiTrait theName
+		traitComposition: aFiTrait traitComposition
+		category: aFiTrait category
+		comment: aFiTrait comment
+		commentStamp: ''
+]
+
+{ #category : #private }
+FiMonticelloUnmarshaler >> monticelloTraitDefinitionsFrom: aFiTrait [
+
+	^ Array streamContents: [ :stream | 
+		stream 
+			nextPut: (self monticelloTraitDefinitionFrom: aFiTrait);
+			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiTrait className: aFiTrait theName classIsMeta: false)
+			"nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass metaclass className: aFiClass theName classIsMeta: true)" ]
 ]
 
 { #category : #private }

@@ -33,6 +33,41 @@ FiMonticelloRoundTripTest >> marshaled: aMCSnapshot [
 ]
 
 { #category : #running }
+FiMonticelloRoundTripTest >> mockClassWithTraitComposition [
+
+	| className |
+	className := 'MCMockClassC'.
+	^ MCClassDefinition
+		name: className
+		superclassName: 'Object'
+		traitComposition: 'Trait1 + Trait2'
+		classTraitComposition: 'Trait3'
+		category: self mockCategoryName
+		instVarNames: #()
+		classVarNames: #()
+		poolDictionaryNames: #()
+		classInstVarNames: #()
+		type: #normal
+		comment: (self commentForClass: className)
+		commentStamp: (self commentStampForClass: className).
+
+]
+
+{ #category : #running }
+FiMonticelloRoundTripTest >> mockTrait [
+
+	| traitName |
+	traitName := 'MCMockTrait'.
+	^ MCTraitDefinition
+		name: traitName
+		traitComposition: 'Trait1+ Trait2'
+		category: self mockCategoryName
+		comment: (self commentForClass: traitName)
+		commentStamp: (self commentStampForClass: traitName).
+
+]
+
+{ #category : #running }
 FiMonticelloRoundTripTest >> setUp [
 
 	self setUpMarshaler.
@@ -56,7 +91,8 @@ FiMonticelloRoundTripTest >> test01Class [
 
 	self assertRoundTripEquals: { 
 		self mockClassA asClassDefinition.
-		self mockClassB asClassDefinition. }
+		self mockClassB asClassDefinition.
+		self mockClassWithTraitComposition. }
 ]
 
 { #category : #tests }
@@ -91,6 +127,13 @@ FiMonticelloRoundTripTest >> test04Organization [
 	self assertRoundTripEquals: { 
 		self mockClassB asClassDefinition.
 		MCOrganizationDefinition categories: { self mockClassB category } }
+]
+
+{ #category : #tests }
+FiMonticelloRoundTripTest >> test05Trait [
+
+	self assertRoundTripEquals: { 
+		self mockTrait }
 ]
 
 { #category : #running }

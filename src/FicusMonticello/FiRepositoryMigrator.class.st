@@ -76,11 +76,11 @@ FiRepositoryMigrator >> gitEmailFor: aVersionNode [
 { #category : #private }
 FiRepositoryMigrator >> gitMessageFor: aVersionNode [ 
 
-	^ String streamContents: [ :stream |
+	^ (String streamContents: [ :stream |
 		stream 
 			nextPutAll: aVersionNode versionInfo message; cr; cr;
 			nextPutAll: '# Original MCVersion summary #'; cr; cr;
-			nextPutAll: aVersionNode versionInfo summary; cr ]
+			nextPutAll: aVersionNode versionInfo summary; cr ]) withUnixLineEndings
 ]
 
 { #category : #private }

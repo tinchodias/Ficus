@@ -15,6 +15,14 @@ FiMetaclass class >> named: aString [
 		
 ]
 
+{ #category : #initialization }
+FiMetaclass >> initialize [
+
+	super initialize.
+
+	traitComposition := '{}'.
+]
+
 { #category : #testing }
 FiMetaclass >> isMeta [
 

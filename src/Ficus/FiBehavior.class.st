@@ -8,6 +8,15 @@ Class {
 	#category : #'Ficus-Model-Meta'
 }
 
+{ #category : #initialization }
+FiBehavior >> initialize [
+
+	super initialize.
+	
+	methods := FiDictionary new.
+	layout := FiFixedLayout new.
+]
+
 { #category : #testing }
 FiBehavior >> isMeta [
 

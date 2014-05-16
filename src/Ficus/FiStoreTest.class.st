@@ -61,5 +61,5 @@ FiStoreTest >> testTwoCommits [
 				at: #B 
 				equal: (FiClass named: #B)).
 	
-	self assert: (store shots count: [ :e | e isKindOf: FiDictionary ]) equals: 3
+	self assert: (store shots count: [ :e | e isKindOf: FiDictionary ]) equals: 3 + 4 "FIX nasty assertion: FiClass and FiMetaclass initializes methods as a FiDictionary too"
 ]

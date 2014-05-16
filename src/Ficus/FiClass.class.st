@@ -68,11 +68,18 @@ FiClass >> initialize [
 	classPool := #().
 	comment := ''.
 	sharedPools := FiSet new.
-	traitComposition := nil.
+	metaclass := FiMetaclass new.
+	traitComposition := '{}'.
 ]
 
 { #category : #testing }
 FiClass >> isMeta [
+
+	^ false
+]
+
+{ #category : #testing }
+FiClass >> isTrait [
 
 	^ false
 ]

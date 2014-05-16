@@ -7,6 +7,14 @@ Class {
 	#category : #'Ficus-Model-Meta'
 }
 
+{ #category : #initialization }
+FiPointerLayout >> initialize [
+
+	super initialize.
+
+	slotNames := FiSet new
+]
+
 { #category : #accessing }
 FiPointerLayout >> slotNames [
 	

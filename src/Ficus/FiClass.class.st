@@ -73,13 +73,19 @@ FiClass >> initialize [
 ]
 
 { #category : #testing }
-FiClass >> isMeta [
+FiClass >> isFicusClass [
+
+	^ true
+]
+
+{ #category : #testing }
+FiClass >> isFicusTrait [
 
 	^ false
 ]
 
 { #category : #testing }
-FiClass >> isTrait [
+FiClass >> isMeta [
 
 	^ false
 ]

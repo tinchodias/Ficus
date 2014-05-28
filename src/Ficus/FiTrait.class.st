@@ -56,7 +56,13 @@ FiTrait >> initialize [
 ]
 
 { #category : #testing }
-FiTrait >> isTrait [
+FiTrait >> isFicusClass [
+
+	^ false
+]
+
+{ #category : #testing }
+FiTrait >> isFicusTrait [
 
 	^ true
 ]

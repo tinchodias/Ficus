@@ -3,9 +3,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'monticelloClasses',
-		'monticelloMethodsByClassName',
-		'monticelloMetaclassMethodsByClassName',
-		'monticelloTraits'
+		'monticelloTraits',
+		'monticelloExtensionMethodsByHostName',
+		'monticelloMethodsByHostName',
+		'monticelloMetaclassMethodsByHostName'
 	],
 	#category : #'FicusMonticello-Marshaling'
 }
@@ -32,6 +33,17 @@ FiMarshalingVisitor >> ficusClassFor: aMCClassDefinition [
 FiMarshalingVisitor >> ficusClassPoolFor: aMCClassDefinition [ 
 
 	^ self ficusSymbolSetFor: aMCClassDefinition classVarNames 
+]
+
+{ #category : #private }
+FiMarshalingVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions [ 
+	
+	^ FiExtensionMethods newFromStepsAndValues: 
+		(Dictionary new
+			at: #hostName put: hostName;
+			at: #methods put: (self ficusMethodsForAll: someMCMethodDefinitions);
+			at: #isMetaSide put: false;
+			yourself)
 ]
 
 { #category : #private }
@@ -67,7 +79,7 @@ FiMarshalingVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
 FiMarshalingVisitor >> ficusMetaclassMethodsFor: aMCClassDefinition [ 
 	
 	^ self ficusMethodsForAll: 
-		(monticelloMetaclassMethodsByClassName 
+		(monticelloMetaclassMethodsByHostName 
 			at: aMCClassDefinition className
 			ifAbsent: [ #() ]).
 
@@ -88,7 +100,7 @@ FiMarshalingVisitor >> ficusMethodFor: aMCMethodDefinition [
 FiMarshalingVisitor >> ficusMethodsFor: aMCClassDefinition [ 
 	
 	^ self ficusMethodsForAll: 
-		(monticelloMethodsByClassName 
+		(monticelloMethodsByHostName 
 			at: aMCClassDefinition className
 			ifAbsent: [ #() ]).
 
@@ -106,6 +118,40 @@ FiMarshalingVisitor >> ficusMethodsForAll: monticelloMethods [
 			put: (self ficusMethodFor: aMCMethodDefinition) ].
 	
 	^ FiDictionary newFromStepsAndValues: ficusMethodsBySelector
+]
+
+{ #category : #private }
+FiMarshalingVisitor >> ficusPackage [
+
+	^ FiPackage newFromStepsAndValues: 
+		(Dictionary new
+			at: #theName put: 'ThisShouldBeThePackageName';
+			at: #contents put: self ficusPackageContents;
+			yourself)
+]
+
+{ #category : #private }
+FiMarshalingVisitor >> ficusPackageContents [
+	
+	| childByName |
+	childByName := Dictionary new.
+
+	monticelloClasses do: [ :each |
+		childByName 
+			at: each className
+			put: (self ficusClassFor: each) ].
+
+	monticelloTraits do: [ :each |
+		childByName 
+			at: each className
+			put: (self ficusTraitFor: each) ].
+
+	monticelloExtensionMethodsByHostName keysAndValuesDo: [ :hostName :each |
+		childByName 
+			at: hostName
+			put: (self ficusExtensionMethodsForHostName: hostName methods: each) ].
+	
+	^ FiDictionary newFromStepsAndValues: childByName
 ]
 
 { #category : #private }
@@ -140,27 +186,15 @@ FiMarshalingVisitor >> initialize [
 	
 	monticelloClasses := Set new.
 	monticelloTraits := Set new.
-	monticelloMethodsByClassName := Dictionary new.
-	monticelloMetaclassMethodsByClassName := Dictionary new.
+	monticelloMethodsByHostName := Dictionary new.
+	monticelloMetaclassMethodsByHostName := Dictionary new.
+	monticelloExtensionMethodsByHostName := Dictionary new.
 ]
 
 { #category : #building }
 FiMarshalingVisitor >> result [
 	
-	| classOrTraitByName |
-	classOrTraitByName := Dictionary new.
-
-	monticelloClasses do: [ :each |
-		classOrTraitByName 
-			at: each className
-			put: (self ficusClassFor: each) ].
-
-	monticelloTraits do: [ :each |
-		classOrTraitByName 
-			at: each className
-			put: (self ficusTraitFor: each) ].
-	
-	^ FiDictionary newFromStepsAndValues: classOrTraitByName
+	^ self ficusPackage
 ]
 
 { #category : #visitor }
@@ -179,9 +213,12 @@ FiMarshalingVisitor >> visitMethodDefinition: aMCMethodDefinition [
 	
 	| aDictionary |
 	aDictionary := 
-		aMCMethodDefinition classIsMeta 
-			ifFalse: [ monticelloMethodsByClassName ]
-			ifTrue: [ monticelloMetaclassMethodsByClassName ].
+		aMCMethodDefinition isExtensionMethod
+			ifTrue: [ monticelloExtensionMethodsByHostName ]
+			ifFalse: [
+				aMCMethodDefinition classIsMeta 
+					ifFalse: [ monticelloMethodsByHostName ]
+					ifTrue: [ monticelloMetaclassMethodsByHostName ] ].
 	
 	(aDictionary
 		at: aMCMethodDefinition className

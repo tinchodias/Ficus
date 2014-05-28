@@ -51,18 +51,38 @@ FiMonticelloUnmarshaler >> monticelloClassDefinitionsFrom: aFiClass [
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloDefinitionsFrom: aFiDictionary [ 
+FiMonticelloUnmarshaler >> monticelloDefinitionsFrom: aFiPackage [ 
 
 	| definitions |
 	definitions := Set new.
 	
-	aFiDictionary stepsAndValuesDo: [ :className :aFicusShot |
+	self flag: #fix.
+	
+	aFiPackage contents stepsAndValuesDo: [ :className :aFicusShot |
 		definitions addAll: 
-			(aFicusShot isTrait
-				ifTrue: [ self monticelloTraitDefinitionsFrom: aFicusShot ]
-				ifFalse: [ self monticelloClassDefinitionsFrom: aFicusShot ]) ].
+			(aFicusShot isFicusClass
+				ifTrue: [ self monticelloClassDefinitionsFrom: aFicusShot ]
+				ifFalse: [ 
+					aFicusShot isFicusTrait
+						ifTrue: [ self monticelloTraitDefinitionsFrom: aFicusShot ]
+						ifFalse: [ self monticelloExtensionMethodDefinitionsFrom: aFicusShot ] ]) ].
 	
 	^ definitions
+]
+
+{ #category : #private }
+FiMonticelloUnmarshaler >> monticelloExtensionMethodDefinitionsFrom: aFiExtensionMethods [ 
+
+	^ aFiExtensionMethods methods valueByKey 
+		collect: [ :aFicusMethod |
+			MCMethodDefinition
+				className: aFiExtensionMethods hostName
+				classIsMeta: aFiExtensionMethods isMetaSide
+				selector: aFicusMethod selector
+				category: aFicusMethod protocol
+				timeStamp: ''
+				source: aFicusMethod sourceCode ]
+		as: Array
 ]
 
 { #category : #private }
@@ -113,7 +133,7 @@ FiMonticelloUnmarshaler >> typeOfClassFrom: aFiClass [
 ]
 
 { #category : #unmarshaling }
-FiMonticelloUnmarshaler >> unmarshaled: aFiDictionary [ 
+FiMonticelloUnmarshaler >> unmarshaled: aFiPackage [
 	
-	^ MCSnapshot fromDefinitions: (self monticelloDefinitionsFrom: aFiDictionary)
+	^ MCSnapshot fromDefinitions: (self monticelloDefinitionsFrom: aFiPackage)
 ]

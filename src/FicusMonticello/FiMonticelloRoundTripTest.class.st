@@ -54,6 +54,18 @@ FiMonticelloRoundTripTest >> mockClassWithTraitComposition [
 ]
 
 { #category : #running }
+FiMonticelloRoundTripTest >> mockExtensionMethod [
+
+	^ MCMethodDefinition 
+		className: 'Integer'
+		classIsMeta: false
+		selector: 'fortyTwo'
+		category: self mockExtensionMethodCategory 
+		timeStamp: ''
+		source: 'fotryTwo ^42'
+]
+
+{ #category : #running }
 FiMonticelloRoundTripTest >> mockTrait [
 
 	| traitName |
@@ -134,6 +146,13 @@ FiMonticelloRoundTripTest >> test05Trait [
 
 	self assertRoundTripEquals: { 
 		self mockTrait }
+]
+
+{ #category : #tests }
+FiMonticelloRoundTripTest >> test06ExtensionMethod [
+
+	self assertRoundTripEquals: { 
+		self mockExtensionMethod }
 ]
 
 { #category : #running }

@@ -52,6 +52,13 @@ FiShot >> at: step equal: value [
 		edit: (FiEqual value: value)
 ]
 
+{ #category : #accessing }
+FiShot >> defaultStep [
+	"Answer a default value, a kind of suggestion to use it as step."
+	
+	^ self printString asSymbol
+]
+
 { #category : #differencing }
 FiShot >> differenceFrom: other [
 

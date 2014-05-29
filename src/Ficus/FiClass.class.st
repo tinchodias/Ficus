@@ -58,6 +58,12 @@ FiClass >> comment: anObject [
 	comment := anObject
 ]
 
+{ #category : #accessing }
+FiClass >> defaultStep [
+
+	^ theName asSymbol
+]
+
 { #category : #initialize }
 FiClass >> initialize [
 

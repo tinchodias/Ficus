@@ -43,6 +43,12 @@ FiTrait >> comment: anObject [
 	comment := anObject
 ]
 
+{ #category : #accessing }
+FiTrait >> defaultStep [
+
+	^ theName asSymbol
+]
+
 { #category : #initialize }
 FiTrait >> initialize [
 

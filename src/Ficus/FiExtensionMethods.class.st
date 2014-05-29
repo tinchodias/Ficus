@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : #accessing }
+FiExtensionMethods >> defaultStep [
+
+	^ (isMetaSide 
+		ifFalse: [ hostName ]
+		ifTrue: [ hostName,  ' class' ]) asSymbol
+]
+
+{ #category : #accessing }
 FiExtensionMethods >> hostName [
 	
 	^ hostName

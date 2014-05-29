@@ -6,7 +6,8 @@ Class {
 		'monticelloTraits',
 		'monticelloExtensionMethodsByHostName',
 		'monticelloMethodsByHostName',
-		'monticelloMetaclassMethodsByHostName'
+		'monticelloMetaclassMethodsByHostName',
+		'monticelloMetaclassExtensionMethodsByHostName'
 	],
 	#category : #'FicusMonticello-Marshaling'
 }
@@ -36,13 +37,13 @@ FiMarshalingVisitor >> ficusClassPoolFor: aMCClassDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions [ 
+FiMarshalingVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions isMetaSide: aBoolean [
 	
 	^ FiExtensionMethods newFromStepsAndValues: 
 		(Dictionary new
 			at: #hostName put: hostName;
 			at: #methods put: (self ficusMethodsForAll: someMCMethodDefinitions);
-			at: #isMetaSide put: false;
+			at: #isMetaSide put: aBoolean;
 			yourself)
 ]
 
@@ -133,23 +134,25 @@ FiMarshalingVisitor >> ficusPackage [
 { #category : #private }
 FiMarshalingVisitor >> ficusPackageContents [
 	
-	| childByName |
-	childByName := Dictionary new.
+	| children childByName |
+	children := OrderedCollection new.
 
 	monticelloClasses do: [ :each |
-		childByName 
-			at: each className
-			put: (self ficusClassFor: each) ].
+		children add: (self ficusClassFor: each) ].
 
 	monticelloTraits do: [ :each |
-		childByName 
-			at: each className
-			put: (self ficusTraitFor: each) ].
+		children add: (self ficusTraitFor: each) ].
 
 	monticelloExtensionMethodsByHostName keysAndValuesDo: [ :hostName :each |
-		childByName 
-			at: hostName
-			put: (self ficusExtensionMethodsForHostName: hostName methods: each) ].
+		children add: (self ficusExtensionMethodsForHostName: hostName methods: each isMetaSide: false) ].
+
+	monticelloMetaclassExtensionMethodsByHostName keysAndValuesDo: [ :hostName :each |
+		children add: (self ficusExtensionMethodsForHostName: hostName methods: each isMetaSide: true) ].
+
+	"Convert to dictionary"
+	childByName := Dictionary new.
+	children do: [ :each |
+		childByName at: each defaultStep put: each ].
 	
 	^ FiDictionary newFromStepsAndValues: childByName
 ]
@@ -186,9 +189,12 @@ FiMarshalingVisitor >> initialize [
 	
 	monticelloClasses := Set new.
 	monticelloTraits := Set new.
+
 	monticelloMethodsByHostName := Dictionary new.
 	monticelloMetaclassMethodsByHostName := Dictionary new.
+
 	monticelloExtensionMethodsByHostName := Dictionary new.
+	monticelloMetaclassExtensionMethodsByHostName := Dictionary new.
 ]
 
 { #category : #building }
@@ -214,7 +220,10 @@ FiMarshalingVisitor >> visitMethodDefinition: aMCMethodDefinition [
 	| aDictionary |
 	aDictionary := 
 		aMCMethodDefinition isExtensionMethod
-			ifTrue: [ monticelloExtensionMethodsByHostName ]
+			ifTrue: [ 
+				aMCMethodDefinition classIsMeta
+ 					ifFalse: [ monticelloExtensionMethodsByHostName ]
+					ifTrue: [ monticelloMetaclassExtensionMethodsByHostName ] ]
 			ifFalse: [
 				aMCMethodDefinition classIsMeta 
 					ifFalse: [ monticelloMethodsByHostName ]

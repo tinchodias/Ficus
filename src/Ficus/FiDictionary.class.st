@@ -7,6 +7,12 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
+{ #category : #'instance creation' }
+FiDictionary class >> new [
+
+	^ self newFromStepsAndValues: Dictionary new
+]
+
 { #category : #edits }
 FiDictionary >> at: step equal: value [
 
@@ -76,27 +82,15 @@ FiDictionary >> exclude: key [
 { #category : #enumerating }
 FiDictionary >> ficusDeepCollect: aBlock [
 
-	| copy newValueByKey |
-	copy := self copy.
+	| newValueByKey |
+	newValueByKey := Dictionary new.
 	
-	newValueByKey := self valueByKey species new.
-	
-	self valueByKey keysAndValuesDo: [ :key :value | 
+	self stepsAndValuesDo: [ :key :value | 
 		newValueByKey 
 			at: (key ficusDeepCollect: aBlock)
 			put: (value ficusDeepCollect: aBlock) ].
 
-	copy valueByKey: newValueByKey.
-		
-	^ aBlock value: copy
-]
-
-{ #category : #initialization }
-FiDictionary >> initialize [
-
-	super initialize.
-
-	valueByKey := Dictionary new.
+	^ aBlock value: (self species newFromStepsAndValues: newValueByKey)
 ]
 
 { #category : #initialization }
@@ -111,7 +105,7 @@ FiDictionary >> initializeFromStepsAndValues: aCollection [
 FiDictionary >> printOn: aStream [
 
 	super printOn: aStream.
-	self valueByKey printElementsOn: aStream.
+	valueByKey printElementsOn: aStream.
 
 ]
 
@@ -120,70 +114,57 @@ FiDictionary >> resultOfAcceptKey: anAcceptKey [
 
 	self flag: #fix.
 
-	^ self copy
-		valueByKey:
-			(self valueByKey copy
+	^ self species 
+		newFromStepsAndValues:
+			(valueByKey copy
 				at: anAcceptKey key
 				put: anAcceptKey edit theValue; "Assume it is a FiEqual..."
-				yourself);
-		yourself
-
+				yourself)
 ]
 
 { #category : #results }
 FiDictionary >> resultOfExcludeKey: anExcludeKey [
 
-	^ self copy
-		valueByKey:
-			(self valueByKey copy
+	^ self species 
+		newFromStepsAndValues:
+			(valueByKey copy
 				removeKey: anExcludeKey key;
-				yourself);
-		yourself
-
+				yourself)
 ]
 
 { #category : #accessing }
 FiDictionary >> shotAt: key [
 	
-	^ self valueByKey at: key
+	^ valueByKey at: key
 ]
 
 { #category : #enumerating }
 FiDictionary >> stepCount [
 	
-	^ self valueByKey size
+	^ valueByKey size
 ]
 
 { #category : #enumerating }
 FiDictionary >> stepsAndValuesDo: aBlock [
 
-	^ self valueByKey keysAndValuesDo: aBlock
+	^ valueByKey keysAndValuesDo: aBlock
 ]
 
 { #category : #pruning }
 FiDictionary >> untaggedPruned [
 
-	| copy newValueByKey |
-	copy := self copy.
+	| newValueByKey |
+	newValueByKey := Dictionary new.
 	
-	newValueByKey := self valueByKey species new.
-	
-	self valueByKey keysAndValuesDo: [ :key :value | 
+	self stepsAndValuesDo: [ :key :value | 
 		newValueByKey 
 			at: key pruned
 			put: value pruned ].
 
-	^ copy 
-		valueByKey: newValueByKey;
-		yourself
+	^ self species newFromStepsAndValues: newValueByKey
 ]
 
 { #category : #accessing }
 FiDictionary >> valueByKey [
 	^ valueByKey
-]
-
-{ #category : #accessing }
-FiDictionary >> valueByKey: anObject [
-	valueByKey := anObject
 ]

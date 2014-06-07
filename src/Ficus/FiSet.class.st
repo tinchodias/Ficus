@@ -6,6 +6,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+FiSet class >> new [
+
+	^ self withValues: #()
+]
+
+{ #category : #'instance creation' }
 FiSet class >> withValues: aCollection [ 
 	
 	^ (self basicNew: aCollection size)

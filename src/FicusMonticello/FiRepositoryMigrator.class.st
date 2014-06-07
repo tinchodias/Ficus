@@ -19,47 +19,19 @@ FiRepositoryMigrator class >> example1 [
 	"
 
 	"git repository"
-	| directory gitRepository monticelloRepository |
+	| directory gitRepository |
 	directory := FileSystem workingDirectory / 'yrupeFuelTests'.
 	gitRepository := LGitRepository on: directory.
 	gitRepository
 		create;
 		init.
 
-	monticelloRepository := 
-		self extraRepositoryGroup 
-			addRepository: FiMonticelloVersionGraphBuilder fuelRepository;
-			yourself.
-
 	^ self new
 		gitRepository: gitRepository;
 		packageName: 'FuelTests';
-		monticelloRepository: monticelloRepository;
+		monticelloRepository: FiMonticelloVersionGraphBuilder fuelRepository;
 		limit: 5;
 		migrate.
-]
-
-{ #category : #'as yet unclassified' }
-FiRepositoryMigrator class >> extraRepositoryGroup [
-
-	^ MCRepositoryGroup withRepositories: {
-		(MCHttpRepository
-			location: 'http://smalltalkhub.com/mc/Pharo/Pharo30Inbox/main'
-			user: ''
-			password: '').
-		(MCHttpRepository
-			location: 'http://smalltalkhub.com/mc/Pharo/Pharo30/main'
-			user: ''
-			password: '').
-		(MCHttpRepository
-			location: 'http://ss3.gemstone.com/ss/PharoInbox'
-			user: ''
-			password: '').
-		(MCHttpRepository
-			location: 'http://ss3.gemstone.com/ss/Pharo20'
-			user: ''
-			password: '').
-			}
 ]
 
 { #category : #private }

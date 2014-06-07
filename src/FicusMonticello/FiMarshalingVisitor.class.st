@@ -166,7 +166,7 @@ FiMarshalingVisitor >> ficusSharedPoolsFor: aMCClassDefinition [
 { #category : #private }
 FiMarshalingVisitor >> ficusSymbolSetFor: aCollection [
 
-	^ FiSet new values: (aCollection collect: #asSymbol as: Set) 
+	^ FiSet withValues: (aCollection collect: #asSymbol as: Set) 
 ]
 
 { #category : #private }

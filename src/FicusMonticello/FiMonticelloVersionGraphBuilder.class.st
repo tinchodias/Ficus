@@ -208,14 +208,17 @@ FiMonticelloVersionGraphBuilder >> leafNodes [
 
 { #category : #accessing }
 FiMonticelloVersionGraphBuilder >> loadRemainingVersionInfos [
-	| currentNodes counter packageInfo |
+	| currentNodes counter |
 	currentNodes := self sortedNodes.
 	counter := 25.
 
-	[ counter > 0 and: [ (currentNodes reversed anySatisfy: [ :each | each versionInfo isNil and: [ (packageInfo := self packageInfoFor: each name) isNotNil ] ]) ] ] whileTrue: [
-		| ancestry |
+	[ counter > 0 and: [ currentNodes anySatisfy: [ :each | each versionInfo isNil ] ] ] whileTrue: [
+		| nextNameToLoad packageInfo ancestry |
 		counter := counter - 1.
 		
+		nextNameToLoad := (currentNodes reversed detect: [ :each | each versionInfo isNil ]) name.
+		
+		packageInfo := self packageInfoFor: nextNameToLoad. 
 		ancestry := self recursiveAncestryFrom: packageInfo.
 		
 		self logCr: counter asString, '. Loading ', packageInfo name.
@@ -258,20 +261,9 @@ FiMonticelloVersionGraphBuilder >> orphanNodes [
 
 { #category : #private }
 FiMonticelloVersionGraphBuilder >> packageInfoFor: versionName [
+	"FIX: this makes some assumptions on the repository"
 	
-	| fakeInfo |
-	fakeInfo := 
-		MCVersionInfo 
-			name: versionName 
-			id: nil
-			message: nil
-			date: nil 
-			time: nil
-			author: nil
-			ancestors: nil.
-	
-	^ (repository versionWithInfo: fakeInfo ifNone: [ ^ nil ]) info.
-
+	^ repository versionInfoFromFileNamed: versionName, '.mcz'
 ]
 
 { #category : #accessing }

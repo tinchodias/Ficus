@@ -21,8 +21,7 @@ FiPrunedTest >> testAlreadyTagged [
 { #category : #tests }
 FiPrunedTest >> testAlreadyTaggedCollaborator [
 
-	shot := FiSet new.	
-	shot values: { FiSet new tag: 42; yourself }.
+	shot := FiSet withValues: { FiSet new tag: 42; yourself }.
 	
 "	self deny: shot pruned = shot.  ?? "
 
@@ -33,10 +32,10 @@ FiPrunedTest >> testAlreadyTaggedCollaborator [
 { #category : #tests }
 FiPrunedTest >> testNotTagged [
 
-	shot := FiSet new values: #(1 1 2 3 5); yourself.
+	shot := FiSet withValues: #(1 2 3 5) asSet.
 	
 "	self assert: shot pruned = shot.  ?? "
 	
 	self deny: shot pruned isProxy.
-	self assert: shot pruned values equals: #(1 1 2 3 5).
+	self assert: shot pruned values equals: #(1 2 3 5) asSet.
 ]

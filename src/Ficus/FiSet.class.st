@@ -1,23 +1,30 @@
 Class {
 	#name : #FiSet,
 	#superclass : #FiShot,
-	#instVars : [
-		'values'
-	],
+	#type : #variable,
 	#category : #'Ficus-Model-Core'
 }
+
+{ #category : #'instance creation' }
+FiSet class >> withValues: aCollection [ 
+	
+	^ (self basicNew: aCollection size)
+		initializeWithValues: aCollection;
+		yourself
+]
 
 { #category : #differencing }
 FiSet >> differenceFrom: other [
 
-	| internalEdits |	
+	| internalEdits selfValues |	
 	self == other ifTrue: [ ^ self noEdit ].
 	self class == other class ifFalse: [ self shouldBeImplemented ].
 
+	selfValues := self values.
 	internalEdits := Set new.
-
+	
 	other stepsAndValuesDo: [ :step :otherValue | 
-		(values includes: otherValue) ifFalse: [
+		(selfValues includes: otherValue) ifFalse: [
 			internalEdits add: (other exclude: otherValue) ] ].
 
 	self stepsAndValuesDo: [ :step :value |
@@ -41,9 +48,7 @@ FiSet >> exclude: aValue [
 FiSet >> ficusDeepCollect: aBlock [
 
 	^ aBlock value: 
-		(self copy
-			values: (self values collect: [ :each | each ficusDeepCollect: aBlock ]);
-			yourself)
+		(self species withValues: (self values collect: [ :each | each ficusDeepCollect: aBlock ]))
 ]
 
 { #category : #edits }
@@ -52,11 +57,16 @@ FiSet >> include: aValue [
 	^ FiInclude value: aValue
 ]
 
-{ #category : #initialize }
-FiSet >> initialize [
-	super initialize.
+{ #category : #initialization }
+FiSet >> initializeWithValues: aCollection [ 
 
-	values := #()
+	| index |	
+	self initialize.
+	
+	index := 1.
+	aCollection asSet do: [ :each | 
+		self at: index put: each. 
+		index := index + 1 ]
 ]
 
 { #category : #printing }
@@ -70,25 +80,20 @@ FiSet >> printOn: aStream [
 { #category : #results }
 FiSet >> resultOfExclude: anExclude [ 
 
-	^ self copy
-		values: (self values copyWithout: anExclude theValue);
-		yourself
-
+	^ self species withValues: (self values copyWithout: anExclude theValue)
 ]
 
 { #category : #results }
 FiSet >> resultOfInclude: anInclude [ 
 
-	^ self copy
-		values: (self values copyWith: anInclude theValue);
-		yourself
-
+	^ self species withValues: (self values copyWith: anInclude theValue)
 ]
 
 { #category : #accessing }
 FiSet >> shotAt: step [
 
-	self assert: (values includes: step).
+	self assert: (self values includes: step).
+	self flag: #todo. "mmm"
 
 	^ step
 ]
@@ -96,30 +101,36 @@ FiSet >> shotAt: step [
 { #category : #enumerating }
 FiSet >> stepCount [
 	
-	^ self values size
+	^ self size
 ]
 
 { #category : #enumerating }
 FiSet >> stepsAndValuesDo: aBlockClosure [ 
 	"Each value is both step and value"
 
-	^ self values do: [ :each | aBlockClosure value: each value: each ]
+	^ self valuesWithIndexDo: [ :each :index | aBlockClosure value: each value: each ]
 ]
 
 { #category : #pruning }
 FiSet >> untaggedPruned [
 
-	^ self copy
-		values: (self values collect: [ :each | each pruned ]);
-		yourself
+	^ self species withValues: (self values collect: [ :each | each pruned ])
 ]
 
 { #category : #accessing }
 FiSet >> values [
-	^ values
+	
+	^ (1 to: self size) collect: [ :index | self at: index ] as: Set
+
 ]
 
-{ #category : #accessing }
-FiSet >> values: anObject [
-	values := anObject
+{ #category : #enumerating }
+FiSet >> valuesWithIndexDo: elementAndIndexBlock [ 
+	"Just like with:do: except that the iteration index supplies the second argument to the block."
+
+	1 to: self size do:
+		[:index |
+		elementAndIndexBlock
+			value: (self at: index)
+			value: index]
 ]

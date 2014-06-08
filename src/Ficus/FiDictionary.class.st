@@ -30,17 +30,17 @@ FiDictionary >> differenceFrom: other [
 
 	internalEdits := Set new.
 	
-	other valueByKey keysAndValuesDo: [ :key :otherValue | 
-		self valueByKey
-			at: key
+	other stepsAndValuesDo: [ :key :otherValue | 
+		self
+			shotAt: key
 			ifPresent: [ :value | 
 				(otherValue = value) ifFalse: [
 					internalEdits add: (other at: key equal: value) ] ]
 			ifAbsent: [ 
 				internalEdits add: (other exclude: key) ] ].
 
-	self valueByKey keysAndValuesDo: [ :key :value |
-		(other valueByKey includesKey: key)
+	self stepsAndValuesDo: [ :key :value |
+		(other steps includes: key)
 			ifFalse: [ internalEdits add: (other at: key equal: value) ] ].
 	
 	^ internalEdits

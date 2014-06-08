@@ -279,6 +279,18 @@ FiShot >> stepCount [
 	^ self class allInstVarNames size - 1 "discount #tag"
 ]
 
+{ #category : #accessing }
+FiShot >> steps [
+
+	| result |
+	result := Set new.
+
+	self stepsAndValuesDo: [ :step :value |
+		result add: step ].
+
+	^ result
+]
+
 { #category : #enumerating }
 FiShot >> stepsAndValues [
 

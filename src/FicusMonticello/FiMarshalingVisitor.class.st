@@ -134,7 +134,7 @@ FiMarshalingVisitor >> ficusPackage [
 { #category : #private }
 FiMarshalingVisitor >> ficusPackageContents [
 	
-	| children childByName |
+	| children |
 	children := OrderedCollection new.
 
 	monticelloClasses do: [ :each |
@@ -148,13 +148,8 @@ FiMarshalingVisitor >> ficusPackageContents [
 
 	monticelloMetaclassExtensionMethodsByHostName keysAndValuesDo: [ :hostName :each |
 		children add: (self ficusExtensionMethodsForHostName: hostName methods: each isMetaSide: true) ].
-
-	"Convert to dictionary"
-	childByName := Dictionary new.
-	children do: [ :each |
-		childByName at: each defaultStep put: each ].
 	
-	^ FiDictionary newFromStepsAndValues: childByName
+	^ FiSet withValues: children
 ]
 
 { #category : #private }

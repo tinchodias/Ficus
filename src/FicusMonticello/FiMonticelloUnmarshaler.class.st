@@ -58,7 +58,7 @@ FiMonticelloUnmarshaler >> monticelloDefinitionsFrom: aFiPackage [
 	
 	self flag: #fix.
 	
-	aFiPackage contents stepsAndValuesDo: [ :className :aFicusShot |
+	aFiPackage contents valuesDo: [ :aFicusShot |
 		definitions addAll: 
 			(aFicusShot isFicusClass
 				ifTrue: [ self monticelloClassDefinitionsFrom: aFicusShot ]

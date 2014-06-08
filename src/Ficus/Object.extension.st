@@ -7,6 +7,12 @@ Object >> asFicusPath [
 ]
 
 { #category : #'*Ficus' }
+Object >> defaultStep [
+	
+	^ self
+]
+
+{ #category : #'*Ficus' }
 Object >> differenceFrom: other [
 
 	^ self == other 

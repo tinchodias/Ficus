@@ -14,9 +14,18 @@ FiSet class >> new [
 { #category : #'instance creation' }
 FiSet class >> withValues: aCollection [ 
 	
-	^ (self basicNew: aCollection size)
-		initializeWithValues: aCollection;
+	| aSet |
+	aSet := aCollection asSet.
+
+	^ (self basicNew: aSet size)
+		initializeWithSet: aSet;
 		yourself
+]
+
+{ #category : #converting }
+FiSet >> asArray [
+	
+	^ (1 to: self size) collect: [ :index | self at: index ] as: Array
 ]
 
 { #category : #differencing }
@@ -63,14 +72,23 @@ FiSet >> include: aValue [
 	^ FiInclude value: aValue
 ]
 
+{ #category : #private }
+FiSet >> indexOf: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	self valuesWithIndexDo: [ :each :index | 
+		each defaultStep = step ifTrue: [ ^ presentBlock cull: index ] ].
+
+	^ absentBlock value
+]
+
 { #category : #initialization }
-FiSet >> initializeWithValues: aCollection [ 
+FiSet >> initializeWithSet: aSet [ 
 
 	| index |	
 	self initialize.
 	
 	index := 1.
-	aCollection asSet do: [ :each | 
+	aSet do: [ :each | 
 		self at: index put: each. 
 		index := index + 1 ]
 ]
@@ -92,16 +110,24 @@ FiSet >> resultOfExclude: anExclude [
 { #category : #results }
 FiSet >> resultOfInclude: anInclude [ 
 
-	^ self species withValues: (self values copyWith: anInclude theValue)
+	| newValues |
+	newValues := self asArray copyWith: anInclude theValue.
+
+	self 
+		indexOf: anInclude theValue defaultStep 
+		ifPresent: [ :index | newValues := newValues copyWithoutIndex: index ]
+		ifAbsent: [ ].
+		
+	^ self species withValues: newValues
 ]
 
 { #category : #accessing }
 FiSet >> shotAt: step [
 
-	self assert: (self values includes: step).
-	self flag: #todo. "mmm"
-
-	^ step
+	^ self 
+		indexOf: step 
+		ifPresent: [ :index | self at: index ]
+		ifAbsent: [ NotFound signal ]
 ]
 
 { #category : #enumerating }

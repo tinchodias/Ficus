@@ -4,7 +4,7 @@ Class {
 	#category : #'Ficus-Tests'
 }
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiEditTest >> testAddClass [
 
 	| edit source result shot |
@@ -18,7 +18,7 @@ FiEditTest >> testAddClass [
 	self assert: result valueByKey asSet equals: { shot } asSet.
 ]
 
-{ #category : #tests }
+{ #category : #'tests-class' }
 FiEditTest >> testAddSharedPool [
 
 	| edit source result |
@@ -35,7 +35,7 @@ FiEditTest >> testAddSharedPool [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-class' }
 FiEditTest >> testAddSharedPoolAndUpdateComment [
 
 	| edit source result |
@@ -59,7 +59,7 @@ FiEditTest >> testAddSharedPoolAndUpdateComment [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiEditTest >> testRemoveClass [
 
 	| edit source result shot intermediate |
@@ -78,7 +78,7 @@ FiEditTest >> testRemoveClass [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-class' }
 FiEditTest >> testRemoveSharedPool [
 
 	| edit preSource source result |
@@ -101,7 +101,7 @@ FiEditTest >> testRemoveSharedPool [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiEditTest >> testUpdateClass [
 
 	| shot otherShot edit source result intermediate |
@@ -123,7 +123,7 @@ FiEditTest >> testUpdateClass [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-class' }
 FiEditTest >> testUpdateComment [
 
 	| edit source result |

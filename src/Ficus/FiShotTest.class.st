@@ -5,6 +5,24 @@ Class {
 }
 
 { #category : #tests }
+FiShotTest >> testAddMethod [
+
+	| edit source method result |
+	source := FiClass named: #A.
+	method := FiMethod selector: #fortyTwo sourceCode: 'fortyTwo ^42' protocol: 'accessing'. 
+
+	edit := 
+		source 
+			at: #methods
+			edit: [ :methods | methods include: method ].
+	result := source resultOf: edit.
+
+	self assert: source methods values isEmpty.
+	self assert: result methods values asSet equals: { method } asSet.
+	self assert: result methods stepsAndValues asSet equals: { method selector -> method } asSet.
+]
+
+{ #category : #tests }
 FiShotTest >> testAddSharedPool [
 
 	| edit source result |

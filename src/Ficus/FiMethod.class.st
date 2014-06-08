@@ -10,12 +10,19 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiMethod class >> sourceCode: aSourceCode protocol: aProtocol [
+FiMethod class >> selector: aSelector sourceCode: aSourceCode protocol: aProtocol [
 	
 	^ self new
+		selector: aSelector;
 		sourceCode: aSourceCode;
 		protocol: aProtocol;
 		yourself
+]
+
+{ #category : #accessing }
+FiMethod >> defaultStep [
+
+	^ selector asSymbol
 ]
 
 { #category : #accessing }

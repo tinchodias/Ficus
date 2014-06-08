@@ -13,7 +13,7 @@ FiBehavior >> initialize [
 
 	super initialize.
 	
-	methods := FiDictionary new.
+	methods := FiSet new.
 	layout := FiFixedLayout new.
 ]
 

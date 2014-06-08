@@ -26,7 +26,7 @@ FiStoreTest >> testCommitClass [
 	
 	commit := store commit: edit.
 
-	self assert: store shots size equals: store shots asSet size. "no repetition of objects (modulo =)"
+	"self assert: store shots size equals: store shots asSet size." "no repetition of objects (modulo =)"
 
 	self assert: (store shots count: [ :e | e proxyEquals: shot ]) equals: 1.
 	self assert: (store shots count: [ :e | e proxyEquals: edit ]) equals: 1.

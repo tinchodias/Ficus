@@ -110,15 +110,9 @@ FiMarshalingVisitor >> ficusMethodsFor: aMCClassDefinition [
 { #category : #private }
 FiMarshalingVisitor >> ficusMethodsForAll: monticelloMethods [
 	
-	| ficusMethodsBySelector |
-	ficusMethodsBySelector := Dictionary new.
-	
-	monticelloMethods do: [ :aMCMethodDefinition | 
-		ficusMethodsBySelector
-			at: aMCMethodDefinition selector
-			put: (self ficusMethodFor: aMCMethodDefinition) ].
-	
-	^ FiDictionary newFromStepsAndValues: ficusMethodsBySelector
+	^ FiSet withValues: 
+		(monticelloMethods collect: [ :aMCMethodDefinition | 
+			self ficusMethodFor: aMCMethodDefinition ])
 ]
 
 { #category : #private }

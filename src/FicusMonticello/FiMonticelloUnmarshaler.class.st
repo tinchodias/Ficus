@@ -73,7 +73,7 @@ FiMonticelloUnmarshaler >> monticelloDefinitionsFrom: aFiPackage [
 { #category : #private }
 FiMonticelloUnmarshaler >> monticelloExtensionMethodDefinitionsFrom: aFiExtensionMethods [ 
 
-	^ aFiExtensionMethods methods valueByKey 
+	^ aFiExtensionMethods methods values 
 		collect: [ :aFicusMethod |
 			MCMethodDefinition
 				className: aFiExtensionMethods hostName
@@ -91,7 +91,7 @@ FiMonticelloUnmarshaler >> monticelloMethodDefinitionsFrom: aFicusBehavior class
 	| methods |
 	methods := Set new.
 
-	aFicusBehavior methods stepsAndValuesDo: [ :selector :aFicusMethod | 
+	aFicusBehavior methods valuesDo: [ :aFicusMethod | 
 		methods add: 
 			(MCMethodDefinition
 				className: className

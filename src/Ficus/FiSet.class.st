@@ -157,8 +157,16 @@ FiSet >> values [
 ]
 
 { #category : #enumerating }
+FiSet >> valuesDo: elementBlock [ 
+
+	1 to: self size do:
+		[:index |
+		elementBlock
+			value: (self at: index) ]
+]
+
+{ #category : #enumerating }
 FiSet >> valuesWithIndexDo: elementAndIndexBlock [ 
-	"Just like with:do: except that the iteration index supplies the second argument to the block."
 
 	1 to: self size do:
 		[:index |

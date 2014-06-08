@@ -138,6 +138,15 @@ FiDictionary >> shotAt: key [
 	^ valueByKey at: key
 ]
 
+{ #category : #accessing }
+FiDictionary >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ valueByKey 
+		at: step
+		ifPresent: presentBlock
+		ifAbsent: absentBlock
+]
+
 { #category : #enumerating }
 FiDictionary >> stepCount [
 	

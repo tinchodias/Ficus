@@ -29,8 +29,10 @@ FiShot >> = another [
 	
 	self 
 		stepsAndValuesDo: [ :step :value | 
-			value = (another shotAt: step)
-				ifFalse: [ ^ false ] ].
+			another 
+				shotAt: step 
+				ifPresent: [ :otherValue | value = otherValue ifFalse: [ ^ false ] ]
+				ifAbsent: [ ^ false ] ].
 		
 	^ true	
 
@@ -259,6 +261,16 @@ FiShot >> resultOfCompositeEdit: aCompositeEdit [
 FiShot >> shotAt: selector [ 
 
 	^ self perform: selector
+]
+
+{ #category : #accessing }
+FiShot >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	step isSymbol ifFalse: [ ^ absentBlock value ].
+
+	^ (self respondsTo: step)
+		ifTrue: [ presentBlock cull: (self perform: step) ]
+		ifFalse: absentBlock
 ]
 
 { #category : #accessing }

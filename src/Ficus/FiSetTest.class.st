@@ -20,7 +20,7 @@ FiSetTest >> testAddClass [
 	self assert: source values isEmpty.
 	self assert: result values equals: { shot } asSet.
 	self assert: (result shotAt: shot defaultStep) equals: shot.
-
+	self assert: result stepsAndValues equals: { shot defaultStep -> shot } asSet.
 ]
 
 { #category : #tests }

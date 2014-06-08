@@ -140,7 +140,7 @@ FiSet >> stepCount [
 FiSet >> stepsAndValuesDo: aBlockClosure [ 
 	"Each value is both step and value"
 
-	^ self valuesWithIndexDo: [ :each :index | aBlockClosure value: each value: each ]
+	^ self valuesWithIndexDo: [ :each :index | aBlockClosure value: each defaultStep value: each ]
 ]
 
 { #category : #pruning }

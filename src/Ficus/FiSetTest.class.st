@@ -26,6 +26,9 @@ FiSetTest >> testAddClass [
 { #category : #tests }
 FiSetTest >> testInstanciation [
 
+	self assert: (FiSet withValues: #()) equals: (FiSet withValues: #()).
+
+	self assert: (FiSet withValues: #(1)) equals: (FiSet withValues: #(1)).
 	self assert: (FiSet withValues: #(1)) equals: (FiSet withValues: #(1) asSet).
 	self assert: (FiSet withValues: #(1 1)) equals: (FiSet withValues: #(1)).
 

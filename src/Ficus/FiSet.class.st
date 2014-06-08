@@ -125,9 +125,18 @@ FiSet >> resultOfInclude: anInclude [
 FiSet >> shotAt: step [
 
 	^ self 
-		indexOf: step 
-		ifPresent: [ :index | self at: index ]
+		shotAt: step 
+		ifPresent: [ :shot | shot ]
 		ifAbsent: [ NotFound signal ]
+]
+
+{ #category : #accessing }
+FiSet >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ self 
+		indexOf: step 
+		ifPresent: [ :index | presentBlock value: (self at: index) ]
+		ifAbsent: absentBlock
 ]
 
 { #category : #enumerating }

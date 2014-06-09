@@ -8,7 +8,7 @@ Class {
 	#category : #'Ficus-Tests'
 }
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiDifferencesTest >> testAddClass [
 
 	| edit editEffect source result shot |
@@ -76,7 +76,32 @@ FiDifferencesTest >> testAddSharedPoolAndUpdateComment [
 	self assert: (source differenceFrom: result) equals: inverseEdit.
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
+FiDifferencesTest >> testAddSharedPoolInsideDictionary [
+	"Test difference with a sub edit inside a dictionary."
+
+	| edit  source result |
+	source := 
+		FiDictionary newFromStepsAndValues: 
+			(Dictionary new 
+				at: #A put: (FiClass named: #A);
+				yourself).
+
+	edit := 
+		source 
+			at: #A
+			edit: [ :class | 
+				class 
+					at: #sharedPools
+					edit: [ :sharedPools | sharedPools include: #X ] ].		
+	
+	result := source resultOf: edit.
+
+	self assert: (result differenceFrom: source) equals: edit.
+
+]
+
+{ #category : #'tests-dictionary' }
 FiDifferencesTest >> testAddTwoClasses [
 
 	| edit inverseEdit source result |
@@ -98,7 +123,7 @@ FiDifferencesTest >> testAddTwoClasses [
 	self assert: (source differenceFrom: result) equals: inverseEdit.
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiDifferencesTest >> testNoEditClass [
 
 	| shot edit preSource result source |
@@ -117,7 +142,7 @@ FiDifferencesTest >> testNoEditClass [
 	self assert: (source differenceFrom: result) isNoEdit.
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiDifferencesTest >> testRemoveClass [
 
 	| edit editEffect preSource source result shot |
@@ -137,25 +162,30 @@ FiDifferencesTest >> testRemoveClass [
 	self assert: (source differenceFrom: result) equals: editEffect inverse.
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiDifferencesTest >> testUpdateClass [
 
-	| shot otherShot edit preSource result source editEffect |
+	| shot otherShot edit preSource result source expectedDifference |
 	preSource := FiDictionary new.
 	shot := FiClass named: #A.
 	otherShot := shot copy
-		comment: 'hi';
+		comment: '42';
 		yourself.
 
 	edit := preSource at: #A equal: shot.
 	source := preSource resultOf: edit.
 
 	edit := source at: #A equal: otherShot.
-	editEffect := source effectOf: edit.
 	result := source resultOf: edit.
+	
+	expectedDifference := 
+		source 
+			at: #A
+			edit: [ :class | 
+				class at: #comment equal: '42' ].		
 	
 	self assert: (source differenceFrom: source) isNoEdit.
 	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: editEffect inverse.
+	self assert: (result differenceFrom: source) equals: expectedDifference.
+
 ]

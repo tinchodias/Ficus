@@ -14,6 +14,14 @@ FiDictionary class >> new [
 ]
 
 { #category : #edits }
+FiDictionary >> at: step edit: aBlockClosure [ 
+	
+	^ FiAcceptKey 
+		key: step
+		edit: (aBlockClosure value: (self shotAt: step))
+]
+
+{ #category : #edits }
 FiDictionary >> at: step equal: value [
 
 	^ FiAcceptKey 
@@ -35,7 +43,7 @@ FiDictionary >> differenceFrom: other [
 			shotAt: key
 			ifPresent: [ :value | 
 				(otherValue = value) ifFalse: [
-					internalEdits add: (other at: key equal: value) ] ]
+					internalEdits add: (other at: key edit: [ :otherValue2 | value differenceFrom: otherValue ]) ] ]
 			ifAbsent: [ 
 				internalEdits add: (other exclude: key) ] ].
 
@@ -112,13 +120,20 @@ FiDictionary >> printOn: aStream [
 { #category : #results }
 FiDictionary >> resultOfAcceptKey: anAcceptKey [
 
-	self flag: #fix.
-
+	| newValue |
+	newValue := self 
+		shotAt: anAcceptKey key
+		ifPresent: [ :aValue | 
+			anAcceptKey edit resultOn: aValue ]
+		ifAbsent: [ 
+			self flag: #todo. "FIX".
+			anAcceptKey edit resultOn: nil ].
+		
 	^ self species 
 		newFromStepsAndValues:
 			(valueByKey copy
 				at: anAcceptKey key
-				put: anAcceptKey edit theValue; "Assume it is a FiEqual..."
+				put: newValue;
 				yourself)
 ]
 

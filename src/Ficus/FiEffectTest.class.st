@@ -21,9 +21,9 @@ FiEffectTest >> testAddClass [
 
 	reverted := result resultOf: editEffect inverse.
 	
-	self assert: source valueByKey isEmpty.
-	self assert: result valueByKey asSet equals: { shot } asSet.
-	self assert: reverted valueByKey isEmpty.
+	self assert: source values isEmpty.
+	self assert: result values asSet equals: { shot } asSet.
+	self assert: reverted values isEmpty.
 
 ]
 
@@ -43,10 +43,10 @@ FiEffectTest >> testNoEditClass [
 
 	reverted := result resultOf: editEffect inverse.
 	
-	self assert: source valueByKey isEmpty.
-	self assert: intermediate valueByKey asSet equals: { shot } asSet.
-	self assert: result valueByKey asSet equals: { shot } asSet.
-	self assert: reverted valueByKey asSet equals: { shot } asSet.
+	self assert: source values isEmpty.
+	self assert: intermediate values asSet equals: { shot } asSet.
+	self assert: result values asSet equals: { shot } asSet.
+	self assert: reverted values asSet equals: { shot } asSet.
 
 ]
 
@@ -66,10 +66,10 @@ FiEffectTest >> testRemoveClass [
 
 	reverted := result resultOf: editEffect inverse.
 		
-	self assert: source valueByKey isEmpty.
-	self assert: intermediate valueByKey asSet equals: { shot } asSet.
-	self assert: result valueByKey isEmpty.
-	self assert: reverted valueByKey asSet equals: { shot } asSet.
+	self assert: source values isEmpty.
+	self assert: intermediate values asSet equals: { shot } asSet.
+	self assert: result values isEmpty.
+	self assert: reverted values asSet equals: { shot } asSet.
 
 ]
 
@@ -79,9 +79,7 @@ FiEffectTest >> testUpdateClass [
 	| shot otherShot edit source result intermediate editEffect reverted |
 	source := FiDictionary new.
 	shot := FiClass named: #A.
-	otherShot := shot copy
-		comment: 'hi';
-		yourself.
+	otherShot := shot resultOf: (shot at: #comment equal: '42').
 
 	edit := source at: #A equal: shot.
 	intermediate := source resultOf: edit.
@@ -92,10 +90,10 @@ FiEffectTest >> testUpdateClass [
 
 	reverted := result resultOf: editEffect inverse.
 	
-	self assert: source valueByKey isEmpty.
-	self assert: intermediate valueByKey asSet equals: { shot } asSet.
-	self assert: result valueByKey asSet equals: { otherShot } asSet.
-	self assert: reverted valueByKey asSet equals: { shot } asSet.
+	self assert: source values isEmpty.
+	self assert: intermediate values asSet equals: { shot } asSet.
+	self assert: result values asSet equals: { otherShot } asSet.
+	self assert: reverted values asSet equals: { shot } asSet.
 
 ]
 

@@ -66,8 +66,8 @@ FiDictionary >> effectOfAcceptKey: anAcceptKey [
 
 	self flag: #fix. "theValue"
 
-	^ self valueByKey
-		at: anAcceptKey key
+	^ self 
+		shotAt: anAcceptKey key
 		ifPresent: [ :aValue | 
 			aValue = anAcceptKey edit theValue
 				ifTrue: [ anAcceptKey effectNothing ]
@@ -78,8 +78,8 @@ FiDictionary >> effectOfAcceptKey: anAcceptKey [
 { #category : #effects }
 FiDictionary >> effectOfExcludeKey: anExcludeKey [
 
-	^ self valueByKey
-		at: anExcludeKey key
+	^ self 
+		shotAt: anExcludeKey key
 		ifPresent: [ :aValue | anExcludeKey effectRemove: aValue ]
 		ifAbsent: [ anExcludeKey effectNothing ]
 ]

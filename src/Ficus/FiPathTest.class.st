@@ -29,8 +29,7 @@ FiPathTest >> sampleShot [
 	aClass := FiClass named: #A.
 	
 	anEnvironment := FiDictionary new.
-	anEnvironment valueByKey at: #A put: aClass.
-	^ anEnvironment
+	^ anEnvironment resultOf: (anEnvironment at: #A equal: aClass)
 ]
 
 { #category : #tests }

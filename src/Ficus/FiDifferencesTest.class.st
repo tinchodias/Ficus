@@ -183,9 +183,7 @@ FiDifferencesTest >> testSetUpdateClass [
 	| shot otherShot edit preSource result source expectedDifference |
 	preSource := FiSet new.
 	shot := FiClass named: #A.
-	otherShot := shot copy
-		comment: '42';
-		yourself.
+	otherShot := shot resultOf: (shot at: #comment equal: '42').
 
 	edit := preSource include: shot.
 	source := preSource resultOf: edit.
@@ -211,9 +209,7 @@ FiDifferencesTest >> testUpdateClass [
 	| shot otherShot edit preSource result source expectedDifference |
 	preSource := FiDictionary new.
 	shot := FiClass named: #A.
-	otherShot := shot copy
-		comment: '42';
-		yourself.
+	otherShot := shot resultOf: (shot at: #comment equal: '42').
 
 	edit := preSource at: #A equal: shot.
 	source := preSource resultOf: edit.

@@ -14,8 +14,8 @@ FiDictionaryTest >> testAddClass [
 	edit := source at: #A equal: shot.
 	result := source resultOf: edit.
 
-	self assert: source valueByKey isEmpty.
-	self assert: result valueByKey asSet equals: { shot } asSet.
+	self assert: source values isEmpty.
+	self assert: result values asSet equals: { shot } asSet.
 ]
 
 { #category : #tests }
@@ -49,9 +49,9 @@ FiDictionaryTest >> testRemoveClass [
 	edit := intermediate exclude: shot theName.
 	result := intermediate resultOf: edit.
 	
-	self assert: source valueByKey isEmpty.
-	self assert: intermediate valueByKey asSet equals: { shot } asSet.
-	self assert: result valueByKey isEmpty.
+	self assert: source values isEmpty.
+	self assert: intermediate values asSet equals: { shot } asSet.
+	self assert: result values isEmpty.
 
 ]
 
@@ -61,9 +61,7 @@ FiDictionaryTest >> testUpdateClass [
 	| shot otherShot edit source result intermediate |
 	source := FiDictionary new.
 	shot := FiClass named: #A.
-	otherShot := shot copy
-		comment: 'hi';
-		yourself.
+	otherShot := shot resultOf: (shot at: #comment equal: '42').
 
 	edit := source at: #A equal: shot.
 	intermediate := source resultOf: edit.
@@ -71,8 +69,8 @@ FiDictionaryTest >> testUpdateClass [
 	edit := intermediate at: #A equal: otherShot.
 	result := intermediate resultOf: edit.
 	
-	self assert: source valueByKey isEmpty.
-	self assert: intermediate valueByKey asSet equals: { shot } asSet.
-	self assert: result valueByKey asSet equals: { otherShot } asSet.
+	self assert: source values isEmpty.
+	self assert: intermediate values asSet equals: { shot } asSet.
+	self assert: result values asSet equals: { otherShot } asSet.
 
 ]

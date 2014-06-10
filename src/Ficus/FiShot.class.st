@@ -106,17 +106,15 @@ FiShot >> effectOfAcceptSlot: anAcceptSlot [
 { #category : #enumerating }
 FiShot >> ficusDeepCollect: aBlock [
 
-	| copy |
-	self flag: #fix. "FIX"	
+	| newStepsAndValues |
+	newStepsAndValues := Dictionary new.
+	
+	self stepsAndValuesDo: [ :step :value | 
+		newStepsAndValues 
+			at: (step ficusDeepCollect: aBlock)
+			put: (value ficusDeepCollect: aBlock) ].
 
-	copy := self copy.
-
-	copy class instanceVariableNamesDo: [ :name |
-		copy 
-			instVarNamed: name 
-			put: ((copy instVarNamed: name) ficusDeepCollect: aBlock) ].
-
-	^ aBlock value: copy
+	^ aBlock value: (self species newFromStepsAndValues: newStepsAndValues)
 ]
 
 { #category : #enumerating }
@@ -333,15 +331,15 @@ FiShot >> taggedPruned [
 { #category : #pruning }
 FiShot >> untaggedPruned [
 
-	| copy |
-	self flag: #fix. "FIX"	
+	| newStepsAndValues |
+	newStepsAndValues := Dictionary new.
+	
+	self stepsAndValuesDo: [ :step :value | 
+		newStepsAndValues 
+			at: step pruned
+			put: value pruned ].
 
-	copy := self copy.
-	copy class instanceVariableNamesDo: [ :name |
-		copy 
-			instVarNamed: name 
-			put: (copy instVarNamed: name) pruned ].
-	^ copy
+	^ self species newFromStepsAndValues: newStepsAndValues
 ]
 
 { #category : #accessing }

@@ -87,20 +87,6 @@ FiDictionary >> exclude: key [
 	^ FiExcludeKey key: key
 ]
 
-{ #category : #enumerating }
-FiDictionary >> ficusDeepCollect: aBlock [
-
-	| newValueByKey |
-	newValueByKey := Dictionary new.
-	
-	self stepsAndValuesDo: [ :key :value | 
-		newValueByKey 
-			at: (key ficusDeepCollect: aBlock)
-			put: (value ficusDeepCollect: aBlock) ].
-
-	^ aBlock value: (self species newFromStepsAndValues: newValueByKey)
-]
-
 { #category : #initialization }
 FiDictionary >> initializeFromStepsAndValues: aCollection [ 
 	
@@ -172,20 +158,6 @@ FiDictionary >> stepCount [
 FiDictionary >> stepsAndValuesDo: aBlock [
 
 	^ valueByKey keysAndValuesDo: aBlock
-]
-
-{ #category : #pruning }
-FiDictionary >> untaggedPruned [
-
-	| newValueByKey |
-	newValueByKey := Dictionary new.
-	
-	self stepsAndValuesDo: [ :key :value | 
-		newValueByKey 
-			at: key pruned
-			put: value pruned ].
-
-	^ self species newFromStepsAndValues: newValueByKey
 ]
 
 { #category : #accessing }

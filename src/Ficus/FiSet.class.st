@@ -89,13 +89,6 @@ FiSet >> exclude: aValue [
 	^ FiExclude value: aValue
 ]
 
-{ #category : #enumerating }
-FiSet >> ficusDeepCollect: aBlock [
-
-	^ aBlock value: 
-		(self species withValues: (self values collect: [ :each | each ficusDeepCollect: aBlock ]))
-]
-
 { #category : #edits }
 FiSet >> include: aValue [
 
@@ -173,12 +166,6 @@ FiSet >> stepsAndValuesDo: aBlockClosure [
 		aBlockClosure 
 			value: each defaultStep 
 			value: each ]
-]
-
-{ #category : #pruning }
-FiSet >> untaggedPruned [
-
-	^ self species withValues: (self values collect: [ :each | each pruned ])
 ]
 
 { #category : #enumerating }

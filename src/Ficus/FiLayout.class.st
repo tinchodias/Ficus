@@ -1,5 +1,8 @@
+"
+I represent an abstract FiBehavior's layout.
+"
 Class {
 	#name : #FiLayout,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#category : #'Ficus-Model-Meta'
 }

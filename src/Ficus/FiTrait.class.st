@@ -1,6 +1,9 @@
+"
+I represent a trait.
+"
 Class {
 	#name : #FiTrait,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#instVars : [
 		'theName',
 		'methods',

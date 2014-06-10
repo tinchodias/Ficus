@@ -1,6 +1,9 @@
+"
+I represent a package.
+"
 Class {
 	#name : #FiPackage,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#instVars : [
 		'theName',
 		'contents'

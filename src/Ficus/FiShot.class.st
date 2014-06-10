@@ -27,31 +27,14 @@ FiShot >> = another [
 	self class = another class ifFalse: [ ^ false ].
 	self stepCount = another stepCount ifFalse: [ ^ false ].
 	
-	self 
-		stepsAndValuesDo: [ :step :value | 
-			another 
-				shotAt: step 
-				ifPresent: [ :otherValue | value = otherValue ifFalse: [ ^ false ] ]
-				ifAbsent: [ ^ false ] ].
+	self stepsAndValuesDo: [ :step :value | 
+		another 
+			shotAt: step 
+			ifPresent: [ :otherValue | value = otherValue ifFalse: [ ^ false ] ]
+			ifAbsent: [ ^ false ] ].
 		
 	^ true	
 
-]
-
-{ #category : #edits }
-FiShot >> at: aSlotName edit: aBlockClosure [ 
-	
-	^ FiAcceptSlot
-		slotName: aSlotName
-		edit: (aBlockClosure value: (self shotAt: aSlotName))
-]
-
-{ #category : #edits }
-FiShot >> at: step equal: value [
-
-	^ FiAcceptSlot 
-		slotName: step
-		edit: (FiEqual value: value)
 ]
 
 { #category : #accessing }
@@ -64,25 +47,7 @@ FiShot >> defaultStep [
 { #category : #differencing }
 FiShot >> differenceFrom: other [
 
-	| internalEdits |	
-	self == other ifTrue: [ ^ self noEdit ].
-	self class == other class ifFalse: [ self shouldBeImplemented ].
-
-	internalEdits := Set new.
-	
-	other stepsAndValuesDo: [ :step :otherValue | 
-		| value edit |
-		value := self shotAt: step.
-		edit := value differenceFrom: otherValue.
-		
-		edit isNoEdit ifFalse: [
-			internalEdits add: (FiAcceptSlot slotName: step edit: edit) ] ].
-
-	^ internalEdits
-		ifEmpty: [ self noEdit ]
-		ifNotEmpty: [ internalEdits size = 1
-			ifTrue: [ internalEdits anyOne ]
-			ifFalse: [ self edits: internalEdits ] ]
+	^ self subclassResponsibility 
 ]
 
 { #category : #edits }
@@ -95,12 +60,6 @@ FiShot >> edits: aCollectionOfEdits [
 FiShot >> effectOf: anEdit [ 
 
 	^ anEdit effectOn: self
-]
-
-{ #category : #effects }
-FiShot >> effectOfAcceptSlot: anAcceptSlot [
-
-	^ anAcceptSlot effectUpdate: (self instVarNamed: anAcceptSlot slotName)
 ]
 
 { #category : #enumerating }
@@ -149,9 +108,8 @@ FiShot >> hash [
 	| hash |
 	hash := self class hash.
 	
-	self 
-		stepsAndValuesDo: [ :step :value | 
-			hash := hash bitXor: value hash ].
+	self stepsAndValuesDo: [ :step :value | 
+		hash := (hash bitXor: step hash) bitXor: value hash ].
 		
 	^ hash
 ]
@@ -159,11 +117,7 @@ FiShot >> hash [
 { #category : #initialization }
 FiShot >> initializeFromStepsAndValues: aDictionary [
 
-	self initialize.
-	
-	aDictionary 
-		keysAndValuesDo: [ :slotName :value |
-			self instVarNamed: slotName put: value ]
+	self subclassResponsibility 
 ]
 
 { #category : #testing }
@@ -233,16 +187,6 @@ FiShot >> pruned [
 ]
 
 { #category : #results }
-FiShot >> resultOfAcceptSlot: anAcceptSlot [ 
-
-	^ self copy
-		instVarNamed: anAcceptSlot slotName
-		put: ((self instVarNamed: anAcceptSlot slotName) resultOf: anAcceptSlot edit);
-		yourself
-
-]
-
-{ #category : #results }
 FiShot >> resultOfCompositeEdit: aCompositeEdit [ 
 
 	^ aCompositeEdit subEdits 
@@ -262,17 +206,13 @@ FiShot >> shotAt: step [
 { #category : #accessing }
 FiShot >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 
-	step isSymbol ifFalse: [ ^ absentBlock value ].
-
-	^ (self respondsTo: step)
-		ifTrue: [ presentBlock cull: (self perform: step) ]
-		ifFalse: absentBlock
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
 FiShot >> stepCount [
 	
-	^ self class allInstVarNames size - 1 "discount #tag"
+	^ self steps size
 ]
 
 { #category : #accessing }
@@ -302,12 +242,7 @@ FiShot >> stepsAndValues [
 { #category : #enumerating }
 FiShot >> stepsAndValuesDo: aBlockClosure [ 
 
-	^ self class instanceVariableNamesDo: [ :name |
-		(name ~= #tag) ifTrue: [
-			aBlockClosure 
-				value: name asSymbol 
-				value: (self instVarNamed: name)] ]
-
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }

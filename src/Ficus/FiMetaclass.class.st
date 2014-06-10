@@ -1,3 +1,6 @@
+"
+I represent a metaclass.
+"
 Class {
 	#name : #FiMetaclass,
 	#superclass : #FiBehavior,

@@ -1,6 +1,9 @@
+"
+I represent a method.
+"
 Class {
 	#name : #FiMethod,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#instVars : [
 		'protocol',
 		'sourceCode',

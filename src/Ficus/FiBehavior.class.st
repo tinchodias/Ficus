@@ -1,6 +1,9 @@
+"
+I represent a behavior. I have some common implementation of class and metaclass representations.
+"
 Class {
 	#name : #FiBehavior,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#instVars : [
 		'layout',
 		'methods'

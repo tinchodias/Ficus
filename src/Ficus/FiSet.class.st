@@ -1,3 +1,6 @@
+"
+I represent a set. TODO
+"
 Class {
 	#name : #FiSet,
 	#superclass : #FiShot,

@@ -1,3 +1,6 @@
+"
+I represent a dictionary.
+"
 Class {
 	#name : #FiDictionary,
 	#superclass : #FiShot,

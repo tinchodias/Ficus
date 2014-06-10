@@ -1,3 +1,6 @@
+"
+I represent an abstract FiBehavior's layout with slots.
+"
 Class {
 	#name : #FiPointerLayout,
 	#superclass : #FiLayout,

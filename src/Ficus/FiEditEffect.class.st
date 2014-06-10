@@ -1,6 +1,9 @@
+"
+I represent an abstract edit effect on a shot. FiEdits know how to create effects.
+"
 Class {
 	#name : #FiEditEffect,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#instVars : [
 		'edit'
 	],

@@ -1,3 +1,6 @@
+"
+I represent a path in a shot. See my concrete subclasses.
+"
 Class {
 	#name : #FiPath,
 	#superclass : #Object,

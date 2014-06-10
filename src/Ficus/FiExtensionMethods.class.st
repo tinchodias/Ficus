@@ -1,6 +1,9 @@
+"
+I represent a set of extension methods in a package. 
+"
 Class {
 	#name : #FiExtensionMethods,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#instVars : [
 		'hostName',
 		'methods',

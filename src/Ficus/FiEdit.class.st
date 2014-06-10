@@ -1,6 +1,9 @@
+"
+I represent an abstract edit on a shot.
+"
 Class {
 	#name : #FiEdit,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#category : #'Ficus-Model-Edits'
 }
 

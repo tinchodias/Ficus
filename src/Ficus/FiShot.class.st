@@ -253,9 +253,12 @@ FiShot >> resultOfCompositeEdit: aCompositeEdit [
 ]
 
 { #category : #accessing }
-FiShot >> shotAt: selector [ 
+FiShot >> shotAt: step [
 
-	^ self perform: selector
+	^ self 
+		shotAt: step 
+		ifPresent: [ :shot | shot ]
+		ifAbsent: [ NotFound signal ]
 ]
 
 { #category : #accessing }
@@ -339,4 +342,22 @@ FiShot >> untaggedPruned [
 			instVarNamed: name 
 			put: (copy instVarNamed: name) pruned ].
 	^ copy
+]
+
+{ #category : #accessing }
+FiShot >> values [
+	
+	| answer |
+	answer := Set new.
+
+	self valuesDo: [ :each | answer add: each ].
+
+	^ answer 
+]
+
+{ #category : #accessing }
+FiShot >> valuesDo: elementBlock [
+	"Evaluates the block on each value of this object"
+	
+	^ self stepsAndValuesDo: [ :step :value | elementBlock value: value ]
 ]

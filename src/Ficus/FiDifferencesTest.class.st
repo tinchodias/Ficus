@@ -25,7 +25,7 @@ FiDifferencesTest >> testAddClass [
 	self assert: (source differenceFrom: result) equals: editEffect inverse.
 ]
 
-{ #category : #tests }
+{ #category : #'tests-shot' }
 FiDifferencesTest >> testAddSharedPool [
 	"Test difference with a sub edit."
 
@@ -46,7 +46,7 @@ FiDifferencesTest >> testAddSharedPool [
 	self assert: (source differenceFrom: result) equals: inverseEdit.
 ]
 
-{ #category : #tests }
+{ #category : #'tests-shot' }
 FiDifferencesTest >> testAddSharedPoolAndUpdateComment [
 
 	| edit inverseEdit source result |

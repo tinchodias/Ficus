@@ -12,6 +12,12 @@ FiSet class >> new [
 ]
 
 { #category : #'instance creation' }
+FiSet class >> newFromStepsAndValues: aDictionary [ 
+	
+	^ self withValues: aDictionary values
+]
+
+{ #category : #'instance creation' }
 FiSet class >> withValues: aCollection [ 
 	
 	| aSet |
@@ -146,15 +152,6 @@ FiSet >> resultOfInclude: anInclude [
 ]
 
 { #category : #accessing }
-FiSet >> shotAt: step [
-
-	^ self 
-		shotAt: step 
-		ifPresent: [ :shot | shot ]
-		ifAbsent: [ NotFound signal ]
-]
-
-{ #category : #accessing }
 FiSet >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 
 	^ self 
@@ -171,9 +168,11 @@ FiSet >> stepCount [
 
 { #category : #enumerating }
 FiSet >> stepsAndValuesDo: aBlockClosure [ 
-	"Each value is both step and value"
 
-	^ self valuesWithIndexDo: [ :each :index | aBlockClosure value: each defaultStep value: each ]
+	^ self valuesDo: [ :each | 
+		aBlockClosure 
+			value: each defaultStep 
+			value: each ]
 ]
 
 { #category : #pruning }
@@ -182,28 +181,17 @@ FiSet >> untaggedPruned [
 	^ self species withValues: (self values collect: [ :each | each pruned ])
 ]
 
-{ #category : #accessing }
-FiSet >> values [
-	
-	^ (1 to: self size) collect: [ :index | self at: index ] as: Set
-
-]
-
 { #category : #enumerating }
 FiSet >> valuesDo: elementBlock [ 
 
-	1 to: self size do:
-		[:index |
-		elementBlock
-			value: (self at: index) ]
+	^ self valuesWithIndexDo: [ :value :index | elementBlock value: value ]
 ]
 
-{ #category : #enumerating }
+{ #category : #private }
 FiSet >> valuesWithIndexDo: elementAndIndexBlock [ 
 
-	1 to: self size do:
-		[:index |
+	1 to: self size do: [ :index |
 		elementAndIndexBlock
 			value: (self at: index)
-			value: index]
+			value: index ]
 ]

@@ -8,7 +8,7 @@ Class {
 	#category : #'Ficus-Tests'
 }
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiEffectTest >> testAddClass [
 
 	| shot edit source reverted result editEffect |
@@ -27,7 +27,7 @@ FiEffectTest >> testAddClass [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiEffectTest >> testNoEditClass [
 
 	| shot edit source result intermediate editEffect reverted |
@@ -50,7 +50,7 @@ FiEffectTest >> testNoEditClass [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiEffectTest >> testRemoveClass [
 
 	| edit source result shot intermediate reverted editEffect |
@@ -73,7 +73,7 @@ FiEffectTest >> testRemoveClass [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-dictionary' }
 FiEffectTest >> testUpdateClass [
 
 	| shot otherShot edit source result intermediate editEffect reverted |
@@ -99,7 +99,7 @@ FiEffectTest >> testUpdateClass [
 
 ]
 
-{ #category : #tests }
+{ #category : #'tests-shot' }
 FiEffectTest >> testUpdateComment [
 
 	| edit effect source |

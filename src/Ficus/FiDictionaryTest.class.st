@@ -19,6 +19,24 @@ FiDictionaryTest >> testAddClass [
 ]
 
 { #category : #tests }
+FiDictionaryTest >> testInstanciationWithStepsAndValues [
+
+	| shot |
+	self assert: (FiDictionary newFromStepsAndValues: Dictionary new) stepCount equals: 0.
+
+	shot := 
+		FiSet newFromStepsAndValues: 
+			(Dictionary new
+				at: #A put: (FiClass named: #A);
+				at: #B put: (FiClass named: #B);
+				yourself).
+
+	self assert: shot steps asSet equals: #(A B) asSet.
+	self assert: (shot shotAt: #A) equals: (FiClass named: #A).
+	self assert: (shot shotAt: #B) equals: (FiClass named: #B).
+]
+
+{ #category : #tests }
 FiDictionaryTest >> testRemoveClass [
 
 	| edit source result shot intermediate |

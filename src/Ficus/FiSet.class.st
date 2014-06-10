@@ -28,23 +28,47 @@ FiSet >> asArray [
 	^ (1 to: self size) collect: [ :index | self at: index ] as: Array
 ]
 
+{ #category : #edits }
+FiSet >> at: step edit: aBlockClosure [ 
+
+	self flag: #todo. "Cloned from FiDictionary"
+	
+	^ FiAcceptKey 
+		key: step
+		edit: (aBlockClosure value: (self shotAt: step))
+]
+
+{ #category : #edits }
+FiSet >> at: step equal: value [
+
+	self flag: #todo. "Cloned from FiDictionary"
+
+	^ FiAcceptKey 
+		key: step
+		edit: (FiEqual value: value)
+]
+
 { #category : #differencing }
 FiSet >> differenceFrom: other [
 
-	| internalEdits selfValues |	
+	| internalEdits |	
 	self == other ifTrue: [ ^ self noEdit ].
 	self class == other class ifFalse: [ self shouldBeImplemented ].
 
-	selfValues := self values.
 	internalEdits := Set new.
 	
-	other stepsAndValuesDo: [ :step :otherValue | 
-		(selfValues includes: otherValue) ifFalse: [
-			internalEdits add: (other exclude: otherValue) ] ].
+	other stepsAndValuesDo: [ :key :otherValue | 
+		self
+			shotAt: key
+			ifPresent: [ :value | 
+				(otherValue = value) ifFalse: [
+					internalEdits add: (other at: key edit: [ :otherValue2 | value differenceFrom: otherValue ]) ] ]
+			ifAbsent: [ 
+				internalEdits add: (other exclude: key) ] ].
 
-	self stepsAndValuesDo: [ :step :value |
-		(other values includes: value) ifFalse: [ 
-			internalEdits add: (other include: value) ] ].
+	self stepsAndValuesDo: [ :key :value |
+		(other steps includes: key)
+			ifFalse: [ internalEdits add: (other include: value) ] ].
 	
 	^ internalEdits
 		ifEmpty: [ self noEdit ]

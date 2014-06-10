@@ -70,11 +70,6 @@ FiShot >> differenceFrom: other [
 
 	internalEdits := Set new.
 	
-	self flag: #todo.
-	"
-	- implement replaceBy:
-	- extract duplicated code in all implementations of differenceFrom:
-	"
 	other stepsAndValuesDo: [ :step :otherValue | 
 		| value edit |
 		value := self shotAt: step.

@@ -162,6 +162,49 @@ FiDifferencesTest >> testRemoveClass [
 	self assert: (source differenceFrom: result) equals: editEffect inverse.
 ]
 
+{ #category : #'tests-set' }
+FiDifferencesTest >> testSetAddSharedPool [
+
+	|   edit  result source  |
+	source := FiSet new.
+
+	edit := source include: #A.
+	result := source resultOf: edit.
+	
+	self assert: (source differenceFrom: source) isNoEdit.
+	self assert: (result differenceFrom: result) isNoEdit.
+	self assert: (result differenceFrom: source) equals: edit.
+
+]
+
+{ #category : #'tests-set' }
+FiDifferencesTest >> testSetUpdateClass [
+
+	| shot otherShot edit preSource result source expectedDifference |
+	preSource := FiSet new.
+	shot := FiClass named: #A.
+	otherShot := shot copy
+		comment: '42';
+		yourself.
+
+	edit := preSource include: shot.
+	source := preSource resultOf: edit.
+
+	edit := source include: otherShot.
+	result := source resultOf: edit.
+	
+	expectedDifference := 
+		source 
+			at: #A
+			edit: [ :class | 
+				class at: #comment equal: '42' ].		
+	
+	self assert: (source differenceFrom: source) isNoEdit.
+	self assert: (result differenceFrom: result) isNoEdit.
+	self assert: (result differenceFrom: source) equals: expectedDifference.
+
+]
+
 { #category : #'tests-dictionary' }
 FiDifferencesTest >> testUpdateClass [
 

@@ -8,14 +8,15 @@ Object >> asFicusPath [
 
 { #category : #'*Ficus' }
 Object >> defaultStep [
+	"Answer a default value, a kind of suggestion to use it as step."
 	
-	^ self
+	^ self printString asSymbol
 ]
 
 { #category : #'*Ficus' }
 Object >> differenceFrom: other [
 
-	^ self == other 
+	^ self = other 
 		ifTrue: [ self noEdit ]
 		ifFalse: [ other replaceBy: self ]
 ]

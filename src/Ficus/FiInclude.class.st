@@ -12,6 +12,22 @@ FiInclude class >> value: aValue [
 		yourself
 ]
 
+{ #category : #effects }
+FiInclude >> effectAdd [
+
+	self flag: #todo. "Copy&pasted from FiAcceptKey"
+
+	^ FiAddEffect new
+		edit: self;
+		yourself
+]
+
+{ #category : #effects }
+FiInclude >> effectOn: aSet [
+
+	^ aSet effectOfInclude: self
+]
+
 { #category : #results }
 FiInclude >> resultOn: aValue [ 
 

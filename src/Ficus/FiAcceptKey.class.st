@@ -48,6 +48,7 @@ FiAcceptKey >> effectUpdate: oldValue [
 	^ FiUpdateEffect new
 		edit: self;
 		oldValue: oldValue;
+		subEffect: (edit effectOn: oldValue);
 		yourself
 ]
 

@@ -12,6 +12,14 @@ FiEqual class >> value: aValue [
 		yourself
 ]
 
+{ #category : #effects }
+FiEqual >> effectOn: aValue [ 
+
+	^ theValue = aValue
+		ifTrue: [ self effectNothing ]
+		ifFalse: [ self effectReplace: aValue ]
+]
+
 { #category : #results }
 FiEqual >> resultOn: aValue [ 
 

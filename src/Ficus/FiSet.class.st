@@ -86,6 +86,32 @@ FiSet >> differenceFrom: other [
 			ifFalse: [ self edits: internalEdits ] ]
 ]
 
+{ #category : #effects }
+FiSet >> effectOfAcceptKey: anAcceptKey [ 
+
+	self flag: #fix. "theValue" "copy&pasted from FiDictionary"
+
+	^ self 
+		shotAt: anAcceptKey key
+		ifPresent: [ :aValue | 
+			aValue = (anAcceptKey edit resultOn: aValue)
+				ifTrue: [ anAcceptKey effectNothing ]
+				ifFalse: [ anAcceptKey effectUpdate: aValue ] ] 
+		ifAbsent: [ anAcceptKey effectAdd ].
+]
+
+{ #category : #effects }
+FiSet >> effectOfInclude: anInclude [ 
+
+	^ self 
+		shotAt: anInclude theValue defaultStep
+		ifPresent: [ :aValue | 
+			aValue = anInclude theValue
+				ifTrue: [ anInclude effectNothing ]
+				ifFalse: [ anInclude effectUpdate: aValue ] ] 
+		ifAbsent: [ anInclude effectAdd ].
+]
+
 { #category : #edits }
 FiSet >> exclude: aValue [
 
@@ -125,6 +151,28 @@ FiSet >> printOn: aStream [
 	super printOn: aStream.
 	self values printElementsOn: aStream.
 
+]
+
+{ #category : #results }
+FiSet >> resultOfAcceptKey: anAcceptKey [ 
+
+	| newValue newValues |
+	newValue := self 
+		shotAt: anAcceptKey key
+		ifPresent: [ :aValue | 
+			anAcceptKey edit resultOn: aValue ]
+		ifAbsent: [ 
+			self flag: #todo. "FIX".
+			anAcceptKey edit resultOn: nil ].
+		
+	newValues := self asArray copyWith: newValue.
+
+	self 
+		indexOf: newValue defaultStep 
+		ifPresent: [ :index | newValues := newValues copyWithoutIndex: index ]
+		ifAbsent: [ ].
+		
+	^ self species withValues: newValues
 ]
 
 { #category : #results }

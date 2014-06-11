@@ -27,6 +27,15 @@ FiEdit >> effectOn: anObject [
 	^ self subclassResponsibility
 ]
 
+{ #category : #effects }
+FiEdit >> effectReplace: aValue [ 
+	
+	^ FiReplace new
+		edit: self;
+		oldValue: aValue;
+		yourself
+]
+
 { #category : #testing }
 FiEdit >> isNoEdit [
 

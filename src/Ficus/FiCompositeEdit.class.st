@@ -15,6 +15,12 @@ FiCompositeEdit class >> withAll: aCollectionOfEdits [
 		yourself
 ]
 
+{ #category : #effects }
+FiCompositeEdit >> effectOn: aValue [
+	
+	^ aValue effectOfCompositeEdit: self
+]
+
 { #category : #initialization }
 FiCompositeEdit >> initializeWithAll: aCollectionOfEdits [ 
 

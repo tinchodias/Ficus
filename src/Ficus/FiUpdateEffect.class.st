@@ -2,7 +2,8 @@ Class {
 	#name : #FiUpdateEffect,
 	#superclass : #FiEditEffect,
 	#instVars : [
-		'oldValue'
+		'oldValue',
+		'subEffect'
 	],
 	#category : #'Ficus-Model-Effects'
 }
@@ -41,4 +42,14 @@ FiUpdateEffect >> printOn: aStream [
 		nextPutAll: self oldValue printString trimmed;
 		nextPut: $).
 
+]
+
+{ #category : #accessing }
+FiUpdateEffect >> subEffect [
+	^ subEffect
+]
+
+{ #category : #accessing }
+FiUpdateEffect >> subEffect: anObject [
+	subEffect := anObject
 ]

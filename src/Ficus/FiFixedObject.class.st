@@ -50,7 +50,7 @@ FiFixedObject >> differenceFrom: other [
 { #category : #effects }
 FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 
-	^ anAcceptSlot effectUpdate: (self instVarNamed: anAcceptSlot slotName)
+	^ anAcceptSlot effectUpdate: (self shotAt: anAcceptSlot slotName)
 ]
 
 { #category : #initialization }

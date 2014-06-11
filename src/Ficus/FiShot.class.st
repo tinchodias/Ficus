@@ -41,7 +41,7 @@ FiShot >> = another [
 FiShot >> defaultStep [
 	"Answer a default value, a kind of suggestion to use it as step."
 	
-	^ self printString asSymbol
+	^ self subclassResponsibility
 ]
 
 { #category : #differencing }
@@ -60,6 +60,15 @@ FiShot >> edits: aCollectionOfEdits [
 FiShot >> effectOf: anEdit [ 
 
 	^ anEdit effectOn: self
+]
+
+{ #category : #effects }
+FiShot >> effectOfCompositeEdit: aCompositeEdit [ 
+
+	^ FiCompositeEffect new
+		edit: aCompositeEdit;
+		subEffects: (aCompositeEdit subEdits collect: [ :anEdit | anEdit effectOn: self ]);
+		yourself
 ]
 
 { #category : #enumerating }

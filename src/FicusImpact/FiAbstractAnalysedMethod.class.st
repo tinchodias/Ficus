@@ -10,17 +10,6 @@ Class {
 	#category : #FicusImpact
 }
 
-{ #category : #'instance creation' }
-FiAbstractAnalysedMethod class >> selector: aSelector sourceCode: aSourceCode dependencies: aSet [
-	
-	^ self new
-		selector: aSelector;
-		sourceCode: aSourceCode;
-		dependencies: aSet;
-		yourself
-
-]
-
 { #category : #accessing }
 FiAbstractAnalysedMethod >> defaultStep [
 	

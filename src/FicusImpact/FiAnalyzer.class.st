@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 FiAnalyzer >> analysisOf: aMethod levels: levels [
 
-	| dependencies |
+	| dependencies impact |
 
 	"stop recursion"
 	levels > 0 ifFalse: [ 
@@ -32,6 +32,11 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 							collect: [ :anImpl | self analysisOf: anImpl levels: levels-1] 
 							as: Array)) ] 
 			as: Array.
+
+	impact := 
+		(register sendersOf: aMethod selector)
+			collect: [:senderMethod | self analysisOf: senderMethod levels: levels-1 ] 
+			as: Array.
 			
 	^ FiAnalysedMethod new
 		hostName: aMethod methodClass name;
@@ -39,6 +44,7 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 		selector: aMethod selector;
 		sourceCode: aMethod sourceCode;
 		dependencies: (FiSet withValues: dependencies);
+		impact: (FiSet withValues: impact);
 		yourself
 
 ]

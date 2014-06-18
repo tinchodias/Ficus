@@ -2,21 +2,11 @@ Class {
 	#name : #FiAnalysedMethod,
 	#superclass : #FiAbstractAnalysedMethod,
 	#instVars : [
-		'dependencies'
+		'dependencies',
+		'impact'
 	],
 	#category : #FicusImpact
 }
-
-{ #category : #'instance creation' }
-FiAnalysedMethod class >> selector: aSelector sourceCode: aSourceCode dependencies: aSet [
-	
-	^ self new
-		selector: aSelector;
-		sourceCode: aSourceCode;
-		dependencies: aSet;
-		yourself
-
-]
 
 { #category : #accessing }
 FiAnalysedMethod >> dependencies [
@@ -28,4 +18,16 @@ FiAnalysedMethod >> dependencies [
 FiAnalysedMethod >> dependencies: aSet [ 
 
 	dependencies := aSet
+]
+
+{ #category : #accessing }
+FiAnalysedMethod >> impact [
+	
+	^ impact
+]
+
+{ #category : #accessing }
+FiAnalysedMethod >> impact: anObject [
+	
+	impact := anObject
 ]

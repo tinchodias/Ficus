@@ -15,13 +15,13 @@ FiInspector class >> inspect: rootShot [
 		roots: { #root -> rootShot };
 		displayBlock: [ :assoc | 
 			self panelMorphWithAll: { 
-				(assoc key, ': ') asMorph.
+				(assoc key, ' ·') asMorph.
 				(assoc value isShot 
 					ifTrue: [  self stringMorphWith: ('a ', assoc value species asString) color: Color blue muchDarker ]
 					ifFalse: [ self stringMorphWith: assoc value storeString color: Color red muchDarker ]) } ];
 		childrenBlock: [ :assoc | 
 			assoc value isShot 
-				ifTrue: [ assoc value stepsAndValues]
+				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
 				ifFalse: [ #() ] ];
 		openWithSpec
 ]

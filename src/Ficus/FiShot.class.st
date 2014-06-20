@@ -37,13 +37,6 @@ FiShot >> = another [
 
 ]
 
-{ #category : #accessing }
-FiShot >> defaultStep [
-	"Answer a default value, a kind of suggestion to use it as step."
-	
-	^ self subclassResponsibility
-]
-
 { #category : #differencing }
 FiShot >> differenceFrom: other [
 
@@ -53,7 +46,7 @@ FiShot >> differenceFrom: other [
 { #category : #edits }
 FiShot >> edits: aCollectionOfEdits [
 	
-	^ FiCompositeEdit withAll: aCollectionOfEdits
+	^ FiCompositeEdit withAll: (FiSet withValues: aCollectionOfEdits)
 ]
 
 { #category : #effects }
@@ -67,7 +60,7 @@ FiShot >> effectOfCompositeEdit: aCompositeEdit [
 
 	^ FiCompositeEffect new
 		edit: aCompositeEdit;
-		subEffects: (aCompositeEdit subEdits collect: [ :anEdit | anEdit effectOn: self ]);
+		subEffects: (FiSet withValues: (aCompositeEdit subEdits values collect: [ :anEdit | anEdit effectOn: self ]));
 		yourself
 ]
 
@@ -198,7 +191,7 @@ FiShot >> pruned [
 { #category : #results }
 FiShot >> resultOfCompositeEdit: aCompositeEdit [ 
 
-	^ aCompositeEdit subEdits 
+	^ aCompositeEdit subEdits values
 		inject: self
 		into: [ :copy :edit | copy resultOf: edit ]
 ]

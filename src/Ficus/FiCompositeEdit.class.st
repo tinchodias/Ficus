@@ -26,7 +26,7 @@ FiCompositeEdit >> initializeWithAll: aCollectionOfEdits [
 
 	self initialize.
 	
-	subEdits := aCollectionOfEdits asSet
+	subEdits := aCollectionOfEdits
 ]
 
 { #category : #printing }
@@ -40,7 +40,7 @@ FiCompositeEdit >> printOn: aStream [
 	delimitingBlock := [ aStream cr; tab ].
 	delimitingBlock value.
 
-	self subEdits 
+	self subEdits values
 		do: [ :each | aStream print: each ]
 		separatedBy: delimitingBlock.
 		

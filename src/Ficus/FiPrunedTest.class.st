@@ -21,7 +21,7 @@ FiPrunedTest >> testAlreadyTagged [
 { #category : #tests }
 FiPrunedTest >> testAlreadyTaggedCollaborator [
 
-	shot := FiSet withValues: { FiSet new tag: 42; yourself }.
+	shot := FiSet withValues: { (FiClass named: #A) tag: 42; yourself }.
 	
 "	self deny: shot pruned = shot.  ?? "
 

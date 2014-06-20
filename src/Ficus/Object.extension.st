@@ -10,7 +10,7 @@ Object >> asFicusPath [
 Object >> defaultStep [
 	"Answer a default value, a kind of suggestion to use it as step."
 	
-	^ self printString asSymbol
+	^ self asString asSymbol
 ]
 
 { #category : #'*Ficus' }

@@ -11,6 +11,14 @@ FiAddEffect >> inverse [
 		key: edit key
 ]
 
+{ #category : #enumerating }
+FiAddEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+	
+	^ aBlockClosure 
+		value: self 
+		value: aPath
+]
+
 { #category : #printing }
 FiAddEffect >> printOn: aStream [
 

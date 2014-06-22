@@ -16,6 +16,15 @@ FiUpdateEffect >> inverse [
 		edit: (FiEqual value: oldValue)
 ]
 
+{ #category : #enumerating }
+FiUpdateEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+
+	^ subEffect 
+		leafEffectsDo: aBlockClosure 
+		basePath: aPath / edit step
+
+]
+
 { #category : #accessing }
 FiUpdateEffect >> oldValue [
 

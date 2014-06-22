@@ -9,3 +9,9 @@ FiNoEffect >> inverse [
 
 	^ FiNoEdit new
 ]
+
+{ #category : #enumerating }
+FiNoEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+	
+	^ self
+]

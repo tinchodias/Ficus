@@ -26,6 +26,22 @@ FiInspector class >> inspect: rootShot [
 		openWithSpec
 ]
 
+{ #category : #inspecting }
+FiInspector class >> inspectEffect: rootEffect [
+
+	| stepsAndValues |	
+	stepsAndValues := 
+		rootEffect flattenedLeafEffects
+			inject: Dictionary new
+			into: [ :dict :each | 
+				dict 
+					at: each key asString
+					put: each value.
+				dict ].
+
+	^ self inspect: (FiDictionary newFromStepsAndValues: stepsAndValues)
+]
+
 { #category : #private }
 FiInspector class >> panelMorphWithAll: someMophs [
 

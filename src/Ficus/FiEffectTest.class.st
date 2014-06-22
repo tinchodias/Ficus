@@ -25,6 +25,56 @@ FiEffectTest >> testAddClass [
 	self assert: result values asSet equals: { shot } asSet.
 	self assert: reverted values isEmpty.
 
+	self 
+		assert: editEffect flattenedLeafEffects 
+		equals: { FiPath root -> editEffect }.
+
+]
+
+{ #category : #'tests-shot' }
+FiEffectTest >> testAddSharedPoolAndUpdateComment [
+
+	| source editSharedPools editComment edit effect leafEffectOfEditSharedPools leafEffectOfEditComment |
+	source := FiClass named: #A.
+
+	editSharedPools := 
+		source 
+			at: #sharedPools
+			edit: [ :sharedPools | sharedPools include: #X ].
+	editComment := 
+		source
+			at: #comment
+			equal: '42'.
+
+	edit := source edits: { editSharedPools. editComment }.			
+	effect := source effectOf: edit.
+
+	"These are the 'leaf effects' we expect of #flattenedEffects"
+	leafEffectOfEditSharedPools := (source effectOf: editSharedPools) subEffect.
+	leafEffectOfEditComment := (source effectOf: editComment) subEffect.
+	
+	self flag: #todo. "Smells bad that both oldValues are the old comment..."
+	self assert: (source effectOf: editComment) edit equals: editComment.
+	self assert: (source effectOf: editComment) oldValue equals: ''.
+	self assert: leafEffectOfEditComment edit equals: editComment edit.
+	self assert: leafEffectOfEditComment oldValue equals: ''.
+	
+	
+	self 
+		assert: leafEffectOfEditSharedPools flattenedLeafEffects 
+		equals: { FiPath root -> leafEffectOfEditSharedPools }.
+
+	self 
+		assert: leafEffectOfEditComment flattenedLeafEffects 
+		equals: { FiPath root -> leafEffectOfEditComment }.
+			
+	self 
+		assert: effect flattenedLeafEffects 
+		equals: { 
+			FiPath root / #sharedPools -> leafEffectOfEditSharedPools.
+			FiPath root / #comment -> leafEffectOfEditComment.
+			}.
+			
 ]
 
 { #category : #'tests-dictionary' }
@@ -48,6 +98,7 @@ FiEffectTest >> testNoEditClass [
 	self assert: result values asSet equals: { shot } asSet.
 	self assert: reverted values asSet equals: { shot } asSet.
 
+	self assert: editEffect flattenedLeafEffects isEmpty.
 ]
 
 { #category : #'tests-dictionary' }
@@ -70,6 +121,10 @@ FiEffectTest >> testRemoveClass [
 	self assert: intermediate values asSet equals: { shot } asSet.
 	self assert: result values isEmpty.
 	self assert: reverted values asSet equals: { shot } asSet.
+
+	self 
+		assert: editEffect flattenedLeafEffects 
+		equals: { FiPath root -> editEffect }.
 
 ]
 
@@ -95,6 +150,11 @@ FiEffectTest >> testUpdateClass [
 	self assert: result values asSet equals: { otherShot } asSet.
 	self assert: reverted values asSet equals: { shot } asSet.
 
+	self flag: #todo. "For coherence with other dictionary effects, we should expect: FiPath root / -> a FiUpdateEffect"
+	self 
+		assert: editEffect flattenedLeafEffects 
+		equals: { FiPath root / #A -> editEffect subEffect }.
+
 ]
 
 { #category : #'tests-shot' }
@@ -108,4 +168,9 @@ FiEffectTest >> testUpdateComment [
 	
 	self assert: effect oldValue equals: ''.
 	self assert: effect edit equals: edit.
+	
+	self 
+		assert: effect flattenedLeafEffects 
+		equals: { FiPath root / #comment -> effect subEffect }.
+
 ]

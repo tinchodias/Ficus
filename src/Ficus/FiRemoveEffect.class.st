@@ -15,6 +15,14 @@ FiRemoveEffect >> inverse [
 		edit: (FiEqual value: oldValue)
 ]
 
+{ #category : #enumerating }
+FiRemoveEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+	
+	^ aBlockClosure 
+		value: self 
+		value: aPath
+]
+
 { #category : #accessing }
 FiRemoveEffect >> oldValue [
 

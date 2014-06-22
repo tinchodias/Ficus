@@ -98,6 +98,17 @@ FiShot >> ficusDeepDo: aBlock basePath: aPath [
 		value: aPath
 ]
 
+{ #category : #'as yet unclassified' }
+FiShot >> flattened [
+	
+	^ (Array streamContents: [ :stream |
+		self 
+			ficusDeepDo: [ :value :path | stream nextPut: path -> value ]
+			basePath: FiPath root ])
+		reversed
+
+]
+
 { #category : #testing }
 FiShot >> hasTag [
 

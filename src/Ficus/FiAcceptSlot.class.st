@@ -78,3 +78,9 @@ FiAcceptSlot >> slotName: anObject [
 	
 	slotName := anObject
 ]
+
+{ #category : #accessing }
+FiAcceptSlot >> step [
+	
+	^ slotName
+]

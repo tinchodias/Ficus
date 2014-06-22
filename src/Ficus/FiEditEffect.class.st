@@ -23,7 +23,23 @@ FiEditEffect >> edit: anObject [
 ]
 
 { #category : #accessing }
+FiEditEffect >> flattenedLeafEffects [
+	
+	^ Array streamContents: [ :stream |
+		self 
+			leafEffectsDo: [ :anEffect :editPath | stream nextPut: editPath -> anEffect ]
+			basePath: FiPath root ]
+
+]
+
+{ #category : #accessing }
 FiEditEffect >> inverse [
 
 	^ self subclassResponsibility 
+]
+
+{ #category : #enumerating }
+FiEditEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+	
+	^ self subclassResponsibility
 ]

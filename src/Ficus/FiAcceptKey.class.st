@@ -73,9 +73,3 @@ FiAcceptKey >> resultOn: aValue [
 	^ aValue resultOfAcceptKey: self
 	
 ]
-
-{ #category : #accessing }
-FiAcceptKey >> step [
-	
-	^ key
-]

@@ -10,8 +10,9 @@ Class {
 { #category : #accessing }
 FiRemoveEffect >> inverse [
 
+	self flag: #todo. "Does not work when edit is a FiSet's FiExclude"
 	^ FiAcceptKey 
-		key: edit key
+		key: edit step
 		edit: (FiEqual value: oldValue)
 ]
 

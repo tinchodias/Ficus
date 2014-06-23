@@ -12,6 +12,22 @@ FiExclude class >> value: aValue [
 		yourself
 ]
 
+{ #category : #effects }
+FiExclude >> effectOn: aValue [
+
+	^ aValue effectOfExclude: self
+	
+]
+
+{ #category : #effects }
+FiExclude >> effectRemove: oldValue [
+
+	^ FiRemoveEffect new
+		edit: self;
+		oldValue: oldValue;
+		yourself
+]
+
 { #category : #results }
 FiExclude >> resultOn: aValue [ 
 

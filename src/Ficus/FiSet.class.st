@@ -73,7 +73,7 @@ FiSet >> differenceFrom: other [
 				(otherValue = value) ifFalse: [
 					internalEdits add: (other at: key edit: [ :otherValue2 | value differenceFrom: otherValue ]) ] ]
 			ifAbsent: [ 
-				internalEdits add: (other exclude: key) ] ].
+				internalEdits add: (other exclude: otherValue) ] ].
 
 	self stepsAndValuesDo: [ :key :value |
 		(other steps includes: key)
@@ -98,6 +98,15 @@ FiSet >> effectOfAcceptKey: anAcceptKey [
 				ifTrue: [ anAcceptKey effectNothing ]
 				ifFalse: [ anAcceptKey effectUpdate: aValue ] ] 
 		ifAbsent: [ anAcceptKey effectAdd ].
+]
+
+{ #category : #'as yet unclassified' }
+FiSet >> effectOfExclude: anExclude [ 
+
+	^ self 
+		shotAt: anExclude theValue defaultStep
+		ifPresent: [ :aValue | anExclude effectRemove: aValue ]
+		ifAbsent: [ anExclude effectNothing ]
 ]
 
 { #category : #effects }

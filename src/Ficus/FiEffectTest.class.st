@@ -128,6 +128,33 @@ FiEffectTest >> testRemoveClass [
 
 ]
 
+{ #category : #'tests-set' }
+FiEffectTest >> testSetRemoveClass [
+
+	| edit source result shot intermediate reverted editEffect |
+	source := FiSet new.
+	shot := FiClass named: #A.
+
+	edit := source include: shot.
+	intermediate := source resultOf: edit.
+
+	edit := intermediate exclude: shot.
+	editEffect := intermediate effectOf: edit.
+	result := intermediate resultOf: edit.
+
+	reverted := result resultOf: editEffect inverse.
+		
+	self assert: source values isEmpty.
+	self assert: intermediate values asSet equals: { shot } asSet.
+	self assert: result values isEmpty.
+	self assert: reverted values asSet equals: { shot } asSet.
+
+	self 
+		assert: editEffect flattenedLeafEffects 
+		equals: { FiPath root -> editEffect }.
+
+]
+
 { #category : #'tests-dictionary' }
 FiEffectTest >> testUpdateClass [
 

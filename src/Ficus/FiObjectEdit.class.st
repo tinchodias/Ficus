@@ -26,6 +26,12 @@ FiObjectEdit >> printOn: aStream [
 ]
 
 { #category : #accessing }
+FiObjectEdit >> step [
+
+	^ theValue defaultStep
+]
+
+{ #category : #accessing }
 FiObjectEdit >> theValue [
 	
 	^ theValue

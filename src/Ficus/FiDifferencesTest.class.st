@@ -178,6 +178,26 @@ FiDifferencesTest >> testSetAddSharedPool [
 ]
 
 { #category : #'tests-set' }
+FiDifferencesTest >> testSetRemoveClass [
+
+	| edit editEffect preSource source result shot |
+	preSource := FiSet new.
+	shot := FiClass named: #A.
+
+	edit := preSource include: shot.
+	source := preSource resultOf: edit.
+
+	edit := source exclude: shot.
+	editEffect := source effectOf: edit.
+	result := source resultOf: edit.
+	
+	self assert: (source differenceFrom: source) isNoEdit.
+	self assert: (result differenceFrom: result) isNoEdit.
+	self assert: (result differenceFrom: source) equals: edit.
+	self assert: (source differenceFrom: result) equals: (result include: shot).
+]
+
+{ #category : #'tests-set' }
 FiDifferencesTest >> testSetUpdateClass [
 
 	| shot otherShot edit preSource result source expectedDifference |

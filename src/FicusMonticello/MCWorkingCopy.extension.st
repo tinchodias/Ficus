@@ -14,3 +14,9 @@ MCWorkingCopy >> ficusDifferenceRelativeToRepository: aRepository [
 
 
 ]
+
+{ #category : #'*FicusMonticello' }
+MCWorkingCopy >> ficusPackage [
+
+	^ FiMonticelloMarshaler new marshaled: self completeSnapshot
+]

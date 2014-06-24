@@ -18,6 +18,15 @@ FiPointerLayout >> initialize [
 	slotNames := FiSet new
 ]
 
+{ #category : #printing }
+FiPointerLayout >> printOn: aStream [
+
+	super printOn: aStream.
+
+	slotNames values printElementsOn: aStream.
+	
+]
+
 { #category : #accessing }
 FiPointerLayout >> slotNames [
 	

@@ -65,3 +65,14 @@ FiExtensionMethods >> methods: anObject [
 	
 	methods := anObject
 ]
+
+{ #category : #printing }
+FiExtensionMethods >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream nextPut: $(.
+	self defaultStep printOn: aStream.
+	aStream nextPut: $).
+	
+]

@@ -23,6 +23,17 @@ FiPackage >> contents: anObject [
 	contents := anObject
 ]
 
+{ #category : #printing }
+FiPackage >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream nextPut: $(.
+	theName printOn: aStream.
+	aStream nextPut: $).
+	
+]
+
 { #category : #accessing }
 FiPackage >> theName [
 	

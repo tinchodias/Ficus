@@ -28,6 +28,17 @@ FiMethod >> defaultStep [
 	^ selector asSymbol
 ]
 
+{ #category : #printing }
+FiMethod >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream nextPut: $(.
+	selector printOn: aStream.
+	aStream nextPut: $).
+	
+]
+
 { #category : #accessing }
 FiMethod >> protocol [
 	

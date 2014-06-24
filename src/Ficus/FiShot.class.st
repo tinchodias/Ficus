@@ -98,7 +98,7 @@ FiShot >> ficusDeepDo: aBlock basePath: aPath [
 		value: aPath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #converting }
 FiShot >> flattened [
 	
 	^ (Array streamContents: [ :stream |

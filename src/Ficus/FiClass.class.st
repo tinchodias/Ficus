@@ -115,7 +115,7 @@ FiClass >> printOn: aStream [
 	super printOn: aStream.
 
 	aStream nextPut: $(.
-	self theName printOn: aStream.
+	theName printOn: aStream.
 	aStream nextPut: $).
 	
 ]

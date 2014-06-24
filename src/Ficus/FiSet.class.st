@@ -100,7 +100,7 @@ FiSet >> effectOfAcceptKey: anAcceptKey [
 		ifAbsent: [ anAcceptKey effectAdd ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #effects }
 FiSet >> effectOfExclude: anExclude [ 
 
 	^ self 
@@ -152,6 +152,12 @@ FiSet >> initializeWithSet: aSet [
 	aSet do: [ :each | 
 		self at: index put: each. 
 		index := index + 1 ]
+]
+
+{ #category : #testing }
+FiSet >> isEmpty [
+	
+	^ self stepCount = 0
 ]
 
 { #category : #printing }
@@ -226,6 +232,15 @@ FiSet >> stepsAndValuesDo: aBlockClosure [
 		aBlockClosure 
 			value: each defaultStep 
 			value: each ]
+]
+
+{ #category : #ston }
+FiSet >> stonOn: stonWriter [
+	"Taken from Collection"
+
+	stonWriter writeObject: self do: [
+		stonWriter encodeList: self values ]
+
 ]
 
 { #category : #enumerating }

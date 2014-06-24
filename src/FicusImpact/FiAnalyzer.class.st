@@ -2,12 +2,13 @@ Class {
 	#name : #FiAnalyzer,
 	#superclass : #Object,
 	#instVars : [
-		'register'
+		'register',
+		'sourceArray'
 	],
 	#category : #FicusImpact
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #analysis }
 FiAnalyzer >> analysisOf: aMethod levels: levels [
 
 	| dependencies impact |
@@ -18,7 +19,7 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 			hostName: aMethod methodClass name;
 			isMeta: aMethod methodClass isMeta;
 			selector: aMethod selector;
-			sourceCode: aMethod sourceCode;
+			sourceCode: (self sourceCodeFor: aMethod);
 			yourself ].
 	
 	"continue recursion"
@@ -28,13 +29,13 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 				FiPossibleMethodInvocation
 					sending: selector "///(FiMessageSend of: selector)"
 					toAnyOf: 
-						(FiSet withValues: ((register implementorsOf: selector) 
+						(FiSet withValues: ((self register implementorsOf: selector) 
 							collect: [ :anImpl | self analysisOf: anImpl levels: levels-1] 
 							as: Array)) ] 
 			as: Array.
 
 	impact := 
-		(register sendersOf: aMethod selector)
+		(self register sendersOf: aMethod selector)
 			collect: [:senderMethod | self analysisOf: senderMethod levels: levels-1 ] 
 			as: Array.
 			
@@ -42,18 +43,43 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 		hostName: aMethod methodClass name;
 		isMeta: aMethod methodClass isMeta;
 		selector: aMethod selector;
-		sourceCode: aMethod sourceCode;
+		sourceCode: (self sourceCodeFor: aMethod);
 		dependencies: (FiSet withValues: dependencies);
 		impact: (FiSet withValues: impact);
 		yourself
 
 ]
 
-{ #category : #initialization }
-FiAnalyzer >> initialize [
+{ #category : #accessing }
+FiAnalyzer >> register [
 
-	super initialize.
+	^ register ifNil: [ register := SIRegister new fill; yourself ]
+]
+
+{ #category : #accessing }
+FiAnalyzer >> register: anObject [
+
+	register := anObject
+]
+
+{ #category : #accessing }
+FiAnalyzer >> sourceArray [
+
+	^ sourceArray ifNil: [ sourceArray := SourceFiles readOnlyCopy ]
+]
+
+{ #category : #accessing }
+FiAnalyzer >> sourceArray: anObject [
+
+	sourceArray := anObject
+]
+
+{ #category : #analysis }
+FiAnalyzer >> sourceCodeFor: aMethod [
+
+	"regular way?"
+	aMethod hasSourcePointer ifFalse: [ ^ aMethod sourceCode ].
 	
-	register := SIRegister new fill; yourself.
-
+	"=> optimize"
+	^ self sourceArray sourceCodeAt: aMethod sourcePointer.
 ]

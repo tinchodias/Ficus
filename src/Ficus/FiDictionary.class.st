@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 FiDictionary class >> new [
 
-	^ self newFromStepsAndValues: Dictionary new
+	^ self builder new
 ]
 
 { #category : #edits }

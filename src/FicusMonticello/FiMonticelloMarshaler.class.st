@@ -12,9 +12,8 @@ FiMonticelloMarshaler >> marshaled: aMCSnapshot name: packageName [
 	
 	aMCSnapshot definitions do: [ :each | each accept: visitor ].
 	
-	^ FiPackage newFromStepsAndValues: 
-		(Dictionary new
-			at: #theName put: packageName asSymbol;
-			at: #contents put: visitor ficusPackageContents;
-			yourself)	
+	^ FiPackage builder
+		theName: packageName asSymbol;
+		contents: visitor ficusPackageContents;
+		new
 ]

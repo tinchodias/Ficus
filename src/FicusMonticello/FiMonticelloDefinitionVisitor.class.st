@@ -15,19 +15,18 @@ Class {
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusClassFor: aMCClassDefinition [ 
 
-	^ FiClass newFromStepsAndValues: 
-		(Dictionary new
-			at: #theName put: aMCClassDefinition className;
-			at: #metaclass put: (self ficusMetaclassFor: aMCClassDefinition);
-			at: #superclass put: aMCClassDefinition superclassName;
-			at: #layout put: (self ficusLayoutFor: aMCClassDefinition);
-			at: #methods put: (self ficusMethodsFor: aMCClassDefinition);
-			at: #traitComposition put: aMCClassDefinition traitCompositionString;
-			at: #category put: aMCClassDefinition category;
-			at: #classPool put: (self ficusClassPoolFor: aMCClassDefinition);
-			at: #sharedPools put: (self ficusSharedPoolsFor: aMCClassDefinition);
-			at: #comment put: aMCClassDefinition comment;
-			yourself)
+	^ FiClass builder
+		theName: aMCClassDefinition className;
+		metaclass: (self ficusMetaclassFor: aMCClassDefinition);
+		superclass: aMCClassDefinition superclassName;
+		layout: (self ficusLayoutFor: aMCClassDefinition);
+		methods: (self ficusMethodsFor: aMCClassDefinition);
+		traitComposition: aMCClassDefinition traitCompositionString;
+		category: aMCClassDefinition category;
+		classPool: (self ficusClassPoolFor: aMCClassDefinition);
+		sharedPools: (self ficusSharedPoolsFor: aMCClassDefinition);
+		comment: aMCClassDefinition comment;
+		new
 ]
 
 { #category : #private }
@@ -39,41 +38,38 @@ FiMonticelloDefinitionVisitor >> ficusClassPoolFor: aMCClassDefinition [
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions isMetaSide: aBoolean [
 	
-	^ FiExtensionMethods newFromStepsAndValues: 
-		(Dictionary new
-			at: #hostName put: hostName;
-			at: #methods put: (self ficusMethodsForAll: someMCMethodDefinitions);
-			at: #isMetaSide put: aBoolean;
-			yourself)
+	^ FiExtensionMethods builder
+		hostName: hostName;
+		methods: (self ficusMethodsForAll: someMCMethodDefinitions);
+		isMetaSide: aBoolean;
+		new
 ]
 
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusLayoutFor: aMCClassDefinition [
 			
-	^ FiFixedLayout newFromStepsAndValues: 
-		(Dictionary new
-			at: #slotNames put: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
-			yourself)
+	^ FiFixedLayout builder 
+		slotNames: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
+		new
 ]
 
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusMetaclassFor: aMCClassDefinition [ 
 
-	^ FiMetaclass newFromStepsAndValues: 
-		(Dictionary new
-			at: #methods put: (self ficusMetaclassMethodsFor: aMCClassDefinition);
-			at: #layout put: (self ficusMetaclassLayoutFor: aMCClassDefinition);
-			at: #traitComposition put: aMCClassDefinition classTraitCompositionString;
-			yourself)
+	^ FiMetaclass builder 
+		methods: (self ficusMetaclassMethodsFor: aMCClassDefinition);
+		layout: (self ficusMetaclassLayoutFor: aMCClassDefinition);
+		traitComposition: aMCClassDefinition classTraitCompositionString;
+		new
 ]
 
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
 			
-	^ FiFixedLayout newFromStepsAndValues: 
-		(Dictionary new
-			at: #slotNames put: (self ficusSymbolSetFor: aMCClassDefinition classInstVarNames);
-			yourself)
+	^ FiFixedLayout builder 
+		slotNames: (self ficusSymbolSetFor: aMCClassDefinition classInstVarNames);
+		new
+		
 ]
 
 { #category : #private }
@@ -89,12 +85,11 @@ FiMonticelloDefinitionVisitor >> ficusMetaclassMethodsFor: aMCClassDefinition [
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusMethodFor: aMCMethodDefinition [ 
 	
-	^ FiMethod newFromStepsAndValues: 
-		(Dictionary new
-			at: #selector put: aMCMethodDefinition selector;
-			at: #protocol put: aMCMethodDefinition category;
-			at: #sourceCode put: aMCMethodDefinition source;
-			yourself)
+	^ FiMethod builder 
+		selector: aMCMethodDefinition selector;
+		protocol: aMCMethodDefinition category;
+		sourceCode: aMCMethodDefinition source;
+		new
 ]
 
 { #category : #private }
@@ -151,14 +146,13 @@ FiMonticelloDefinitionVisitor >> ficusSymbolSetFor: aCollection [
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusTraitFor: aMCTraitDefinition [ 
 
-	^ FiTrait newFromStepsAndValues: 
-		(Dictionary new
-			at: #theName put: aMCTraitDefinition className;
-			at: #methods put: (self ficusMethodsFor: aMCTraitDefinition);
-			at: #traitComposition put: aMCTraitDefinition traitCompositionString;
-			at: #category put: aMCTraitDefinition category;
-			at: #comment put: aMCTraitDefinition comment;
-			yourself)
+	^ FiTrait builder
+		theName: aMCTraitDefinition className;
+		methods: (self ficusMethodsFor: aMCTraitDefinition);
+		traitComposition: aMCTraitDefinition traitCompositionString;
+		category: aMCTraitDefinition category;
+		comment: aMCTraitDefinition comment;
+		new
 ]
 
 { #category : #initialization }

@@ -30,12 +30,6 @@ FiRemoveEffect >> oldValue [
 	^ oldValue
 ]
 
-{ #category : #accessing }
-FiRemoveEffect >> oldValue: aValue [
-
-	oldValue := aValue
-]
-
 { #category : #printing }
 FiRemoveEffect >> printOn: aStream [
 

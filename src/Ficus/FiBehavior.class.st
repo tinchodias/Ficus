@@ -33,19 +33,7 @@ FiBehavior >> layout [
 ]
 
 { #category : #accessing }
-FiBehavior >> layout: anObject [
-	
-	layout := anObject
-]
-
-{ #category : #accessing }
 FiBehavior >> methods [
 	
 	^ methods
-]
-
-{ #category : #accessing }
-FiBehavior >> methods: anObject [
-	
-	methods := anObject
 ]

@@ -36,9 +36,3 @@ FiObjectEdit >> theValue [
 	
 	^ theValue
 ]
-
-{ #category : #accessing }
-FiObjectEdit >> theValue: anObject [
-	
-	theValue := anObject
-]

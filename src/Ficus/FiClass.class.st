@@ -19,10 +19,10 @@ Class {
 
 { #category : #'instance creation' }
 FiClass class >> named: aString [ 
-	^ self new
+
+	^ self builder
 		theName: aString;
-		yourself
-		
+		new
 ]
 
 { #category : #accessing }
@@ -32,33 +32,15 @@ FiClass >> category [
 ]
 
 { #category : #accessing }
-FiClass >> category: anObject [
-
-	category := anObject
-]
-
-{ #category : #accessing }
 FiClass >> classPool [
 	
 	^ classPool
 ]
 
 { #category : #accessing }
-FiClass >> classPool: anObject [
-	
-	classPool := anObject
-]
-
-{ #category : #accessing }
 FiClass >> comment [
 
 	^ comment
-]
-
-{ #category : #accessing }
-FiClass >> comment: anObject [
-
-	comment := anObject
 ]
 
 { #category : #accessing }
@@ -104,11 +86,6 @@ FiClass >> metaclass [
 	^ metaclass
 ]
 
-{ #category : #accessing }
-FiClass >> metaclass: anObject [
-	metaclass := anObject
-]
-
 { #category : #printing }
 FiClass >> printOn: aStream [
 
@@ -127,21 +104,9 @@ FiClass >> sharedPools [
 ]
 
 { #category : #accessing }
-FiClass >> sharedPools: anObject [
-	
-	sharedPools := anObject
-]
-
-{ #category : #accessing }
 FiClass >> superclass [
 	
 	^ superclass
-]
-
-{ #category : #accessing }
-FiClass >> superclass: anObject [
-	
-	superclass := anObject
 ]
 
 { #category : #accessing }
@@ -151,19 +116,7 @@ FiClass >> theName [
 ]
 
 { #category : #accessing }
-FiClass >> theName: anObject [
-	
-	theName := anObject
-]
-
-{ #category : #accessing }
 FiClass >> traitComposition [
 	
 	^ traitComposition
-]
-
-{ #category : #accessing }
-FiClass >> traitComposition: anObject [
-	
-	traitComposition := anObject
 ]

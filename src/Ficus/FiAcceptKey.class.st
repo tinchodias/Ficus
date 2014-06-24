@@ -10,10 +10,10 @@ Class {
 { #category : #'instance creation' }
 FiAcceptKey class >> key: aKey edit: anEdit [
 	
-	^ self new
+	^ self builder
 		key: aKey;
 		edit: anEdit;
-		yourself
+		new
 ]
 
 { #category : #accessing }
@@ -22,18 +22,12 @@ FiAcceptKey >> edit [
 	^ edit
 ]
 
-{ #category : #accessing }
-FiAcceptKey >> edit: anEdit [
-	
-	edit := anEdit
-]
-
 { #category : #effects }
 FiAcceptKey >> effectAdd [
 
-	^ FiAddEffect new
+	^ FiAddEffect builder
 		edit: self;
-		yourself
+		new
 ]
 
 { #category : #effects }
@@ -45,11 +39,11 @@ FiAcceptKey >> effectOn: aValue [
 { #category : #effects }
 FiAcceptKey >> effectUpdate: oldValue [
 
-	^ FiUpdateEffect new
+	^ FiUpdateEffect builder
 		edit: self;
 		oldValue: oldValue;
 		subEffect: (edit effectOn: oldValue);
-		yourself
+		new
 ]
 
 { #category : #printing }

@@ -20,9 +20,3 @@ FiReplace >> oldValue [
 
 	^ oldValue
 ]
-
-{ #category : #accessing }
-FiReplace >> oldValue: aValue [
-
-	oldValue := aValue
-]

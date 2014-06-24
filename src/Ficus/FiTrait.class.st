@@ -29,21 +29,9 @@ FiTrait >> category [
 ]
 
 { #category : #accessing }
-FiTrait >> category: anObject [
-
-	category := anObject
-]
-
-{ #category : #accessing }
 FiTrait >> comment [
 
 	^ comment
-]
-
-{ #category : #accessing }
-FiTrait >> comment: anObject [
-
-	comment := anObject
 ]
 
 { #category : #accessing }
@@ -82,12 +70,6 @@ FiTrait >> methods [
 	^ methods
 ]
 
-{ #category : #accessing }
-FiTrait >> methods: anObject [
-	
-	methods := anObject
-]
-
 { #category : #printing }
 FiTrait >> printOn: aStream [
 
@@ -106,19 +88,7 @@ FiTrait >> theName [
 ]
 
 { #category : #accessing }
-FiTrait >> theName: anObject [
-	
-	theName := anObject
-]
-
-{ #category : #accessing }
 FiTrait >> traitComposition [
 	
 	^ traitComposition
-]
-
-{ #category : #accessing }
-FiTrait >> traitComposition: anObject [
-	
-	traitComposition := anObject
 ]

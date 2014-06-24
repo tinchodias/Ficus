@@ -31,12 +31,6 @@ FiUpdateEffect >> oldValue [
 	^ oldValue
 ]
 
-{ #category : #accessing }
-FiUpdateEffect >> oldValue: anObject [
-
-	oldValue := anObject
-]
-
 { #category : #printing }
 FiUpdateEffect >> printOn: aStream [
 
@@ -56,9 +50,4 @@ FiUpdateEffect >> printOn: aStream [
 { #category : #accessing }
 FiUpdateEffect >> subEffect [
 	^ subEffect
-]
-
-{ #category : #accessing }
-FiUpdateEffect >> subEffect: anObject [
-	subEffect := anObject
 ]

@@ -7,9 +7,9 @@ Class {
 { #category : #'instance creation' }
 FiInclude class >> value: aValue [
 	
-	^ self new
+	^ self builder
 		theValue: aValue;
-		yourself
+		new
 ]
 
 { #category : #effects }
@@ -17,9 +17,9 @@ FiInclude >> effectAdd [
 
 	self flag: #todo. "Copy&pasted from FiAcceptKey"
 
-	^ FiAddEffect new
+	^ FiAddEffect builder
 		edit: self;
-		yourself
+		new
 ]
 
 { #category : #effects }

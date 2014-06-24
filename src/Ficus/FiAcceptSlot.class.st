@@ -11,22 +11,16 @@ Class {
 { #category : #'instance creation' }
 FiAcceptSlot class >> slotName: aSlotName edit: aEdit [
 	
-	^ self new
+	^ self builder
 		slotName: aSlotName;
 		edit: aEdit;
-		yourself
+		new
 ]
 
 { #category : #accessing }
 FiAcceptSlot >> edit [
 
 	^ edit
-]
-
-{ #category : #accessing }
-FiAcceptSlot >> edit: anObject [
-
-	edit := anObject
 ]
 
 { #category : #effects }
@@ -38,11 +32,11 @@ FiAcceptSlot >> effectOn: aValue [
 { #category : #effects }
 FiAcceptSlot >> effectUpdate: oldValue [
 
-	^ FiUpdateEffect new
+	^ FiUpdateEffect builder
 		edit: self;
 		oldValue: oldValue;
 		subEffect: (edit effectOn: oldValue);
-		yourself
+		new
 ]
 
 { #category : #printing }
@@ -71,12 +65,6 @@ FiAcceptSlot >> resultOn: aValue [
 FiAcceptSlot >> slotName [
 	
 	^ slotName
-]
-
-{ #category : #accessing }
-FiAcceptSlot >> slotName: anObject [
-	
-	slotName := anObject
 ]
 
 { #category : #accessing }

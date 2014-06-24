@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : #'instance creation' }
+FiShot class >> builder [
+	
+	^ FiShotBuilder forClass: self
+]
+
+{ #category : #'instance creation' }
 FiShot class >> newFromStepsAndValues: aCollection [ 
 	
 	^ self basicNew
@@ -58,10 +64,10 @@ FiShot >> effectOf: anEdit [
 { #category : #effects }
 FiShot >> effectOfCompositeEdit: aCompositeEdit [ 
 
-	^ FiCompositeEffect new
+	^ FiCompositeEffect builder
 		edit: aCompositeEdit;
 		subEffects: (FiSet withValues: (aCompositeEdit subEdits values collect: [ :anEdit | anEdit effectOn: self ]));
-		yourself
+		new
 ]
 
 { #category : #enumerating }
@@ -153,13 +159,6 @@ FiShot >> isPruned [
 FiShot >> isShot [
 	
 	^ true
-]
-
-{ #category : #copying }
-FiShot >> postCopy [
-	"In the current state of this prototype, copy is used for performing a modification, so it's a common need to clean the tag."
-
-	tag := nil
 ]
 
 { #category : #printing }
@@ -265,7 +264,7 @@ FiShot >> tag [
 ]
 
 { #category : #accessing }
-FiShot >> tag: anObject [ 
+FiShot >> tag: anObject [
 
 	tag := anObject
 ]

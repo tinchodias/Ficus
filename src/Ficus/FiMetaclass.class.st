@@ -37,9 +37,3 @@ FiMetaclass >> traitComposition [
 	
 	^ traitComposition
 ]
-
-{ #category : #accessing }
-FiMetaclass >> traitComposition: anObject [
-	
-	traitComposition := anObject
-]

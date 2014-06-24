@@ -17,12 +17,6 @@ FiPackage >> contents [
 	^ contents
 ]
 
-{ #category : #accessing }
-FiPackage >> contents: anObject [
-	
-	contents := anObject
-]
-
 { #category : #printing }
 FiPackage >> printOn: aStream [
 
@@ -38,10 +32,4 @@ FiPackage >> printOn: aStream [
 FiPackage >> theName [
 	
 	^ theName
-]
-
-{ #category : #accessing }
-FiPackage >> theName: anObject [
-	
-	theName := anObject
 ]

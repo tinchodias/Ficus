@@ -26,12 +26,6 @@ FiExtensionMethods >> hostName [
 	^ hostName
 ]
 
-{ #category : #accessing }
-FiExtensionMethods >> hostName: anObject [
-	
-	hostName := anObject
-]
-
 { #category : #testing }
 FiExtensionMethods >> isFicusClass [
 
@@ -50,20 +44,9 @@ FiExtensionMethods >> isMetaSide [
 ]
 
 { #category : #accessing }
-FiExtensionMethods >> isMetaSide: anObject [
-	isMetaSide := anObject
-]
-
-{ #category : #accessing }
 FiExtensionMethods >> methods [
 	
 	^ methods
-]
-
-{ #category : #accessing }
-FiExtensionMethods >> methods: anObject [
-	
-	methods := anObject
 ]
 
 { #category : #printing }

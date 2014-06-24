@@ -16,9 +16,9 @@ FiEdit >> affects: aPath [
 { #category : #effects }
 FiEdit >> effectNothing [
 
-	^ FiNoEffect new
+	^ FiNoEffect builder
 		edit: self;
-		yourself
+		new
 ]
 
 { #category : #effects }
@@ -30,10 +30,10 @@ FiEdit >> effectOn: anObject [
 { #category : #effects }
 FiEdit >> effectReplace: aValue [ 
 	
-	^ FiReplace new
+	^ FiReplace builder
 		edit: self;
 		oldValue: aValue;
-		yourself
+		new
 ]
 
 { #category : #testing }

@@ -32,9 +32,3 @@ FiPointerLayout >> slotNames [
 	
 	^ slotNames
 ]
-
-{ #category : #accessing }
-FiPointerLayout >> slotNames: anObject [
-	
-	slotNames := anObject
-]

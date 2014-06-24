@@ -21,9 +21,3 @@ FiCompositeEffect >> subEffects [
 	
 	^ subEffects
 ]
-
-{ #category : #accessing }
-FiCompositeEffect >> subEffects: aCollection [ 
-	
-	subEffects := aCollection
-]

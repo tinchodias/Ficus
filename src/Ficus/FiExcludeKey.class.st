@@ -7,9 +7,9 @@ Class {
 { #category : #'instance creation' }
 FiExcludeKey class >> key: aKey [
 	
-	^ self new
+	^ self builder
 		key: aKey;
-		yourself
+		new
 ]
 
 { #category : #effects }
@@ -22,10 +22,10 @@ FiExcludeKey >> effectOn: aValue [
 { #category : #effects }
 FiExcludeKey >> effectRemove: oldValue [
 
-	^ FiRemoveEffect new
+	^ FiRemoveEffect builder
 		edit: self;
 		oldValue: oldValue;
-		yourself
+		new
 ]
 
 { #category : #printing }

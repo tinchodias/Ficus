@@ -7,9 +7,9 @@ Class {
 { #category : #'instance creation' }
 FiEqual class >> value: aValue [
 	
-	^ self new
+	^ self builder
 		theValue: aValue;
-		yourself
+		new
 ]
 
 { #category : #effects }

@@ -17,12 +17,6 @@ FiEditEffect >> edit [
 ]
 
 { #category : #accessing }
-FiEditEffect >> edit: anObject [
-
-	edit := anObject
-]
-
-{ #category : #accessing }
 FiEditEffect >> flattenedLeafEffects [
 	
 	^ Array streamContents: [ :stream |

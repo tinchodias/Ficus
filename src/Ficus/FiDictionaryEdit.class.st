@@ -22,12 +22,6 @@ FiDictionaryEdit >> key [
 ]
 
 { #category : #accessing }
-FiDictionaryEdit >> key: anObject [
-
-	key := anObject
-]
-
-{ #category : #accessing }
 FiDictionaryEdit >> step [
 	
 	^ key

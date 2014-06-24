@@ -23,13 +23,13 @@ FiMonticelloRoundTripTest >> assertRoundTripEquals: someMCDefinitions [
 { #category : #running }
 FiMonticelloRoundTripTest >> expectedFailures [
 
-	^ #(test04Organization)
+	^ #(test04Organization test08ClassTrait)
 ]
 
 { #category : #running }
 FiMonticelloRoundTripTest >> marshaled: aMCSnapshot [
 	
-	^ marshaler marshaled: aMCSnapshot
+	^ marshaler marshaled: aMCSnapshot name: 'TestingName'
 ]
 
 { #category : #running }
@@ -42,6 +42,15 @@ FiMonticelloRoundTripTest >> mockClassExtensionMethod [
 		category: self mockExtensionMethodCategory 
 		timeStamp: ''
 		source: 'fotryTwo ^42'
+]
+
+{ #category : #running }
+FiMonticelloRoundTripTest >> mockClassTrait [
+
+	^ MCClassTraitDefinition
+		baseTraitName: 'MCMockTrait'
+		classTraitComposition: 'Trait1+ Trait2'
+		category: self mockCategoryName
 ]
 
 { #category : #running }
@@ -172,6 +181,14 @@ FiMonticelloRoundTripTest >> test07ClassExtensionMethod [
 
 	self assertRoundTripEquals: { 
 		self mockClassExtensionMethod }
+]
+
+{ #category : #tests }
+FiMonticelloRoundTripTest >> test08ClassTrait [
+
+	self assertRoundTripEquals: { 
+		self mockClassTrait.
+		"todo: also put a method" }
 ]
 
 { #category : #running }

@@ -119,6 +119,8 @@ FiMonticelloUnmarshaler >> monticelloTraitDefinitionFrom: aFiTrait [
 { #category : #private }
 FiMonticelloUnmarshaler >> monticelloTraitDefinitionsFrom: aFiTrait [
 
+	self flag: #todo. "fix!"
+	
 	^ Array streamContents: [ :stream | 
 		stream 
 			nextPut: (self monticelloTraitDefinitionFrom: aFiTrait);
@@ -129,6 +131,7 @@ FiMonticelloUnmarshaler >> monticelloTraitDefinitionsFrom: aFiTrait [
 { #category : #private }
 FiMonticelloUnmarshaler >> typeOfClassFrom: aFiClass [ 
 	
+	self flag: #todo. "fix!"
 	^ #normal
 ]
 

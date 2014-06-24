@@ -5,12 +5,16 @@ Class {
 }
 
 { #category : #marshaling }
-FiMonticelloMarshaler >> marshaled: aMCSnapshot [
+FiMonticelloMarshaler >> marshaled: aMCSnapshot name: packageName [
 	
-	| run |
-	run := FiMarshalingVisitor new.
+	| visitor |
+	visitor := FiMonticelloDefinitionVisitor new.
 	
-	aMCSnapshot definitions do: [ :each | each accept: run ].
+	aMCSnapshot definitions do: [ :each | each accept: visitor ].
 	
-	^ run result
+	^ FiPackage newFromStepsAndValues: 
+		(Dictionary new
+			at: #theName put: packageName asSymbol;
+			at: #contents put: visitor ficusPackageContents;
+			yourself)	
 ]

@@ -51,7 +51,9 @@ FiRepositoryMigrator >> doMigrate: aVersionNode branch: aBranchPath [
 { #category : #private }
 FiRepositoryMigrator >> ficusModelFor: aVersionNode [
 		
-	^ FiMonticelloMarshaler new marshaled: (self snapshotFor: aVersionNode)
+	^ FiMonticelloMarshaler new 
+		marshaled: (self snapshotFor: aVersionNode)
+		name: packageName
 
 ]
 

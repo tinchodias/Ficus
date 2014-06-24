@@ -7,16 +7,23 @@ MCWorkingCopy >> ficusDifferenceRelativeToRepository: aRepository [
 	snapshotA := self closestAncestorSnapshotIn: aRepository.
 	snapshotB := self completeSnapshot.
 
-	shotA := FiMonticelloMarshaler new marshaled: snapshotA.	
-	shotB := FiMonticelloMarshaler new marshaled: snapshotB.	
+	shotA := self ficusPackageWith: snapshotA.	
+	shotB := self ficusPackageWith: snapshotB.	
 
 	^ (shotB differenceFrom: shotA) effectOn: shotA.
-
 
 ]
 
 { #category : #'*FicusMonticello' }
 MCWorkingCopy >> ficusPackage [
 
-	^ FiMonticelloMarshaler new marshaled: self completeSnapshot
+	^ self ficusPackageWith: self completeSnapshot
+]
+
+{ #category : #'*FicusMonticello' }
+MCWorkingCopy >> ficusPackageWith: aMCSnapshot [
+
+	^ FiMonticelloMarshaler new 
+		marshaled: aMCSnapshot
+		name: self packageName
 ]

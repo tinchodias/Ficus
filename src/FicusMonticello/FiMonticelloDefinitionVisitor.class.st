@@ -1,5 +1,5 @@
 Class {
-	#name : #FiMarshalingVisitor,
+	#name : #FiMonticelloDefinitionVisitor,
 	#superclass : #Object,
 	#instVars : [
 		'monticelloClasses',
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #private }
-FiMarshalingVisitor >> ficusClassFor: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusClassFor: aMCClassDefinition [ 
 
 	^ FiClass newFromStepsAndValues: 
 		(Dictionary new
@@ -31,13 +31,13 @@ FiMarshalingVisitor >> ficusClassFor: aMCClassDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusClassPoolFor: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusClassPoolFor: aMCClassDefinition [ 
 
 	^ self ficusSymbolSetFor: aMCClassDefinition classVarNames 
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions isMetaSide: aBoolean [
+FiMonticelloDefinitionVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions isMetaSide: aBoolean [
 	
 	^ FiExtensionMethods newFromStepsAndValues: 
 		(Dictionary new
@@ -48,7 +48,7 @@ FiMarshalingVisitor >> ficusExtensionMethodsForHostName: hostName methods: someM
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusLayoutFor: aMCClassDefinition [
+FiMonticelloDefinitionVisitor >> ficusLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout newFromStepsAndValues: 
 		(Dictionary new
@@ -57,7 +57,7 @@ FiMarshalingVisitor >> ficusLayoutFor: aMCClassDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusMetaclassFor: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusMetaclassFor: aMCClassDefinition [ 
 
 	^ FiMetaclass newFromStepsAndValues: 
 		(Dictionary new
@@ -68,7 +68,7 @@ FiMarshalingVisitor >> ficusMetaclassFor: aMCClassDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
+FiMonticelloDefinitionVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout newFromStepsAndValues: 
 		(Dictionary new
@@ -77,7 +77,7 @@ FiMarshalingVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusMetaclassMethodsFor: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusMetaclassMethodsFor: aMCClassDefinition [ 
 	
 	^ self ficusMethodsForAll: 
 		(monticelloMetaclassMethodsByHostName 
@@ -87,7 +87,7 @@ FiMarshalingVisitor >> ficusMetaclassMethodsFor: aMCClassDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusMethodFor: aMCMethodDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusMethodFor: aMCMethodDefinition [ 
 	
 	^ FiMethod newFromStepsAndValues: 
 		(Dictionary new
@@ -98,7 +98,7 @@ FiMarshalingVisitor >> ficusMethodFor: aMCMethodDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusMethodsFor: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusMethodsFor: aMCClassDefinition [ 
 	
 	^ self ficusMethodsForAll: 
 		(monticelloMethodsByHostName 
@@ -108,7 +108,7 @@ FiMarshalingVisitor >> ficusMethodsFor: aMCClassDefinition [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusMethodsForAll: monticelloMethods [
+FiMonticelloDefinitionVisitor >> ficusMethodsForAll: monticelloMethods [
 	
 	^ FiSet withValues: 
 		(monticelloMethods collect: [ :aMCMethodDefinition | 
@@ -116,17 +116,7 @@ FiMarshalingVisitor >> ficusMethodsForAll: monticelloMethods [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusPackage [
-
-	^ FiPackage newFromStepsAndValues: 
-		(Dictionary new
-			at: #theName put: 'ThisShouldBeThePackageName';
-			at: #contents put: self ficusPackageContents;
-			yourself)
-]
-
-{ #category : #private }
-FiMarshalingVisitor >> ficusPackageContents [
+FiMonticelloDefinitionVisitor >> ficusPackageContents [
 	
 	| children |
 	children := OrderedCollection new.
@@ -147,19 +137,19 @@ FiMarshalingVisitor >> ficusPackageContents [
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusSharedPoolsFor: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusSharedPoolsFor: aMCClassDefinition [ 
 
 	^ self ficusSymbolSetFor: aMCClassDefinition poolDictionaries
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusSymbolSetFor: aCollection [
+FiMonticelloDefinitionVisitor >> ficusSymbolSetFor: aCollection [
 
 	^ FiSet withValues: (aCollection collect: #asSymbol as: Set) 
 ]
 
 { #category : #private }
-FiMarshalingVisitor >> ficusTraitFor: aMCTraitDefinition [ 
+FiMonticelloDefinitionVisitor >> ficusTraitFor: aMCTraitDefinition [ 
 
 	^ FiTrait newFromStepsAndValues: 
 		(Dictionary new
@@ -172,7 +162,7 @@ FiMarshalingVisitor >> ficusTraitFor: aMCTraitDefinition [
 ]
 
 { #category : #initialization }
-FiMarshalingVisitor >> initialize [
+FiMonticelloDefinitionVisitor >> initialize [
 
 	super initialize.
 	
@@ -186,25 +176,25 @@ FiMarshalingVisitor >> initialize [
 	monticelloMetaclassExtensionMethodsByHostName := Dictionary new.
 ]
 
-{ #category : #building }
-FiMarshalingVisitor >> result [
-	
-	^ self ficusPackage
-]
-
 { #category : #visitor }
-FiMarshalingVisitor >> visitClassDefinition: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> visitClassDefinition: aMCClassDefinition [ 
 	
 	monticelloClasses add: aMCClassDefinition
 ]
 
 { #category : #visitor }
-FiMarshalingVisitor >> visitMetaclassDefinition: aMCClassDefinition [ 
+FiMonticelloDefinitionVisitor >> visitClassTraitDefinition: aMCClassTraitDefinition [ 
+	
+	self flag: #todo. "this should *not* be ignored"
+]
+
+{ #category : #visitor }
+FiMonticelloDefinitionVisitor >> visitMetaclassDefinition: aMCClassDefinition [ 
 	"Do nothing: it's enough to collect the instance-side"
 ]
 
 { #category : #visitor }
-FiMarshalingVisitor >> visitMethodDefinition: aMCMethodDefinition [ 
+FiMonticelloDefinitionVisitor >> visitMethodDefinition: aMCMethodDefinition [ 
 	
 	| aDictionary |
 	aDictionary := 
@@ -225,14 +215,14 @@ FiMarshalingVisitor >> visitMethodDefinition: aMCMethodDefinition [
 ]
 
 { #category : #visitor }
-FiMarshalingVisitor >> visitOrganizationDefinition: aMCOrganizationDefinition [ 
+FiMonticelloDefinitionVisitor >> visitOrganizationDefinition: aMCOrganizationDefinition [ 
 	"Just ignore"
 	
-	self flag: #fix. "?"
+	self flag: #todo. "?"
 ]
 
 { #category : #visitor }
-FiMarshalingVisitor >> visitTraitDefinition: aMCTraitDefinition [ 
+FiMonticelloDefinitionVisitor >> visitTraitDefinition: aMCTraitDefinition [ 
 	
 	monticelloTraits add: aMCTraitDefinition
 ]

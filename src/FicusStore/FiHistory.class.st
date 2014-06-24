@@ -40,7 +40,7 @@ FiHistory >> priorTo: aCommit [
 FiHistory >> priorsOf: anEdit [ 
 	
 	^ (anEdit affects: self watchedPath)
-		ifTrue: [ { FiPrior new historyName: self historyName; tag: #?; yourself } ]
+		ifTrue: [ { (FiPrior builder historyName: self historyName; new) tag: #?; yourself } ]
 		ifFalse: [ #() ]
 ]
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #FiPrior,
-	#superclass : #FiShot,
+	#superclass : #FiFixedObject,
 	#instVars : [
 		'historyName'
 	],
@@ -11,10 +11,4 @@ Class {
 FiPrior >> historyName [
 	
 	^ historyName
-]
-
-{ #category : #accessing }
-FiPrior >> historyName: anObject [
-	
-	historyName := anObject
 ]

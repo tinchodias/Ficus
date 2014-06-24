@@ -31,12 +31,12 @@ FiStore >> commit: anEdit [
 	newRoot := self head root resultOf: anEdit. 
 	editEffect := self head root effectOf: anEdit. 
 
-	newCommit := FiCommit new
+	newCommit := FiCommit builder
 		timestamp: DateAndTime now;
 		editEffect: editEffect;				"#edits"
 		root: newRoot; 						"1"
 		priors: (self priorsOf: anEdit); 		"<= #histories"
-		yourself.
+		new.
 	
 	self newCommit: newCommit.
 
@@ -79,12 +79,12 @@ FiStore >> initialCommit: aRoot [
 
 	| newCommit |
 		
-	newCommit := FiCommit new
+	newCommit := FiCommit builder
 		timestamp: DateAndTime now;
 		editEffect: FiNoEdit new effectNothing;
 		root: aRoot;
 		priors: #();
-		yourself.
+		new.
 	
 	self newCommit: newCommit.
 

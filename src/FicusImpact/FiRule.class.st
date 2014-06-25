@@ -1,5 +1,5 @@
 Class {
 	#name : #FiRule,
 	#superclass : #Object,
-	#category : #FicusImpact
+	#category : #'FicusImpact-Unused'
 }

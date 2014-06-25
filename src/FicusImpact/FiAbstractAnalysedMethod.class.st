@@ -7,7 +7,7 @@ Class {
 		'isMeta',
 		'sourceCode'
 	],
-	#category : #FicusImpact
+	#category : #'FicusImpact-Prototype'
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'dependencies',
 		'impact'
 	],
-	#category : #FicusImpact
+	#category : #'FicusImpact-Prototype'
 }
 
 { #category : #accessing }

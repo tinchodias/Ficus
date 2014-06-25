@@ -5,7 +5,7 @@ Class {
 		'register',
 		'sourceArray'
 	],
-	#category : #FicusImpact
+	#category : #'FicusImpact-Prototype'
 }
 
 { #category : #analysis }

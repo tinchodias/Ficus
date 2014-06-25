@@ -5,5 +5,5 @@ Class {
 		'messageReceiver',
 		'selector'
 	],
-	#category : #FicusImpact
+	#category : #'FicusImpact-Unused'
 }

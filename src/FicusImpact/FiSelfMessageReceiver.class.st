@@ -4,5 +4,5 @@ Class {
 	#instVars : [
 		'className'
 	],
-	#category : #FicusImpact
+	#category : #'FicusImpact-Unused'
 }

@@ -5,7 +5,7 @@ Class {
 		'messageSend',
 		'methods'
 	],
-	#category : #FicusImpact
+	#category : #'FicusImpact-Prototype'
 }
 
 { #category : #'instance creation' }

@@ -69,11 +69,11 @@ FiEffectTest >> testAddSharedPoolAndUpdateComment [
 		equals: { FiPath root -> leafEffectOfEditComment }.
 			
 	self 
-		assert: effect flattenedLeafEffects 
+		assert: effect flattenedLeafEffects asSet
 		equals: { 
 			FiPath root / #sharedPools -> leafEffectOfEditSharedPools.
 			FiPath root / #comment -> leafEffectOfEditComment.
-			}.
+			} asSet.
 			
 ]
 

@@ -11,10 +11,10 @@ Class {
 { #category : #'instance creation' }
 FiPossibleMethodInvocation class >> sending: aMessageSend toAnyOf: aCollection [ 
 	
-	^ self new
+	^ self builder
 		messageSend: aMessageSend;
 		methods: aCollection;
-		yourself
+		new
 
 ]
 
@@ -25,13 +25,13 @@ FiPossibleMethodInvocation >> defaultStep [
 ]
 
 { #category : #accessing }
-FiPossibleMethodInvocation >> messageSend: aMessageSend [
-
-	messageSend := aMessageSend 
+FiPossibleMethodInvocation >> messageSend [
+	
+	^ messageSend
 ]
 
 { #category : #accessing }
-FiPossibleMethodInvocation >> methods: aCollection [ 
+FiPossibleMethodInvocation >> methods [
 	
-	methods := aCollection
+	^ methods
 ]

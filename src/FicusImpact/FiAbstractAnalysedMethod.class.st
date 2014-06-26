@@ -25,21 +25,9 @@ FiAbstractAnalysedMethod >> hostName [
 ]
 
 { #category : #accessing }
-FiAbstractAnalysedMethod >> hostName: anObject [
-	
-	hostName := anObject
-]
-
-{ #category : #accessing }
 FiAbstractAnalysedMethod >> isMeta [
 	
 	^ isMeta
-]
-
-{ #category : #accessing }
-FiAbstractAnalysedMethod >> isMeta: anObject [
-	
-	isMeta := anObject
 ]
 
 { #category : #accessing }
@@ -49,19 +37,7 @@ FiAbstractAnalysedMethod >> selector [
 ]
 
 { #category : #accessing }
-FiAbstractAnalysedMethod >> selector: aSelector [
-
-	selector := aSelector
-]
-
-{ #category : #accessing }
 FiAbstractAnalysedMethod >> sourceCode [
 	
 	^ sourceCode
-]
-
-{ #category : #accessing }
-FiAbstractAnalysedMethod >> sourceCode: aString [ 
-	
-	sourceCode := aString
 ]

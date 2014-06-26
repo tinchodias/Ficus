@@ -15,12 +15,12 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 
 	"stop recursion"
 	levels > 0 ifFalse: [ 
-		^ FiNotAnalysedMethod new
+		^ FiNotAnalysedMethod builder
 			hostName: aMethod methodClass name;
 			isMeta: aMethod methodClass isMeta;
 			selector: aMethod selector;
 			sourceCode: (self sourceCodeFor: aMethod);
-			yourself ].
+			new ].
 	
 	"continue recursion"
 	dependencies := 
@@ -39,14 +39,14 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 			collect: [:senderMethod | self analysisOf: senderMethod levels: levels-1 ] 
 			as: Array.
 			
-	^ FiAnalysedMethod new
+	^ FiAnalysedMethod builder
 		hostName: aMethod methodClass name;
 		isMeta: aMethod methodClass isMeta;
 		selector: aMethod selector;
 		sourceCode: (self sourceCodeFor: aMethod);
 		dependencies: (FiSet withValues: dependencies);
 		impact: (FiSet withValues: impact);
-		yourself
+		new
 
 ]
 

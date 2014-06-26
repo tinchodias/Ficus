@@ -25,8 +25,9 @@ FiAcceptKey >> edit [
 { #category : #effects }
 FiAcceptKey >> effectAdd [
 
-	^ FiAddEffect builder
-		edit: self;
+	^ FiDictionaryAddEffect builder
+		key: key;
+		newValue: edit theValue;
 		new
 ]
 
@@ -39,9 +40,10 @@ FiAcceptKey >> effectOn: aValue [
 { #category : #effects }
 FiAcceptKey >> effectUpdate: oldValue [
 
-	^ FiUpdateEffect builder
-		edit: self;
+	^ FiDictionaryUpdateEffect builder
+		key: key;
 		oldValue: oldValue;
+		newValue: (edit resultOn: oldValue);
 		subEffect: (edit effectOn: oldValue);
 		new
 ]

@@ -64,12 +64,10 @@ FiDictionary >> differenceFrom: other [
 { #category : #effects }
 FiDictionary >> effectOfAcceptKey: anAcceptKey [ 
 
-	self flag: #fix. "theValue"
-
 	^ self 
 		shotAt: anAcceptKey key
 		ifPresent: [ :aValue | 
-			aValue = anAcceptKey edit theValue
+			aValue = (anAcceptKey edit resultOn: aValue)
 				ifTrue: [ anAcceptKey effectNothing ]
 				ifFalse: [ anAcceptKey effectUpdate: aValue ] ] 
 		ifAbsent: [ anAcceptKey effectAdd ].

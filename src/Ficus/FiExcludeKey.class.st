@@ -22,8 +22,8 @@ FiExcludeKey >> effectOn: aValue [
 { #category : #effects }
 FiExcludeKey >> effectRemove: oldValue [
 
-	^ FiRemoveEffect builder
-		edit: self;
+	^ FiDictionaryRemoveEffect builder
+		key: key;
 		oldValue: oldValue;
 		new
 ]

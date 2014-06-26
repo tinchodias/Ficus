@@ -22,6 +22,15 @@ Object >> differenceFrom: other [
 ]
 
 { #category : #'*Ficus' }
+Object >> effectReplace: oldValue [ 
+	
+	^ FiReplace builder
+		oldValue: oldValue;
+		newValue: self;
+		new
+]
+
+{ #category : #'*Ficus' }
 Object >> ficusDeepCollect: aBlock [
 
 	^ aBlock value: self

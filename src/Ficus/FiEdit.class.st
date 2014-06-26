@@ -16,24 +16,13 @@ FiEdit >> affects: aPath [
 { #category : #effects }
 FiEdit >> effectNothing [
 
-	^ FiNoEffect builder
-		edit: self;
-		new
+	^ FiNoEffect new
 ]
 
 { #category : #effects }
 FiEdit >> effectOn: anObject [ 
 
 	^ self subclassResponsibility
-]
-
-{ #category : #effects }
-FiEdit >> effectReplace: aValue [ 
-	
-	^ FiReplace builder
-		edit: self;
-		oldValue: aValue;
-		new
 ]
 
 { #category : #testing }

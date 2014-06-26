@@ -22,7 +22,7 @@ FiDifferencesTest >> testAddClass [
 	self assert: (source differenceFrom: source) isNoEdit.
 	self assert: (result differenceFrom: result) isNoEdit.
 	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: editEffect inverse.
+	self assert: (source differenceFrom: result) equals: (result exclude: #A).
 ]
 
 { #category : #'tests-shot' }
@@ -145,7 +145,7 @@ FiDifferencesTest >> testNoEditClass [
 { #category : #'tests-dictionary' }
 FiDifferencesTest >> testRemoveClass [
 
-	| edit editEffect preSource source result shot |
+	| edit preSource source result shot |
 	preSource := FiDictionary new.
 	shot := FiClass named: #A.
 
@@ -153,13 +153,12 @@ FiDifferencesTest >> testRemoveClass [
 	source := preSource resultOf: edit.
 
 	edit := source exclude: shot theName.
-	editEffect := source effectOf: edit.
 	result := source resultOf: edit.
 	
 	self assert: (source differenceFrom: source) isNoEdit.
 	self assert: (result differenceFrom: result) isNoEdit.
 	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: editEffect inverse.
+	self assert: (source differenceFrom: result) equals: (result at: #A equal: shot).
 ]
 
 { #category : #'tests-set' }

@@ -4,16 +4,13 @@ I represent an abstract edit effect on a shot. FiEdits know how to create effect
 Class {
 	#name : #FiEditEffect,
 	#superclass : #FiFixedObject,
-	#instVars : [
-		'edit'
-	],
 	#category : #'Ficus-Model-Effects'
 }
 
 { #category : #accessing }
 FiEditEffect >> edit [
 
-	^ edit
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -35,5 +32,7 @@ FiEditEffect >> inverse [
 { #category : #enumerating }
 FiEditEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
 	
-	^ self subclassResponsibility
+	^ aBlockClosure 
+		value: self 
+		value: aPath
 ]

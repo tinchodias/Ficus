@@ -15,10 +15,8 @@ FiInclude class >> value: aValue [
 { #category : #effects }
 FiInclude >> effectAdd [
 
-	self flag: #todo. "Copy&pasted from FiAcceptKey"
-
-	^ FiAddEffect builder
-		edit: self;
+	^ FiSetAddEffect builder
+		theValue: theValue;
 		new
 ]
 
@@ -26,6 +24,16 @@ FiInclude >> effectAdd [
 FiInclude >> effectOn: aSet [
 
 	^ aSet effectOfInclude: self
+]
+
+{ #category : #effects }
+FiInclude >> effectUpdate: oldValue [
+
+	^ FiSetUpdateEffect builder
+		theValue: theValue;
+		oldValue: oldValue;
+		subEffect: (theValue effectReplace: oldValue);
+		new
 ]
 
 { #category : #results }

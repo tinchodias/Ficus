@@ -50,7 +50,12 @@ FiFixedObject >> differenceFrom: other [
 { #category : #effects }
 FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 
-	^ anAcceptSlot effectUpdate: (self shotAt: anAcceptSlot slotName)
+	| oldValue |
+	oldValue := self shotAt: anAcceptSlot slotName.
+
+	^ oldValue = (oldValue resultOf: anAcceptSlot edit)
+		ifTrue: [ anAcceptSlot effectNothing ]
+		ifFalse: [ anAcceptSlot effectUpdate: oldValue ]
 ]
 
 { #category : #initialization }

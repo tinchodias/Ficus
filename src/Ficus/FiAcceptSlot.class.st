@@ -32,9 +32,10 @@ FiAcceptSlot >> effectOn: aValue [
 { #category : #effects }
 FiAcceptSlot >> effectUpdate: oldValue [
 
-	^ FiUpdateEffect builder
-		edit: self;
+	^ FiSlotUpdateEffect builder
+		slotName: slotName;
 		oldValue: oldValue;
+		newValue: (edit resultOn: oldValue);
 		subEffect: (edit effectOn: oldValue);
 		new
 ]

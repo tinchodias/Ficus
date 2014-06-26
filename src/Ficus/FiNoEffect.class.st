@@ -5,9 +5,15 @@ Class {
 }
 
 { #category : #accessing }
-FiNoEffect >> inverse [
+FiNoEffect >> edit [
 
 	^ FiNoEdit new
+]
+
+{ #category : #accessing }
+FiNoEffect >> inverse [
+
+	^ self edit
 ]
 
 { #category : #enumerating }

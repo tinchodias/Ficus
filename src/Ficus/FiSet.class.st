@@ -89,7 +89,7 @@ FiSet >> differenceFrom: other [
 { #category : #effects }
 FiSet >> effectOfAcceptKey: anAcceptKey [ 
 
-	self flag: #fix. "theValue" "copy&pasted from FiDictionary"
+	self flag: #fix. "copy&pasted from FiDictionary"
 
 	^ self 
 		shotAt: anAcceptKey key

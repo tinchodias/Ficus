@@ -1,7 +1,7 @@
 "
-A FiShot is xxxxxxxxx.
+I represent an immutable object which must not form cycles with other FiShots. 
 
-I reference some objects indirectly: I hold a name that should be resolved by a store.
+A shot has #steps, which are Symbol names which can be used to access the corresponding #values.
 "
 Class {
 	#name : #FiShot,
@@ -140,22 +140,6 @@ FiShot >> initializeFromStepsAndValues: aDictionary [
 ]
 
 { #category : #testing }
-FiShot >> isProxy [
-	
-	^ false
-]
-
-{ #category : #testing }
-FiShot >> isPruned [
-
-	self stepsAndValuesDo: [ :step :value |
-		(value isShot not or: [ value isProxy ])
-			ifFalse: [ ^ false ] ].
-		
-	^ true
-]
-
-{ #category : #testing }
 FiShot >> isShot [
 	
 	^ true
@@ -177,25 +161,6 @@ FiShot >> printOn: aStream [
 	aStream 
 		nextPut: $];
 		space.
-]
-
-{ #category : #comparing }
-FiShot >> proxyEquals: otherObject [
-	
-	otherObject isShot ifFalse: [ ^ false ].
-
-	tag ifNotNil: [ tag = otherObject tag ifTrue: [ ^ true ] ].
-	
-	^ self = otherObject
-]
-
-{ #category : #pruning }
-FiShot >> pruned [
-
-	^ self tag 
-		ifNotNil: [ self taggedPruned ]
-		ifNil: [ self untaggedPruned ]
-	
 ]
 
 { #category : #results }
@@ -267,26 +232,6 @@ FiShot >> tag [
 FiShot >> tag: anObject [
 
 	tag := anObject
-]
-
-{ #category : #pruning }
-FiShot >> taggedPruned [
-
-	^ FiProxy new tag: self tag
-]
-
-{ #category : #pruning }
-FiShot >> untaggedPruned [
-
-	| newStepsAndValues |
-	newStepsAndValues := Dictionary new.
-	
-	self stepsAndValuesDo: [ :step :value | 
-		newStepsAndValues 
-			at: step pruned
-			put: value pruned ].
-
-	^ self species newFromStepsAndValues: newStepsAndValues
 ]
 
 { #category : #accessing }

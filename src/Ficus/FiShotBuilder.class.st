@@ -1,3 +1,15 @@
+"
+I help on building FiShot subclasses. 
+
+Example:
+
+FiMethod builder
+	protocol: #accessing;
+	selector: #fortyTwo;
+	new.
+	
+Will answer an instance of FiMethod where the protocol and the selector have the specified values. 
+"
 Class {
 	#name : #FiShotBuilder,
 	#superclass : #Object,

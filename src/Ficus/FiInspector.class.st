@@ -3,7 +3,8 @@ Class {
 	#superclass : #DynamicComposableModel,
 	#instVars : [
 		'treeModel',
-		'rootShot'
+		'rootAssociations',
+		'iconByClassName'
 	],
 	#category : #'Ficus-UI'
 }
@@ -11,8 +12,7 @@ Class {
 { #category : #inspecting }
 FiInspector class >> inspect: aRootShot [
 
-	^ self basicNew
-		initializeWith: aRootShot;
+	^ (self newWith: { #root -> aRootShot })
 		open;
 		yourself
 ]
@@ -40,7 +40,15 @@ FiInspector class >> inspectEffect: rootEffect [
 					put: (FiSet withValues: each value).
 				dict ].
 
-	^ self inspect: (FiDictionary newFromStepsAndValues: stepsAndValues)
+	^ (self newWith: stepsAndValues associations) open; yourself
+]
+
+{ #category : #inspecting }
+FiInspector class >> newWith: someAssociations [
+
+	^ self basicNew
+		initializeWith: someAssociations;
+		yourself
 ]
 
 { #category : #private }
@@ -54,6 +62,48 @@ FiInspector >> dynamicLayout [
 
 ]
 
+{ #category : #private }
+FiInspector >> iconFor: aShot [
+
+	aShot isShot ifFalse: [ ^ Smalltalk ui icons stringIcon ].
+
+	^ Smalltalk ui icons perform: 
+		(iconByClassName 
+			at: aShot species name 
+			ifAbsent: [ #smallHierarchyBrowserIcon "#nautilusIcon" "#emptyIcon" ])
+]
+
+{ #category : #initialization }
+FiInspector >> initializeIconByClassName [
+
+	iconByClassName := 
+		Dictionary new
+			"effects"
+			at: #FiDictionaryAddEffect put: #changeAddIcon;
+			at: #FiDictionaryRemoveEffect put: #changeRemoveIcon;
+			at: #FiDictionaryUpdateEffect put: #changeUpdateIcon;
+
+			at: #FiSetAddEffect put: #changeAddIcon;
+			at: #FiSetRemoveEffect put: #changeRemoveIcon;
+			at: #FiSetUpdateEffect put: #changeUpdateIcon;
+
+			at: #FiReplace put: #changeUpdateIcon;
+			
+			"meta"
+			at: #FiPackage put: #packageIcon;
+			at: #FiClass put: #classIcon;
+			at: #FiMetaclass put: #classIcon;
+			at: #FiTrait put: #traitIcon;
+			at: #FiMethod put: #testGreenIcon;
+			
+			"core"
+			at: #FiSet put: #collectionIcon;
+			at: #FiDictionary put: #collectionIcon;
+
+			yourself.
+	
+]
+
 { #category : #initialization }
 FiInspector >> initializePresenter [
 	
@@ -62,17 +112,19 @@ FiInspector >> initializePresenter [
 		title: 'Ficus Inspector'.
 
 	treeModel
-		roots: { #root -> rootShot };
+		roots: rootAssociations;
 		displayBlock: [ :assoc | 
 			self panelMorphWithAll: { 
 				(assoc key, ' ·') asMorph.
 				(assoc value isShot 
 					ifTrue: [  self stringMorphWith: ('a ', assoc value species asString) color: Color blue muchDarker ]
-					ifFalse: [ self stringMorphWith: assoc value storeString color: Color red muchDarker ]) } ];
+					ifFalse: [ self stringMorphWith: (assoc value printStringLimitedTo: 60) color: Color red muchDarker ]) } ];
 		childrenBlock: [ :assoc | 
 			assoc value isShot 
 				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
-				ifFalse: [ #() ] ].
+				ifFalse: [ #() ] ];
+		iconBlock: [ :assoc | self iconFor: assoc value ].
+
 ]
 
 { #category : #initialization }
@@ -85,10 +137,11 @@ FiInspector >> initializeWidgets [
 ]
 
 { #category : #initialization }
-FiInspector >> initializeWith: aRootShot [
+FiInspector >> initializeWith: someAssociations [
 
-	rootShot := aRootShot.
-	
+	rootAssociations := someAssociations.
+
+	self initializeIconByClassName.	
 	self initialize.
 
 ]
@@ -96,9 +149,13 @@ FiInspector >> initializeWith: aRootShot [
 { #category : #opening }
 FiInspector >> open [
 
-	^ self
-"		extent: 900@800;"
-		openWithSpecLayout: self dynamicLayout
+	self
+		extent: 700@600;
+		openWithSpecLayout: self dynamicLayout.
+
+	"It has no effect if applied before opening:"		
+	treeModel expandAll
+
 ]
 
 { #category : #private }

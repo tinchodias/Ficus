@@ -30,7 +30,7 @@ FiRoot >> hash [
 { #category : #printing }
 FiRoot >> printOn: aStream [
 
-	aStream nextPutAll: '/'
+	aStream nextPutAll: 'root'
 ]
 
 { #category : #resolving }

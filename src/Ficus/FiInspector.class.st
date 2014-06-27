@@ -1,29 +1,20 @@
-"
-I use Spec for inspecting FiShot instances in a tree-like view.
-"
 Class {
 	#name : #FiInspector,
-	#superclass : #Object,
+	#superclass : #DynamicComposableModel,
+	#instVars : [
+		'treeModel',
+		'rootShot'
+	],
 	#category : #'Ficus-UI'
 }
 
 { #category : #inspecting }
-FiInspector class >> inspect: rootShot [
+FiInspector class >> inspect: aRootShot [
 
-	^ TreeModel new
-		title: 'Ficus Shot Inspector';
-		roots: { #root -> rootShot };
-		displayBlock: [ :assoc | 
-			self panelMorphWithAll: { 
-				(assoc key, ' ·') asMorph.
-				(assoc value isShot 
-					ifTrue: [  self stringMorphWith: ('a ', assoc value species asString) color: Color blue muchDarker ]
-					ifFalse: [ self stringMorphWith: assoc value storeString color: Color red muchDarker ]) } ];
-		childrenBlock: [ :assoc | 
-			assoc value isShot 
-				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
-				ifFalse: [ #() ] ];
-		openWithSpec
+	^ self basicNew
+		initializeWith: aRootShot;
+		open;
+		yourself
 ]
 
 { #category : #inspecting }
@@ -53,7 +44,65 @@ FiInspector class >> inspectEffect: rootEffect [
 ]
 
 { #category : #private }
-FiInspector class >> panelMorphWithAll: someMophs [
+FiInspector >> dynamicLayout [
+
+	^ SpecLayout composed
+		newColumn: [ :column |
+			column 
+				add: #treeModel ];
+		yourself.
+
+]
+
+{ #category : #initialization }
+FiInspector >> initializePresenter [
+	
+	self 
+		windowIcon: Smalltalk ui icons smallInspectItIcon;
+		title: 'Ficus Inspector'.
+
+	treeModel
+		roots: { #root -> rootShot };
+		displayBlock: [ :assoc | 
+			self panelMorphWithAll: { 
+				(assoc key, ' ·') asMorph.
+				(assoc value isShot 
+					ifTrue: [  self stringMorphWith: ('a ', assoc value species asString) color: Color blue muchDarker ]
+					ifFalse: [ self stringMorphWith: assoc value storeString color: Color red muchDarker ]) } ];
+		childrenBlock: [ :assoc | 
+			assoc value isShot 
+				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
+				ifFalse: [ #() ] ].
+]
+
+{ #category : #initialization }
+FiInspector >> initializeWidgets [ 
+	
+	treeModel := self instantiate: TreeModel.
+	self assign: treeModel to: #treeModel.
+
+
+]
+
+{ #category : #initialization }
+FiInspector >> initializeWith: aRootShot [
+
+	rootShot := aRootShot.
+	
+	self initialize.
+
+]
+
+{ #category : #opening }
+FiInspector >> open [
+
+	^ self
+"		extent: 900@800;"
+		openWithSpecLayout: self dynamicLayout
+]
+
+{ #category : #private }
+FiInspector >> panelMorphWithAll: someMophs [
 
 	^ PanelMorph new
 		changeTableLayout;
@@ -66,7 +115,15 @@ FiInspector class >> panelMorphWithAll: someMophs [
 ]
 
 { #category : #private }
-FiInspector class >> stringMorphWith: aString color: aColor [
+FiInspector >> refreshSpecLayout [
+
+	self needFullRebuild: true.
+	self needRebuild: false.
+ 	self buildWithSpecLayout: self dynamicLayout
+]
+
+{ #category : #private }
+FiInspector >> stringMorphWith: aString color: aColor [
 
 	^ aString asMorph
 		color: aColor;

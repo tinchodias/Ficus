@@ -10,6 +10,19 @@ FiSetAddEffect >> edit [
 	^ self include: theValue
 ]
 
+{ #category : #summary }
+FiSetAddEffect >> hierarchicalSummary [
+	
+	^ { theValue 
+		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+			FiSummaryAdd builder 
+				step: path step;
+				newValue: shot; 
+				subSummary: collectionFromChildren;
+				new ] 
+		basePath: FiPath root / theValue defaultStep }
+]
+
 { #category : #accessing }
 FiSetAddEffect >> inverse [
 

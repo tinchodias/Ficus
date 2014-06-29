@@ -18,6 +18,28 @@ FiSlotUpdateEffect >> edit [
 		edit: subEffect edit
 ]
 
+{ #category : #summary }
+FiSlotUpdateEffect >> hierarchicalSummary [
+
+	self flag: #todo. "FIX"
+	
+	^ {(subEffect isKindOf: FiReplace) 
+		ifTrue: [ 
+			FiSummaryUpdate builder 
+				step: slotName;
+				oldValue: subEffect oldValue; 
+				newValue: subEffect newValue; 
+				subSummary: #();
+				new ]
+		ifFalse: [ 
+			FiSummaryUpdate builder 
+				step: slotName;
+				oldValue: oldValue; 
+				newValue: newValue; 
+				subSummary: subEffect hierarchicalSummary;
+				new ]}
+]
+
 { #category : #accessing }
 FiSlotUpdateEffect >> inverse [
 

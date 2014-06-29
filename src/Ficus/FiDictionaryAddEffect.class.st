@@ -15,6 +15,19 @@ FiDictionaryAddEffect >> edit [
 		edit: (FiEqual value: newValue)
 ]
 
+{ #category : #summary }
+FiDictionaryAddEffect >> hierarchicalSummary [
+	
+	^ { newValue 
+		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+			FiSummaryAdd builder 
+				step: path step;
+				newValue: shot; 
+				subSummary: collectionFromChildren;
+				new ] 
+		basePath: FiPath root / key }
+]
+
 { #category : #accessing }
 FiDictionaryAddEffect >> inverse [
 

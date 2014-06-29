@@ -70,17 +70,18 @@ FiShot >> effectOfCompositeEdit: aCompositeEdit [
 ]
 
 { #category : #enumerating }
-FiShot >> ficusDeepCollect: aBlock [
+FiShot >> ficusDeepCollect: aBlock basePath: aPath [
 
-	| newStepsAndValues |
-	newStepsAndValues := Dictionary new.
-	
-	self stepsAndValuesDo: [ :step :value | 
-		newStepsAndValues 
-			at: (step ficusDeepCollect: aBlock)
-			put: (value ficusDeepCollect: aBlock) ].
+	| collectionFromChildren |
+	collectionFromChildren := 
+		Array streamContents: [ :stream |	
+			self stepsAndValuesDo: [ :step :value | 
+				stream nextPut: (value ficusDeepCollect: aBlock basePath: (aPath / step)) ]].
 
-	^ aBlock value: (self species newFromStepsAndValues: newStepsAndValues)
+	^ aBlock 
+		value: self 
+		value: aPath 
+		value: collectionFromChildren
 ]
 
 { #category : #enumerating }

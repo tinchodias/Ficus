@@ -14,6 +14,28 @@ FiSetUpdateEffect >> edit [
 	^ self include: theValue
 ]
 
+{ #category : #summary }
+FiSetUpdateEffect >> hierarchicalSummary [
+
+	self flag: #todo. "FIX"
+	
+	^ {(subEffect isKindOf: FiReplace) 
+		ifTrue: [ 
+			FiSummaryUpdate builder 
+				step: theValue defaultStep;
+				oldValue: subEffect oldValue; 
+				newValue: subEffect newValue; 
+				subSummary: #();
+				new ]	
+		ifFalse: [
+			FiSummaryUpdate builder 
+				step: theValue defaultStep;
+				oldValue: oldValue; 
+				newValue: theValue; 
+				subSummary: subEffect hierarchicalSummary;
+				new ]}
+]
+
 { #category : #accessing }
 FiSetUpdateEffect >> inverse [
 

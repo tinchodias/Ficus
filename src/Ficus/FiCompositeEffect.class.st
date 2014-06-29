@@ -13,6 +13,12 @@ FiCompositeEffect >> edit [
 	^ self edits: (subEffects values collect: #edit)
 ]
 
+{ #category : #summary }
+FiCompositeEffect >> hierarchicalSummary [
+
+	^ subEffects values flatCollect: #hierarchicalSummary
+]
+
 { #category : #accessing }
 FiCompositeEffect >> inverse [
 	

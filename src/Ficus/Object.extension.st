@@ -31,9 +31,12 @@ Object >> effectReplace: oldValue [
 ]
 
 { #category : #'*Ficus' }
-Object >> ficusDeepCollect: aBlock [
+Object >> ficusDeepCollect: aBlock basePath: aPath [
 
-	^ aBlock value: self
+	^ aBlock 
+		value: self 
+		value: aPath 
+		value: #()
 ]
 
 { #category : #'*Ficus' }

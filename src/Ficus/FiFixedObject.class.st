@@ -83,9 +83,7 @@ FiFixedObject >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 
 	step isSymbol ifFalse: [ ^ absentBlock value ].
 
-	^ (self respondsTo: step)
-		ifTrue: [ presentBlock cull: (self perform: step) ]
-		ifFalse: absentBlock
+	^ presentBlock value: (self instVarNamed: step)
 ]
 
 { #category : #accessing }

@@ -17,6 +17,28 @@ FiDictionaryUpdateEffect >> edit [
 		edit: (FiEqual value: newValue)
 ]
 
+{ #category : #summary }
+FiDictionaryUpdateEffect >> hierarchicalSummary [
+
+	self flag: #todo. "FIX"
+	
+	^ {(subEffect isKindOf: FiReplace) 
+		ifTrue: [ 
+			FiSummaryUpdate builder 
+				step: key;
+				oldValue: subEffect oldValue; 
+				newValue: subEffect newValue; 
+				subSummary: #();
+				new ]
+		ifFalse: [	
+			FiSummaryUpdate builder 
+				step: key;
+				oldValue: oldValue; 
+				newValue: newValue; 
+				subSummary: subEffect hierarchicalSummary;
+				new ]}
+]
+
 { #category : #accessing }
 FiDictionaryUpdateEffect >> inverse [
 

@@ -11,7 +11,7 @@ Class {
 { #category : #'tests-dictionary' }
 FiEffectTest >> testAddClass [
 
-	| shot edit source result effect |
+	| shot edit source result effect summary |
 	source := FiDictionary new.
 	shot := FiClass named: #A.
 
@@ -29,6 +29,15 @@ FiEffectTest >> testAddClass [
 	self 
 		assert: effect flattenedLeafEffects 
 		equals: { FiPath root -> effect }.
+
+	self flag: #todo. "refactor"
+	summary := effect hierarchicalSummary.
+	self assert: summary isCollection.
+	self assert: summary size equals: 1.
+	self assert: (summary anyOne isKindOf: FiSummaryAdd).
+	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne subSummary isNotEmpty.
+	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
 
 ]
 
@@ -81,7 +90,27 @@ FiEffectTest >> testAddSharedPoolAndUpdateComment [
 			FiPath root / #sharedPools -> leafEffectOfEditSharedPools.
 			FiPath root / #comment -> leafEffectOfEditComment.
 			} .
-			
+
+	self 
+		assert: effect hierarchicalSummary asSet
+		equals: {
+			(FiSummaryUpdate builder 
+				step: #sharedPools;
+				oldValue: source sharedPools; 
+				newValue: result sharedPools; 
+				subSummary: { 
+					(FiSummaryAdd builder 
+						step: #X; 
+						newValue: #X; 
+						subSummary: #();
+						new). };
+				new).
+			(FiSummaryUpdate builder 
+				step: #comment;
+				oldValue: ''; 
+				newValue: '42'; 
+				subSummary: #();
+				new)} asSet
 ]
 
 { #category : #'tests-dictionary' }
@@ -111,7 +140,7 @@ FiEffectTest >> testNoEffect [
 { #category : #'tests-dictionary' }
 FiEffectTest >> testRemoveClass [
 
-	| edit source result shot intermediate reverted effect |
+	| edit source result shot intermediate reverted effect summary |
 	source := FiDictionary new.
 	shot := FiClass named: #A.
 
@@ -136,12 +165,21 @@ FiEffectTest >> testRemoveClass [
 		assert: effect flattenedLeafEffects 
 		equals: { FiPath root -> effect }.
 
+	self flag: #todo. "refactor"
+	summary := effect hierarchicalSummary.
+	self assert: summary isCollection.
+	self assert: summary size equals: 1.
+	self assert: (summary anyOne isKindOf: FiSummaryRemove).
+	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne subSummary isNotEmpty.
+	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
+
 ]
 
 { #category : #'tests-set' }
 FiEffectTest >> testSetAddClass [
 
-	| shot edit source result effect |
+	| shot edit source result effect summary |
 	source := FiSet new.
 	shot := FiClass named: #A.
 
@@ -159,6 +197,15 @@ FiEffectTest >> testSetAddClass [
 	self 
 		assert: effect flattenedLeafEffects 
 		equals: { FiPath root -> effect }.
+
+	self flag: #todo. "refactor"
+	summary := effect hierarchicalSummary.
+	self assert: summary isCollection.
+	self assert: summary size equals: 1.
+	self assert: (summary anyOne isKindOf: FiSummaryAdd).
+	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne subSummary isNotEmpty.
+	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
 
 ]
 
@@ -192,7 +239,7 @@ FiEffectTest >> testSetNoEffect [
 { #category : #'tests-set' }
 FiEffectTest >> testSetRemoveClass [
 
-	| edit source result shot intermediate reverted effect |
+	| edit source result shot intermediate reverted effect summary |
 	source := FiSet new.
 	shot := FiClass named: #A.
 
@@ -216,6 +263,15 @@ FiEffectTest >> testSetRemoveClass [
 	self 
 		assert: effect flattenedLeafEffects 
 		equals: { FiPath root -> effect }.
+
+	self flag: #todo. "refactor"
+	summary := effect hierarchicalSummary.
+	self assert: summary isCollection.
+	self assert: summary size equals: 1.
+	self assert: (summary anyOne isKindOf: FiSummaryRemove).
+	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne subSummary isNotEmpty.
+	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
 
 ]
 
@@ -248,6 +304,16 @@ FiEffectTest >> testSetUpdateClass [
 	self 
 		assert: effect flattenedLeafEffects 
 		equals: { FiPath root / #A -> effect subEffect }.
+
+	self 
+		assert: effect hierarchicalSummary asArray
+		equals: 
+			{ FiSummaryUpdate builder 
+				step: #A;
+				oldValue: shot; 
+				newValue: otherShot; 
+				subSummary: #();
+				new } 
 
 ]
 
@@ -298,6 +364,15 @@ FiEffectTest >> testUpdateClass [
 		assert: effect flattenedLeafEffects 
 		equals: { FiPath root / #A -> effect subEffect }.
 
+	self 
+		assert: effect hierarchicalSummary asArray
+		equals: 
+			{ FiSummaryUpdate builder 
+				step: #A;
+				oldValue: shot; 
+				newValue: otherShot; 
+				subSummary: #();
+				new }
 ]
 
 { #category : #'tests-shot' }
@@ -317,5 +392,15 @@ FiEffectTest >> testUpdateComment [
 	self 
 		assert: effect flattenedLeafEffects 
 		equals: { FiPath root / #comment -> effect subEffect }.
+
+	self 
+		assert: effect hierarchicalSummary asArray
+		equals: 
+			{ FiSummaryUpdate builder 
+				step: #comment;
+				oldValue: ''; 
+				newValue: '42'; 
+				subSummary: #();
+				new }
 
 ]

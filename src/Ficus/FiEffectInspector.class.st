@@ -125,11 +125,19 @@ FiEffectInspector >> open [
 ]
 
 { #category : #initialization }
+FiEffectInspector >> printStringFor: anObject [
+
+	^ anObject isString 
+		ifTrue: [ anObject ]
+		ifFalse: [ '' ]
+]
+
+{ #category : #initialization }
 FiEffectInspector >> showAddDiff: summaryAdd [
 
 	diffModel
 		leftText: '';
-		rightText: summaryAdd newValue asString.
+		rightText: (self printStringFor: summaryAdd newValue).
 ]
 
 { #category : #private }
@@ -161,7 +169,7 @@ FiEffectInspector >> showEmptyDiff [
 FiEffectInspector >> showRemoveDiff: summaryRemove [
 
 	diffModel
-		leftText: summaryRemove oldValue asString;
+		leftText: (self printStringFor: summaryRemove oldValue);
 		rightText: ''.
 ]
 
@@ -169,8 +177,8 @@ FiEffectInspector >> showRemoveDiff: summaryRemove [
 FiEffectInspector >> showUpdateDiff: summaryUpdate [
 
 	diffModel
-		leftText: summaryUpdate oldValue asString;
-		rightText: summaryUpdate newValue asString.
+		leftText: (self printStringFor: summaryUpdate oldValue);
+		rightText: (self printStringFor: summaryUpdate newValue).
 ]
 
 { #category : #private }

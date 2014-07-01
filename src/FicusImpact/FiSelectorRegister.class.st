@@ -1,5 +1,18 @@
 "
-Stores the SISelector objects that corresponds to a given environment and supports collection-like enumerations
+Stores the senders and implementors that corresponds to a given environment and supports collection-like enumerations.
+
+
+Example:
+{
+	[ workingCopies := MCWorkingCopy allManagers ] timeToRun.
+	[ workingCopiesAndSnapshots := workingCopies collect: [ :package | package -> package completeSnapshot ] ] timeToRun.
+	[ ficusWorkingCopies := workingCopiesAndSnapshots collect: [ :assoc | assoc key ficusPackageWith: assoc value ] ] timeToRun.
+	[ ficusWorkingCopiesSet := (FiSet withValues: ficusWorkingCopies) ] timeToRun.
+	[ register := FiSelectorRegister environment: ficusWorkingCopiesSet ] timeToRun.
+}.
+
+register sendersOf: #serialize:	
+
 "
 Class {
 	#name : #FiSelectorRegister,
@@ -52,19 +65,6 @@ FiSelectorRegister >> ensureSelector: aSymbol [
 
 { #category : #private }
 FiSelectorRegister >> fill [
-
-	"TODO: enhance.
-	
-	Example:
-	{
-	[ workingCopies := MCWorkingCopy allManagers ] timeToRun.
-	[ ficusWorkingCopies := workingCopies collect: #ficusPackage ] timeToRun.
-	[ ficusWorkingCopiesSet := (FiSet withValues: ficusWorkingCopies) ] timeToRun.
-	[ register := FiSelectorRegister environment: ficusWorkingCopiesSet ] timeToRun.
-	}.
-
-	register sendersOf: #serialize:	
-	"
 
 	((environment values flatCollect: [ :package | package contents values ] as: OrderedCollection) 
 		select: [ :each | each isFicusClass or: [ each isFicusTrait ] ])

@@ -119,6 +119,8 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #Ficus;
 			package: #FicusMonticello with: [
 				spec requires: #(#Ficus ) ];
+			package: #FicusRing with: [
+				spec requires: #(#Ficus ) ];
 			package: #FicusImpact with: [
 				spec requires: #(#Ficus ) ];
 			package: #FicusStore with: [

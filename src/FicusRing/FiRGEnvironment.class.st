@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'packagesShot'
 	],
-	#category : #FicusRing
+	#category : #'FicusRing-Core'
 }
 
 { #category : #polymorphism }
@@ -24,6 +24,19 @@ FiRGEnvironment >> allClasses [
 								environment: self; 
 								shot: classShot;
 								yourself ]) ] ]
+]
+
+{ #category : #'as yet unclassified' }
+FiRGEnvironment >> allClassesAndTraits [
+
+	"FIX"
+	^ self allClasses
+]
+
+{ #category : #'as yet unclassified' }
+FiRGEnvironment >> allClassesAndTraitsDo: aBlockClosure [ 
+
+	^ self allClassesAndTraits do: aBlockClosure 
 ]
 
 { #category : #polymorphism }

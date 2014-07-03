@@ -1,21 +1,21 @@
 Class {
 	#name : #FiRGClassTest,
 	#superclass : #FiRGShotTest,
-	#category : #FicusRing
+	#category : #'FicusRing-Tests'
 }
 
 { #category : #tests }
 FiRGClassTest >> testAllInstVarNames [
 
-	self assert: pshotResource classA allInstVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: pshotResource classB allInstVarNames asSet equals: #('a1' 'a2' 'b1' 'b2') asSet
+	self assert: ringShotResource classA allInstVarNames asSet equals: #('a1' 'a2') asSet.
+	self assert: ringShotResource classB allInstVarNames asSet equals: #('a1' 'a2' 'b1' 'b2') asSet
 ]
 
 { #category : #tests }
 FiRGClassTest >> testCompiledMethodAt [
 		
-	self assert: (pshotResource classA compiledMethodAt: #sum) isNotNil.
-	self assert: (pshotResource classA >> #sum) isNotNil.
+	self assert: (ringShotResource classA compiledMethodAt: #sum) isNotNil.
+	self assert: (ringShotResource classA >> #sum) isNotNil.
 
 ]
 
@@ -25,7 +25,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 	| presentOrNil |
 	presentOrNil := nil.
 		
-	pshotResource classA 
+	ringShotResource classA 
 		compiledMethodAt: #sum
 		ifPresent: [ :method | presentOrNil := true ]
 		ifAbsent: [ presentOrNil := false ].
@@ -35,7 +35,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 	
 	presentOrNil := nil.
 		
-	pshotResource classA 
+	ringShotResource classA 
 		compiledMethodAt: #unexistentMethod
 		ifPresent: [ :method | presentOrNil := true ]
 		ifAbsent: [ presentOrNil := false ].
@@ -47,7 +47,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 FiRGClassTest >> testEnvironment [
 		
 	| environment |
-	environment := pshotResource environmentWithClassesAB.
+	environment := ringShotResource environmentWithClassesAB.
 	
 	self assert: (environment classNamed: #A) environment == environment
 ]
@@ -55,47 +55,47 @@ FiRGClassTest >> testEnvironment [
 { #category : #tests }
 FiRGClassTest >> testInstVarNames [
 		
-	self assert: pshotResource classA instVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: pshotResource classB instVarNames asSet equals: #('b1' 'b2') asSet.
+	self assert: ringShotResource classA instVarNames asSet equals: #('a1' 'a2') asSet.
+	self assert: ringShotResource classB instVarNames asSet equals: #('b1' 'b2') asSet.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testIsBehavior [
 		
-	self assert: pshotResource classA isBehavior.
-	self assert: pshotResource classB isBehavior.
+	self assert: ringShotResource classA isBehavior.
+	self assert: ringShotResource classB isBehavior.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testLookupSelector [
 		
-	self deny: (pshotResource classA lookupSelector: #sum) isNil.
-	self assert: (pshotResource classA lookupSelector: #unexistentMethod) isNil.
+	self deny: (ringShotResource classA lookupSelector: #sum) isNil.
+	self assert: (ringShotResource classA lookupSelector: #unexistentMethod) isNil.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testMethods [
 
-	self assert: pshotResource classA methods size equals: 2.
-	self assert: pshotResource classB methods size equals: 1.
+	self assert: ringShotResource classA methods size equals: 2.
+	self assert: ringShotResource classB methods size equals: 1.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSuperclass [
 
-	self assert: pshotResource classA superclass isNil.
-	self assert: pshotResource classB superclass name equals: #A.
+	self assert: ringShotResource classA superclass isNil.
+	self assert: ringShotResource classB superclass name equals: #A.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testTheNonMetaClass [
 		
 	| aClass |
-	aClass := pshotResource classA.
+	aClass := ringShotResource classA.
 
 	self assert: aClass theNonMetaClass == aClass.
 

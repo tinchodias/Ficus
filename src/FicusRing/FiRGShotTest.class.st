@@ -2,9 +2,9 @@ Class {
 	#name : #FiRGShotTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'pshotResource'
+		'ringShotResource'
 	],
-	#category : #FicusRing
+	#category : #'FicusRing-Tests'
 }
 
 { #category : #running }
@@ -12,5 +12,5 @@ FiRGShotTest >> setUp [
 
 	super setUp.
 	
-	pshotResource := FiRGShotResource new
+	ringShotResource := FiRGShotResource new
 ]

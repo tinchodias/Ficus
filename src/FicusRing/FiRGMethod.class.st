@@ -5,23 +5,17 @@ Class {
 	#name : #FiRGMethod,
 	#superclass : #FiRGShot,
 	#instVars : [
-		'environment',
 		'shot',
-		'methodClass'
+		'ringEnvironment',
+		'ringMethodClass'
 	],
-	#category : #FicusRing
+	#category : #'FicusRing-Core'
 }
 
 { #category : #polymorphism }
 FiRGMethod >> environment [
 	
-	^ environment
-]
-
-{ #category : #accessing }
-FiRGMethod >> environment: anObject [
-	
-	environment := anObject
+	^ ringEnvironment
 ]
 
 { #category : #polymorphism }
@@ -36,13 +30,7 @@ FiRGMethod >> messages [
 { #category : #polymorphism }
 FiRGMethod >> methodClass [
 	
-	^ methodClass
-]
-
-{ #category : #accessing }
-FiRGMethod >> methodClass: anObject [
-	
-	methodClass := anObject
+	^ ringMethodClass
 ]
 
 { #category : #polymorphism }
@@ -52,6 +40,18 @@ FiRGMethod >> parseTree [
 		parseMethod: self sourceCode 
 		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass.
 	
+]
+
+{ #category : #accessing }
+FiRGMethod >> ringEnvironment: anObject [
+	
+	ringEnvironment := anObject
+]
+
+{ #category : #accessing }
+FiRGMethod >> ringMethodClass: anObject [
+	
+	ringMethodClass := anObject
 ]
 
 { #category : #polymorphism }

@@ -1,17 +1,34 @@
 Class {
 	#name : #FiRGEnvironmentTest,
 	#superclass : #FiRGShotTest,
-	#category : #FicusRing
+	#category : #'FicusRing-Tests'
 }
 
 { #category : #tests }
 FiRGEnvironmentTest >> testAllClasses [
 
-	self assert: pshotResource environmentWithClassesAB allClasses size equals: 2
+	self assert: ringShotResource environmentWithClassesAB allClasses size equals: 2
+]
+
+{ #category : #tests }
+FiRGEnvironmentTest >> testAllClassesAndTraits [
+
+	self assert: ringShotResource environmentWithClassesAB allClassesAndTraits size equals: 2
+]
+
+{ #category : #tests }
+FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
+
+	| items |
+	items := IdentitySet new.
+
+	ringShotResource environmentWithClassesAB allClassesAndTraitsDo: [ :each | items add: each ].
+
+	self assert: items size equals: 2
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testClassNamed [
 
-	self assert: (pshotResource environmentWithClassesAB classNamed: #A) name equals: #A 
+	self assert: (ringShotResource environmentWithClassesAB classNamed: #A) name equals: #A 
 ]

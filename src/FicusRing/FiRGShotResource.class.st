@@ -17,7 +17,7 @@ DiffModel new
 Class {
 	#name : #FiRGShotResource,
 	#superclass : #Object,
-	#category : #FicusRing
+	#category : #'FicusRing-Tests'
 }
 
 { #category : #resources }

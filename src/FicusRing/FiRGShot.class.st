@@ -4,5 +4,5 @@ I am the abstract superclass of classes that are polymorphic with metamodel enti
 Class {
 	#name : #FiRGShot,
 	#superclass : #Object,
-	#category : #FicusRing
+	#category : #'FicusRing-Core'
 }

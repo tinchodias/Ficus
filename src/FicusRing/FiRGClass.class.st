@@ -8,7 +8,7 @@ Class {
 		'environment',
 		'shot'
 	],
-	#category : #FicusRing
+	#category : #'FicusRing-Core'
 }
 
 { #category : #polymorphism }
@@ -127,8 +127,8 @@ FiRGClass >> printOn: aStream [
 FiRGClass >> ringMethodFor: aMethodShot [
 
 	^ FiRGMethod new 
-		environment: environment; 
-		methodClass: self;
+		ringEnvironment: environment; 
+		ringMethodClass: self;
 		shot: aMethodShot;
 		yourself
 ]

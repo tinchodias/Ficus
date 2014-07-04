@@ -12,10 +12,35 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #comparing }
+FiRGMethod >> = other [
+
+	self == other ifTrue: [ ^ true ].
+	self class = other class ifFalse: [ ^ false ].
+
+	^ self environment = other environment 
+		and: [ self shot = other shot ]
+]
+
 { #category : #polymorphism }
 FiRGMethod >> environment [
 	
 	^ ringEnvironment
+]
+
+{ #category : #comparing }
+FiRGMethod >> hash [
+
+	^ (self class hash 
+		bitXor: self environment hash)
+		bitXor: self shot hash
+]
+
+{ #category : #lookup }
+FiRGMethod >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+
+	^ self methodClass 
+		lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure 
 ]
 
 { #category : #polymorphism }

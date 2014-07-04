@@ -10,6 +10,15 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #comparing }
+FiRGEnvironment >> = other [
+
+	self == other ifTrue: [ ^ true ].
+	self class = other class ifFalse: [ ^ false ].
+
+	^ self environmentShot = other environmentShot
+]
+
 { #category : #polymorphism }
 FiRGEnvironment >> allClasses [
 
@@ -21,19 +30,19 @@ FiRGEnvironment >> allClasses [
 						select: #isFicusClass 
 						thenCollect: [ :classShot |
 							FiRGClass new 
-								environment: self; 
+								ringEnvironment: self; 
 								shot: classShot;
 								yourself ]) ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 FiRGEnvironment >> allClassesAndTraits [
 
 	"FIX"
 	^ self allClasses
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiRGEnvironment >> allClassesAndTraitsDo: aBlockClosure [ 
 
 	^ self allClassesAndTraits do: aBlockClosure 
@@ -74,4 +83,20 @@ FiRGEnvironment >> environmentShot [
 FiRGEnvironment >> environmentShot: anObject [
 	
 	packagesShot := anObject
+]
+
+{ #category : #comparing }
+FiRGEnvironment >> hash [
+
+	^ self class hash 
+		bitXor: self environmentShot hash
+]
+
+{ #category : #lookup }
+FiRGEnvironment >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+
+	^ self 
+		at: aName 
+		ifPresent: presentBlockClosure 
+		ifAbsent: absentBlockClosure
 ]

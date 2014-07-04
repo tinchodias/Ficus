@@ -11,6 +11,16 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #comparing }
+FiRGClass >> = other [
+
+	self == other ifTrue: [ ^ true ].
+	self class = other class ifFalse: [ ^ false ].
+
+	^ self environment = other environment 
+		and: [ self shot = other shot ]
+]
+
 { #category : #polymorphism }
 FiRGClass >> >> selector [ 
 	"Answer the compiled method associated with the argument, selector (a 
@@ -58,16 +68,18 @@ FiRGClass >> compiler [
 		class: self
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphism }
 FiRGClass >> environment [
 	
 	^ environment
 ]
 
-{ #category : #accessing }
-FiRGClass >> environment: anObject [
-	
-	environment := anObject
+{ #category : #comparing }
+FiRGClass >> hash [
+
+	^ (self class hash 
+		bitXor: self environment hash)
+		bitXor: self shot hash
 ]
 
 { #category : #polymorphism }
@@ -98,6 +110,18 @@ FiRGClass >> lookupSelector: selector [
 	^ nil
 ]
 
+{ #category : #lookup }
+FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+
+	(self instVarNames includes: aName)
+		ifTrue: [ ^ presentBlockClosure value: self ].
+		
+	^ (self superclass ifNil: [ self environment ])
+		lookupVariableNamed: aName 
+		ifFound: presentBlockClosure 
+		ifNotFound: absentBlockClosure
+]
+
 { #category : #polymorphism }
 FiRGClass >> methods [
 	
@@ -121,6 +145,12 @@ FiRGClass >> printOn: aStream [
 	self name printOn: aStream.
 	aStream nextPut: $).
 
+]
+
+{ #category : #accessing }
+FiRGClass >> ringEnvironment: anObject [
+	
+	environment := anObject
 ]
 
 { #category : #private }

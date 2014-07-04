@@ -1,5 +1,5 @@
 Class {
-	#name : #FiNeedsCollectorTest,
+	#name : #FiDependenciesCollectorTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'ringShotResource'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #private }
-FiNeedsCollectorTest >> assertNeedsOf: aRingMethod equals: aNeed [
+FiDependenciesCollectorTest >> assertNeedsOf: aRingMethod equals: aNeed [
 	
 	self 
 		assert: (FiDependenciesCollector new dependenciesFor: aRingMethod) asSet 
@@ -16,7 +16,7 @@ FiNeedsCollectorTest >> assertNeedsOf: aRingMethod equals: aNeed [
 ]
 
 { #category : #running }
-FiNeedsCollectorTest >> setUp [
+FiDependenciesCollectorTest >> setUp [
 
 	super setUp.
 	
@@ -24,7 +24,7 @@ FiNeedsCollectorTest >> setUp [
 ]
 
 { #category : #tests }
-FiNeedsCollectorTest >> testClassASum [
+FiDependenciesCollectorTest >> testClassASum [
 
 	self 
 		assertNeedsOf: ringShotResource classA >> #sum
@@ -43,7 +43,7 @@ FiNeedsCollectorTest >> testClassASum [
 ]
 
 { #category : #tests }
-FiNeedsCollectorTest >> testClassASum42 [
+FiDependenciesCollectorTest >> testClassASum42 [
 
 	self 
 		assertNeedsOf: ringShotResource classA >> #sum42
@@ -60,7 +60,7 @@ FiNeedsCollectorTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-FiNeedsCollectorTest >> testClassBDefaultClass [
+FiDependenciesCollectorTest >> testClassBDefaultClass [
 
 	self 
 		assertNeedsOf: ringShotResource classB >> #defaultClass
@@ -72,7 +72,7 @@ FiNeedsCollectorTest >> testClassBDefaultClass [
 ]
 
 { #category : #tests }
-FiNeedsCollectorTest >> testClassBSum [
+FiDependenciesCollectorTest >> testClassBSum [
 
 	self 
 		assertNeedsOf: ringShotResource classB >> #sum
@@ -92,7 +92,7 @@ FiNeedsCollectorTest >> testClassBSum [
 ]
 
 { #category : #tests }
-FiNeedsCollectorTest >> testClassBVariableInSuper [
+FiDependenciesCollectorTest >> testClassBVariableInSuper [
 
 	self 
 		assertNeedsOf: ringShotResource classB >> #variableInSuper
@@ -104,7 +104,7 @@ FiNeedsCollectorTest >> testClassBVariableInSuper [
 ]
 
 { #category : #tests }
-FiNeedsCollectorTest >> testClassCSum [
+FiDependenciesCollectorTest >> testClassCSum [
 
 	self 
 		assertNeedsOf: ringShotResource classC >> #sum
@@ -112,7 +112,7 @@ FiNeedsCollectorTest >> testClassCSum [
 ]
 
 { #category : #tests }
-FiNeedsCollectorTest >> testClassCUndeclared [
+FiDependenciesCollectorTest >> testClassCUndeclared [
 
 	self 
 		assertNeedsOf: ringShotResource classC >> #undeclared

@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #private }
-FiDependenciesCollectorTest >> assertNeedsOf: aRingMethod equals: aNeed [
+FiDependenciesCollectorTest >> assertDependenciesOf: aRingMethod equals: dependencies [
 	
 	self 
 		assert: (FiDependenciesCollector new dependenciesFor: aRingMethod) asSet 
-		equals: aNeed asSet
+		equals: dependencies asSet
 ]
 
 { #category : #running }
@@ -27,7 +27,7 @@ FiDependenciesCollectorTest >> setUp [
 FiDependenciesCollectorTest >> testClassASum [
 
 	self 
-		assertNeedsOf: ringShotResource classA >> #sum
+		assertDependenciesOf: ringShotResource classA >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
@@ -46,7 +46,7 @@ FiDependenciesCollectorTest >> testClassASum [
 FiDependenciesCollectorTest >> testClassASum42 [
 
 	self 
-		assertNeedsOf: ringShotResource classA >> #sum42
+		assertDependenciesOf: ringShotResource classA >> #sum42
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSelfMessageReceiver new;
@@ -63,7 +63,7 @@ FiDependenciesCollectorTest >> testClassASum42 [
 FiDependenciesCollectorTest >> testClassBDefaultClass [
 
 	self 
-		assertNeedsOf: ringShotResource classB >> #defaultClass
+		assertDependenciesOf: ringShotResource classB >> #defaultClass
 		equals: {
 			FiVariableAccess builder
 				variableName: #C;
@@ -75,7 +75,7 @@ FiDependenciesCollectorTest >> testClassBDefaultClass [
 FiDependenciesCollectorTest >> testClassBSum [
 
 	self 
-		assertNeedsOf: ringShotResource classB >> #sum
+		assertDependenciesOf: ringShotResource classB >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSuperMessageReceiver new;
@@ -95,7 +95,7 @@ FiDependenciesCollectorTest >> testClassBSum [
 FiDependenciesCollectorTest >> testClassBVariableInSuper [
 
 	self 
-		assertNeedsOf: ringShotResource classB >> #variableInSuper
+		assertDependenciesOf: ringShotResource classB >> #variableInSuper
 		equals: {
 			FiVariableAccess builder
 				variableName: #a1;
@@ -107,7 +107,7 @@ FiDependenciesCollectorTest >> testClassBVariableInSuper [
 FiDependenciesCollectorTest >> testClassCSum [
 
 	self 
-		assertNeedsOf: ringShotResource classC >> #sum
+		assertDependenciesOf: ringShotResource classC >> #sum
 		equals: { }
 ]
 
@@ -115,7 +115,7 @@ FiDependenciesCollectorTest >> testClassCSum [
 FiDependenciesCollectorTest >> testClassCUndeclared [
 
 	self 
-		assertNeedsOf: ringShotResource classC >> #undeclared
+		assertDependenciesOf: ringShotResource classC >> #undeclared
 		equals: {
 			FiVariableAccess builder
 				variableName: #undeclaredVar;

@@ -15,7 +15,7 @@ FiShotResource >> classA [
 		layout: (self fixedLayoutWithSlotsNamed: #('a1' 'a2'));
 		methods: (FiSet withValues: { 
 			self methodWith: 'sum  ^ a1 + a2'.
-			self methodWith: 'numberClass  ^ Float'. });
+			self methodWith: 'sum42  ^ self sum + 42'. });
 		new.
 ]
 
@@ -25,15 +25,29 @@ FiShotResource >> classB [
 	^ FiClass builder 
 		theName: #B;
 		superclass: #A;
-		layout: (self fixedLayoutWithSlotsNamed: #('b1' 'b2'));
-		methods: (FiSet withValues: { self methodWith: 'sum  ^ a1 + a2 + b1 + b2' });
+		layout: (self fixedLayoutWithSlotsNamed: #('b1'));
+		methods: (FiSet withValues: { 
+			self methodWith: 'sum  ^ super sum + b1'.
+			self methodWith: 'coolClass  ^ C'.
+			});
 		new.
 ]
 
 { #category : #resources }
-FiShotResource >> environmentWithClassesAB [
+FiShotResource >> classC [
 
-	^ FiSet withValues: { self packageXWithClassesAB }
+	^ FiClass builder 
+		theName: #C;
+		layout: (self fixedLayoutWithSlotsNamed: #());
+		methods: (FiSet withValues: { 
+			self methodWith: 'sum  ^ 0'. });
+		new.
+]
+
+{ #category : #resources }
+FiShotResource >> environmentWithClassesABC [
+
+	^ FiSet withValues: { self packageXWithClassesABC }
 ]
 
 { #category : #resources }
@@ -56,10 +70,10 @@ FiShotResource >> methodWith: sourceCode [
 ]
 
 { #category : #resources }
-FiShotResource >> packageXWithClassesAB [
+FiShotResource >> packageXWithClassesABC [
 	
 	^ FiPackage builder
 		theName: #X;
-		contents: (FiSet withValues: { self classA. self classB });
+		contents: (FiSet withValues: { self classA. self classB. self classC });
 		new
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #FiNeedIteratorTest,
+	#name : #FiNeedsCollectorTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'ringShotResource'
@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #private }
-FiNeedIteratorTest >> assertNeedsOf: aRingMethod equals: aNeed [
+FiNeedsCollectorTest >> assertNeedsOf: aRingMethod equals: aNeed [
 	
 	self 
-		assert: (FiNeedIterator new needsFor: aRingMethod) asSet 
+		assert: (FiNeedsCollector new needsFor: aRingMethod) asSet 
 		equals: aNeed asSet
 ]
 
 { #category : #running }
-FiNeedIteratorTest >> setUp [
+FiNeedsCollectorTest >> setUp [
 
 	super setUp.
 	
@@ -24,7 +24,7 @@ FiNeedIteratorTest >> setUp [
 ]
 
 { #category : #tests }
-FiNeedIteratorTest >> testClassASum [
+FiNeedsCollectorTest >> testClassASum [
 
 	self 
 		assertNeedsOf: ringShotResource classA >> #sum
@@ -43,7 +43,7 @@ FiNeedIteratorTest >> testClassASum [
 ]
 
 { #category : #tests }
-FiNeedIteratorTest >> testClassASum42 [
+FiNeedsCollectorTest >> testClassASum42 [
 
 	self 
 		assertNeedsOf: ringShotResource classA >> #sum42
@@ -60,7 +60,19 @@ FiNeedIteratorTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-FiNeedIteratorTest >> testClassBSum [
+FiNeedsCollectorTest >> testClassBDefaultClass [
+
+	self 
+		assertNeedsOf: ringShotResource classB >> #defaultClass
+		equals: {
+			FiVariableAccess builder
+				variableName: #C;
+				new
+			}
+]
+
+{ #category : #tests }
+FiNeedsCollectorTest >> testClassBSum [
 
 	self 
 		assertNeedsOf: ringShotResource classB >> #sum
@@ -80,9 +92,33 @@ FiNeedIteratorTest >> testClassBSum [
 ]
 
 { #category : #tests }
-FiNeedIteratorTest >> testClassCSum [
+FiNeedsCollectorTest >> testClassBVariableInSuper [
+
+	self 
+		assertNeedsOf: ringShotResource classB >> #variableInSuper
+		equals: {
+			FiVariableAccess builder
+				variableName: #a1;
+				new
+			}
+]
+
+{ #category : #tests }
+FiNeedsCollectorTest >> testClassCSum [
 
 	self 
 		assertNeedsOf: ringShotResource classC >> #sum
 		equals: { }
+]
+
+{ #category : #tests }
+FiNeedsCollectorTest >> testClassCUndeclared [
+
+	self 
+		assertNeedsOf: ringShotResource classC >> #undeclared
+		equals: {
+			FiVariableAccess builder
+				variableName: #undeclaredVar;
+				new
+		}
 ]

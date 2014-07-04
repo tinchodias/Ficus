@@ -2,28 +2,28 @@
 A FiMessageReceiverBuilderTest is a test class for testing the behavior of FiMessageReceiverBuilder
 "
 Class {
-	#name : #FiMessageReceiverBuilderTest,
+	#name : #FiMessageReceiverFactoryTest,
 	#superclass : #TestCase,
 	#category : #'FicusImpact-Tests'
 }
 
 { #category : #private }
-FiMessageReceiverBuilderTest >> assertMessageReceiverOf: sourceCodeFragment equals: aMessageReceiver [
+FiMessageReceiverFactoryTest >> assertMessageReceiverOf: sourceCodeFragment equals: aMessageReceiver [
 	
 	| node |
 	node := self receiverNodeFor: sourceCodeFragment.
 	
-	self assert: (FiMessageReceiverBuilder new messageReceiverFor: node) equals: aMessageReceiver 
+	self assert: (FiMessageReceiverFactory new messageReceiverFor: node) equals: aMessageReceiver 
 ]
 
 { #category : #private }
-FiMessageReceiverBuilderTest >> astOf: sourceCode [
+FiMessageReceiverFactoryTest >> astOf: sourceCode [
 
 	^ RBExplicitVariableParser parseMethod: sourceCode
 ]
 
 { #category : #private }
-FiMessageReceiverBuilderTest >> receiverNodeFor: sourceCodeFragment [
+FiMessageReceiverFactoryTest >> receiverNodeFor: sourceCodeFragment [
 
 	| ast |
 	ast := self astOf: 'method: arg1 ', sourceCodeFragment.
@@ -36,7 +36,7 @@ FiMessageReceiverBuilderTest >> receiverNodeFor: sourceCodeFragment [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver1 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver1 [
 
 	self 
 		assertMessageReceiverOf: 'a1 hash' 
@@ -46,7 +46,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver1 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver10 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver10 [
 
 	self 
 		assertMessageReceiverOf: '(a1 := true) hash' 
@@ -56,7 +56,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver10 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver11 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver11 [
 
 	self 
 		assertMessageReceiverOf: 'Object hash' 
@@ -66,7 +66,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver11 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver12 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver12 [
 
 	self 
 		assertMessageReceiverOf: 'arg1 hash' 
@@ -76,7 +76,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver12 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver2 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver2 [
 
 	self 
 		assertMessageReceiverOf: '1 hash' 
@@ -86,7 +86,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver2 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver3 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver3 [
 
 	self 
 		assertMessageReceiverOf: 'thisContext hash' 
@@ -96,7 +96,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver3 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver4 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver4 [
 
 	self 
 		assertMessageReceiverOf: '(1 + 2) hash' 
@@ -106,7 +106,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver4 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver5 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver5 [
 
 	self 
 		assertMessageReceiverOf: '(Object new; yourself) hash' 
@@ -116,7 +116,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver5 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver6 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver6 [
 
 	self 
 		assertMessageReceiverOf: '| tmp | tmp hash' 
@@ -126,7 +126,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver6 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver7 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver7 [
 
 	self 
 		assertMessageReceiverOf: '{1. 2.} hash' 
@@ -136,7 +136,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver7 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver8 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver8 [
 
 	self 
 		assertMessageReceiverOf: '#(1 2) hash' 
@@ -146,7 +146,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver8 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testAnyMessageReceiver9 [
+FiMessageReceiverFactoryTest >> testAnyMessageReceiver9 [
 
 	self 
 		assertMessageReceiverOf: '#[1 2] hash' 
@@ -156,7 +156,7 @@ FiMessageReceiverBuilderTest >> testAnyMessageReceiver9 [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testSelfMessageReceiver [
+FiMessageReceiverFactoryTest >> testSelfMessageReceiver [
 
 	self 
 		assertMessageReceiverOf: 'self hash' 
@@ -165,7 +165,7 @@ FiMessageReceiverBuilderTest >> testSelfMessageReceiver [
 ]
 
 { #category : #tests }
-FiMessageReceiverBuilderTest >> testSuperMessageReceiver [
+FiMessageReceiverFactoryTest >> testSuperMessageReceiver [
 
 	self 
 		assertMessageReceiverOf: 'super hash' 

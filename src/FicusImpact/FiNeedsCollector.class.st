@@ -1,5 +1,5 @@
 Class {
-	#name : #FiNeedIterator,
+	#name : #FiNeedsCollector,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'needs'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-FiNeedIterator >> initialize [
+FiNeedsCollector >> initialize [
 
 	super initialize.
 	
@@ -16,7 +16,7 @@ FiNeedIterator >> initialize [
 ]
 
 { #category : #public }
-FiNeedIterator >> needsFor: aRBMethodNode [ 
+FiNeedsCollector >> needsFor: aRBMethodNode [ 
 
 	needs := OrderedCollection new.
 
@@ -26,10 +26,10 @@ FiNeedIterator >> needsFor: aRBMethodNode [
 ]
 
 { #category : #'as yet unclassified' }
-FiNeedIterator >> visitMessageNode: aMessageNode [
+FiNeedsCollector >> visitMessageNode: aMessageNode [
 
 	| receiver |
-	receiver := FiMessageReceiverBuilder new messageReceiverFor: aMessageNode receiver.
+	receiver := FiMessageReceiverFactory new messageReceiverFor: aMessageNode receiver.
 
 	needs add: 
 		(FiMessageSend builder
@@ -41,9 +41,12 @@ FiNeedIterator >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #'as yet unclassified' }
-FiNeedIterator >> visitVariableNode: aVariableNode [
+FiNeedsCollector >> visitVariableNode: aVariableNode [
 
-	aVariableNode isInstance ifTrue: [
+	| binding |
+	binding := aVariableNode binding.
+
+	(binding isUndeclared or: [ binding isInstance ]) ifTrue: [
 		needs add: 
 			(FiVariableAccess builder
 				variableName: aVariableNode name;

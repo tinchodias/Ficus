@@ -1,8 +1,8 @@
 Class {
 	#name : #FiVariableAccess,
-	#superclass : #FiNeed,
+	#superclass : #FiDependency,
 	#instVars : [
 		'variableName'
 	],
-	#category : #'FicusImpact-Needs'
+	#category : #'FicusImpact-Dependencies'
 }

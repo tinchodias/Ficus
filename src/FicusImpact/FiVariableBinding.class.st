@@ -1,5 +1,5 @@
 Class {
 	#name : #FiVariableBinding,
-	#superclass : #FiDependency,
-	#category : #'FicusImpact-Dependencies'
+	#superclass : #FiDependencyInterpretation,
+	#category : #'FicusImpact-Interpretations'
 }

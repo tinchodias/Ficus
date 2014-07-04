@@ -21,7 +21,7 @@ Class {
 		'environment',
 		'selectors'
 	],
-	#category : #'FicusImpact-SendersImplementors'
+	#category : #'FicusImpact-Old-SendersImplementors'
 }
 
 { #category : #'instance creation' }

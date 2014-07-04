@@ -5,7 +5,7 @@ Class {
 		'dependencies',
 		'impact'
 	],
-	#category : #'FicusImpact-Analyzer'
+	#category : #'FicusImpact-Old-Analyzer'
 }
 
 { #category : #accessing }

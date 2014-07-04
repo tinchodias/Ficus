@@ -1,7 +1,7 @@
 Class {
 	#name : #FiMessageReceiverFactory,
 	#superclass : #Object,
-	#category : #'FicusImpact-Needs'
+	#category : #'FicusImpact-Dependencies'
 }
 
 { #category : #public }

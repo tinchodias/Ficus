@@ -1,37 +1,37 @@
 Class {
-	#name : #FiNeedsCollector,
+	#name : #FiDependenciesCollector,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'needs'
+		'dependencies'
 	],
-	#category : #'FicusImpact-Needs'
+	#category : #'FicusImpact-Dependencies'
 }
 
-{ #category : #initialization }
-FiNeedsCollector >> initialize [
-
-	super initialize.
-	
-	needs := OrderedCollection new.
-]
-
 { #category : #public }
-FiNeedsCollector >> needsFor: aRBMethodNode [ 
+FiDependenciesCollector >> dependenciesFor: aRBMethodNode [ 
 
-	needs := OrderedCollection new.
+	dependencies := OrderedCollection new.
 
 	aRBMethodNode parseTree doSemanticAnalysis acceptVisitor: self.
 	
-	^ needs asArray
+	^ dependencies asArray
+]
+
+{ #category : #initialization }
+FiDependenciesCollector >> initialize [
+
+	super initialize.
+	
+	dependencies := OrderedCollection new.
 ]
 
 { #category : #'as yet unclassified' }
-FiNeedsCollector >> visitMessageNode: aMessageNode [
+FiDependenciesCollector >> visitMessageNode: aMessageNode [
 
 	| receiver |
 	receiver := FiMessageReceiverFactory new messageReceiverFor: aMessageNode receiver.
 
-	needs add: 
+	dependencies add: 
 		(FiMessageSend builder
 			selector: aMessageNode selector;
 			receiver: receiver;
@@ -41,13 +41,13 @@ FiNeedsCollector >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #'as yet unclassified' }
-FiNeedsCollector >> visitVariableNode: aVariableNode [
+FiDependenciesCollector >> visitVariableNode: aVariableNode [
 
 	| binding |
 	binding := aVariableNode binding.
 
 	(binding isUndeclared or: [ binding isInstance ]) ifTrue: [
-		needs add: 
+		dependencies add: 
 			(FiVariableAccess builder
 				variableName: aVariableNode name;
 				new) ].

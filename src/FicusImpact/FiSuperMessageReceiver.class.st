@@ -4,5 +4,5 @@ Class {
 	#instVars : [
 		'behaviorName'
 	],
-	#category : #'FicusImpact-Needs'
+	#category : #'FicusImpact-Dependencies'
 }

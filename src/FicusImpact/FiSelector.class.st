@@ -9,7 +9,7 @@ Class {
 		'senders',
 		'implementors'
 	],
-	#category : #'FicusImpact-SendersImplementors'
+	#category : #'FicusImpact-Old-SendersImplementors'
 }
 
 { #category : #accessing }

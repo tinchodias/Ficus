@@ -1,8 +1,8 @@
 Class {
 	#name : #FiHostDeclaration,
-	#superclass : #FiNeed,
+	#superclass : #FiDependency,
 	#instVars : [
 		'hostName'
 	],
-	#category : #'FicusImpact-Needs'
+	#category : #'FicusImpact-Dependencies'
 }

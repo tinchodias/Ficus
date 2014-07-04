@@ -5,7 +5,7 @@ Class {
 		'register',
 		'sourceArray'
 	],
-	#category : #'FicusImpact-Analyzer'
+	#category : #'FicusImpact-Old-Analyzer'
 }
 
 { #category : #analysis }

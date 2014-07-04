@@ -11,7 +11,7 @@ Class {
 FiNeedsCollectorTest >> assertNeedsOf: aRingMethod equals: aNeed [
 	
 	self 
-		assert: (FiNeedsCollector new needsFor: aRingMethod) asSet 
+		assert: (FiDependenciesCollector new dependenciesFor: aRingMethod) asSet 
 		equals: aNeed asSet
 ]
 

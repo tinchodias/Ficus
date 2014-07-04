@@ -1,9 +1,9 @@
 Class {
 	#name : #FiMessageSend,
-	#superclass : #FiNeed,
+	#superclass : #FiDependency,
 	#instVars : [
 		'receiver',
 		'selector'
 	],
-	#category : #'FicusImpact-Needs'
+	#category : #'FicusImpact-Dependencies'
 }

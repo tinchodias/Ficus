@@ -1,5 +1,5 @@
 Class {
 	#name : #FiNotAnalysedMethod,
 	#superclass : #FiAbstractAnalysedMethod,
-	#category : #'FicusImpact-Analyzer'
+	#category : #'FicusImpact-Old-Analyzer'
 }

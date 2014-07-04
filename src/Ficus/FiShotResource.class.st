@@ -28,7 +28,8 @@ FiShotResource >> classB [
 		layout: (self fixedLayoutWithSlotsNamed: #('b1'));
 		methods: (FiSet withValues: { 
 			self methodWith: 'sum  ^ super sum + b1'.
-			self methodWith: 'coolClass  ^ C'.
+			self methodWith: 'variableInSuper  ^ a1'.
+			self methodWith: 'defaultClass  ^ C'.
 			});
 		new.
 ]
@@ -40,7 +41,8 @@ FiShotResource >> classC [
 		theName: #C;
 		layout: (self fixedLayoutWithSlotsNamed: #());
 		methods: (FiSet withValues: { 
-			self methodWith: 'sum  ^ 0'. });
+			self methodWith: 'sum  ^ 0'.
+			self methodWith: 'undeclared  ^ undeclaredVar' });
 		new.
 ]
 

@@ -2,7 +2,7 @@ Class {
 	#name : #FiSuperMessageReceiver,
 	#superclass : #FiMessageReceiver,
 	#instVars : [
-		'className'
+		'behaviorName'
 	],
-	#category : #'FicusImpact-Unused'
+	#category : #'FicusImpact-Needs'
 }

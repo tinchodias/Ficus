@@ -1,11 +1,10 @@
 Class {
 	#name : #FiPossibleMethodInvocation,
-	#superclass : #FiFixedObject,
+	#superclass : #FiDependency,
 	#instVars : [
-		'messageSend',
 		'methods'
 	],
-	#category : #'FicusImpact-Prototype'
+	#category : #'FicusImpact-Dependencies'
 }
 
 { #category : #'instance creation' }

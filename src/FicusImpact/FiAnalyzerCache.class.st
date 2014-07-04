@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cache'
 	],
-	#category : #'FicusImpact-Prototype'
+	#category : #'FicusImpact-Analyzer'
 }
 
 { #category : #analysis }

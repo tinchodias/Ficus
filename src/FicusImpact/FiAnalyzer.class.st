@@ -5,7 +5,7 @@ Class {
 		'register',
 		'sourceArray'
 	],
-	#category : #'FicusImpact-Prototype'
+	#category : #'FicusImpact-Analyzer'
 }
 
 { #category : #analysis }
@@ -26,7 +26,7 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 	dependencies := 
 		aMethod messages 
 			collect: [:selector |
-				FiPossibleMethodInvocation
+				FiAnalysisPossibleMethodInvocation
 					sending: selector "///(FiMessageSend of: selector)"
 					toAnyOf: 
 						(FiSet withValues: ((self register implementorsOf: selector) 

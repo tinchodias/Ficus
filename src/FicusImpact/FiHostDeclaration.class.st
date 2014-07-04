@@ -1,9 +1,8 @@
 Class {
-	#name : #FiMessageSend,
+	#name : #FiHostDeclaration,
 	#superclass : #FiNeed,
 	#instVars : [
-		'receiver',
-		'selector'
+		'hostName'
 	],
 	#category : #'FicusImpact-Needs'
 }

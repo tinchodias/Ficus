@@ -1,5 +1,5 @@
 Class {
 	#name : #FiAnyMessageReceiver,
 	#superclass : #FiMessageReceiver,
-	#category : #'FicusImpact-Unused'
+	#category : #'FicusImpact-Needs'
 }

@@ -1,5 +1,5 @@
 Class {
-	#name : #FiMessageReceiver,
+	#name : #FiNeed,
 	#superclass : #FiFixedObject,
 	#category : #'FicusImpact-Needs'
 }

@@ -23,20 +23,26 @@ Class {
 { #category : #resources }
 FiRGShotResource >> classA [
 
-	^ self environmentWithClassesAB classNamed: #A
+	^ self environmentWithClassesABC classNamed: #A
 ]
 
 { #category : #resources }
 FiRGShotResource >> classB [
 
-	^ self environmentWithClassesAB classNamed: #B
+	^ self environmentWithClassesABC classNamed: #B
 ]
 
 { #category : #resources }
-FiRGShotResource >> environmentWithClassesAB [
+FiRGShotResource >> classC [
+
+	^ self environmentWithClassesABC classNamed: #C
+]
+
+{ #category : #resources }
+FiRGShotResource >> environmentWithClassesABC [
 
 	^ FiRGEnvironment new
-		environmentShot: FiShotResource new environmentWithClassesAB;
+		environmentShot: FiShotResource new environmentWithClassesABC;
 		yourself.
 
 ]

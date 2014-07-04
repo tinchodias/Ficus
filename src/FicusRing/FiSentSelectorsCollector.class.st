@@ -24,10 +24,7 @@ FiSentSelectorsCollector >> selectors [
 { #category : #visitor }
 FiSentSelectorsCollector >> visitMessageNode: aMessageNode [
 
-	| selectorString |
-	selectorString := (String streamContents: [ :str | aMessageNode selectorParts do: [ :each | str nextPutAll: each value ]]).
-
-	selectors add: selectorString asSymbol.
+	selectors add: aMessageNode selector.
 	
 	super visitMessageNode: aMessageNode.
 ]

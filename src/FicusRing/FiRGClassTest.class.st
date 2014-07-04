@@ -8,7 +8,7 @@ Class {
 FiRGClassTest >> testAllInstVarNames [
 
 	self assert: ringShotResource classA allInstVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: ringShotResource classB allInstVarNames asSet equals: #('a1' 'a2' 'b1' 'b2') asSet
+	self assert: ringShotResource classB allInstVarNames asSet equals: #('a1' 'a2' 'b1') asSet
 ]
 
 { #category : #tests }
@@ -47,7 +47,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 FiRGClassTest >> testEnvironment [
 		
 	| environment |
-	environment := ringShotResource environmentWithClassesAB.
+	environment := ringShotResource environmentWithClassesABC.
 	
 	self assert: (environment classNamed: #A) environment == environment
 ]
@@ -56,7 +56,7 @@ FiRGClassTest >> testEnvironment [
 FiRGClassTest >> testInstVarNames [
 		
 	self assert: ringShotResource classA instVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: ringShotResource classB instVarNames asSet equals: #('b1' 'b2') asSet.
+	self assert: ringShotResource classB instVarNames asSet equals: #('b1') asSet.
 
 ]
 
@@ -79,8 +79,7 @@ FiRGClassTest >> testLookupSelector [
 { #category : #tests }
 FiRGClassTest >> testMethods [
 
-	self assert: ringShotResource classA methods size equals: 2.
-	self assert: ringShotResource classB methods size equals: 1.
+	self deny: ringShotResource classA methods isEmpty.
 
 ]
 

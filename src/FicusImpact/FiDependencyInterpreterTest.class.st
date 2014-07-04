@@ -56,3 +56,15 @@ FiDependencyInterpreterTest >> testClassBVariableInSuper [
 				new)
 
 ]
+
+{ #category : #tests }
+FiDependencyInterpreterTest >> testClassCUndeclared [
+
+	self 
+		assertInterpretationOf: (
+			FiVariableAccess builder
+				variableName: #undeclaredVar;
+				new)
+		in: (ringShotResource classC >> #undeclared)
+		equals: FiVariableBinding undeclared
+]

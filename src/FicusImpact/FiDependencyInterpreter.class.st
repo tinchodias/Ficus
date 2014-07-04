@@ -16,6 +16,5 @@ FiDependencyInterpreter >> interpretationOf: aDependency in: aFiRGShot [
 			FiVariableBinding builder 
 				target: variable;
 				new ]
-		ifNotFound: [ 
-			FiVariableBinding undeclared ].
+		ifNotFound: [ FiVariableBinding undeclared ].
 ]

@@ -6,3 +6,9 @@ Class {
 	],
 	#category : #'FicusImpact-Dependencies'
 }
+
+{ #category : #accessing }
+FiVariableAccess >> variableName [
+	
+	^ variableName
+]

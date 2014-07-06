@@ -4,7 +4,7 @@ Class {
 	#category : #'FicusImpact-Dependencies'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 FiAnyMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
 
 	^  anEnvironment implementorsOf: aSelector

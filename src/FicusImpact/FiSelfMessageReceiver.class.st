@@ -13,7 +13,7 @@ FiSelfMessageReceiver >> behaviorName [
 	^ behaviorName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 FiSelfMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
 
 	^ anEnvironment 

@@ -13,7 +13,7 @@ FiSuperMessageReceiver >> behaviorName [
 	^ behaviorName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 FiSuperMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
 
 	^ anEnvironment 

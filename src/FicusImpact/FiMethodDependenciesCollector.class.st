@@ -1,5 +1,5 @@
 Class {
-	#name : #FiDependenciesCollector,
+	#name : #FiMethodDependenciesCollector,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'dependencies'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #public }
-FiDependenciesCollector >> dependenciesFor: aRBMethodNode [ 
+FiMethodDependenciesCollector >> dependenciesFor: aRBMethodNode [ 
 
 	dependencies := OrderedCollection new.
 
@@ -18,15 +18,15 @@ FiDependenciesCollector >> dependenciesFor: aRBMethodNode [
 ]
 
 { #category : #initialization }
-FiDependenciesCollector >> initialize [
+FiMethodDependenciesCollector >> initialize [
 
 	super initialize.
 	
 	dependencies := OrderedCollection new.
 ]
 
-{ #category : #'as yet unclassified' }
-FiDependenciesCollector >> visitMessageNode: aMessageNode [
+{ #category : #visitor }
+FiMethodDependenciesCollector >> visitMessageNode: aMessageNode [
 
 	| receiver |
 	receiver := FiMessageReceiverFactory new messageReceiverFor: aMessageNode receiver.
@@ -40,8 +40,8 @@ FiDependenciesCollector >> visitMessageNode: aMessageNode [
 	super visitMessageNode: aMessageNode.
 ]
 
-{ #category : #'as yet unclassified' }
-FiDependenciesCollector >> visitVariableNode: aVariableNode [
+{ #category : #visitor }
+FiMethodDependenciesCollector >> visitVariableNode: aVariableNode [
 
 	| binding |
 	binding := aVariableNode binding.

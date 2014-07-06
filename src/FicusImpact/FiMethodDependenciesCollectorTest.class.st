@@ -1,5 +1,5 @@
 Class {
-	#name : #FiDependenciesCollectorTest,
+	#name : #FiMethodDependenciesCollectorTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'ringShotResource'
@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #private }
-FiDependenciesCollectorTest >> assertDependenciesOf: aRingMethod equals: dependencies [
+FiMethodDependenciesCollectorTest >> assertDependenciesOf: aRingMethod equals: dependencies [
 	
 	self 
-		assert: (FiDependenciesCollector new dependenciesFor: aRingMethod) asSet 
+		assert: (FiMethodDependenciesCollector new dependenciesFor: aRingMethod) asSet 
 		equals: dependencies asSet
 ]
 
 { #category : #running }
-FiDependenciesCollectorTest >> setUp [
+FiMethodDependenciesCollectorTest >> setUp [
 
 	super setUp.
 	
@@ -24,7 +24,7 @@ FiDependenciesCollectorTest >> setUp [
 ]
 
 { #category : #tests }
-FiDependenciesCollectorTest >> testClassASum [
+FiMethodDependenciesCollectorTest >> testClassASum [
 
 	self 
 		assertDependenciesOf: ringShotResource classA >> #sum
@@ -43,7 +43,7 @@ FiDependenciesCollectorTest >> testClassASum [
 ]
 
 { #category : #tests }
-FiDependenciesCollectorTest >> testClassASum42 [
+FiMethodDependenciesCollectorTest >> testClassASum42 [
 
 	self 
 		assertDependenciesOf: ringShotResource classA >> #sum42
@@ -60,7 +60,7 @@ FiDependenciesCollectorTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-FiDependenciesCollectorTest >> testClassBDefaultClass [
+FiMethodDependenciesCollectorTest >> testClassBDefaultClass [
 
 	self 
 		assertDependenciesOf: ringShotResource classB >> #defaultClass
@@ -72,7 +72,7 @@ FiDependenciesCollectorTest >> testClassBDefaultClass [
 ]
 
 { #category : #tests }
-FiDependenciesCollectorTest >> testClassBSum [
+FiMethodDependenciesCollectorTest >> testClassBSum [
 
 	self 
 		assertDependenciesOf: ringShotResource classB >> #sum
@@ -92,7 +92,7 @@ FiDependenciesCollectorTest >> testClassBSum [
 ]
 
 { #category : #tests }
-FiDependenciesCollectorTest >> testClassBVariableInSuper [
+FiMethodDependenciesCollectorTest >> testClassBVariableInSuper [
 
 	self 
 		assertDependenciesOf: ringShotResource classB >> #variableInSuper
@@ -104,7 +104,7 @@ FiDependenciesCollectorTest >> testClassBVariableInSuper [
 ]
 
 { #category : #tests }
-FiDependenciesCollectorTest >> testClassCSum [
+FiMethodDependenciesCollectorTest >> testClassCSum [
 
 	self 
 		assertDependenciesOf: ringShotResource classC >> #sum
@@ -112,7 +112,7 @@ FiDependenciesCollectorTest >> testClassCSum [
 ]
 
 { #category : #tests }
-FiDependenciesCollectorTest >> testClassCUndeclared [
+FiMethodDependenciesCollectorTest >> testClassCUndeclared [
 
 	self 
 		assertDependenciesOf: ringShotResource classC >> #undeclared

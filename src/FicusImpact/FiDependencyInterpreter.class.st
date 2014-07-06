@@ -1,7 +1,7 @@
 Class {
 	#name : #FiDependencyInterpreter,
 	#superclass : #Object,
-	#category : #'FicusImpact-Tests'
+	#category : #'FicusImpact-Interpretations'
 }
 
 { #category : #public }

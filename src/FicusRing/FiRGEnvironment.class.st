@@ -92,7 +92,7 @@ FiRGEnvironment >> hash [
 		bitXor: self environmentShot hash
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 FiRGEnvironment >> implementorsOf: aSelector [ 
 	
 	^ Array streamContents: [ :stream |
@@ -103,7 +103,7 @@ FiRGEnvironment >> implementorsOf: aSelector [
 				ifAbsent: [ ] ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 FiRGEnvironment >> implementorsOf: aSelector inHierarchyOf: aRingClass [
 
 	^ Array streamContents: [ :stream |
@@ -114,7 +114,7 @@ FiRGEnvironment >> implementorsOf: aSelector inHierarchyOf: aRingClass [
 				ifAbsent: [ ] ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #lookup }
 FiRGEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [ 
 
 	^ Array streamContents: [ :stream |

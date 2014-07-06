@@ -42,7 +42,8 @@ FiShotResource >> classC [
 		layout: (self fixedLayoutWithSlotsNamed: #());
 		methods: (FiSet withValues: { 
 			self methodWith: 'sum  ^ 0'.
-			self methodWith: 'undeclared  ^ undeclaredVar' });
+			self methodWith: 'undeclared  ^ undeclaredVar'.
+			self methodWith: 'sumAt: argument  ^ argument sum' });
 		new.
 ]
 

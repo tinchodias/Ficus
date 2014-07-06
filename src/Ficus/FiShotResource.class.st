@@ -12,7 +12,7 @@ FiShotResource >> classA [
 
 	^ FiClass builder 
 		theName: #A;
-		layout: (self fixedLayoutWithSlotsNamed: #('a1' 'a2'));
+		layout: (self fixedLayoutWithSlotsNamed: #( #a1 #a2 ));
 		methods: (FiSet withValues: { 
 			self methodWith: 'sum  ^ a1 + a2'.
 			self methodWith: 'sum42  ^ self sum + 42'. });
@@ -25,7 +25,8 @@ FiShotResource >> classB [
 	^ FiClass builder 
 		theName: #B;
 		superclass: #A;
-		layout: (self fixedLayoutWithSlotsNamed: #('b1'));
+		classPool: (FiSet withValues: #(BConstants));
+		layout: (self fixedLayoutWithSlotsNamed: #(b1));
 		methods: (FiSet withValues: { 
 			self methodWith: 'sum  ^ super sum + b1'.
 			self methodWith: 'variableInSuper  ^ a1'.

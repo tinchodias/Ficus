@@ -56,7 +56,7 @@ FiClass >> initialize [
 
 	theName := nil.
 	category := nil.
-	classPool := #().
+	classPool := FiSet new.
 	comment := ''.
 	sharedPools := FiSet new.
 	metaclass := FiMetaclass new.

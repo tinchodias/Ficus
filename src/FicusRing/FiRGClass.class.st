@@ -40,7 +40,27 @@ FiRGClass >> allInstVarNames [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
+FiRGClass >> allSelectors [
+	"Answer all selectors understood by instances of the receiver"
+
+	| result |
+	result := IdentitySet new.
+
+	self withAllSuperclasses do: [ :aClass | 
+		result addAll: aClass selectors ].
+
+	^ result
+]
+
+{ #category : #polymorphism }
+FiRGClass >> allSubclasses [
+
+	^ Array streamContents: [ :stream |
+		self allSubclassesDo: [ :each | stream nextPut: each ] ]
+]
+
+{ #category : #polymorphism }
 FiRGClass >> allSubclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's subclasses."
 
@@ -49,13 +69,41 @@ FiRGClass >> allSubclassesDo: aBlock [
 		aSubclass allSubclassesDo: aBlock ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
+FiRGClass >> allSuperclasses [
+
+	^ Array streamContents: [ :stream |
+		self allSuperclassesDo: [ :each | stream nextPut: each ] ]
+]
+
+{ #category : #polymorphism }
 FiRGClass >> allSuperclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
 	self superclass ifNotNil: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
+]
+
+{ #category : #polymorphism }
+FiRGClass >> canUnderstand: aSymbol [
+
+	self withAllSuperclasses do: [ :aClass |
+		(aClass includesSelector: aSymbol) ifTrue: [ ^ true ] ].
+	
+	^ false
+]
+
+{ #category : #polymorphism }
+FiRGClass >> classVarNames [
+
+	^ shot classPool values
+]
+
+{ #category : #polymorphism }
+FiRGClass >> comment [
+
+	^ shot comment
 ]
 
 { #category : #polymorphism }
@@ -101,6 +149,17 @@ FiRGClass >> hash [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> includesSelector: aSymbol [ 
+	"Answer whether the message whose selector is the argument is in the 
+	method dictionary of the receiver's class."
+
+	^ self
+		compiledMethodAt: aSymbol
+		ifPresent: [ :method | true ]
+		ifAbsent: [ false ].
+]
+
+{ #category : #polymorphism }
 FiRGClass >> instVarNames [
 
 	^ self shot layout slotNames values asArray
@@ -110,6 +169,12 @@ FiRGClass >> instVarNames [
 FiRGClass >> isBehavior [
 
 	^ true
+]
+
+{ #category : #polymorphism }
+FiRGClass >> isMeta [
+
+	^ false
 ]
 
 { #category : #polymorphism }
@@ -154,6 +219,15 @@ FiRGClass >> name [
 	^ self shot theName
 ]
 
+{ #category : #polymorphism }
+FiRGClass >> parseTreeFor: aSymbol [
+
+	^ self 
+		compiledMethodAt: aSymbol 
+		ifPresent: [ :method | method parseTree ]
+		ifAbsent: [ nil ]
+]
+
 { #category : #printing }
 FiRGClass >> printOn: aStream [
 
@@ -182,6 +256,26 @@ FiRGClass >> ringMethodFor: aMethodShot [
 		yourself
 ]
 
+{ #category : #polymorphism }
+FiRGClass >> selectors [
+
+	^ self methods collect: #selector
+]
+
+{ #category : #polymorphism }
+FiRGClass >> selectorsAndMethodsDo: selectorAndMethodBlock [
+	"Evaluate selectorAndMethodBlock with two arguments for each selector/method pair in my method dictionary."
+
+	^ self methods do: [ :each | 
+		selectorAndMethodBlock value: each selector value: each ]
+]
+
+{ #category : #polymorphism }
+FiRGClass >> sharedPoolNames [
+
+	^ shot sharedPools values
+]
+
 { #category : #accessing }
 FiRGClass >> shot [
 	
@@ -194,13 +288,22 @@ FiRGClass >> shot: anObject [
 	shot := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
+FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
+
+	^ self 
+		compiledMethodAt: selector 
+		ifPresent: [ :method | method sourceCode ] 
+		ifAbsent: aBlock
+]
+
+{ #category : #polymorphism }
 FiRGClass >> subclasses [
 	
 	^ environment allClasses select: [ :aClass | aClass shot superclass = self name ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 FiRGClass >> subclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
 
@@ -221,10 +324,32 @@ FiRGClass >> theNonMetaClass [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
+FiRGClass >> whichClassIncludesSelector: aSymbol [
+
+	^ (self lookupSelector: aSymbol) 
+		ifNil: [ nil ]
+		ifNotNil: [ :method | method methodClass ]
+]
+
+{ #category : #polymorphism }
+FiRGClass >> withAllSubclasses [
+	"Answer a Set of the receiver, the receiver's descendent's, and the  
+	receiver's descendent's subclasses."
+
+	^ self allSubclasses, { self }
+]
+
+{ #category : #polymorphism }
 FiRGClass >> withAllSuperAndSubclassesDo: aBlock [
 
 	self allSuperclassesDo: aBlock.
 	aBlock value: self.
 	self allSubclassesDo: aBlock.
+]
+
+{ #category : #polymorphism }
+FiRGClass >> withAllSuperclasses [
+
+	^ self allSuperclasses, { self }
 ]

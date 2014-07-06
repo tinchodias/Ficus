@@ -40,6 +40,24 @@ FiRGClass >> allInstVarNames [
 
 ]
 
+{ #category : #'as yet unclassified' }
+FiRGClass >> allSubclassesDo: aBlock [ 
+	"Evaluate the argument, aBlock, for each of the receiver's subclasses."
+
+	self subclassesDo: [ :aSubclass | 
+		aBlock value: aSubclass.
+		aSubclass allSubclassesDo: aBlock ]
+]
+
+{ #category : #'as yet unclassified' }
+FiRGClass >> allSuperclassesDo: aBlock [ 
+	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
+
+	self superclass ifNotNil: [
+		aBlock value: self superclass.
+		self superclass allSuperclassesDo: aBlock ]
+]
+
 { #category : #polymorphism }
 FiRGClass >> compiledMethodAt: selector [ 
 	"Answer the compiled method associated with the argument, selector (a 
@@ -136,15 +154,16 @@ FiRGClass >> name [
 	^ self shot theName
 ]
 
-{ #category : #polymorphism }
+{ #category : #printing }
 FiRGClass >> printOn: aStream [
 
 	super printOn: aStream.
-	
-	aStream nextPut: $(.
-	self name printOn: aStream.
-	aStream nextPut: $).
 
+	aStream 
+		nextPut: $(;
+		nextPutAll: self name;
+		nextPut: $).
+	
 ]
 
 { #category : #accessing }
@@ -175,6 +194,19 @@ FiRGClass >> shot: anObject [
 	shot := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+FiRGClass >> subclasses [
+	
+	^ environment allClasses select: [ :aClass | aClass shot superclass = self name ]
+]
+
+{ #category : #'as yet unclassified' }
+FiRGClass >> subclassesDo: aBlock [
+	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
+
+	^ self subclasses do: aBlock
+]
+
 { #category : #polymorphism }
 FiRGClass >> superclass [
 	
@@ -187,4 +219,12 @@ FiRGClass >> superclass [
 FiRGClass >> theNonMetaClass [
 	
 	^ self
+]
+
+{ #category : #'as yet unclassified' }
+FiRGClass >> withAllSuperAndSubclassesDo: aBlock [
+
+	self allSuperclassesDo: aBlock.
+	aBlock value: self.
+	self allSubclassesDo: aBlock.
 ]

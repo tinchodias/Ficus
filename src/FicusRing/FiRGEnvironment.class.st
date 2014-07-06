@@ -92,6 +92,39 @@ FiRGEnvironment >> hash [
 		bitXor: self environmentShot hash
 ]
 
+{ #category : #'as yet unclassified' }
+FiRGEnvironment >> implementorsOf: aSelector [ 
+	
+	^ Array streamContents: [ :stream |
+		self allClassesAndTraitsDo: [ :aClassOrTrait |
+			aClassOrTrait 
+				compiledMethodAt: aSelector 
+				ifPresent: [ :method | stream nextPut: method ] 
+				ifAbsent: [ ] ] ]
+]
+
+{ #category : #'as yet unclassified' }
+FiRGEnvironment >> implementorsOf: aSelector inHierarchyOf: aRingClass [
+
+	^ Array streamContents: [ :stream |
+		aRingClass withAllSuperAndSubclassesDo: [ :aClassOrTrait |
+			aClassOrTrait 
+				compiledMethodAt: aSelector 
+				ifPresent: [ :method | stream nextPut: method ] 
+				ifAbsent: [ ] ] ]
+]
+
+{ #category : #'as yet unclassified' }
+FiRGEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [ 
+
+	^ Array streamContents: [ :stream |
+		aRingClass allSuperclassesDo: [ :aClass |
+			aClass
+				compiledMethodAt: aSelector 
+				ifPresent: [ :method | stream nextPut: method ] 
+				ifAbsent: [ ] ] ]
+]
+
 { #category : #lookup }
 FiRGEnvironment >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 

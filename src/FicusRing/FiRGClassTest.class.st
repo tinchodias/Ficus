@@ -12,6 +12,26 @@ FiRGClassTest >> testAllInstVarNames [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testAllSubclassesDo [
+
+	| result |
+	result := OrderedCollection new.
+	ringShotResource classA allSubclassesDo: [ :aSubclass | result add: aSubclass ].
+	
+	self assert: result asArray equals: { ringShotResource classB }.
+]
+
+{ #category : #tests }
+FiRGClassTest >> testAllSuperclassesDo [
+
+	| result |
+	result := OrderedCollection new.
+	ringShotResource classB allSuperclassesDo: [ :aSuperclass | result add: aSuperclass ].
+	
+	self assert: result asArray equals: { ringShotResource classA }.
+]
+
+{ #category : #tests }
 FiRGClassTest >> testCompiledMethodAt [
 		
 	self assert: (ringShotResource classA compiledMethodAt: #sum) isNotNil.
@@ -84,6 +104,23 @@ FiRGClassTest >> testMethods [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testSubclasses [
+
+	self assert: ringShotResource classA subclasses equals: { ringShotResource classB }.
+	self assert: ringShotResource classB subclasses isEmpty.
+]
+
+{ #category : #tests }
+FiRGClassTest >> testSubclassesDo [
+
+	| result |
+	result := OrderedCollection new.
+	ringShotResource classA subclassesDo: [ :aSubclass | result add: aSubclass ].
+	
+	self assert: result asArray equals: { ringShotResource classB }.
+]
+
+{ #category : #tests }
 FiRGClassTest >> testSuperclass [
 
 	self assert: ringShotResource classA superclass isNil.
@@ -98,4 +135,14 @@ FiRGClassTest >> testTheNonMetaClass [
 
 	self assert: aClass theNonMetaClass == aClass.
 
+]
+
+{ #category : #tests }
+FiRGClassTest >> testWithAllSuperAndSubclassesDo [
+
+	| result |
+	result := OrderedCollection new.
+	ringShotResource classA withAllSuperAndSubclassesDo: [ :aSubclass | result add: aSubclass ].
+	
+	self assert: result asArray equals: { ringShotResource classA. ringShotResource classB }.
 ]

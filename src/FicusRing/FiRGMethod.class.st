@@ -67,6 +67,20 @@ FiRGMethod >> parseTree [
 	
 ]
 
+{ #category : #printing }
+FiRGMethod >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self methodClass name;
+		nextPutAll: '>>';
+		nextPutAll: self selector;
+		nextPut: $).
+	
+]
+
 { #category : #accessing }
 FiRGMethod >> ringEnvironment: anObject [
 	

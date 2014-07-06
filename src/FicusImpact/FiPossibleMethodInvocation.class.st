@@ -8,25 +8,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiPossibleMethodInvocation class >> sending: aMessageSend toAnyOf: aCollection [ 
-	
-	^ self builder
-		messageSend: aMessageSend;
-		methods: aCollection;
-		new
+FiPossibleMethodInvocation class >> empty [
 
-]
-
-{ #category : #accessing }
-FiPossibleMethodInvocation >> defaultStep [
-	
-	^ messageSend asString asSymbol
-]
-
-{ #category : #accessing }
-FiPossibleMethodInvocation >> messageSend [
-	
-	^ messageSend
+	^ self builder methods: FiSet new; new.
 ]
 
 { #category : #accessing }

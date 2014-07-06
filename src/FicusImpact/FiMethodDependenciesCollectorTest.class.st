@@ -112,6 +112,20 @@ FiMethodDependenciesCollectorTest >> testClassCSum [
 ]
 
 { #category : #tests }
+FiMethodDependenciesCollectorTest >> testClassCSumAt [
+
+	self 
+		assertDependenciesOf: ringShotResource classC >> #sumAt:
+		equals: {
+			FiMessageSend builder 
+				receiver: FiAnyMessageReceiver new;
+				selector: #sum;
+				new
+		}
+
+]
+
+{ #category : #tests }
 FiMethodDependenciesCollectorTest >> testClassCUndeclared [
 
 	self 

@@ -6,3 +6,17 @@ Class {
 	],
 	#category : #'FicusImpact-Dependencies'
 }
+
+{ #category : #accessing }
+FiSelfMessageReceiver >> behaviorName [
+	
+	^ behaviorName
+]
+
+{ #category : #'as yet unclassified' }
+FiSelfMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
+
+	^ anEnvironment 
+		implementorsOf: aSelector 
+		inHierarchyOf: (anEnvironment classNamed: behaviorName)
+]

@@ -7,3 +7,15 @@ Class {
 	],
 	#category : #'FicusImpact-Dependencies'
 }
+
+{ #category : #accessing }
+FiMessageSend >> receiver [
+	
+	^ receiver
+]
+
+{ #category : #accessing }
+FiMessageSend >> selector [
+	
+	^ selector
+]

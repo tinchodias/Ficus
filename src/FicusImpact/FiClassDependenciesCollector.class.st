@@ -1,7 +1,7 @@
 Class {
 	#name : #FiClassDependenciesCollector,
 	#superclass : #Object,
-	#category : #'FicusImpact-Tests'
+	#category : #'FicusImpact-Dependencies'
 }
 
 { #category : #public }

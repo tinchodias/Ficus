@@ -50,3 +50,11 @@ FiRoot >> steps [
 	
 	^ #()
 ]
+
+{ #category : #printing }
+FiRoot >> storeOn: aStream [
+
+	aStream 
+		nextPutAll: FiPath name;
+		nextPutAll: ' root'
+]

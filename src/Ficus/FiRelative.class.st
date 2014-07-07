@@ -47,6 +47,8 @@ FiRelative >> initializeOn: aPath step: anObject [
 	self initialize.
 	basePath := aPath.
 	step := anObject.
+	
+	self assert: anObject isLiteral
 ]
 
 { #category : #printing }
@@ -86,4 +88,14 @@ FiRelative >> step [
 FiRelative >> steps [
 	
 	^ basePath steps copyWith: step
+]
+
+{ #category : #printing }
+FiRelative >> storeOn: aStream [
+
+	basePath storeOn: aStream.
+
+	aStream nextPutAll: ' / '.
+		
+	step storeOn: aStream.
 ]

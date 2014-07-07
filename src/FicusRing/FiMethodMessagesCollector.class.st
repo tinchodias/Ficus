@@ -1,5 +1,5 @@
 Class {
-	#name : #FiSentSelectorsCollector,
+	#name : #FiMethodMessagesCollector,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'selectors'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-FiSentSelectorsCollector >> initialize [
+FiMethodMessagesCollector >> initialize [
 
 	super initialize.
 	
@@ -16,13 +16,13 @@ FiSentSelectorsCollector >> initialize [
 ]
 
 { #category : #accessing }
-FiSentSelectorsCollector >> selectors [
+FiMethodMessagesCollector >> selectors [
 	
 	^ selectors
 ]
 
 { #category : #visitor }
-FiSentSelectorsCollector >> visitMessageNode: aMessageNode [
+FiMethodMessagesCollector >> visitMessageNode: aMessageNode [
 
 	selectors add: aMessageNode selector.
 	

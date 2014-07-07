@@ -46,7 +46,7 @@ FiRGMethod >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound
 { #category : #polymorphism }
 FiRGMethod >> messages [
 
-	^ FiSentSelectorsCollector new
+	^ FiMethodMessagesCollector new
 		in: [ :visitor | self parseTree acceptVisitor: visitor ];
 		selectors.
 

@@ -2,7 +2,7 @@
 I represent the root of a FiPath.
 "
 Class {
-	#name : #FiRoot,
+	#name : #FiRootPath,
 	#superclass : #FiPath,
 	#classInstVars : [
 		'instance'
@@ -11,48 +11,48 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiRoot class >> instance [
+FiRootPath class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
 { #category : #comparing }
-FiRoot >> = another [
+FiRootPath >> = another [
 
 	^ self class = another class
 ]
 
 { #category : #comparing }
-FiRoot >> hash [
+FiRootPath >> hash [
 
 	^ self class hash
 ]
 
 { #category : #printing }
-FiRoot >> printOn: aStream [
+FiRootPath >> printOn: aStream [
 
 	aStream nextPutAll: 'root'
 ]
 
 { #category : #resolving }
-FiRoot >> resolvedOn: anObject [
+FiRootPath >> resolvedOn: anObject [
 
 	^ anObject
 ]
 
 { #category : #resolving }
-FiRoot >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect: stepBlockClosure [ 
+FiRootPath >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect: stepBlockClosure [ 
 	
 	^ targetBlockClosure value: anObject
 ]
 
 { #category : #accessing }
-FiRoot >> steps [
+FiRootPath >> steps [
 	
 	^ #()
 ]
 
 { #category : #printing }
-FiRoot >> storeOn: aStream [
+FiRootPath >> storeOn: aStream [
 
 	aStream 
 		nextPutAll: FiPath name;

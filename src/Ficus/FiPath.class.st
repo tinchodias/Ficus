@@ -27,13 +27,13 @@ FiPath class >> fromSton: stonReader [
 
 { #category : #'instance creation' }
 FiPath class >> root [
-	^ FiRoot instance
+	^ FiRootPath instance
 ]
 
 { #category : #accessing }
 FiPath >> / anObject [
 	
-	^ FiRelative 
+	^ FiRelativePath 
 		on: self 
 		step: anObject
 ]

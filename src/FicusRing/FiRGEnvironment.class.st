@@ -5,7 +5,8 @@ Class {
 	#name : #FiRGEnvironment,
 	#superclass : #FiRGShot,
 	#instVars : [
-		'packagesShot'
+		'packagesShot',
+		'allClasses'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -22,9 +23,11 @@ FiRGEnvironment >> = other [
 { #category : #polymorphism }
 FiRGEnvironment >> allClasses [
 
-	^ Array streamContents: [ :stream |
-		packagesShot 
-			valuesDo: [ :packageShot |
+	allClasses ifNotNil: [ ^ allClasses ].
+
+	^ allClasses := 
+		Array streamContents: [ :stream |
+			packagesShot valuesDo: [ :packageShot |
 				stream nextPutAll: 
 					(packageShot contents values 
 						select: #isFicusClass 

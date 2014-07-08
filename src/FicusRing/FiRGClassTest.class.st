@@ -16,7 +16,7 @@ FiRGClassTest >> testAllSelectors [
 
 	self 
 		assert: ringShotResource classB allSelectors
-		equals: ringShotResource classA selectors, ringShotResource classB selectors
+		equals: (ringShotResource classA selectors, ringShotResource classB selectors) asSet
 
 ]
 

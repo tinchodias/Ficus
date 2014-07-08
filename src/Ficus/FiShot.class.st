@@ -237,12 +237,9 @@ FiShot >> tag: anObject [
 { #category : #accessing }
 FiShot >> values [
 	
-	| answer |
-	answer := Set new.
+	^ Array streamContents: [ :stream |
+		self valuesDo: [ :each | stream nextPut: each ] ]
 
-	self valuesDo: [ :each | answer add: each ].
-
-	^ answer 
 ]
 
 { #category : #accessing }

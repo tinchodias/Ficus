@@ -23,12 +23,6 @@ Class {
 }
 
 { #category : #running }
-FiPathTest >> assertStoreStringRoundTripOf: aPath [
-
-	self assert: (self class evaluate: aPath storeString) equals: aPath.
-]
-
-{ #category : #running }
 FiPathTest >> sampleShot [
 	
 	| aSet aClass |
@@ -102,13 +96,4 @@ FiPathTest >> testSteps [
 	path := FiPath root / #A / #sharedPools / #X.
 		
 	self assert: path steps equals: #(A sharedPools X).
-]
-
-{ #category : #tests }
-FiPathTest >> testStoreString [
-
-	self assertStoreStringRoundTripOf: FiPath root.
-	self assertStoreStringRoundTripOf: FiPath root / #A.
-	self assertStoreStringRoundTripOf: FiPath root / #A / #B.
-	self assertStoreStringRoundTripOf: FiPath root / 1 / 4.2.
 ]

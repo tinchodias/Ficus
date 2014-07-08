@@ -58,6 +58,12 @@ FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 		ifFalse: [ anAcceptSlot effectUpdate: oldValue ]
 ]
 
+{ #category : #accessing }
+FiFixedObject >> excludedInstanceVariableNamesForSteps [
+
+	^ #(tag)
+]
+
 { #category : #initialization }
 FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 
@@ -89,14 +95,17 @@ FiFixedObject >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 { #category : #accessing }
 FiFixedObject >> stepCount [
 	
-	^ self class allInstVarNames size - 1 "discount #tag"
+	^ self class allInstVarNames size - self excludedInstanceVariableNamesForSteps size
 ]
 
 { #category : #enumerating }
 FiFixedObject >> stepsAndValuesDo: aBlockClosure [ 
 
-	^ self class instanceVariableNamesDo: [ :name |
-		(name ~= #tag) ifTrue: [
+	| excludedInstanceVariableNames |
+	excludedInstanceVariableNames := self excludedInstanceVariableNamesForSteps.
+
+	^ self class allInstVarNames do: [ :name |
+		(excludedInstanceVariableNames includes: name) ifFalse: [
 			aBlockClosure 
 				value: name asSymbol 
 				value: (self instVarNamed: name)] ]

@@ -8,17 +8,6 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
-{ #category : #ston }
-FiSet class >> fromSton: stonReader [
-
-	| values |
-	values := Array streamContents: [ :stream |
-		stonReader parseListDo: [ :each | 
-			stream nextPut: each ]].
-	
-	^ self withValues: values
-]
-
 { #category : #'instance creation' }
 FiSet class >> new [
 
@@ -34,11 +23,8 @@ FiSet class >> newFromStepsAndValues: aDictionary [
 { #category : #'instance creation' }
 FiSet class >> withValues: aCollection [ 
 	
-	| aSet |
-	aSet := aCollection asSet.
-
-	^ (self basicNew: aSet size)
-		initializeWithSet: aSet;
+	^ (self basicNew: aCollection size)
+		initializeWithValues: aCollection;
 		yourself
 ]
 
@@ -154,13 +140,13 @@ FiSet >> indexOf: step ifPresent: presentBlock ifAbsent: absentBlock [
 ]
 
 { #category : #initialization }
-FiSet >> initializeWithSet: aSet [ 
+FiSet >> initializeWithValues: aCollection [ 
 
 	| index |	
 	self initialize.
 	
 	index := 1.
-	aSet do: [ :each | 
+	aCollection do: [ :each | 
 		self at: index put: each. 
 		index := index + 1 ]
 ]

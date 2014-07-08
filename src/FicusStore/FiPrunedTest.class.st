@@ -32,10 +32,10 @@ FiPrunedTest >> testAlreadyTaggedCollaborator [
 { #category : #tests }
 FiPrunedTest >> testNotTagged [
 
-	shot := FiSet withValues: #(1 2 3 5) asSet.
+	shot := FiSet withValues: #(1 2 3 5).
 	
 "	self assert: shot pruned = shot.  ?? "
 	
 	self deny: shot pruned isProxy.
-	self assert: shot pruned values equals: #(1 2 3 5) asSet.
+	self assert: shot pruned values asSet equals: #(1 2 3 5) asSet.
 ]

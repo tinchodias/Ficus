@@ -34,6 +34,18 @@ FiSet >> asArray [
 	^ (1 to: self size) collect: [ :index | self at: index ] as: Array
 ]
 
+{ #category : #converting }
+FiSet >> asDictionary [
+
+	| result |
+	result := Dictionary new.
+
+	self stepsAndValuesDo: [ :step :value |
+		result at: step put: value ].
+	
+	^ result
+]
+
 { #category : #edits }
 FiSet >> at: step edit: aBlockClosure [ 
 

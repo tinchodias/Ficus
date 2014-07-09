@@ -61,7 +61,7 @@ FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 { #category : #accessing }
 FiFixedObject >> excludedInstanceVariableNamesForSteps [
 
-	^ #(tag)
+	^ #(tag cachedHash)
 ]
 
 { #category : #initialization }

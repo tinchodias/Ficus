@@ -7,7 +7,8 @@ Class {
 	#name : #FiShot,
 	#superclass : #Object,
 	#instVars : [
-		'tag'
+		'tag',
+		'cachedHash'
 	],
 	#category : #'Ficus-Model-Core'
 }
@@ -124,13 +125,7 @@ FiShot >> hasTag [
 { #category : #comparing }
 FiShot >> hash [
 	
-	| hash |
-	hash := self class hash.
-	
-	self stepsAndValuesDo: [ :step :value | 
-		hash := (hash bitXor: step hash) bitXor: value hash ].
-		
-	^ hash
+	^ cachedHash ifNil: [ cachedHash := self uncachedHash ]
 ]
 
 { #category : #initialization }
@@ -232,6 +227,18 @@ FiShot >> tag [
 FiShot >> tag: anObject [
 
 	tag := anObject
+]
+
+{ #category : #comparing }
+FiShot >> uncachedHash [
+	
+	| hash |
+	hash := self class hash.
+	
+	self stepsAndValuesDo: [ :step :value | 
+		hash := (hash bitXor: step hash) bitXor: value hash ].
+		
+	^ hash
 ]
 
 { #category : #accessing }

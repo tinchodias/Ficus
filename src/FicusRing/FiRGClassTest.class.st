@@ -47,6 +47,28 @@ FiRGClassTest >> testAllSuperclassesDo [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testBindingOf [
+
+	| classB |
+	classB := ringShotResource environmentWithClassesABC classNamed: #B.
+
+	"for an undeclared"
+	self assert: (classB bindingOf: #UnexistentClass) isNil.
+
+	"for a global"	
+	self deny: (classB bindingOf: #A) isNil.
+	self assert: (classB bindingOf: #A) equals: (ringShotResource environmentWithClassesABC bindingOf: #A).
+
+	"for a class variable"
+	self deny: (classB bindingOf: #BConstants) isNil.
+"	self assert: (classB bindingOf: #BConstants) equals: (ringShotResource environmentWithClassesABC bindingOf: #A)."
+
+	self flag: #todo. "Functionality missing: SHAREDPOOLS"
+
+
+]
+
+{ #category : #tests }
 FiRGClassTest >> testCanUnderstand [
 
 	self assert: (ringShotResource classA canUnderstand: #sum42).

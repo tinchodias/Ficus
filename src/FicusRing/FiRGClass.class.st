@@ -34,7 +34,7 @@ FiRGClass >> >> selector [
 { #category : #polymorphism }
 FiRGClass >> allInstVarNames [
 
-	^ shot superclassName isNil
+	^ shot hasNullSuperclass
 		ifTrue: [ self instVarNames ]
 		ifFalse: [ self superclass allInstVarNames, self instVarNames ].
 
@@ -80,9 +80,27 @@ FiRGClass >> allSuperclasses [
 FiRGClass >> allSuperclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
-	shot superclassName ifNotNil: [
+	shot hasNullSuperclass ifFalse: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
+]
+
+{ #category : #polymorphism }
+FiRGClass >> bindingOf: varName [
+	"Answer the binding of some variable resolved in the scope of the receiver, or nil
+	if variable with such name is not defined"
+
+	"The lookup recurses up to superclasses looking inside their class and shared pools,
+	but not the environment, since two classes, even if they have ancestry relationship,
+	could use different environments.
+	That's why we doing an environment lookup only as a last step of symbol lookup 
+	and taking only the environment of receiver only, not any of it's superclass(es) "
+	
+	| aSymbol |
+	aSymbol := varName asSymbol.
+
+	^ (self innerBindingOf: aSymbol) ifNil: [
+		 self environment bindingOf: aSymbol ]
 ]
 
 { #category : #polymorphism }
@@ -163,6 +181,20 @@ FiRGClass >> includesSelector: aSymbol [
 		compiledMethodAt: aSymbol
 		ifPresent: [ :method | true ]
 		ifAbsent: [ false ].
+]
+
+{ #category : #polymorphism }
+FiRGClass >> innerBindingOf: aSymbol [
+	"Answer the binding of some variable resolved in the scope of the receiver, or one of its superclass
+	but do not look up binding in receiver's environment.
+	Use #bindingOf: for looking up the variable binding in a full scope, including receiver's environment"
+
+	"First look in classVar dictionary."
+	(self classPool bindingOf: aSymbol) ifNotNil: [:binding | ^binding].
+	"Next look in shared pools."
+	self sharedPools do: [:pool | (pool bindingOf: aSymbol) ifNotNil: [:binding | ^binding]].
+	self superclass ifNotNil: [:supercl | ^ supercl innerBindingOf: aSymbol].	
+	^ nil
 ]
 
 { #category : #polymorphism }
@@ -325,7 +357,7 @@ FiRGClass >> subclassesDo: aBlock [
 { #category : #polymorphism }
 FiRGClass >> superclass [
 	
-	shot superclassName ifNil: [ ^ nil ].
+	shot hasNullSuperclass ifTrue: [ ^ nil ].
 	
 	^ environment classNamed: shot superclassName
 ]

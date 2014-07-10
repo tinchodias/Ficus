@@ -28,6 +28,17 @@ FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
 ]
 
 { #category : #tests }
+FiRGEnvironmentTest >> testBindingOf [
+
+	self 
+		assert: (ringShotResource environmentWithClassesABC bindingOf: #A) 
+		equals: (#A -> (ringShotResource environmentWithClassesABC classNamed: #A)).
+
+	self assert: (ringShotResource environmentWithClassesABC bindingOf: #UnexistentClass) isNil
+
+]
+
+{ #category : #tests }
 FiRGEnvironmentTest >> testClassNamed [
 
 	self assert: (ringShotResource environmentWithClassesABC classNamed: #A) name equals: #A 

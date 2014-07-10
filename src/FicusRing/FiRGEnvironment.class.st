@@ -71,6 +71,15 @@ FiRGEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
 ]
 
 { #category : #polymorphism }
+FiRGEnvironment >> bindingOf: aName [
+	
+	^ self 
+		at: aName
+		ifPresent: [ :value | aName -> value ]
+		ifAbsent: [ nil ]
+]
+
+{ #category : #polymorphism }
 FiRGEnvironment >> classNamed: aName [
 	
 	^ self at: aName ifAbsent: [ NotFound signal ]

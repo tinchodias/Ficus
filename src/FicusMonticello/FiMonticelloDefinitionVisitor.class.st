@@ -18,7 +18,7 @@ FiMonticelloDefinitionVisitor >> ficusClassFor: aMCClassDefinition [
 	^ FiClass builder
 		theName: aMCClassDefinition className;
 		metaclass: (self ficusMetaclassFor: aMCClassDefinition);
-		superclass: aMCClassDefinition superclassName;
+		superclassName: aMCClassDefinition superclassName;
 		layout: (self ficusLayoutFor: aMCClassDefinition);
 		methods: (self ficusMethodsFor: aMCClassDefinition);
 		traitComposition: aMCClassDefinition traitCompositionString;

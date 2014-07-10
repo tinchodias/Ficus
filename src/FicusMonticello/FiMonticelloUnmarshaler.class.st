@@ -27,7 +27,7 @@ FiMonticelloUnmarshaler >> monticelloClassDefinitionFrom: aFiClass [
 
 	^ MCClassDefinition
 		name: aFiClass theName
-		superclassName: aFiClass superclass
+		superclassName: aFiClass superclassName
 		traitComposition: aFiClass traitComposition
 		classTraitComposition: aFiClass metaclass traitComposition
 		category: aFiClass category

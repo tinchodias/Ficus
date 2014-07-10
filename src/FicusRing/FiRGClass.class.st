@@ -395,5 +395,5 @@ FiRGClass >> withAllSuperAndSubclassesDo: aBlock [
 { #category : #polymorphism }
 FiRGClass >> withAllSuperclasses [
 
-	^ self allSuperclasses, { self }
+	^ { self }, self allSuperclasses
 ]

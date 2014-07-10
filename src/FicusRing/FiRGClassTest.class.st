@@ -37,6 +37,12 @@ FiRGClassTest >> testAllSubclassesDo [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testAllSuperclasses [
+
+	self assert: ringShotResource classB allSuperclasses asArray equals: { ringShotResource classA }.
+]
+
+{ #category : #tests }
 FiRGClassTest >> testAllSuperclassesDo [
 
 	| result |
@@ -77,6 +83,13 @@ FiRGClassTest >> testCanUnderstand [
 	self deny: (ringShotResource classA canUnderstand: #defaultClass).
 	self assert: (ringShotResource classB canUnderstand: #defaultClass).
 
+]
+
+{ #category : #'tests-polymorphism' }
+FiRGClassTest >> testClassPool [
+
+	self assert: ringShotResource classA classPool isEmpty.
+	self deny: ringShotResource classB classPool isEmpty.
 ]
 
 { #category : #tests }
@@ -267,4 +280,12 @@ FiRGClassTest >> testWithAllSuperAndSubclassesDo [
 	ringShotResource classA withAllSuperAndSubclassesDo: [ :aSubclass | result add: aSubclass ].
 	
 	self assert: result asArray equals: { ringShotResource classA. ringShotResource classB }.
+]
+
+{ #category : #'tests-polymorphism' }
+FiRGClassTest >> testWithAllSuperclasses [
+
+	self 
+		assert: ringShotResource classB withAllSuperclasses asArray 
+		equals: { ringShotResource classB. ringShotResource classA }.
 ]

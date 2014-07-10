@@ -88,6 +88,12 @@ FiRGEnvironment >> environmentShot: anObject [
 	packagesShot := anObject
 ]
 
+{ #category : #polymorphism }
+FiRGEnvironment >> hasBindingThatBeginsWith: aString [ 
+
+	^ self allClassesAndTraits anySatisfy: [ :each | each name beginsWith: aString ]
+]
+
 { #category : #comparing }
 FiRGEnvironment >> hash [
 

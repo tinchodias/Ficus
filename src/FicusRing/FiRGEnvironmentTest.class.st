@@ -32,3 +32,10 @@ FiRGEnvironmentTest >> testClassNamed [
 
 	self assert: (ringShotResource environmentWithClassesABC classNamed: #A) name equals: #A 
 ]
+
+{ #category : #tests }
+FiRGEnvironmentTest >> testHasBindingThatBeginsWith [
+
+	self assert: (ringShotResource environmentWithClassesABC hasBindingThatBeginsWith: #A).
+	self deny: (ringShotResource environmentWithClassesABC hasBindingThatBeginsWith: #UnexistentClass).
+]

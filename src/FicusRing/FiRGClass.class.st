@@ -34,7 +34,7 @@ FiRGClass >> >> selector [
 { #category : #polymorphism }
 FiRGClass >> allInstVarNames [
 
-	^ shot superclass isNil
+	^ shot superclassName isNil
 		ifTrue: [ self instVarNames ]
 		ifFalse: [ self superclass allInstVarNames, self instVarNames ].
 
@@ -80,7 +80,7 @@ FiRGClass >> allSuperclasses [
 FiRGClass >> allSuperclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
-	self superclass ifNotNil: [
+	shot superclassName ifNotNil: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
 ]
@@ -92,6 +92,12 @@ FiRGClass >> canUnderstand: aSymbol [
 		(aClass includesSelector: aSymbol) ifTrue: [ ^ true ] ].
 	
 	^ false
+]
+
+{ #category : #polymorphism }
+FiRGClass >> classPool [
+
+	^ shot classPool asDictionary
 ]
 
 { #category : #polymorphism }
@@ -276,6 +282,12 @@ FiRGClass >> sharedPoolNames [
 	^ shot sharedPools values
 ]
 
+{ #category : #polymorphism }
+FiRGClass >> sharedPools [
+
+	^ shot sharedPools asArray
+]
+
 { #category : #accessing }
 FiRGClass >> shot [
 	
@@ -300,7 +312,7 @@ FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
 { #category : #polymorphism }
 FiRGClass >> subclasses [
 	
-	^ environment allClasses select: [ :aClass | aClass shot superclass = self name ]
+	^ environment allClasses select: [ :aClass | aClass shot superclassName = self name ]
 ]
 
 { #category : #polymorphism }
@@ -313,9 +325,9 @@ FiRGClass >> subclassesDo: aBlock [
 { #category : #polymorphism }
 FiRGClass >> superclass [
 	
-	shot superclass ifNil: [ ^ nil ].
+	shot superclassName ifNil: [ ^ nil ].
 	
-	^ environment classNamed: shot superclass
+	^ environment classNamed: shot superclassName
 ]
 
 { #category : #polymorphism }

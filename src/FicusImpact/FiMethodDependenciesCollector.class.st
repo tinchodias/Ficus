@@ -46,7 +46,7 @@ FiMethodDependenciesCollector >> visitVariableNode: aVariableNode [
 	| binding |
 	binding := aVariableNode binding.
 
-	(binding isUndeclared or: [ binding isInstance ]) ifTrue: [
+	((binding isUndeclared or: [ binding isInstance ]) or: [ binding isGlobal ]) ifTrue: [
 		dependencies add: 
 			(FiVariableAccess builder
 				variableName: aVariableNode name;

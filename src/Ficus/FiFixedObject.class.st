@@ -107,7 +107,7 @@ FiFixedObject >> stepsAndValuesDo: aBlockClosure [
 	^ self class allInstVarNames do: [ :name |
 		(excludedInstanceVariableNames includes: name) ifFalse: [
 			aBlockClosure 
-				value: name asSymbol 
+				value: name 
 				value: (self instVarNamed: name)] ]
 
 ]

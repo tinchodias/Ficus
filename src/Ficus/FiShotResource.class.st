@@ -24,7 +24,7 @@ FiShotResource >> classB [
 
 	^ FiClass builder 
 		theName: #B;
-		superclass: #A;
+		superclassName: #A;
 		classPool: (FiSet withValues: #(BConstants));
 		layout: (self fixedLayoutWithSlotsNamed: #(b1));
 		methods: (FiSet withValues: { 

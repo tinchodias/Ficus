@@ -7,12 +7,12 @@ Class {
 	#instVars : [
 		'theName',
 		'metaclass',
-		'superclass',
 		'classPool',
 		'sharedPools',
 		'category',
 		'comment',
-		'traitComposition'
+		'traitComposition',
+		'superclassName'
 	],
 	#category : #'Ficus-Model-Meta'
 }
@@ -104,9 +104,10 @@ FiClass >> sharedPools [
 ]
 
 { #category : #accessing }
-FiClass >> superclass [
+FiClass >> superclassName [
 	
-	^ superclass
+	^ superclassName
+	
 ]
 
 { #category : #accessing }

@@ -25,6 +25,12 @@ FiClass class >> named: aString [
 		new
 ]
 
+{ #category : #'default values' }
+FiClass class >> nullSuperclassName [
+	
+	^ #nil
+]
+
 { #category : #accessing }
 FiClass >> category [
 
@@ -49,13 +55,20 @@ FiClass >> defaultStep [
 	^ theName asSymbol
 ]
 
+{ #category : #testing }
+FiClass >> hasNullSuperclass [
+
+	^ superclassName == self class nullSuperclassName
+]
+
 { #category : #initialize }
 FiClass >> initialize [
 
 	super initialize.
 
-	theName := nil.
-	category := nil.
+	theName := #NoName.
+	superclassName := self class nullSuperclassName.
+	category := #NoCategory.
 	classPool := FiSet new.
 	comment := ''.
 	sharedPools := FiSet new.

@@ -7,7 +7,7 @@ Class {
 { #category : #public }
 FiClassDependenciesCollector >> dependenciesFor: aRingClass [ 
 
-	aRingClass shot superclass ifNil: [ ^ #() ].
+	aRingClass shot superclassName ifNil: [ ^ #() ].
 	
 	^ { 
 		FiClassReference builder

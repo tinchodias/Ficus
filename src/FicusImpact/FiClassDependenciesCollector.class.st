@@ -11,6 +11,6 @@ FiClassDependenciesCollector >> dependenciesFor: aRingClass [
 	
 	^ { 
 		FiClassReference builder
-			theName: aRingClass shot superclass;
+			theName: aRingClass shot superclassName;
 			new }
 ]

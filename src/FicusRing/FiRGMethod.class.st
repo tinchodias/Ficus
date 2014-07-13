@@ -67,6 +67,12 @@ FiRGMethod >> parseTree [
 	
 ]
 
+{ #category : #polymorphism }
+FiRGMethod >> pragmas [
+
+	^ self parseTree pragmas
+]
+
 { #category : #printing }
 FiRGMethod >> printOn: aStream [
 

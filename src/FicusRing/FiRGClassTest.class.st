@@ -249,6 +249,13 @@ FiRGClassTest >> testSuperclass [
 	self assert: ringShotResource classB superclass name equals: #A.
 ]
 
+{ #category : #'tests-polymorphism' }
+FiRGClassTest >> testTheMetaClass [
+
+	self assert: ringShotResource classA theMetaClass isMeta.
+
+]
+
 { #category : #tests }
 FiRGClassTest >> testTheNonMetaClass [
 		

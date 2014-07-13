@@ -3,7 +3,7 @@ I am polymorphic with Class, fetching everything needed from a Ficus environment
 "
 Class {
 	#name : #FiRGClass,
-	#superclass : #FiRGShot,
+	#superclass : #FiRGBehavior,
 	#instVars : [
 		'environment',
 		'shot'
@@ -113,6 +113,12 @@ FiRGClass >> canUnderstand: aSymbol [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> category [
+
+	^ shot category
+]
+
+{ #category : #polymorphism }
 FiRGClass >> classPool [
 
 	^ shot classPool asDictionary
@@ -162,6 +168,12 @@ FiRGClass >> compiler [
 FiRGClass >> environment [
 	
 	^ environment
+]
+
+{ #category : #polymorphism }
+FiRGClass >> hasComment [
+	
+	^ shot comment isNotEmpty
 ]
 
 { #category : #comparing }
@@ -301,14 +313,6 @@ FiRGClass >> selectors [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> selectorsAndMethodsDo: selectorAndMethodBlock [
-	"Evaluate selectorAndMethodBlock with two arguments for each selector/method pair in my method dictionary."
-
-	^ self methods do: [ :each | 
-		selectorAndMethodBlock value: each selector value: each ]
-]
-
-{ #category : #polymorphism }
 FiRGClass >> sharedPoolNames [
 
 	^ shot sharedPools values
@@ -360,6 +364,14 @@ FiRGClass >> superclass [
 	shot hasNullSuperclass ifTrue: [ ^ nil ].
 	
 	^ environment classNamed: shot superclassName
+]
+
+{ #category : #polymorphism }
+FiRGClass >> theMetaClass [
+
+	^ FiRGMetaclass new
+		theNonMetaClass: self;
+		yourself
 ]
 
 { #category : #polymorphism }

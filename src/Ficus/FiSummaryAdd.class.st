@@ -12,3 +12,11 @@ FiSummaryAdd >> newValue [
 	
 	^ newValue
 ]
+
+{ #category : #printing }
+FiSummaryAdd >> newValueString [
+
+	^ (newValue isShot 
+		ifTrue: [ newValue values ]
+		ifFalse: [ newValue ]) asString
+]

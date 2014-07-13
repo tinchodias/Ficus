@@ -12,3 +12,11 @@ FiSummaryRemove >> oldValue [
 	
 	^ oldValue
 ]
+
+{ #category : #printing }
+FiSummaryRemove >> oldValueString [
+
+	^ (oldValue isShot 
+		ifTrue: [ oldValue values ]
+		ifFalse: [ oldValue ]) asString
+]

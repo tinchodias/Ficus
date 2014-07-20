@@ -17,8 +17,12 @@ Object >> defaultStep [
 Object >> differenceFrom: other [
 
 	^ self = other 
-		ifTrue: [ self noEdit ]
-		ifFalse: [ other replaceBy: self ]
+		ifTrue: [ FiNoEffect new ]
+		ifFalse: [ 
+			FiReplace builder
+				oldValue: other;
+				newValue: self;
+				new ]
 ]
 
 { #category : #'*Ficus' }

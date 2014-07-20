@@ -278,7 +278,7 @@ FiEffectTest >> testSetRemoveClass [
 { #category : #'tests-set' }
 FiEffectTest >> testSetUpdateClass [
 
-	| shot otherShot edit source result intermediate effect reverted |
+	| shot otherShot edit source result intermediate effect reverted summary |
 	source := FiSet new.
 	shot := FiClass named: #A.
 	otherShot := shot resultOf: (shot at: #comment equal: '42').
@@ -303,17 +303,16 @@ FiEffectTest >> testSetUpdateClass [
 	self flag: #todo. "For coherence with other set effects, we should expect: FiPath root / -> a FiUpdateEffect"
 	self 
 		assert: effect flattenedLeafEffects 
-		equals: { FiPath root / #A -> effect subEffect }.
+		equals: { FiPath root / #A / #comment -> effect subEffect subEffect }.
 
-	self 
-		assert: effect hierarchicalSummary asArray
-		equals: 
-			{ FiSummaryUpdate builder 
-				step: #A;
-				oldValue: shot; 
-				newValue: otherShot; 
-				subSummary: #();
-				new } 
+	self flag: #todo. "refactor"
+	summary := effect hierarchicalSummary.
+	self assert: summary isCollection.
+	self assert: summary size equals: 1.
+	self assert: (summary anyOne isKindOf: FiSummaryUpdate).
+	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne subSummary isNotEmpty.
+	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryUpdate ]).
 
 ]
 

@@ -16,6 +16,12 @@ FiNoEffect >> inverse [
 	^ self edit
 ]
 
+{ #category : #testing }
+FiNoEffect >> isNoEffect [
+
+	^ true
+]
+
 { #category : #enumerating }
 FiNoEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
 	

@@ -29,6 +29,12 @@ FiEditEffect >> inverse [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #testing }
+FiEditEffect >> isNoEffect [
+
+	^ false
+]
+
 { #category : #enumerating }
 FiEditEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
 	

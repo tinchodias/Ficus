@@ -49,64 +49,56 @@ FiSet >> asDictionary [
 { #category : #edits }
 FiSet >> at: step edit: aBlockClosure [ 
 
-	self flag: #todo. "Cloned from FiDictionary"
-	
-	^ FiAcceptKey 
-		key: step
-		edit: (aBlockClosure value: (self shotAt: step))
-]
+	| aShot |
+	aShot := self shotAt: step.
 
-{ #category : #edits }
-FiSet >> at: step equal: value [
-
-	self flag: #todo. "Cloned from FiDictionary"
-
-	^ FiAcceptKey 
-		key: step
-		edit: (FiEqual value: value)
+	^ self include: (aShot resultOf: (aBlockClosure value: aShot))
 ]
 
 { #category : #differencing }
 FiSet >> differenceFrom: other [
 
-	| internalEdits |	
-	self == other ifTrue: [ ^ self noEdit ].
+	| subEffects |	
+	self == other ifTrue: [ ^ FiNoEffect new ].
 	self class == other class ifFalse: [ self shouldBeImplemented ].
 
-	internalEdits := Set new.
+	subEffects := Set new.
 	
 	other stepsAndValuesDo: [ :key :otherValue | 
 		self
 			shotAt: key
 			ifPresent: [ :value | 
-				(otherValue = value) ifFalse: [
-					internalEdits add: (other at: key edit: [ :otherValue2 | value differenceFrom: otherValue ]) ] ]
+				| subDifference |
+				subDifference := value differenceFrom: otherValue.
+				
+				subDifference isNoEffect ifFalse: [
+					subEffects add: 
+						(FiSetUpdateEffect builder
+							theValue: value;
+							oldValue: otherValue;
+							subEffect: subDifference;
+							new) ] ]
 			ifAbsent: [ 
-				internalEdits add: (other exclude: otherValue) ] ].
+				subEffects add: 
+					(FiSetRemoveEffect builder
+						theValue: otherValue;
+						new) ] ].
 
 	self stepsAndValuesDo: [ :key :value |
-		(other steps includes: key)
-			ifFalse: [ internalEdits add: (other include: value) ] ].
+		(other steps includes: key) ifFalse: [ 
+			subEffects add: 
+				(FiSetAddEffect builder
+					theValue: value;
+					new) ] ].
 	
-	^ internalEdits
-		ifEmpty: [ self noEdit ]
-		ifNotEmpty: [ internalEdits size = 1
-			ifTrue: [ internalEdits anyOne ]
-			ifFalse: [ self edits: internalEdits ] ]
-]
-
-{ #category : #effects }
-FiSet >> effectOfAcceptKey: anAcceptKey [ 
-
-	self flag: #fix. "copy&pasted from FiDictionary"
-
-	^ self 
-		shotAt: anAcceptKey key
-		ifPresent: [ :aValue | 
-			aValue = (anAcceptKey edit resultOn: aValue)
-				ifTrue: [ anAcceptKey effectNothing ]
-				ifFalse: [ anAcceptKey effectUpdate: aValue ] ] 
-		ifAbsent: [ anAcceptKey effectAdd ].
+	^ subEffects
+		ifEmpty: [ FiNoEffect new ]
+		ifNotEmpty: [ subEffects size = 1
+			ifTrue: [ subEffects anyOne ]
+			ifFalse: [ 
+				FiCompositeEffect builder
+					subEffects: (FiSet withValues: subEffects);
+					new ] ]
 ]
 
 { #category : #effects }
@@ -124,9 +116,17 @@ FiSet >> effectOfInclude: anInclude [
 	^ self 
 		shotAt: anInclude theValue defaultStep
 		ifPresent: [ :aValue | 
-			aValue = anInclude theValue
+			| difference |
+			difference := anInclude theValue differenceFrom: aValue.
+			
+			difference isNoEffect
 				ifTrue: [ anInclude effectNothing ]
-				ifFalse: [ anInclude effectUpdate: aValue ] ] 
+				ifFalse: [ 
+					FiSetUpdateEffect builder
+						theValue: anInclude theValue;
+						oldValue: aValue;
+						subEffect: difference;
+						new ] ] 
 		ifAbsent: [ anInclude effectAdd ].
 ]
 

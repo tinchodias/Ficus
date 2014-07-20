@@ -29,7 +29,7 @@ FiPathTest >> sampleShot [
 	aClass := FiClass named: #A.
 	
 	aSet := FiSet new.
-	^ aSet resultOf: (aSet at: #A equal: aClass)
+	^ aSet resultOf: (aSet include: aClass)
 ]
 
 { #category : #tests }

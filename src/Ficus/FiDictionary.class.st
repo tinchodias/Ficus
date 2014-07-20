@@ -35,30 +35,50 @@ FiDictionary >> at: step equal: value [
 { #category : #differencing }
 FiDictionary >> differenceFrom: other [
 
-	| internalEdits |	
-	self == other ifTrue: [ ^ self noEdit ].
+	| subEffects |	
+	self == other ifTrue: [ ^ FiNoEffect new ].
 	self class == other class ifFalse: [ self shouldBeImplemented ].
 
-	internalEdits := Set new.
+	subEffects := Set new.
 	
 	other stepsAndValuesDo: [ :key :otherValue | 
 		self
 			shotAt: key
 			ifPresent: [ :value | 
-				(otherValue = value) ifFalse: [
-					internalEdits add: (other at: key edit: [ :otherValue2 | value differenceFrom: otherValue ]) ] ]
+				| subDifference |
+				subDifference := value differenceFrom: otherValue.
+				
+				subDifference isNoEffect ifFalse: [
+					subEffects add: 
+						(FiDictionaryUpdateEffect builder
+							key: key;
+							newValue: value;
+							oldValue: otherValue;
+							subEffect: subDifference;
+							new) ] ]
 			ifAbsent: [ 
-				internalEdits add: (other exclude: key) ] ].
+				subEffects add: 
+					(FiDictionaryRemoveEffect builder
+						key: key;
+						oldValue: otherValue;
+						new) ] ].
 
 	self stepsAndValuesDo: [ :key :value |
-		(other steps includes: key)
-			ifFalse: [ internalEdits add: (other at: key equal: value) ] ].
+		(other steps includes: key) ifFalse: [ 
+			subEffects add: 
+				(FiDictionaryAddEffect builder
+					key: key;
+					newValue: value;
+					new) ] ].
 	
-	^ internalEdits
-		ifEmpty: [ self noEdit ]
-		ifNotEmpty: [ internalEdits size = 1
-			ifTrue: [ internalEdits anyOne ]
-			ifFalse: [ self edits: internalEdits ] ]
+	^ subEffects
+		ifEmpty: [ FiNoEffect new ]
+		ifNotEmpty: [ subEffects size = 1
+			ifTrue: [ subEffects anyOne ]
+			ifFalse: [ 
+				FiCompositeEffect builder
+					subEffects: (FiSet withValues: subEffects);
+					new ] ]
 ]
 
 { #category : #effects }

@@ -11,25 +11,24 @@ Class {
 { #category : #'tests-dictionary' }
 FiDifferencesTest >> testAddClass [
 
-	| edit editEffect source result shot |
+	| edit source result shot |
 	source := FiDictionary new.
 	shot := FiClass named: #A.
 	
 	edit := source at: #A equal: shot.
-	editEffect := source effectOf: edit.
 	result := source resultOf: edit.
 
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: (result exclude: #A).
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (source differenceFrom: result) equals: (result effectOf: (result exclude: #A)).
 ]
 
 { #category : #'tests-shot' }
 FiDifferencesTest >> testAddSharedPool [
 	"Test difference with a sub edit."
 
-	| edit inverseEdit source result |
+	| edit inverseEdit source result effect inverseEffect |
 	source := FiClass named: #A.
 
 	edit := source 
@@ -37,13 +36,15 @@ FiDifferencesTest >> testAddSharedPool [
 		edit: [ :sharedPools | sharedPools include: #X ].
 	
 	result := source resultOf: edit.
+	effect := source effectOf: edit.
 
-	inverseEdit := result
+	inverseEdit := result 
 		at: #sharedPools
 		edit: [ :sharedPools | sharedPools exclude: #X ].
+	inverseEffect := result effectOf: inverseEdit.
 
-	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: inverseEdit.
+	self assert: (result differenceFrom: source) equals: effect.
+	self assert: (source differenceFrom: result) equals: inverseEffect.
 ]
 
 { #category : #'tests-shot' }
@@ -72,8 +73,8 @@ FiDifferencesTest >> testAddSharedPoolAndUpdateComment [
 			equal: ''.
 		}.
 
-	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: inverseEdit.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (source differenceFrom: result) equals: (result effectOf: inverseEdit).
 ]
 
 { #category : #'tests-dictionary' }
@@ -97,7 +98,7 @@ FiDifferencesTest >> testAddSharedPoolInsideDictionary [
 	
 	result := source resultOf: edit.
 
-	self assert: (result differenceFrom: source) equals: edit.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
 
 ]
 
@@ -117,10 +118,10 @@ FiDifferencesTest >> testAddTwoClasses [
 		result exclude: #A.
 		result exclude: #B }.
 
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: inverseEdit.
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (source differenceFrom: result) equals: (result effectOf: inverseEdit).
 ]
 
 { #category : #'tests-dictionary' }
@@ -136,10 +137,10 @@ FiDifferencesTest >> testNoEditClass [
 	edit := source at: #A equal: shot.
 	result := source resultOf: edit.
 	
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) isNoEdit.
-	self assert: (source differenceFrom: result) isNoEdit.
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) isNoEffect.
+	self assert: (source differenceFrom: result) isNoEffect.
 ]
 
 { #category : #'tests-dictionary' }
@@ -155,10 +156,10 @@ FiDifferencesTest >> testRemoveClass [
 	edit := source exclude: shot theName.
 	result := source resultOf: edit.
 	
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: (result at: #A equal: shot).
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (source differenceFrom: result) equals: (result effectOf: (result at: #A equal: shot)).
 ]
 
 { #category : #'tests-set' }
@@ -170,16 +171,16 @@ FiDifferencesTest >> testSetAddSharedPool [
 	edit := source include: #A.
 	result := source resultOf: edit.
 	
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: edit.
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
 
 ]
 
 { #category : #'tests-set' }
 FiDifferencesTest >> testSetRemoveClass [
 
-	| edit editEffect preSource source result shot |
+	| edit preSource source result shot |
 	preSource := FiSet new.
 	shot := FiClass named: #A.
 
@@ -187,13 +188,12 @@ FiDifferencesTest >> testSetRemoveClass [
 	source := preSource resultOf: edit.
 
 	edit := source exclude: shot.
-	editEffect := source effectOf: edit.
 	result := source resultOf: edit.
 	
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: edit.
-	self assert: (source differenceFrom: result) equals: (result include: shot).
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (source differenceFrom: result) equals: (result effectOf: (result include: shot)).
 ]
 
 { #category : #'tests-set' }
@@ -216,9 +216,9 @@ FiDifferencesTest >> testSetUpdateClass [
 			edit: [ :class | 
 				class at: #comment equal: '42' ].		
 	
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: expectedDifference.
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: expectedDifference).
 
 ]
 
@@ -242,8 +242,8 @@ FiDifferencesTest >> testUpdateClass [
 			edit: [ :class | 
 				class at: #comment equal: '42' ].		
 	
-	self assert: (source differenceFrom: source) isNoEdit.
-	self assert: (result differenceFrom: result) isNoEdit.
-	self assert: (result differenceFrom: source) equals: expectedDifference.
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: expectedDifference).
 
 ]

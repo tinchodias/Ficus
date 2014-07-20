@@ -26,25 +26,34 @@ FiFixedObject >> at: step equal: value [
 { #category : #differencing }
 FiFixedObject >> differenceFrom: other [
 
-	| internalEdits |	
-	self == other ifTrue: [ ^ self noEdit ].
+	| subEffects |	
+	self == other ifTrue: [ ^ FiNoEffect new ].
 	self class == other class ifFalse: [ self shouldBeImplemented ].
 
-	internalEdits := Set new.
+	subEffects := Set new.
 	
 	other stepsAndValuesDo: [ :step :otherValue | 
-		| value edit |
+		| value subDifference |
 		value := self shotAt: step.
-		edit := value differenceFrom: otherValue.
+		subDifference := value differenceFrom: otherValue.
 		
-		edit isNoEdit ifFalse: [
-			internalEdits add: (FiAcceptSlot slotName: step edit: edit) ] ].
+		subDifference isNoEffect ifFalse: [
+			subEffects add: 
+				(FiSlotUpdateEffect builder
+					slotName: step;
+					oldValue: otherValue;
+					newValue: value;
+					subEffect: subDifference;
+					new) ] ].
 
-	^ internalEdits
-		ifEmpty: [ self noEdit ]
-		ifNotEmpty: [ internalEdits size = 1
-			ifTrue: [ internalEdits anyOne ]
-			ifFalse: [ self edits: internalEdits ] ]
+	^ subEffects
+		ifEmpty: [ FiNoEffect new ]
+		ifNotEmpty: [ subEffects size = 1
+			ifTrue: [ subEffects anyOne ]
+			ifFalse: [ 
+				FiCompositeEffect builder
+					subEffects: (FiSet withValues: subEffects);
+					new ] ]
 ]
 
 { #category : #effects }

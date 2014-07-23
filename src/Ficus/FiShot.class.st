@@ -217,6 +217,16 @@ FiShot >> stepsAndValuesDo: aBlockClosure [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #ston }
+FiShot >> stonOn: stonWriter [
+
+	stonWriter 
+		writeObject: self 
+		streamMap: [ :dictionary | 
+			self stepsAndValuesDo: [ :step :value | 
+				dictionary at: step put: value ] ]
+]
+
 { #category : #accessing }
 FiShot >> tag [
 	

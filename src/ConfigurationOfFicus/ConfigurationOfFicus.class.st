@@ -115,7 +115,9 @@ ConfigurationOfFicus >> baseline01: spec [
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
 		spec repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main/'.
-		spec 
+		spec
+			package: #Hiedra with: [ 
+				spec repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ];
 			package: #Ficus;
 			package: #FicusMonticello with: [
 				spec requires: #(#Ficus ) ];
@@ -124,7 +126,7 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #FicusImpact with: [
 				spec requires: #(#FicusRing ) ];
 			package: #FicusStore with: [
-				spec requires: #(#Ficus ) ]. ].
+				spec requires: #(#Ficus #Hiedra ) ]. ].
 
 ]
 

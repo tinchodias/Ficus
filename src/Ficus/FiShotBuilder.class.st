@@ -15,7 +15,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'theClass',
-		'stepsAndValues'
+		'stepsAndValues',
+		'cache'
 	],
 	#category : #'Ficus-Model-Core'
 }
@@ -23,8 +24,8 @@ Class {
 { #category : #'instance creation' }
 FiShotBuilder class >> forClass: aClass [ 
 
-	^ self new
-		theClass: aClass;
+	^ self basicNew
+		initializeForClass: aClass;
 		yourself
 ]
 
@@ -40,21 +41,20 @@ FiShotBuilder >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #initialization }
-FiShotBuilder >> initialize [
+FiShotBuilder >> initializeForClass: aClass [
 
 	super initialize.
-	
+
+	theClass := aClass.	
 	stepsAndValues := Dictionary new.
+	cache := FiShotCache default.
 ]
 
 { #category : #building }
 FiShotBuilder >> new [
 
-	^ theClass newFromStepsAndValues: stepsAndValues
-]
-
-{ #category : #accessing }
-FiShotBuilder >> theClass: aClass [ 
+	| newInstance |
+	newInstance := theClass newFromStepsAndValues: stepsAndValues.
 	
-	theClass := aClass
+	^ cache like: newInstance
 ]

@@ -1,13 +1,24 @@
 Class {
 	#name : #FiInspector,
-	#superclass : #DynamicComposableModel,
+	#superclass : #ComposableModel,
 	#instVars : [
 		'treeModel',
-		'rootAssociations',
 		'iconByClassName'
 	],
 	#category : #'Ficus-UI'
 }
+
+{ #category : #specs }
+FiInspector class >> defaultSpec [
+	<spec>
+
+	^ SpecLayout composed
+		newColumn: [ :column |
+			column 
+				add: #treeModel ];
+		yourself.
+
+]
 
 { #category : #inspecting }
 FiInspector class >> inspect: aRootShot [
@@ -46,20 +57,15 @@ FiInspector class >> inspectEffect: rootEffect [
 { #category : #inspecting }
 FiInspector class >> newWith: someAssociations [
 
-	^ self basicNew
-		initializeWith: someAssociations;
+	^ self new
+		rootAssociations: someAssociations;
 		yourself
 ]
 
-{ #category : #private }
-FiInspector >> dynamicLayout [
+{ #category : #accessing }
+FiInspector >> emptyRoots [
 
-	^ SpecLayout composed
-		newColumn: [ :column |
-			column 
-				add: #treeModel ];
-		yourself.
-
+	self rootAssociations: #()
 ]
 
 { #category : #private }
@@ -71,6 +77,15 @@ FiInspector >> iconFor: aShot [
 		(iconByClassName 
 			at: aShot species name 
 			ifAbsent: [ #smallHierarchyBrowserIcon "#nautilusIcon" "#emptyIcon" ])
+]
+
+{ #category : #initialization }
+FiInspector >> initialize [
+
+	super initialize.
+
+	self initializeIconByClassName.	
+
 ]
 
 { #category : #initialization }
@@ -112,7 +127,6 @@ FiInspector >> initializePresenter [
 		title: 'Ficus Inspector'.
 
 	treeModel
-		roots: rootAssociations;
 		displayBlock: [ :assoc | 
 			self panelMorphWithAll: { 
 				(assoc key, ' ·') asMorph.
@@ -130,19 +144,9 @@ FiInspector >> initializePresenter [
 { #category : #initialization }
 FiInspector >> initializeWidgets [ 
 	
-	treeModel := self instantiate: TreeModel.
-	self assign: treeModel to: #treeModel.
+	self instantiateModels: #(
+		treeModel TreeModel)
 
-
-]
-
-{ #category : #initialization }
-FiInspector >> initializeWith: someAssociations [
-
-	rootAssociations := someAssociations.
-
-	self initializeIconByClassName.	
-	self initialize.
 
 ]
 
@@ -151,7 +155,7 @@ FiInspector >> open [
 
 	self
 		extent: 700@600;
-		openWithSpecLayout: self dynamicLayout.
+		openWithSpec.
 
 	"It has no effect if applied before opening:"		
 	treeModel expandAll
@@ -171,12 +175,16 @@ FiInspector >> panelMorphWithAll: someMophs [
 		yourself
 ]
 
-{ #category : #private }
-FiInspector >> refreshSpecLayout [
+{ #category : #accessing }
+FiInspector >> rootAssociations: someAssociations [
 
-	self needFullRebuild: true.
-	self needRebuild: false.
- 	self buildWithSpecLayout: self dynamicLayout
+	treeModel roots: someAssociations
+]
+
+{ #category : #accessing }
+FiInspector >> rootShot: aShot [
+
+	self rootAssociations: { #root -> aShot }
 ]
 
 { #category : #private }
@@ -185,4 +193,10 @@ FiInspector >> stringMorphWith: aString color: aColor [
 	^ aString asMorph
 		color: aColor;
 		yourself
+]
+
+{ #category : #accessing }
+FiInspector >> treeModel [
+
+	^ treeModel
 ]

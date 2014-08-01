@@ -8,11 +8,31 @@ Class {
 	#category : #'FicusStore-HistoryNodes'
 }
 
+{ #category : #comparing }
+FiSnapshotHistoryNode >> = other [
+
+	self flag: #fix. "Just a hack for playing"
+
+	^ self class == other class
+		and: [ self snapshot hash = other snapshot hash 
+		and: [ self priors = other priors ] ]
+]
+
+{ #category : #comparing }
+FiSnapshotHistoryNode >> hash [
+
+	self flag: #fix. "Just a hack for playing"
+
+	^ (self class hash
+		bitXor: self snapshot hash)
+		bitXor: self priors hash
+]
+
 { #category : #accessing }
 FiSnapshotHistoryNode >> patches [
 
-	^ priors collect: [ :aPrior |
-		aPrior -> (snapshot differenceFrom: aPrior) ]
+	^ priors asArray collect: [ :aPrior |
+		aPrior -> (snapshot differenceFrom: aPrior snapshot) ]
 ]
 
 { #category : #accessing }

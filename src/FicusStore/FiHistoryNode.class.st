@@ -1,8 +1,17 @@
 Class {
 	#name : #FiHistoryNode,
-	#superclass : #Object,
+	#superclass : #FiFixedObject,
+	#instVars : [
+		'origin'
+	],
 	#category : #'FicusStore-HistoryNodes'
 }
+
+{ #category : #accessing }
+FiHistoryNode >> origin [
+
+	^ origin
+]
 
 { #category : #accessing }
 FiHistoryNode >> patches [

@@ -135,6 +135,7 @@ FiEffectTest >> testNoEffect [
 	self assert: result values asSet equals: { shot } asSet.
 
 	self assert: effect flattenedLeafEffects isEmpty.
+	self assert: effect hierarchicalSummary isEmpty.
 ]
 
 { #category : #'tests-dictionary' }

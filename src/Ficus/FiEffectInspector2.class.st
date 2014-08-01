@@ -1,14 +1,27 @@
 Class {
 	#name : #FiEffectInspector2,
-	#superclass : #DynamicComposableModel,
+	#superclass : #ComposableModel,
 	#instVars : [
 		'treeModel',
 		'iconByClassName',
-		'diffModel',
-		'rootEffect'
+		'diffModel'
 	],
 	#category : #'Ficus-UI'
 }
+
+{ #category : #specs }
+FiEffectInspector2 class >> defaultSpec [
+	<spec>
+	
+	^ SpecLayout composed
+		newRow: [ :row |
+			row 
+				add: #treeModel origin: 0@0 corner: 0.3@1;
+				addSplitter;
+				add: #diffModel origin: 0.3@0 corner: 1@1];
+		yourself.
+
+]
 
 { #category : #inspecting }
 FiEffectInspector2 class >> inspect: rootEffect [
@@ -19,8 +32,8 @@ FiEffectInspector2 class >> inspect: rootEffect [
 { #category : #inspecting }
 FiEffectInspector2 class >> newWith: aRootEffect [
 
-	^ self basicNew
-		initializeWith: aRootEffect;
+	^ self new
+		rootEffect: aRootEffect;
 		yourself
 ]
 
@@ -47,6 +60,12 @@ FiEffectInspector2 >> diffChunkMorphFor: aSummary at: aPath [
 		}
 ]
 
+{ #category : #accessing }
+FiEffectInspector2 >> diffModel [
+
+	^ diffModel
+]
+
 { #category : #private }
 FiEffectInspector2 >> diffMorphFrom: aString to: otherString [
 
@@ -65,19 +84,6 @@ FiEffectInspector2 >> diffMorphFrom: aString to: otherString [
 ]
 
 { #category : #private }
-FiEffectInspector2 >> dynamicLayout [
-
-	^ SpecLayout composed
-		newRow: [ :row |
-			row 
-				add: #treeModel origin: 0@0 corner: 0.3@1;
-				addSplitter;
-				add: #diffModel origin: 0.3@0 corner: 1@1];
-		yourself.
-
-]
-
-{ #category : #private }
 FiEffectInspector2 >> iconFor: aShot [
 
 	aShot isShot ifFalse: [ ^ Smalltalk ui icons stringIcon ].
@@ -86,6 +92,14 @@ FiEffectInspector2 >> iconFor: aShot [
 		(iconByClassName 
 			at: aShot species name 
 			ifAbsent: [ #smallHierarchyBrowserIcon "#nautilusIcon" "#emptyIcon" ])
+]
+
+{ #category : #initialization }
+FiEffectInspector2 >> initialize [
+
+	super initialize.
+	self initializeIconByClassName.	
+
 ]
 
 { #category : #initialization }
@@ -103,17 +117,19 @@ FiEffectInspector2 >> initializeIconByClassName [
 { #category : #initialization }
 FiEffectInspector2 >> initializePresenter [
 	
+	super initializePresenter.
+	
 	self 
 		windowIcon: Smalltalk ui icons smallInspectItIcon;
 		title: 'Ficus Effects Inspector'.
  
 	treeModel
 		evenRowColor: Color white;
-		roots: self treeRoots;
 		displayBlock: [ :summary | summary step ];
 		childrenBlock: [ :summary | summary subSummary ];
 		iconBlock: [ :summary | self iconFor: summary ];
-		whenSelectedItemChanged: [ :summary | self showDiffFor: summary value ].
+		whenSelectedItemChanged: [ :summary | 
+			self showDiffFor: summary value ].
 
 	diffModel
 		displayBlock: [ :morph | morph ]
@@ -121,23 +137,10 @@ FiEffectInspector2 >> initializePresenter [
 
 { #category : #initialization }
 FiEffectInspector2 >> initializeWidgets [ 
-	
-	treeModel := self instantiate: TreeModel.
-	self assign: treeModel to: #treeModel.
 
-	diffModel := self instantiate: TreeModel.
-	self assign: diffModel to: #diffModel.
-
-]
-
-{ #category : #initialization }
-FiEffectInspector2 >> initializeWith: aRootEffect [
-
-	rootEffect := aRootEffect.
-
-	self initializeIconByClassName.	
-	self initialize.
-
+	self instantiateModels: #(
+		treeModel TreeModel
+		diffModel TreeModel )
 ]
 
 { #category : #opening }
@@ -145,7 +148,7 @@ FiEffectInspector2 >> open [
 
 	self
 		extent: 800@600;
-		openWithSpecLayout: self dynamicLayout.
+		openWithSpec.
 
 	"It has no effect if applied before opening:"		
 	treeModel expandAll
@@ -159,6 +162,15 @@ FiEffectInspector2 >> pathMorphWith: aPath [
 "		emphasis: 1;"
 		color: Color darkGray;
 		yourself
+]
+
+{ #category : #opening }
+FiEffectInspector2 >> rootEffect: anEffect [
+
+	treeModel roots: (self treeRootsFor: anEffect).
+
+	treeModel expandAll
+
 ]
 
 { #category : #private }
@@ -175,12 +187,19 @@ FiEffectInspector2 >> showDiffFor: anEffect [
 		limitedTo: 15).
 ]
 
+{ #category : #accessing }
+FiEffectInspector2 >> treeModel [
+
+	^ treeModel
+]
+
 { #category : #private }
-FiEffectInspector2 >> treeRoots [
+FiEffectInspector2 >> treeRootsFor: anEffect [
 
-	^ rootEffect hierarchicalSummary size = 1
-		ifTrue: [ rootEffect hierarchicalSummary anyOne subSummary ] "TODO: avoiding #contents in a hacky way"
-		ifFalse: [ rootEffect hierarchicalSummary ].
-		
+	| summary |
+	summary := anEffect hierarchicalSummary.
 
+	^ summary size = 1
+		ifTrue: [ summary anyOne subSummary ] "TODO: avoiding #contents in a hacky way"
+		ifFalse: [ summary ]
 ]

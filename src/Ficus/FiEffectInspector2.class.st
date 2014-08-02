@@ -14,6 +14,20 @@ FiEffectInspector2 class >> defaultSpec [
 	<spec>
 	
 	^ SpecLayout composed
+		newColumn: [ :column |
+			column 
+				add: #treeModel origin: 0@0 corner: 1@0.6;
+				addSplitter;
+				add: #diffModel origin: 0@0.6 corner: 1@1];
+		yourself.
+
+]
+
+{ #category : #specs }
+FiEffectInspector2 class >> defaultSpecAsRow [
+	<spec>
+	
+	^ SpecLayout composed
 		newRow: [ :row |
 			row 
 				add: #treeModel origin: 0@0 corner: 0.3@1;

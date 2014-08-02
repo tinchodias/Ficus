@@ -70,19 +70,17 @@ FiFullHistoryBrowser >> initializePresenter [
 
 	self title: 'Ficus Full History Browser'.
  	
-	self initializeTabs.
+	self initializeTabs. 
 	
 	historyBrowserModel historyTreeModel
 		whenSelectedItemsChanged: [ :selectedItems | 
-			| difference | 
-			difference := selectedItems 
-				ifEmpty: [ FiNoEffect new ]
-				ifNotEmpty: [ 
-					selectedItems anyOne patches 
-						ifEmpty: [ FiNoEffect new ]
-						ifNotEmpty: [ :patches | patches first value ] ].
-				
-			differenceModel rootEffect: difference ]
+			| actuallySelectedTab |
+			actuallySelectedTab := 
+				tabManagerModel selectedTab 
+					ifNil: [ 	snapshotTabModel ] "This is a workaround because you can not convince Spec that the tab initially selected is actually selected."
+					ifNotNil: [ :tabModel | tabModel ].
+					
+			actuallySelectedTab tabSelected ]
 ]
 
 { #category : #initialization }
@@ -92,18 +90,20 @@ FiFullHistoryBrowser >> initializeTabs [
 		label: 'Snapshot';
 		icon: Smalltalk ui icons smallOpenIcon;
 		model: self snapshotModel;
+		whenTabSelected: [ self refreshSnapshotTab ];
 		closeable: false.
 		
 	differenceTabModel
 		label: 'Difference';
 		icon: Smalltalk ui icons smallFindIcon;
 		model: self differenceModel;
+		whenTabSelected: [ self refreshDifferenceTab ];
 		closeable: false.
 
 	tabManagerModel 
 		addTab: snapshotTabModel;
-		addTab: differenceTabModel.
-	
+		addTab: differenceTabModel;
+		selectTabModel: snapshotTabModel.
 ]
 
 { #category : #initialization }
@@ -118,10 +118,43 @@ FiFullHistoryBrowser >> initializeWidgets [
 		#differenceTabModel -> #TabModel.
 		
 		"tabs content"
-		#snapshotModel -> #TreeModel. 
+		#snapshotModel -> #FiInspector. 
 		#differenceModel -> #FiEffectInspector2. 
 		}.
 
+]
+
+{ #category : #private }
+FiFullHistoryBrowser >> refreshDifferenceTab [
+
+	| difference selection |
+	selection := self selectedHistoryNodes. 
+	
+	difference := selection 
+		ifEmpty: [ FiNoEffect new ]
+		ifNotEmpty: [ 
+			selection anyOne patches 
+				ifEmpty: [ FiNoEffect new ]
+				ifNotEmpty: [ :patches | patches first value ] ].
+		
+	differenceModel rootEffect: difference
+]
+
+{ #category : #private }
+FiFullHistoryBrowser >> refreshSnapshotTab [
+
+	| selection |
+	selection := self selectedHistoryNodes. 
+	
+	selection 
+		ifEmpty: [ snapshotModel emptyRoots ]
+		ifNotEmpty: [ snapshotModel rootAssociations: (selection anyOne snapshot contents stepsAndValues sorted: [ :a :b | a key <= b key ]) ]
+]
+
+{ #category : #accessing }
+FiFullHistoryBrowser >> selectedHistoryNodes [
+	
+	^ historyBrowserModel historyTreeModel selectedItems collect: #content
 ]
 
 { #category : #accessing }

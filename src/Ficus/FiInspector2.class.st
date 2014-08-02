@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'treeModel',
 		'contentsModel',
-		'iconByClassName'
+		'iconByClassName',
+		'currentSelection'
 	],
 	#category : #'Ficus-UI'
 }
@@ -146,8 +147,12 @@ FiInspector2 >> initializePresenter [
 				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
 				ifFalse: [ #() ] ];
 		iconBlock: [ :assoc | self iconFor: assoc value ];
-		whenSelectedItemChanged: [ :summaryOrNil | 
-			self showContentsFor: summaryOrNil ].
+		whenSelectedItemChanged: [ :assocOrNil | 
+			self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
+			currentSelection = assocOrNil ifFalse: [
+				currentSelection := assocOrNil.
+				self showContentsFor: assocOrNil
+			] ].
 
 
 ]

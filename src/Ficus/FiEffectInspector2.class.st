@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'treeModel',
 		'iconByClassName',
-		'diffModel'
+		'diffModel',
+		'currentSelection'
 	],
 	#category : #'Ficus-UI'
 }
@@ -142,8 +143,12 @@ FiEffectInspector2 >> initializePresenter [
 		displayBlock: [ :summary | summary step ];
 		childrenBlock: [ :summary | summary subSummary ];
 		iconBlock: [ :summary | self iconFor: summary ];
-		whenSelectedItemChanged: [ :summary | 
-			self showDiffFor: summary value ].
+		whenSelectedItemChanged: [ :summaryOrNil | 
+			self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
+			currentSelection = summaryOrNil ifFalse: [
+				currentSelection := summaryOrNil.
+				self showDiffFor: summaryOrNil value
+			] ].
 
 	diffModel
 		displayBlock: [ :morph | morph ]

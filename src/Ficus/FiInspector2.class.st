@@ -140,19 +140,20 @@ FiInspector2 >> initializePresenter [
 		displayBlock: [ :morph | morph ].
 		
 	treeModel
-		evenRowColor: Color white;
+		evenRowColor: treeModel oddRowColor;
 		displayBlock: [ :assoc | assoc key asMorph ];
 		childrenBlock: [ :assoc | 
 			assoc value isShot 
 				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
 				ifFalse: [ #() ] ];
 		iconBlock: [ :assoc | self iconFor: assoc value ];
+		autoDeselection:true;
+		whenRootsChanged: [ 
+			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 
+				when it changed due to roots update."
+			self showContentsFor: nil ];
 		whenSelectedItemChanged: [ :assocOrNil | 
-			self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
-			currentSelection = assocOrNil ifFalse: [
-				currentSelection := assocOrNil.
-				self showContentsFor: assocOrNil
-			] ].
+			self showContentsFor: assocOrNil ].
 
 
 ]
@@ -205,11 +206,15 @@ FiInspector2 >> rootShot: aShot [
 ]
 
 { #category : #initialization }
-FiInspector2 >> showContentsFor: summaryOrNil [
+FiInspector2 >> showContentsFor: assocOrNil [
 
-	summaryOrNil ifNil: [ ^ contentsModel roots: #() ].
+	self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
+	currentSelection = assocOrNil ifTrue: [ ^ self ].
+	currentSelection := assocOrNil.
+
+	assocOrNil ifNil: [ ^ contentsModel roots: #() ].
 	
-	contentsModel roots: {summaryOrNil value asString asText asMorph lock: true; yourself}
+	contentsModel roots: {assocOrNil value asString asText asMorph lock: true; yourself}
 
 ]
 

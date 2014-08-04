@@ -139,16 +139,17 @@ FiEffectInspector2 >> initializePresenter [
 		title: 'Ficus Effects Inspector'.
  
 	treeModel
-		evenRowColor: Color white;
+		evenRowColor: treeModel oddRowColor;
 		displayBlock: [ :summary | summary step ];
 		childrenBlock: [ :summary | summary subSummary ];
 		iconBlock: [ :summary | self iconFor: summary ];
+		autoDeselection:true;
+		whenRootsChanged: [ 
+			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 
+				when it changed due to roots update."
+			self showDiffFor: nil ];
 		whenSelectedItemChanged: [ :summaryOrNil | 
-			self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
-			currentSelection = summaryOrNil ifFalse: [
-				currentSelection := summaryOrNil.
-				self showDiffFor: summaryOrNil value
-			] ].
+			self showDiffFor: summaryOrNil value ].
 
 	diffModel
 		displayBlock: [ :morph | morph ]
@@ -193,13 +194,17 @@ FiEffectInspector2 >> rootEffect: anEffect [
 ]
 
 { #category : #private }
-FiEffectInspector2 >> showDiffFor: anEffect [ 
+FiEffectInspector2 >> showDiffFor: anEffectOrNil [ 
 
-	anEffect ifNil: [ ^ diffModel roots: #() ].
+	self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
+	currentSelection = anEffectOrNil ifTrue: [ ^ self ].
+	currentSelection := anEffectOrNil.
+
+	anEffectOrNil ifNil: [ ^ diffModel roots: #() ].
 	
 	diffModel roots: (Array 
 		streamContents: [ :stream |
-			anEffect
+			anEffectOrNil
 				leavesDo: [ :aLeafSummary :aPath | 
 					stream nextPut: (self diffChunkMorphFor: aLeafSummary at: aPath) ]
 				basePath: FiPath root ] 

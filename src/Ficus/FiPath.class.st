@@ -14,15 +14,26 @@ FiPath class >> canonicalArgumentName [
 		ifFalse: [ 'aPath' ]
 ]
 
+{ #category : #ston }
+FiPath class >> fromSton: stonReader [
+
+	| result |
+	result := FiPath root.
+	stonReader parseListDo: [ :each :index |
+		result := result / each ].
+
+	^ result
+]
+
 { #category : #'instance creation' }
 FiPath class >> root [
-	^ FiRoot instance
+	^ FiRootPath instance
 ]
 
 { #category : #accessing }
 FiPath >> / anObject [
 	
-	^ FiRelative 
+	^ FiRelativePath 
 		on: self 
 		step: anObject
 ]
@@ -43,4 +54,13 @@ FiPath >> length [
 FiPath >> resolvedOn: anObject [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #ston }
+FiPath >> stonOn: stonWriter [
+	
+	stonWriter 
+		writeObject: self 
+		streamShortList: [ :list |
+			self steps do: [ :each | list add: each ] ]
 ]

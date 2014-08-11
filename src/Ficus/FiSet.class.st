@@ -8,6 +8,17 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
+{ #category : #ston }
+FiSet class >> fromSton: stonReader [
+
+	| values |
+	values := Array streamContents: [ :stream |
+		stonReader parseListDo: [ :each | 
+			stream nextPut: each ]].
+	
+	^ self withValues: values
+]
+
 { #category : #'instance creation' }
 FiSet class >> new [
 

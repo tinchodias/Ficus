@@ -2,7 +2,7 @@
 I represent a relative FiPath. I am composed by a basePath and a step.
 "
 Class {
-	#name : #FiRelative,
+	#name : #FiRelativePath,
 	#superclass : #FiPath,
 	#instVars : [
 		'basePath',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiRelative class >> on: aPath step: anObject [ 
+FiRelativePath class >> on: aPath step: anObject [ 
 	^ self basicNew
 		initializeOn: aPath
 		step: anObject;
@@ -20,7 +20,7 @@ FiRelative class >> on: aPath step: anObject [
 ]
 
 { #category : #comparing }
-FiRelative >> = another [
+FiRelativePath >> = another [
 
 	^ (self class = another class
 		and: [ self basePath = another basePath ])
@@ -28,13 +28,13 @@ FiRelative >> = another [
 ]
 
 { #category : #accessing }
-FiRelative >> basePath [
+FiRelativePath >> basePath [
 
 	^ basePath
 ]
 
 { #category : #comparing }
-FiRelative >> hash [
+FiRelativePath >> hash [
 
 	^ (self class hash 
 		bitXor: self basePath hash)
@@ -42,15 +42,17 @@ FiRelative >> hash [
 ]
 
 { #category : #'initialize-release' }
-FiRelative >> initializeOn: aPath step: anObject [ 
+FiRelativePath >> initializeOn: aPath step: anObject [ 
 
 	self initialize.
 	basePath := aPath.
 	step := anObject.
+	
+	self assert: anObject isLiteral
 ]
 
 { #category : #printing }
-FiRelative >> printOn: aStream [
+FiRelativePath >> printOn: aStream [
 
 	basePath printOn: aStream.
 	aStream 
@@ -59,13 +61,13 @@ FiRelative >> printOn: aStream [
 ]
 
 { #category : #resolving }
-FiRelative >> resolvedOn: anObject [ 
+FiRelativePath >> resolvedOn: anObject [ 
 
 	^ (basePath resolvedOn: anObject) shotAt: step
 ]
 
 { #category : #resolving }
-FiRelative >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect: stepBlockClosure [ 
+FiRelativePath >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect: stepBlockClosure [ 
 	
 	^ stepBlockClosure 
 		value: anObject
@@ -77,13 +79,23 @@ FiRelative >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect
 ]
 
 { #category : #accessing }
-FiRelative >> step [
+FiRelativePath >> step [
 
 	^ step
 ]
 
 { #category : #accessing }
-FiRelative >> steps [
+FiRelativePath >> steps [
 	
 	^ basePath steps copyWith: step
+]
+
+{ #category : #printing }
+FiRelativePath >> storeOn: aStream [
+
+	basePath storeOn: aStream.
+
+	aStream nextPutAll: ' / '.
+		
+	step storeOn: aStream.
 ]

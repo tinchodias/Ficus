@@ -32,6 +32,7 @@ FiShot >> = another [
 	
 	self == another ifTrue: [ ^ true ].
 	self class = another class ifFalse: [ ^ false ].
+	self hash = another hash ifFalse: [ ^ false ].
 	self stepCount = another stepCount ifFalse: [ ^ false ].
 	
 	self stepsAndValuesDo: [ :step :value | 

@@ -15,7 +15,7 @@ FiSnapshotHistoryNode >> = other [
 
 	^ self class == other class
 		and: [ self snapshot hash = other snapshot hash 
-		and: [ self priors = other priors ] ]
+		and: [ self priors hash = other priors hash ] ]
 ]
 
 { #category : #comparing }
@@ -33,6 +33,18 @@ FiSnapshotHistoryNode >> patches [
 
 	^ priors asArray collect: [ :aPrior |
 		aPrior -> (snapshot differenceFrom: aPrior snapshot) ]
+]
+
+{ #category : #printing }
+FiSnapshotHistoryNode >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self origin printString;
+		nextPut: $).
+	
 ]
 
 { #category : #accessing }

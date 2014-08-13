@@ -83,7 +83,7 @@ FiHistoryBrowser >> initializePresenter [
 				yourself.
 				
 			TreeColumnModel new
-				displayBlock: [ :item | item content origin printString ];
+				displayBlock: [ :item | item content origin shortDescription ];
 				initialWidth: 250;
 				yourself.				
 			}

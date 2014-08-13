@@ -40,6 +40,29 @@ FiMonticelloHistoryBuilder class >> forFuelTests [
 		
 ]
 
+{ #category : #examples }
+FiMonticelloHistoryBuilder class >> forFuelTestsCached [
+
+	| repositoryGroup initialVersionInfo cachedRepository |
+	cachedRepository := MCCacheRepository uniqueInstance.
+
+	repositoryGroup := 
+		MCRepositoryGroup withRepositories: {
+			cachedRepository }.
+
+	initialVersionInfo := 
+		(MCWorkingCopy allManagers 
+			detect: [ :each | each packageName = 'FuelTests' ]) 
+			ancestry ancestors first.
+	
+	cachedRepository cacheAllFileNamesDuring:	[
+		^ self new
+			repository: repositoryGroup;
+			addVersionInfo: initialVersionInfo;
+			run;
+			yourself ]
+]
+
 { #category : #'examples-private' }
 FiMonticelloHistoryBuilder class >> fuelRepository [
 
@@ -82,7 +105,7 @@ FiMonticelloHistoryBuilder >> ficusPackageFor: mcSnapshot named: packageName [
 { #category : #private }
 FiMonticelloHistoryBuilder >> historyNodeFor: aVersionInfo [
 	
-	| mcSnapshot versionInfo node |
+	| mcSnapshot versionInfo node priors ficusPackage |
 
 	"Escape if already cached"	
 	historyNodeByUUID 
@@ -99,11 +122,31 @@ FiMonticelloHistoryBuilder >> historyNodeFor: aVersionInfo [
 			foundVersion snapshot ]
 		ifNil: [ MCSnapshot empty ].
 
-	node := FiSnapshotHistoryNode builder
-		origin: versionInfo;
-		snapshot: (self ficusPackageFor: mcSnapshot named: versionInfo packageName);
-		priors: (FiSet withValues: (versionInfo ancestors collect: [ :each | self historyNodeFor: each ]));
-		new.
+
+	ficusPackage := self ficusPackageFor: mcSnapshot named: versionInfo packageName.
+	priors := versionInfo ancestors collect: [ :each | self historyNodeFor: each ].
+
+	"(priors size = 1 and: [ priors anyOne snapshot = ficusPackage ]) " false
+		ifTrue: [ 
+			| priorNodeToMerge |
+			priorNodeToMerge := priors anyOne.
+			node := FiSnapshotHistoryNode builder
+				origin: ((FiSingleCommit builder reference: versionInfo; new) followedBy: priorNodeToMerge origin);
+				snapshot: ficusPackage;
+				priors: priorNodeToMerge priors;
+				new.
+
+				self flag: #fix. "ugly code"
+				
+				priorNodeToMerge becomeForward: node.
+				historyNodeByUUID rehash ]
+		ifFalse: [
+			node := FiSnapshotHistoryNode builder
+				origin: (FiSingleCommit builder reference: versionInfo; new);
+				snapshot: ficusPackage;
+				priors: (FiSet withValues: priors);
+				new ].
+			
 	
 	"do cache"	
 	historyNodeByUUID 
@@ -116,7 +159,7 @@ FiMonticelloHistoryBuilder >> historyNodeFor: aVersionInfo [
 { #category : #accessing }
 FiMonticelloHistoryBuilder >> historyNodes [
 
-	^ historyNodeByUUID values
+	^ historyNodeByUUID values asSet
 ]
 
 { #category : #initialization }

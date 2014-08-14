@@ -5,7 +5,8 @@ Class {
 		'repository',
 		'pendingVersionInfos',
 		'historyNodeByUUID',
-		'notFoundVersions'
+		'notFoundVersions',
+		'historyNodes'
 	],
 	#category : #'FicusMonticello-Marshaling-New'
 }
@@ -153,13 +154,15 @@ FiMonticelloHistoryBuilder >> historyNodeFor: aVersionInfo [
 		at: versionInfo id
 		put: node.
 		
+	historyNodes add: node.
+		
 	^ node
 ]
 
 { #category : #accessing }
 FiMonticelloHistoryBuilder >> historyNodes [
 
-	^ historyNodeByUUID values asSet
+	^ historyNodes
 ]
 
 { #category : #initialization }
@@ -167,6 +170,7 @@ FiMonticelloHistoryBuilder >> initialize [
 
 	super initialize.
 	
+	historyNodes := OrderedCollection new.
 	pendingVersionInfos := Stack new.
 	historyNodeByUUID := Dictionary new.
 	notFoundVersions := Set new.

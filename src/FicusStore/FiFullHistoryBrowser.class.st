@@ -124,6 +124,12 @@ FiFullHistoryBrowser >> initializeWidgets [
 
 ]
 
+{ #category : #'as yet unclassified' }
+FiFullHistoryBrowser >> notes: someNotes [ 
+	
+	historyBrowserModel notes: someNotes
+]
+
 { #category : #private }
 FiFullHistoryBrowser >> refreshDifferenceTab [
 

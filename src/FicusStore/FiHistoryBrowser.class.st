@@ -3,7 +3,8 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'historyTreeModel',
-		'hiedraRulerController'
+		'hiedraRulerController',
+		'notes'
 	],
 	#category : #'FicusStore-HistoryNodes'
 }
@@ -86,6 +87,12 @@ FiHistoryBrowser >> initializePresenter [
 				displayBlock: [ :item | item content origin shortDescription ];
 				initialWidth: 250;
 				yourself.				
+
+			TreeColumnModel new
+				displayBlock: [ :item | self notesMorphFor: item content ];
+				initialWidth: 20;
+				yourself.				
+
 			}
 ]
 
@@ -95,6 +102,42 @@ FiHistoryBrowser >> initializeWidgets [
 	self instantiateModels: #(
 		historyTreeModel TreeModel).
 
+]
+
+{ #category : #accessing }
+FiHistoryBrowser >> notes: someNotes [ 
+	
+	notes := someNotes
+]
+
+{ #category : #private }
+FiHistoryBrowser >> notesFor: aHistoryNode [ 
+
+	^ notes select: [ :each | each appliesTo: aHistoryNode origin ]
+]
+
+{ #category : #private }
+FiHistoryBrowser >> notesMorphFor: aHistoryNode [ 
+
+	^ (self notesFor: aHistoryNode)
+		ifEmpty: [ Smalltalk ui icons emptyIcon ]
+		ifNotEmpty: [ :theNotes | 
+			self rowMorphWithAll: {
+				Smalltalk ui icons announcementIcon asMorph.
+				theNotes size asString asMorph } ]
+]
+
+{ #category : #private }
+FiHistoryBrowser >> rowMorphWithAll: someMophs [
+
+	^ PanelMorph new
+		changeTableLayout;
+		vResizing: #shrinkWrap;
+		hResizing: #shrinkWrap;
+		listDirection: #leftToRight;
+		cellInset: 3;
+		addAllMorphs: someMophs;
+		yourself
 ]
 
 { #category : #'accessing - building API' }

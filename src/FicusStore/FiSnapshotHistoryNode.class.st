@@ -35,18 +35,6 @@ FiSnapshotHistoryNode >> patches [
 		aPrior -> (snapshot differenceFrom: aPrior snapshot) ]
 ]
 
-{ #category : #printing }
-FiSnapshotHistoryNode >> printOn: aStream [
-
-	super printOn: aStream.
-
-	aStream 
-		nextPut: $(;
-		nextPutAll: self origin printString;
-		nextPut: $).
-	
-]
-
 { #category : #accessing }
 FiSnapshotHistoryNode >> priors [
 

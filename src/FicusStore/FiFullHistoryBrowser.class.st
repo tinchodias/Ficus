@@ -88,14 +88,14 @@ FiFullHistoryBrowser >> initializeTabs [
 
 	snapshotTabModel
 		label: 'Snapshot';
-		icon: Smalltalk ui icons smallOpenIcon;
+		icon: Smalltalk ui icons smallSaveIcon;
 		model: self snapshotModel;
 		whenTabSelected: [ self refreshSnapshotTab ];
 		closeable: false.
 		
 	differenceTabModel
 		label: 'Difference';
-		icon: Smalltalk ui icons smallFindIcon;
+		icon: Smalltalk ui icons smallJustifiedIcon;
 		model: self differenceModel;
 		whenTabSelected: [ self refreshDifferenceTab ];
 		closeable: false.

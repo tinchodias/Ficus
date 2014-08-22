@@ -19,6 +19,18 @@ FiHistoryNode >> patches [
 	^ self shouldBeImplemented 
 ]
 
+{ #category : #printing }
+FiHistoryNode >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self origin printString;
+		nextPut: $).
+	
+]
+
 { #category : #accessing }
 FiHistoryNode >> priors [
 

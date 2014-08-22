@@ -2,8 +2,8 @@ Class {
 	#name : #FiPatchHistoryNode,
 	#superclass : #FiHistoryNode,
 	#instVars : [
-		'patch',
-		'prior'
+		'prior',
+		'effect'
 	],
 	#category : #'FicusStore-HistoryNodes'
 }
@@ -11,7 +11,7 @@ Class {
 { #category : #accessing }
 FiPatchHistoryNode >> patches [
 
-	^ { prior -> patch }
+	^ { prior -> effect }
 ]
 
 { #category : #accessing }
@@ -23,5 +23,5 @@ FiPatchHistoryNode >> priors [
 { #category : #accessing }
 FiPatchHistoryNode >> snapshot [
 
-	^ prior snapshot resultOf: patch
+	^ prior snapshot resultOf: effect edit
 ]

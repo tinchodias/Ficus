@@ -26,7 +26,7 @@ Object >> differenceFrom: other [
 ]
 
 { #category : #'*Ficus' }
-Object >> effectReplace: oldValue [ 
+Object >> effectOfReplace: oldValue [ 
 	
 	^ FiReplace builder
 		oldValue: oldValue;

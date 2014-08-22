@@ -162,6 +162,58 @@ FiDifferencesTest >> testRemoveClass [
 	self assert: (source differenceFrom: result) equals: (result effectOf: (result at: #A equal: shot)).
 ]
 
+{ #category : #'tests-shot' }
+FiDifferencesTest >> testReplaceClass [
+
+	| source result |
+	result := FiClass named: #A.
+	source := 42.
+
+	self 
+		assert: (result differenceFrom: source) 
+		equals: (result effectOfReplace: source).
+
+]
+
+{ #category : #'tests-dictionary' }
+FiDifferencesTest >> testReplaceDictionary [
+
+	| source result |
+	result := FiDictionary new.
+	source := 42.
+
+	self 
+		assert: (result differenceFrom: source) 
+		equals: (result effectOfReplace: source).
+
+]
+
+{ #category : #'tests-object' }
+FiDifferencesTest >> testReplaceObject [
+
+	| source result |
+	result := 17.
+	source := 42.
+
+	self 
+		assert: (result differenceFrom: source) 
+		equals: (result effectOfReplace: source).
+
+]
+
+{ #category : #'tests-set' }
+FiDifferencesTest >> testReplaceSet [
+
+	| source result |
+	result := FiSet new.
+	source := 42.
+
+	self 
+		assert: (result differenceFrom: source) 
+		equals: (result effectOfReplace: source).
+
+]
+
 { #category : #'tests-set' }
 FiDifferencesTest >> testSetAddSharedPool [
 

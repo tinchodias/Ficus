@@ -28,7 +28,7 @@ FiFixedObject >> differenceFrom: other [
 
 	| subEffects |	
 	self == other ifTrue: [ ^ FiNoEffect new ].
-	self class == other class ifFalse: [ self shouldBeImplemented ].
+	self class == other class ifFalse: [ ^ self effectOfReplace: other ].
 
 	subEffects := Set new.
 	

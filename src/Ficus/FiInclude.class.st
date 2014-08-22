@@ -32,7 +32,7 @@ FiInclude >> effectUpdate: oldValue [
 	^ FiSetUpdateEffect builder
 		theValue: theValue;
 		oldValue: oldValue;
-		subEffect: (theValue effectReplace: oldValue);
+		subEffect: (theValue effectOfReplace: oldValue);
 		new
 ]
 

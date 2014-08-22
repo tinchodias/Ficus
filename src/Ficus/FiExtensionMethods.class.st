@@ -15,7 +15,7 @@ Class {
 { #category : #accessing }
 FiExtensionMethods >> defaultStep [
 
-	^ (isMetaSide 
+	^ 'Extensions to ', (isMetaSide 
 		ifFalse: [ hostName ]
 		ifTrue: [ hostName,  ' class' ]) asSymbol
 ]

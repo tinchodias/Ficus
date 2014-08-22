@@ -12,6 +12,29 @@ Class {
 }
 
 { #category : #examples }
+FiMonticelloHistoryBuilder class >> forCachedPackageNamed: packageName [
+
+	| repositoryGroup initialVersionInfo cachedRepository |
+	cachedRepository := MCCacheRepository uniqueInstance.
+
+	repositoryGroup := 
+		MCRepositoryGroup withRepositories: {
+			cachedRepository }.
+
+	initialVersionInfo := 
+		(MCWorkingCopy allManagers 
+			detect: [ :each | each packageName = packageName ]) 
+			ancestry ancestors first.
+	
+	cachedRepository cacheAllFileNamesDuring:	[
+		^ self new
+			repository: repositoryGroup;
+			addVersionInfo: initialVersionInfo;
+			run;
+			yourself ]
+]
+
+{ #category : #examples }
 FiMonticelloHistoryBuilder class >> forFuelTests [
 
 	| repositoryGroup initialVersionInfo fuelRepository pharoInboxRepository pharoRepository |
@@ -44,24 +67,7 @@ FiMonticelloHistoryBuilder class >> forFuelTests [
 { #category : #examples }
 FiMonticelloHistoryBuilder class >> forFuelTestsCached [
 
-	| repositoryGroup initialVersionInfo cachedRepository |
-	cachedRepository := MCCacheRepository uniqueInstance.
-
-	repositoryGroup := 
-		MCRepositoryGroup withRepositories: {
-			cachedRepository }.
-
-	initialVersionInfo := 
-		(MCWorkingCopy allManagers 
-			detect: [ :each | each packageName = 'FuelTests' ]) 
-			ancestry ancestors first.
-	
-	cachedRepository cacheAllFileNamesDuring:	[
-		^ self new
-			repository: repositoryGroup;
-			addVersionInfo: initialVersionInfo;
-			run;
-			yourself ]
+	^ self forCachedPackageNamed: 'FuelTests'
 ]
 
 { #category : #'examples-private' }

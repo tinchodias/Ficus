@@ -43,11 +43,9 @@ FiShotCache >> like: aShot [
 			at: aShot class
 			ifAbsentPut: [ WeakSet new ].
 
-	aWeakSet 
+	^ aWeakSet 
 		like: aShot 
 		ifAbsent: [ 
 			aWeakSet add: aShot.
-			aShot ].
-
-	^ aShot
+			aShot ]
 ]

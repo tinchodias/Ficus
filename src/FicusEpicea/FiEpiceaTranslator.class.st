@@ -139,7 +139,6 @@ FiEpiceaTranslator >> resultOfMethodEqual: aRingMethod [
 								(FiMethod builder
 									protocol: aRingMethod protocol asSymbol;
 									sourceCode: aRingMethod sourceCode asString;
-									selector: aRingMethod selector asSymbol;
 									new) ] ] ].
 						
 	^ priorSnapshot resultOf: edit

@@ -86,7 +86,6 @@ FiMonticelloDefinitionVisitor >> ficusMetaclassMethodsFor: aMCClassDefinition [
 FiMonticelloDefinitionVisitor >> ficusMethodFor: aMCMethodDefinition [ 
 	
 	^ FiMethod builder 
-		selector: aMCMethodDefinition selector;
 		protocol: aMCMethodDefinition category;
 		sourceCode: aMCMethodDefinition source;
 		new

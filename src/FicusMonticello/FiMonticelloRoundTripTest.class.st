@@ -16,8 +16,13 @@ FiMonticelloRoundTripTest >> assertRoundTripEquals: someMCDefinitions [
 
 	marshaled := self marshaled: snapshot.
 	unmarshaled := self unmarshaled: marshaled.
-	
+		
 	self assert: unmarshaled equals: snapshot.
+
+	"
+	MCPatch fromBase: snapshot target: unmarshaled.
+	"
+
 ]
 
 { #category : #running }
@@ -41,7 +46,7 @@ FiMonticelloRoundTripTest >> mockClassExtensionMethod [
 		selector: 'fortyTwo'
 		category: self mockExtensionMethodCategory 
 		timeStamp: ''
-		source: 'fotryTwo ^42'
+		source: 'fortyTwo ^42'
 ]
 
 { #category : #running }
@@ -83,7 +88,7 @@ FiMonticelloRoundTripTest >> mockExtensionMethod [
 		selector: 'fortyTwo'
 		category: self mockExtensionMethodCategory 
 		timeStamp: ''
-		source: 'fotryTwo ^42'
+		source: 'fortyTwo ^42'
 ]
 
 { #category : #running }

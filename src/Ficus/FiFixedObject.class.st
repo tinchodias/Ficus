@@ -7,6 +7,12 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
+{ #category : #accessing }
+FiFixedObject class >> excludedInstanceVariableNamesForSteps [
+
+	^ #(tag cachedHash)
+]
+
 { #category : #edits }
 FiFixedObject >> at: aSlotName edit: aBlockClosure [ 
 	
@@ -67,19 +73,18 @@ FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 		ifFalse: [ anAcceptSlot effectUpdate: oldValue ]
 ]
 
-{ #category : #accessing }
-FiFixedObject >> excludedInstanceVariableNamesForSteps [
-
-	^ #(tag cachedHash)
-]
-
 { #category : #initialization }
 FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 
+	| excludedInstanceVariableNames |
+	excludedInstanceVariableNames := self class excludedInstanceVariableNamesForSteps.
 	self initialize.
 	
 	aDictionary 
 		keysAndValuesDo: [ :slotName :value |
+			(excludedInstanceVariableNames includes: slotName)
+				ifTrue: [ self error ].
+
 			self instVarNamed: slotName put: value ]
 ]
 
@@ -104,14 +109,14 @@ FiFixedObject >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 { #category : #accessing }
 FiFixedObject >> stepCount [
 	
-	^ self class allInstVarNames size - self excludedInstanceVariableNamesForSteps size
+	^ self class allInstVarNames size - self class excludedInstanceVariableNamesForSteps size
 ]
 
 { #category : #enumerating }
 FiFixedObject >> stepsAndValuesDo: aBlockClosure [ 
 
 	| excludedInstanceVariableNames |
-	excludedInstanceVariableNames := self excludedInstanceVariableNamesForSteps.
+	excludedInstanceVariableNames := self class excludedInstanceVariableNamesForSteps.
 
 	^ self class allInstVarNames do: [ :name |
 		(excludedInstanceVariableNames includes: name) ifFalse: [

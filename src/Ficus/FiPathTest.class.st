@@ -62,7 +62,7 @@ FiPathTest >> testEquals [
 FiPathTest >> testFlattened [
 
 	| aSet aMethod |
-	aMethod := FiMethod selector: #fortyTwo sourceCode: 'fortyTwo ^42' protocol: #accessing.
+	aMethod := FiMethod sourceCode: 'fortyTwo ^42' protocol: #accessing.
 	aSet := FiSet withValues: { aMethod }.
 
 	self 
@@ -70,7 +70,6 @@ FiPathTest >> testFlattened [
 		equals: { 
 			FiPath root -> aSet.
 			FiPath root / #fortyTwo -> aMethod.
-			FiPath root / #fortyTwo / #selector -> #fortyTwo.
 			FiPath root / #fortyTwo / #sourceCode -> 'fortyTwo ^42'.
 			FiPath root / #fortyTwo / #protocol -> #accessing.
 			}.

@@ -15,17 +15,33 @@ FiBuilderTest >> testCached [
 		FiMethod builder
 			protocol: #accessing;
 			sourceCode: 'fortyTwo  ^42';
-			selector: #fortyTwo;
 			new.
 
 	anotherShot := 
 		FiMethod builder
 			protocol: #accessing;
 			sourceCode: 'fortyTwo  ^42';
-			selector: #fortyTwo;
 			new.
 			
 	self assert: aShot == anotherShot
+]
+
+{ #category : #tests }
+FiBuilderTest >> testErrorWhenSettingAnExcludedVariable [
+
+	self 
+		assert: (FiMethod excludedInstanceVariableNamesForSteps includes: #selector)
+		description: 'This is an assumption of this test'.
+	
+	self 
+		should: [ 
+			FiMethod builder
+				protocol: #accessing;
+				sourceCode: 'fortyTwo  ^42';
+				selector: #fortyTwo;
+				new ]
+		raise: Error.
+
 ]
 
 { #category : #tests }
@@ -35,14 +51,12 @@ FiBuilderTest >> testNotCached [
 		FiMethod builder
 			protocol: #accessing;
 			sourceCode: 'fortyTwo  ^42';
-			selector: #fortyTwo;
 			new.
 
 	anotherShot := 
 		FiMethod builder
 			protocol: #testing;
 			sourceCode: 'fortyTwo  ^42';
-			selector: #fortyTwo;
 			new.
 			
 	self deny: aShot == anotherShot
@@ -55,7 +69,6 @@ FiBuilderTest >> testSingleNew [
 		FiMethod builder
 			protocol: #accessing;
 			sourceCode: 'fortyTwo  ^42';
-			selector: #fortyTwo;
 			new.
 			
 	self assert: aShot class equals: FiMethod.

@@ -9,7 +9,7 @@ FiShotTest >> testAddMethod [
 
 	| edit source method result |
 	source := FiClass named: #A.
-	method := FiMethod selector: #fortyTwo sourceCode: 'fortyTwo ^42' protocol: 'accessing'. 
+	method := FiMethod sourceCode: 'fortyTwo ^42' protocol: 'accessing'. 
 
 	edit := 
 		source 

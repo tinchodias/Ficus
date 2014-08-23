@@ -44,7 +44,7 @@ FiImmutabilityTest >> assertHasNotSetters: shotClass instanceVariableName: insta
 { #category : #'as yet unclassified' }
 FiImmutabilityTest >> falsePositiveSetters [
 	
-	^ #( #tag: #hash )
+	^ #( #tag: #hash #selector )
 ]
 
 { #category : #'as yet unclassified' }

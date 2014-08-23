@@ -12,11 +12,16 @@ Class {
 	#category : #'Ficus-Model-Meta'
 }
 
+{ #category : #accessing }
+FiMethod class >> excludedInstanceVariableNamesForSteps [
+
+	^ super excludedInstanceVariableNamesForSteps copyWith: #selector
+]
+
 { #category : #'instance creation' }
-FiMethod class >> selector: aSelector sourceCode: aSourceCode protocol: aProtocol [
+FiMethod class >> sourceCode: aSourceCode protocol: aProtocol [
 	
 	^ self builder
-		selector: aSelector;
 		sourceCode: aSourceCode;
 		protocol: aProtocol;
 		new
@@ -25,7 +30,7 @@ FiMethod class >> selector: aSelector sourceCode: aSourceCode protocol: aProtoco
 { #category : #accessing }
 FiMethod >> defaultStep [
 
-	^ selector asSymbol
+	^ self selector asSymbol
 ]
 
 { #category : #printing }
@@ -34,7 +39,7 @@ FiMethod >> printOn: aStream [
 	super printOn: aStream.
 
 	aStream nextPut: $(.
-	selector printOn: aStream.
+	self selector printOn: aStream.
 	aStream nextPut: $).
 	
 ]
@@ -47,7 +52,9 @@ FiMethod >> protocol [
 
 { #category : #accessing }
 FiMethod >> selector [
-	^ selector
+
+	^ selector ifNil: [ 
+		selector := RBParser parseMethodPattern: sourceCode ]
 ]
 
 { #category : #accessing }

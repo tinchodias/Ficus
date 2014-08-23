@@ -1,5 +1,5 @@
 Class {
 	#name : #FiSetEdit,
 	#superclass : #FiObjectEdit,
-	#category : #'Ficus-Model-Edits'
+	#category : #'Ficus-Model-Core-Edits'
 }

@@ -10,7 +10,7 @@ Class {
 	#classInstVars : [
 		'defaultInstance'
 	],
-	#category : #'Ficus-Model-Core'
+	#category : #'Ficus-Model-Builder'
 }
 
 { #category : #accessing }

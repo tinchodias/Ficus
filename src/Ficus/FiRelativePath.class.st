@@ -8,7 +8,7 @@ Class {
 		'basePath',
 		'step'
 	],
-	#category : #'Ficus-Paths'
+	#category : #'Ficus-Model-Paths'
 }
 
 { #category : #'instance creation' }

@@ -5,7 +5,7 @@ Class {
 		'oldValue',
 		'subEffect'
 	],
-	#category : #'Ficus-Model-Effects'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #accessing }

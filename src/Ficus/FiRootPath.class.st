@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Ficus-Paths'
+	#category : #'Ficus-Model-Paths'
 }
 
 { #category : #'instance creation' }

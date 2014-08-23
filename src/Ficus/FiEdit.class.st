@@ -1,10 +1,12 @@
 "
-I represent an abstract edit on a shot.
+I represent an abstract edit on a shot. 
+
+See the class comment in FiShot.
 "
 Class {
 	#name : #FiEdit,
 	#superclass : #FiFixedObject,
-	#category : #'Ficus-Model-Edits'
+	#category : #'Ficus-Model-Core-Edits'
 }
 
 { #category : #testing }

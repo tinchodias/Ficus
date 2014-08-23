@@ -1,7 +1,7 @@
 Class {
 	#name : #FiExclude,
 	#superclass : #FiSetEdit,
-	#category : #'Ficus-Model-Edits'
+	#category : #'Ficus-Model-Core-Edits'
 }
 
 { #category : #'instance creation' }

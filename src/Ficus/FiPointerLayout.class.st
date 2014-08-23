@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'slotNames'
 	],
-	#category : #'Ficus-Model-Meta'
+	#category : #'Ficus-Examples-Metamodel'
 }
 
 { #category : #initialization }

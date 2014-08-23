@@ -1,10 +1,12 @@
 "
 I represent an abstract edit effect on a shot. FiEdits know how to create effects.
+
+See class comment of FiShot.
 "
 Class {
 	#name : #FiEditEffect,
 	#superclass : #FiFixedObject,
-	#category : #'Ficus-Model-Effects'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ I represent a path in a shot. See my concrete subclasses.
 Class {
 	#name : #FiPath,
 	#superclass : #Object,
-	#category : #'Ficus-Paths'
+	#category : #'Ficus-Model-Paths'
 }
 
 { #category : #debugger }

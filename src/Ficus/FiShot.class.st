@@ -1,7 +1,15 @@
 "
-I represent an immutable object which must not form cycles with other FiShots. 
+I represent an immutable object which must not form cycles with other FiShots (i.e. a Directed Acyclic Graph). 
 
-A shot has #steps, which are Symbol names which can be used to access the corresponding #values.
+A shot has #steps, which are Symbol names which can be used to access corresponding #values.
+
+Each shot provides an #editing protocol that builds ""edits"", i.e. instances of a class in the hierarchy of FiEdit.
+
+Then, an edit can be used to calculate either:
+- the result of the application of the edit, with: aShot resultOf: anEdit.
+- the effect of the application of the edit, with: aShot effectOf: anEdit.
+
+
 "
 Class {
 	#name : #FiShot,

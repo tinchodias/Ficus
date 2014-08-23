@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'newValue'
 	],
-	#category : #'Ficus-UI-Summaries'
+	#category : #'Ficus-UI-Model'
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'step',
 		'subSummary'
 	],
-	#category : #'Ficus-UI-Summaries'
+	#category : #'Ficus-UI-Model'
 }
 
 { #category : #enumerating }

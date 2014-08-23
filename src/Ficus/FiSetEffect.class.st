@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'theValue'
 	],
-	#category : #'Ficus-Model-Effects'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #edits }

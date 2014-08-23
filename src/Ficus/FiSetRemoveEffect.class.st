@@ -1,7 +1,7 @@
 Class {
 	#name : #FiSetRemoveEffect,
 	#superclass : #FiSetEffect,
-	#category : #'Ficus-Model-Effects'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #FiEqual,
 	#superclass : #FiObjectEdit,
-	#category : #'Ficus-Model-Edits'
+	#category : #'Ficus-Model-Core-Edits'
 }
 
 { #category : #'instance creation' }

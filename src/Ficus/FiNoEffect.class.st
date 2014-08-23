@@ -1,7 +1,7 @@
 Class {
 	#name : #FiNoEffect,
 	#superclass : #FiEditEffect,
-	#category : #'Ficus-Model-Effects'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #accessing }

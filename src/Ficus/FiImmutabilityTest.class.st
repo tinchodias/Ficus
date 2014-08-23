@@ -1,7 +1,7 @@
 Class {
 	#name : #FiImmutabilityTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests'
+	#category : #'Ficus-Tests-Core'
 }
 
 { #category : #'as yet unclassified' }

@@ -11,7 +11,7 @@ Class {
 		'comment',
 		'traitComposition'
 	],
-	#category : #'Ficus-Model-Meta'
+	#category : #'Ficus-Examples-Metamodel'
 }
 
 { #category : #'instance creation' }

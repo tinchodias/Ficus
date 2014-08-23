@@ -1,7 +1,7 @@
 Class {
 	#name : #FiNoEdit,
 	#superclass : #FiEdit,
-	#category : #'Ficus-Model-Edits'
+	#category : #'Ficus-Model-Core-Edits'
 }
 
 { #category : #testing }

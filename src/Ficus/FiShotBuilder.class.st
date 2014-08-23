@@ -18,7 +18,7 @@ Class {
 		'stepsAndValues',
 		'cache'
 	],
-	#category : #'Ficus-Model-Core'
+	#category : #'Ficus-Model-Builder'
 }
 
 { #category : #'instance creation' }

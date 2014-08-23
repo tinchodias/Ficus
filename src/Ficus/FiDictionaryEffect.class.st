@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'key'
 	],
-	#category : #'Ficus-Model-Effects'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #printing }

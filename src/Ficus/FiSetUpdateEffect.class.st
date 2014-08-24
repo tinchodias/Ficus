@@ -2,6 +2,7 @@ Class {
 	#name : #FiSetUpdateEffect,
 	#superclass : #FiSetEffect,
 	#instVars : [
+		'newValue',
 		'oldValue',
 		'subEffect'
 	],
@@ -11,7 +12,7 @@ Class {
 { #category : #accessing }
 FiSetUpdateEffect >> edit [
 	
-	^ self include: theValue
+	^ self include: newValue
 ]
 
 { #category : #summary }
@@ -22,16 +23,16 @@ FiSetUpdateEffect >> hierarchicalSummary [
 	^ {(subEffect isKindOf: FiReplace) 
 		ifTrue: [ 
 			FiSummaryUpdate builder 
-				step: theValue defaultStep;
+				step: newValue defaultStep;
 				oldValue: subEffect oldValue; 
 				newValue: subEffect newValue; 
 				subSummary: #();
 				new ]	
 		ifFalse: [
 			FiSummaryUpdate builder 
-				step: theValue defaultStep;
+				step: newValue defaultStep;
 				oldValue: oldValue; 
-				newValue: theValue; 
+				newValue: newValue; 
 				subSummary: subEffect hierarchicalSummary;
 				new ]}
 ]
@@ -47,8 +48,14 @@ FiSetUpdateEffect >> leafEffectsDo: aBlockClosure basePath: aPath [
 
 	^ subEffect 
 		leafEffectsDo: aBlockClosure 
-		basePath: aPath / theValue defaultStep
+		basePath: aPath / newValue defaultStep
 
+]
+
+{ #category : #accessing }
+FiSetUpdateEffect >> newValue [
+
+	^ newValue
 ]
 
 { #category : #accessing }

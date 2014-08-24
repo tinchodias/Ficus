@@ -29,9 +29,3 @@ FiSetEffect >> printOn: aStream [
 		nextPutAll: (theValue printStringLimitedTo: 30);
 		nextPut: $).
 ]
-
-{ #category : #accessing }
-FiSetEffect >> theValue [
-
-	^ theValue
-]

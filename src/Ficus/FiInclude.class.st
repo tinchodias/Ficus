@@ -16,7 +16,7 @@ FiInclude class >> value: aValue [
 FiInclude >> effectAdd [
 
 	^ FiSetAddEffect builder
-		theValue: theValue;
+		newValue: theValue;
 		new
 ]
 
@@ -30,7 +30,7 @@ FiInclude >> effectOn: aSet [
 FiInclude >> effectUpdate: oldValue [
 
 	^ FiSetUpdateEffect builder
-		theValue: theValue;
+		newValue: theValue;
 		oldValue: oldValue;
 		subEffect: (theValue effectOfReplace: oldValue);
 		new

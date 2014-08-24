@@ -23,7 +23,7 @@ FiExclude >> effectOn: aValue [
 FiExclude >> effectRemove: oldValue [
 
 	^ FiSetRemoveEffect builder
-		theValue: oldValue;
+		oldValue: oldValue;
 		new
 ]
 

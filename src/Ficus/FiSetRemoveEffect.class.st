@@ -1,30 +1,39 @@
 Class {
 	#name : #FiSetRemoveEffect,
 	#superclass : #FiSetEffect,
+	#instVars : [
+		'oldValue'
+	],
 	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #accessing }
 FiSetRemoveEffect >> edit [
 
-	^ self exclude: theValue
+	^ self exclude: oldValue
 ]
 
 { #category : #summary }
 FiSetRemoveEffect >> hierarchicalSummary [
 	
-	^ { theValue 
+	^ { oldValue 
 		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
 			FiSummaryRemove builder 
 				step: path step;
 				oldValue: shot; 
 				subSummary: collectionFromChildren;
 				new ] 
-		basePath: FiPath root / theValue defaultStep }
+		basePath: FiPath root / oldValue defaultStep }
 ]
 
 { #category : #accessing }
 FiSetRemoveEffect >> inverse [
 
-	^ self include: theValue
+	^ self include: oldValue
+]
+
+{ #category : #accessing }
+FiSetRemoveEffect >> oldValue [
+
+	^ oldValue
 ]

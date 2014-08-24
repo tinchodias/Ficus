@@ -37,3 +37,14 @@ FiSetAddEffect >> newValue [
 
 	^ newValue
 ]
+
+{ #category : #printing }
+FiSetAddEffect >> printOn: aStream [
+
+	super printOn: aStream.
+	
+	aStream 
+		nextPut: $(;
+		nextPutAll: (newValue printStringLimitedTo: 30);
+		nextPut: $).
+]

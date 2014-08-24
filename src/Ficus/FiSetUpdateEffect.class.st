@@ -64,6 +64,17 @@ FiSetUpdateEffect >> oldValue [
 	^ oldValue
 ]
 
+{ #category : #printing }
+FiSetUpdateEffect >> printOn: aStream [
+
+	super printOn: aStream.
+	
+	aStream 
+		nextPut: $(;
+		nextPutAll: (subEffect printStringLimitedTo: 30);
+		nextPut: $).
+]
+
 { #category : #accessing }
 FiSetUpdateEffect >> subEffect [
 

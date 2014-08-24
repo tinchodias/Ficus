@@ -1,9 +1,6 @@
 Class {
 	#name : #FiSetEffect,
 	#superclass : #FiEditEffect,
-	#instVars : [
-		'theValue'
-	],
 	#category : #'Ficus-Model-Core-Effects'
 }
 
@@ -17,15 +14,4 @@ FiSetEffect >> exclude: aValue [
 FiSetEffect >> include: aValue [
 
 	^ FiInclude value: aValue
-]
-
-{ #category : #printing }
-FiSetEffect >> printOn: aStream [
-
-	super printOn: aStream.
-	
-	aStream 
-		nextPut: $(;
-		nextPutAll: (theValue printStringLimitedTo: 30);
-		nextPut: $).
 ]

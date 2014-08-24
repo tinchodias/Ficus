@@ -37,3 +37,14 @@ FiSetRemoveEffect >> oldValue [
 
 	^ oldValue
 ]
+
+{ #category : #printing }
+FiSetRemoveEffect >> printOn: aStream [
+
+	super printOn: aStream.
+	
+	aStream 
+		nextPut: $(;
+		nextPutAll: (oldValue printStringLimitedTo: 30);
+		nextPut: $).
+]

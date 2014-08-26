@@ -22,7 +22,7 @@ FiExcludeKey >> effectOn: aValue [
 { #category : #effects }
 FiExcludeKey >> effectRemove: oldValue [
 
-	^ FiDictionaryRemoveEffect builder
+	^ FiDictionaryRemoval builder
 		key: key;
 		oldValue: oldValue;
 		new

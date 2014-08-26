@@ -22,7 +22,7 @@ FiExclude >> effectOn: aValue [
 { #category : #effects }
 FiExclude >> effectRemove: oldValue [
 
-	^ FiSetRemoveEffect builder
+	^ FiSetRemoval builder
 		oldValue: oldValue;
 		new
 ]

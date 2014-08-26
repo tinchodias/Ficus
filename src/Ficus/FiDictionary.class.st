@@ -50,7 +50,7 @@ FiDictionary >> differenceFrom: other [
 				
 				subDifference isNoEffect ifFalse: [
 					subEffects add: 
-						(FiDictionaryUpdateEffect builder
+						(FiDictionaryUpdate builder
 							key: key;
 							newValue: value;
 							oldValue: otherValue;
@@ -58,7 +58,7 @@ FiDictionary >> differenceFrom: other [
 							new) ] ]
 			ifAbsent: [ 
 				subEffects add: 
-					(FiDictionaryRemoveEffect builder
+					(FiDictionaryRemoval builder
 						key: key;
 						oldValue: otherValue;
 						new) ] ].
@@ -66,7 +66,7 @@ FiDictionary >> differenceFrom: other [
 	self stepsAndValuesDo: [ :key :value |
 		(other steps includes: key) ifFalse: [ 
 			subEffects add: 
-				(FiDictionaryAddEffect builder
+				(FiDictionaryAddition builder
 					key: key;
 					newValue: value;
 					new) ] ].

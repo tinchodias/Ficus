@@ -104,15 +104,15 @@ FiInspector2 >> initializeIconByClassName [
 	iconByClassName := 
 		Dictionary new
 			"effects"
-			at: #FiDictionaryAddEffect put: #changeAddIcon;
-			at: #FiDictionaryRemoveEffect put: #changeRemoveIcon;
-			at: #FiDictionaryUpdateEffect put: #changeUpdateIcon;
+			at: #FiDictionaryAddition put: #changeAddIcon;
+			at: #FiDictionaryRemoval put: #changeRemoveIcon;
+			at: #FiDictionaryUpdate put: #changeUpdateIcon;
 
-			at: #FiSetAddEffect put: #changeAddIcon;
-			at: #FiSetRemoveEffect put: #changeRemoveIcon;
-			at: #FiSetUpdateEffect put: #changeUpdateIcon;
+			at: #FiSetAddition put: #changeAddIcon;
+			at: #FiSetRemoval put: #changeRemoveIcon;
+			at: #FiSetUpdate put: #changeUpdateIcon;
 
-			at: #FiReplace put: #changeUpdateIcon;
+			at: #FiReplacement put: #changeUpdateIcon;
 			
 			"meta"
 			at: #FiPackage put: #packageIcon;

@@ -1,41 +1,41 @@
 Class {
-	#name : #FiDictionaryAddEffect,
+	#name : #FiDictionaryRemoval,
 	#superclass : #FiDictionaryEffect,
 	#instVars : [
-		'newValue'
+		'oldValue'
 	],
 	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #accessing }
-FiDictionaryAddEffect >> edit [
+FiDictionaryRemoval >> edit [
 	
-	^ FiAcceptKey 
-		key: key
-		edit: (FiEqual value: newValue)
+	^ FiExcludeKey key: key
 ]
 
 { #category : #summary }
-FiDictionaryAddEffect >> hierarchicalSummary [
+FiDictionaryRemoval >> hierarchicalSummary [
 	
-	^ { newValue 
+	^ {oldValue 
 		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
-			FiSummaryAdd builder 
+			FiSummaryRemove builder 
 				step: path step;
-				newValue: shot; 
+				oldValue: shot; 
 				subSummary: collectionFromChildren;
 				new ] 
 		basePath: FiPath root / key }
 ]
 
 { #category : #accessing }
-FiDictionaryAddEffect >> inverse [
+FiDictionaryRemoval >> inverse [
 
-	^ FiExcludeKey key: key
+	^ FiAcceptKey 
+		key: key
+		edit: (FiEqual value: oldValue)
 ]
 
 { #category : #accessing }
-FiDictionaryAddEffect >> newValue [
+FiDictionaryRemoval >> oldValue [
 
-	^ newValue
+	^ oldValue
 ]

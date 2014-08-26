@@ -84,21 +84,21 @@ FiSet >> differenceFrom: other [
 				
 				subDifference isNoEffect ifFalse: [
 					subEffects add: 
-						(FiSetUpdateEffect builder
+						(FiSetUpdate builder
 							newValue: value;
 							oldValue: otherValue;
 							subEffect: subDifference;
 							new) ] ]
 			ifAbsent: [ 
 				subEffects add: 
-					(FiSetRemoveEffect builder
+					(FiSetRemoval builder
 						oldValue: otherValue;
 						new) ] ].
 
 	self stepsAndValuesDo: [ :key :value |
 		(other steps includes: key) ifFalse: [ 
 			subEffects add: 
-				(FiSetAddEffect builder
+				(FiSetAddition builder
 					newValue: value;
 					new) ] ].
 	
@@ -133,7 +133,7 @@ FiSet >> effectOfInclude: anInclude [
 			difference isNoEffect
 				ifTrue: [ anInclude effectNothing ]
 				ifFalse: [ 
-					FiSetUpdateEffect builder
+					FiSetUpdate builder
 						newValue: anInclude theValue;
 						oldValue: aValue;
 						subEffect: difference;

@@ -1,5 +1,5 @@
 Class {
-	#name : #FiSlotUpdateEffect,
+	#name : #FiSlotUpdate,
 	#superclass : #FiEditEffect,
 	#instVars : [
 		'slotName',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-FiSlotUpdateEffect >> edit [
+FiSlotUpdate >> edit [
 
 	^ FiAcceptSlot 
 		slotName: slotName 
@@ -19,11 +19,11 @@ FiSlotUpdateEffect >> edit [
 ]
 
 { #category : #summary }
-FiSlotUpdateEffect >> hierarchicalSummary [
+FiSlotUpdate >> hierarchicalSummary [
 
 	self flag: #todo. "FIX"
 	
-	^ {(subEffect isKindOf: FiReplace) 
+	^ {(subEffect isKindOf: FiReplacement) 
 		ifTrue: [ 
 			FiSummaryUpdate builder 
 				step: slotName;
@@ -41,7 +41,7 @@ FiSlotUpdateEffect >> hierarchicalSummary [
 ]
 
 { #category : #accessing }
-FiSlotUpdateEffect >> inverse [
+FiSlotUpdate >> inverse [
 
 	^ FiAcceptSlot 
 		slotName: slotName 
@@ -49,7 +49,7 @@ FiSlotUpdateEffect >> inverse [
 ]
 
 { #category : #enumerating }
-FiSlotUpdateEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+FiSlotUpdate >> leafEffectsDo: aBlockClosure basePath: aPath [ 
 
 	^ subEffect 
 		leafEffectsDo: aBlockClosure 
@@ -57,19 +57,19 @@ FiSlotUpdateEffect >> leafEffectsDo: aBlockClosure basePath: aPath [
 ]
 
 { #category : #accessing }
-FiSlotUpdateEffect >> newValue [
+FiSlotUpdate >> newValue [
 
 	^ newValue
 ]
 
 { #category : #accessing }
-FiSlotUpdateEffect >> oldValue [
+FiSlotUpdate >> oldValue [
 
 	^ oldValue
 ]
 
 { #category : #printing }
-FiSlotUpdateEffect >> printOn: aStream [
+FiSlotUpdate >> printOn: aStream [
 
 	super printOn: aStream.
 	
@@ -80,13 +80,13 @@ FiSlotUpdateEffect >> printOn: aStream [
 ]
 
 { #category : #accessing }
-FiSlotUpdateEffect >> slotName [
+FiSlotUpdate >> slotName [
 
 	^ slotName
 ]
 
 { #category : #accessing }
-FiSlotUpdateEffect >> subEffect [
+FiSlotUpdate >> subEffect [
 
 	^ subEffect
 ]

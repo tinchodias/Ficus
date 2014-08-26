@@ -1,6 +1,6 @@
 Class {
-	#name : #FiDictionaryUpdateEffect,
-	#superclass : #FiDictionaryEffect,
+	#name : #FiSetUpdate,
+	#superclass : #FiSetEffect,
 	#instVars : [
 		'newValue',
 		'oldValue',
@@ -10,29 +10,27 @@ Class {
 }
 
 { #category : #accessing }
-FiDictionaryUpdateEffect >> edit [
-
-	^ FiAcceptKey 
-		key: key
-		edit: (FiEqual value: newValue)
+FiSetUpdate >> edit [
+	
+	^ FiInclude value: newValue
 ]
 
 { #category : #summary }
-FiDictionaryUpdateEffect >> hierarchicalSummary [
+FiSetUpdate >> hierarchicalSummary [
 
 	self flag: #todo. "FIX"
 	
-	^ {(subEffect isKindOf: FiReplace) 
+	^ {(subEffect isKindOf: FiReplacement) 
 		ifTrue: [ 
 			FiSummaryUpdate builder 
-				step: key;
+				step: newValue defaultStep;
 				oldValue: subEffect oldValue; 
 				newValue: subEffect newValue; 
 				subSummary: #();
-				new ]
-		ifFalse: [	
+				new ]	
+		ifFalse: [
 			FiSummaryUpdate builder 
-				step: key;
+				step: newValue defaultStep;
 				oldValue: oldValue; 
 				newValue: newValue; 
 				subSummary: subEffect hierarchicalSummary;
@@ -40,35 +38,45 @@ FiDictionaryUpdateEffect >> hierarchicalSummary [
 ]
 
 { #category : #accessing }
-FiDictionaryUpdateEffect >> inverse [
+FiSetUpdate >> inverse [
 
-	^ FiAcceptKey 
-		key: key
-		edit: (FiEqual value: oldValue)
+	^ FiInclude value: oldValue
 ]
 
 { #category : #enumerating }
-FiDictionaryUpdateEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+FiSetUpdate >> leafEffectsDo: aBlockClosure basePath: aPath [ 
 
 	^ subEffect 
 		leafEffectsDo: aBlockClosure 
-		basePath: aPath / key
+		basePath: aPath / newValue defaultStep
+
 ]
 
 { #category : #accessing }
-FiDictionaryUpdateEffect >> newValue [
+FiSetUpdate >> newValue [
 
 	^ newValue
 ]
 
 { #category : #accessing }
-FiDictionaryUpdateEffect >> oldValue [
+FiSetUpdate >> oldValue [
 
 	^ oldValue
 ]
 
+{ #category : #printing }
+FiSetUpdate >> printOn: aStream [
+
+	super printOn: aStream.
+	
+	aStream 
+		nextPut: $(;
+		nextPutAll: (subEffect printStringLimitedTo: 30);
+		nextPut: $).
+]
+
 { #category : #accessing }
-FiDictionaryUpdateEffect >> subEffect [
+FiSetUpdate >> subEffect [
 
 	^ subEffect
 ]

@@ -19,7 +19,7 @@ Object >> differenceFrom: other [
 	^ self = other 
 		ifTrue: [ FiNoEffect new ]
 		ifFalse: [ 
-			FiReplace builder
+			FiReplacement builder
 				oldValue: other;
 				newValue: self;
 				new ]
@@ -28,7 +28,7 @@ Object >> differenceFrom: other [
 { #category : #'*Ficus' }
 Object >> effectOfReplace: oldValue [ 
 	
-	^ FiReplace builder
+	^ FiReplacement builder
 		oldValue: oldValue;
 		newValue: self;
 		new

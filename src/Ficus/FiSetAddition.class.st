@@ -1,5 +1,5 @@
 Class {
-	#name : #FiSetAddEffect,
+	#name : #FiSetAddition,
 	#superclass : #FiSetEffect,
 	#instVars : [
 		'newValue'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-FiSetAddEffect >> edit [
+FiSetAddition >> edit [
 
 	^ FiInclude value: newValue
 ]
 
 { #category : #summary }
-FiSetAddEffect >> hierarchicalSummary [
+FiSetAddition >> hierarchicalSummary [
 	
 	^ { newValue 
 		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
@@ -27,19 +27,19 @@ FiSetAddEffect >> hierarchicalSummary [
 ]
 
 { #category : #accessing }
-FiSetAddEffect >> inverse [
+FiSetAddition >> inverse [
 
 	^ FiExclude value: newValue
 ]
 
 { #category : #accessing }
-FiSetAddEffect >> newValue [
+FiSetAddition >> newValue [
 
 	^ newValue
 ]
 
 { #category : #printing }
-FiSetAddEffect >> printOn: aStream [
+FiSetAddition >> printOn: aStream [
 
 	super printOn: aStream.
 	

@@ -45,7 +45,7 @@ FiFixedObject >> differenceFrom: other [
 		
 		subDifference isNoEffect ifFalse: [
 			subEffects add: 
-				(FiSlotUpdateEffect builder
+				(FiSlotUpdate builder
 					slotName: step;
 					oldValue: otherValue;
 					newValue: value;

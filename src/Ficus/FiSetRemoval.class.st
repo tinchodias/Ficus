@@ -1,5 +1,5 @@
 Class {
-	#name : #FiSetRemoveEffect,
+	#name : #FiSetRemoval,
 	#superclass : #FiSetEffect,
 	#instVars : [
 		'oldValue'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-FiSetRemoveEffect >> edit [
+FiSetRemoval >> edit [
 
 	^ FiExclude value: oldValue
 ]
 
 { #category : #summary }
-FiSetRemoveEffect >> hierarchicalSummary [
+FiSetRemoval >> hierarchicalSummary [
 	
 	^ { oldValue 
 		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
@@ -27,19 +27,19 @@ FiSetRemoveEffect >> hierarchicalSummary [
 ]
 
 { #category : #accessing }
-FiSetRemoveEffect >> inverse [
+FiSetRemoval >> inverse [
 
 	^ FiInclude value: oldValue
 ]
 
 { #category : #accessing }
-FiSetRemoveEffect >> oldValue [
+FiSetRemoval >> oldValue [
 
 	^ oldValue
 ]
 
 { #category : #printing }
-FiSetRemoveEffect >> printOn: aStream [
+FiSetRemoval >> printOn: aStream [
 
 	super printOn: aStream.
 	

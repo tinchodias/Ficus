@@ -1,5 +1,5 @@
 Class {
-	#name : #FiReplace,
+	#name : #FiReplacement,
 	#superclass : #FiEditEffect,
 	#instVars : [
 		'oldValue',
@@ -9,31 +9,31 @@ Class {
 }
 
 { #category : #accessing }
-FiReplace >> edit [
+FiReplacement >> edit [
 	
 	^ oldValue replaceBy: newValue
 ]
 
 { #category : #accessing }
-FiReplace >> inverse [
+FiReplacement >> inverse [
 
 	^ newValue replaceBy: oldValue
 ]
 
 { #category : #accessing }
-FiReplace >> newValue [
+FiReplacement >> newValue [
 
 	^ newValue
 ]
 
 { #category : #accessing }
-FiReplace >> oldValue [
+FiReplacement >> oldValue [
 
 	^ oldValue
 ]
 
 { #category : #printing }
-FiReplace >> printOn: aStream [
+FiReplacement >> printOn: aStream [
 
 	super printOn: aStream.
 

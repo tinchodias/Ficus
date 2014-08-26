@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 FiSetRemoveEffect >> edit [
 
-	^ self exclude: oldValue
+	^ FiExclude value: oldValue
 ]
 
 { #category : #summary }
@@ -29,7 +29,7 @@ FiSetRemoveEffect >> hierarchicalSummary [
 { #category : #accessing }
 FiSetRemoveEffect >> inverse [
 
-	^ self include: oldValue
+	^ FiInclude value: oldValue
 ]
 
 { #category : #accessing }

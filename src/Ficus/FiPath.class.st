@@ -30,6 +30,13 @@ FiPath class >> root [
 	^ FiRootPath instance
 ]
 
+{ #category : #ston }
+FiPath class >> stonName [
+	"Encode my instances using a different class name."
+
+	^ FiPath name
+]
+
 { #category : #accessing }
 FiPath >> / anObject [
 	

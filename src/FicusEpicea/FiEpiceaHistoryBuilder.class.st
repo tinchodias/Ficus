@@ -13,7 +13,7 @@ FiEpiceaHistoryBuilder class >> forFuelTestsCached [
 
 	^ self new
 		theLog: EpMonitor current log;
-		theRightPackageName: 'FuelTests';
+		packageName: 'FuelTests';
 		yourself
 ]
 
@@ -22,7 +22,7 @@ FiEpiceaHistoryBuilder class >> forTetrisCached [
 
 	^ self new
 		theLog: EpMonitor current log;
-		theRightPackageName: 'Tetris';
+		packageName: 'Tetris';
 		yourself
 ]
 
@@ -30,6 +30,7 @@ FiEpiceaHistoryBuilder class >> forTetrisCached [
 FiEpiceaHistoryBuilder >> browse [
 
 	| initialHistoryNodes browser |
+	1halt.
 	initialHistoryNodes := FiEpiceaHistoryBuilder forTetrisCached historyNodes.
 
 	browser := FiFullHistoryBrowser new
@@ -45,11 +46,6 @@ FiEpiceaHistoryBuilder >> browse [
 	^ browser 
 		openWithSpec;
 		yourself
-]
-
-{ #category : #'as yet unclassified' }
-FiEpiceaHistoryBuilder >> entryAdded: anEpEntryAdded [ 
-	self shouldBeImplemented.
 ]
 
 { #category : #private }
@@ -84,10 +80,10 @@ FiEpiceaHistoryBuilder >> interestingEntries [
 	result := OrderedCollection new.
 
 	log priorEntriesFromHeadDo: [ :entry |
-		(self isInteresting: entry)
+		(self isInterestingCodeChange: entry)
 			ifTrue: [ result add: entry ].
 			
-		(self isMonticelloLoadOfRightPackage: entry)
+		(self isInterestingMCLoad: entry)
 			ifTrue: [ ^ result ] ].
 	
 	^ result
@@ -100,7 +96,7 @@ FiEpiceaHistoryBuilder >> isCodeChange: entry [
 ]
 
 { #category : #private }
-FiEpiceaHistoryBuilder >> isInteresting: entry [
+FiEpiceaHistoryBuilder >> isInterestingCodeChange: entry [
 	
 	^ (self isCodeChange: entry) and: [ 
 		(self isRightPackage: entry) and: [ 
@@ -108,7 +104,7 @@ FiEpiceaHistoryBuilder >> isInteresting: entry [
 ]
 
 { #category : #private }
-FiEpiceaHistoryBuilder >> isMonticelloLoadOfRightPackage: entry [
+FiEpiceaHistoryBuilder >> isInterestingMCLoad: entry [
 
 	^ (entry content isKindOf: EpMonticelloVersionsLoad) and: [ 
 		entry content packageNames includes: theRightPackageName ]
@@ -135,6 +131,12 @@ FiEpiceaHistoryBuilder >> isTriggeredByMonticelloLoad: entry [
 	^ false
 ]
 
+{ #category : #accessing }
+FiEpiceaHistoryBuilder >> packageName: anObject [
+	
+	theRightPackageName := anObject
+]
+
 { #category : #private }
 FiEpiceaHistoryBuilder >> snapshotFor: anEpCodeChange prior: priorHistoryNode [
 
@@ -145,10 +147,4 @@ FiEpiceaHistoryBuilder >> snapshotFor: anEpCodeChange prior: priorHistoryNode [
 FiEpiceaHistoryBuilder >> theLog: anObject [
 	
 	log := anObject
-]
-
-{ #category : #accessing }
-FiEpiceaHistoryBuilder >> theRightPackageName: anObject [
-	
-	theRightPackageName := anObject
 ]

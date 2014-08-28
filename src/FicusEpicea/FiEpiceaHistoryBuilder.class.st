@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'log',
-		'theRightPackageName'
+		'packageName'
 	],
 	#category : #FicusEpicea
 }
@@ -65,7 +65,7 @@ FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
 FiEpiceaHistoryBuilder >> historyNodes [
 	
 	| result |
-	result := OrderedCollection withAll: (FiMonticelloHistoryBuilder forCachedPackageNamed: theRightPackageName) historyNodes.
+	result := OrderedCollection withAll: (FiMonticelloHistoryBuilder forCachedPackageNamed: packageName) historyNodes.
 	
 	self interestingEntries reverseDo: [ :anEntry |
 		result addLast: (self historyNodeFor: anEntry prior: result last) ].
@@ -99,7 +99,7 @@ FiEpiceaHistoryBuilder >> isCodeChange: entry [
 FiEpiceaHistoryBuilder >> isInterestingCodeChange: entry [
 	
 	^ (self isCodeChange: entry) and: [ 
-		(self isRightPackage: entry) and: [ 
+		(self isInterestingPackage: entry) and: [ 
 			(self isTriggeredByMonticelloLoad: entry) not ] ]
 ]
 
@@ -107,13 +107,13 @@ FiEpiceaHistoryBuilder >> isInterestingCodeChange: entry [
 FiEpiceaHistoryBuilder >> isInterestingMCLoad: entry [
 
 	^ (entry content isKindOf: EpMonticelloVersionsLoad) and: [ 
-		entry content packageNames includes: theRightPackageName ]
+		entry content packageNames includes: packageName ]
 ]
 
 { #category : #private }
-FiEpiceaHistoryBuilder >> isRightPackage: entry [
+FiEpiceaHistoryBuilder >> isInterestingPackage: entry [
 	
-	^ entry content affectedPackageName = theRightPackageName
+	^ entry content affectedPackageName = packageName
 ]
 
 { #category : #private }
@@ -134,7 +134,7 @@ FiEpiceaHistoryBuilder >> isTriggeredByMonticelloLoad: entry [
 { #category : #accessing }
 FiEpiceaHistoryBuilder >> packageName: anObject [
 	
-	theRightPackageName := anObject
+	packageName := anObject
 ]
 
 { #category : #private }

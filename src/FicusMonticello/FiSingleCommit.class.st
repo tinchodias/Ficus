@@ -7,6 +7,12 @@ Class {
 	#category : #'FicusMonticello-Marshaling-New'
 }
 
+{ #category : #'as yet unclassified' }
+FiSingleCommit >> contains: anOrigin [ 
+	
+	^ self = anOrigin
+]
+
 { #category : #converting }
 FiSingleCommit >> followedBy: aFiCommit [ 
 	

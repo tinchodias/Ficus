@@ -27,6 +27,12 @@ FiShot class >> builder [
 	^ FiShotBuilder forClass: self
 ]
 
+{ #category : #accessing }
+FiShot class >> excludedInstanceVariableNamesForSteps [
+
+	^ #(tag cachedHash)
+]
+
 { #category : #'instance creation' }
 FiShot class >> newFromStepsAndValues: aCollection [ 
 	
@@ -62,7 +68,7 @@ FiShot >> differenceFrom: other [
 { #category : #edits }
 FiShot >> edits: aCollectionOfEdits [
 	
-	^ FiCompositeEdit withAll: (FiSet withValues: aCollectionOfEdits)
+	^ FiCompositeEdit withAll: aCollectionOfEdits
 ]
 
 { #category : #effects }
@@ -77,6 +83,14 @@ FiShot >> effectOfCompositeEdit: aCompositeEdit [
 	^ FiCompositeEffect builder
 		subEffects: (FiSet withValues: (aCompositeEdit subEdits values collect: [ :anEdit | anEdit effectOn: self ]));
 		new
+]
+
+{ #category : #effects }
+FiShot >> effectOfSubEdit: aSubEdit [ 
+
+	self flag: #fix. "inefficient".
+	
+	^ (self resultOf: aSubEdit) differenceFrom: self
 ]
 
 { #category : #enumerating }
@@ -173,6 +187,30 @@ FiShot >> resultOfCompositeEdit: aCompositeEdit [
 	^ aCompositeEdit subEdits values
 		inject: self
 		into: [ :copy :edit | copy resultOf: edit ]
+]
+
+{ #category : #results }
+FiShot >> resultOfSubEdit: aSubEdit [ 
+	
+	^ self resultOfSubEdit: aSubEdit steps: aSubEdit path steps
+]
+
+{ #category : #results }
+FiShot >> resultOfSubEdit: aSubEdit steps: anArrayOfSteps [
+	
+	^ anArrayOfSteps 
+		ifEmpty: [ self resultOf: aSubEdit edit ]
+		ifNotEmpty: [ 
+			| anEdit |
+			anEdit := 
+				self 
+					at: anArrayOfSteps first
+					edit: [ :aValue | 
+						FiEqual value: 
+							(aValue 
+								resultOfSubEdit: aSubEdit 
+								steps: anArrayOfSteps allButFirst) ].
+			self resultOf: anEdit ]
 ]
 
 { #category : #accessing }

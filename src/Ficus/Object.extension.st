@@ -86,3 +86,11 @@ Object >> resultOf: anEdit [
 
 	^ anEdit resultOn: self
 ]
+
+{ #category : #'*Ficus' }
+Object >> resultOfSubEdit: aSubEdit steps: aCollection [ 
+	
+	self assert: aCollection isEmpty.
+	
+	^ self resultOf: aSubEdit edit
+]

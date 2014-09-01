@@ -7,14 +7,6 @@ Class {
 	#category : #'Ficus-Model-Core-Edits'
 }
 
-{ #category : #'instance creation' }
-FiDictionaryEdit class >> key: aKey [
-	
-	^ self new
-		key: aKey;
-		yourself
-]
-
 { #category : #accessing }
 FiDictionaryEdit >> key [
 

@@ -317,6 +317,25 @@ FiEffectTest >> testSetUpdateClass [
 
 ]
 
+{ #category : #'tests-set' }
+FiEffectTest >> testSetUpdateClassWithSubEdit [
+
+	| edit source result |
+	source := FiSet withValues: { FiClass named: #A }.
+
+	edit := 
+		FiSubEdit
+			path: FiPath root / #A / #comment
+			equal: '42'.
+
+	result := source resultOf: edit.
+	
+	self assert: (source shotAt: #A) comment equals: ''.
+	self assert: (result shotAt: #A) comment equals: '42'.
+	self assert: (source effectOf: edit) equals: (result differenceFrom: source).
+
+]
+
 { #category : #'tests-shot' }
 FiEffectTest >> testShotNoEffect [
 

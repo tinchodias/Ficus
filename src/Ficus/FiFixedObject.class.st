@@ -7,12 +7,6 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
-{ #category : #accessing }
-FiFixedObject class >> excludedInstanceVariableNamesForSteps [
-
-	^ #(tag cachedHash)
-]
-
 { #category : #edits }
 FiFixedObject >> at: aSlotName edit: aBlockClosure [ 
 	

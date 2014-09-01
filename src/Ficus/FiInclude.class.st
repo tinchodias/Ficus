@@ -4,14 +4,6 @@ Class {
 	#category : #'Ficus-Model-Core-Edits'
 }
 
-{ #category : #'instance creation' }
-FiInclude class >> value: aValue [
-	
-	^ self builder
-		theValue: aValue;
-		new
-]
-
 { #category : #effects }
 FiInclude >> effectAdd [
 

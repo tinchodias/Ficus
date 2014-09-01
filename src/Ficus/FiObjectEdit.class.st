@@ -10,9 +10,9 @@ Class {
 { #category : #'instance creation' }
 FiObjectEdit class >> value: aValue [
 	
-	^ self new
+	^ self builder
 		theValue: aValue;
-		yourself
+		new
 ]
 
 { #category : #printing }

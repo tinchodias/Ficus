@@ -4,7 +4,7 @@ Class {
 	#category : #'Ficus-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 FiImmutabilityTest class >> candidatesForRemoval [
 
 	^ FiShot withAllSubclasses collect: [ :aClass |
@@ -12,7 +12,7 @@ FiImmutabilityTest class >> candidatesForRemoval [
 			((aClass whichSelectorsStoreInto: instanceVariableName) reject: [ :selector | selector beginsWith: #init ]) ]) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 FiImmutabilityTest class >> removeAllCandidates [
 	"
 	self removeAllCandidates
@@ -23,39 +23,31 @@ FiImmutabilityTest class >> removeAllCandidates [
 			assoc key removeSelector: selector ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 FiImmutabilityTest >> assertHasNotSetters: shotClass [
 
-	shotClass allInstVarNames do: [ :instanceVariableName |
-		self assertHasNotSetters: shotClass instanceVariableName: instanceVariableName ]
+	(shotClass allInstVarNames copyWithoutAll: shotClass excludedInstanceVariableNamesForSteps) 
+		do: [ :instanceVariableName |
+			self assertHasNotSetters: shotClass instanceVariableName: instanceVariableName ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 FiImmutabilityTest >> assertHasNotSetters: shotClass instanceVariableName: instanceVariableName [
 	"Thanks to Clara for her help"
 
 	| setters |
-	setters := ((shotClass whichSelectorsStoreInto: instanceVariableName) 
-		reject: [ :selector | (selector beginsWith: #init) or: [ self falsePositiveSetters includes: selector ] ]).
+	setters := 
+		(shotClass whichSelectorsStoreInto: instanceVariableName) 
+			reject: [ :selector | selector beginsWith: #init ].
 
-	self assert: setters isEmpty description: 'Setters found in: ', shotClass name, ' selectors: ', setters asString
+	self 
+		assert: setters isEmpty 
+		description: 'Setters found in: ', shotClass name, ' instanceVariableName: ', instanceVariableName, ' selectors: ', setters asString
 ]
 
-{ #category : #'as yet unclassified' }
-FiImmutabilityTest >> falsePositiveSetters [
-	
-	^ #( #tag: #hash #selector )
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 FiImmutabilityTest >> testImmutable [
 
 	FiShot withAllSubclasses do: [ :shotClass |
 		self assertHasNotSetters: shotClass ]
-]
-
-{ #category : #'as yet unclassified' }
-FiImmutabilityTest >> testMethod [
-
-	self assertHasNotSetters: FiMethod
 ]

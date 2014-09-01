@@ -10,23 +10,15 @@ Class {
 { #category : #'instance creation' }
 FiCompositeEdit class >> withAll: aCollectionOfEdits [ 
 
-	^ self basicNew
-		initializeWithAll: aCollectionOfEdits;
-		yourself
+	^ self builder
+		subEdits: (FiSet withValues: aCollectionOfEdits);
+		new
 ]
 
 { #category : #effects }
 FiCompositeEdit >> effectOn: aValue [
 	
 	^ aValue effectOfCompositeEdit: self
-]
-
-{ #category : #initialization }
-FiCompositeEdit >> initializeWithAll: aCollectionOfEdits [ 
-
-	self initialize.
-	
-	subEdits := aCollectionOfEdits
 ]
 
 { #category : #printing }

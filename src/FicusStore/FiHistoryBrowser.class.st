@@ -58,14 +58,38 @@ FiHistoryBrowser >> initializeHiedraController [
 		columnSize: self rowSize // 2.5.
 	
 	hiedraRulerController rulerBuilder nodeBuilder
-		width: 3.5;
-		color: Color purple.	
+		width: 5.15;
+		color: Color black.
 	
 	hiedraRulerController rulerBuilder addLinkBuilder: [ :linkBuilder |
 		linkBuilder 
-			width: 3;
+			width: 2.3;
+			color: Color red;
+			destinationsBlock: [ :node | 
+				node origin isComposite
+					ifFalse: [ node priors asArray ]
+					ifTrue: [ 
+						| priorsHack |
+						priorsHack := node priors asArray.
+						priorsHack size = 1 
+							ifTrue: [ priorsHack ]
+							ifFalse: [ priorsHack allButLast ] "the last one should be the epicea prior..."
+						  ] ] ].
+		
+	hiedraRulerController rulerBuilder addLinkBuilder: [ :linkBuilder |
+		linkBuilder 
+			width: 2.3;
 			color: Color blue;
-			destinationsBlock: [ :node | node priors asArray ] ].
+			destinationsBlock: [ :node | 
+				node origin isComposite
+					ifFalse: [ node priors asArray ]
+					ifTrue: [ 
+						| priorsHack |
+						priorsHack := node priors asArray. 
+						priorsHack size = 1 
+							ifTrue: [ #() ]
+							ifFalse: [ {priorsHack last} ] "the last one should be the epicea prior..."
+				] ] ].
 		
 ]
 
@@ -85,7 +109,7 @@ FiHistoryBrowser >> initializePresenter [
 				
 			TreeColumnModel new
 				displayBlock: [ :item | item content origin shortDescription ];
-				initialWidth: 250;
+				initialWidth: 400;
 				yourself.				
 
 			TreeColumnModel new

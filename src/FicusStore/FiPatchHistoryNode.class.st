@@ -3,25 +3,49 @@ Class {
 	#superclass : #FiHistoryNode,
 	#instVars : [
 		'prior',
-		'effect'
+		'edit',
+		'cachedSnapshot',
+		'cachedEffect',
+		'cachedPriors'
 	],
 	#category : #'FicusStore-HistoryNodes'
 }
 
 { #category : #accessing }
+FiPatchHistoryNode class >> excludedInstanceVariableNamesForSteps [
+
+	^ super excludedInstanceVariableNamesForSteps, #(cachedSnapshot cachedEffect cachedPriors)
+]
+
+{ #category : #accessing }
+FiPatchHistoryNode >> edit [
+
+	^ edit
+]
+
+{ #category : #accessing }
+FiPatchHistoryNode >> effect [
+
+	^ cachedEffect ifNil: [ 
+		cachedEffect := prior snapshot effectOf: edit ]
+]
+
+{ #category : #accessing }
 FiPatchHistoryNode >> patches [
 
-	^ { prior -> effect }
+	^ { prior -> self effect }
 ]
 
 { #category : #accessing }
 FiPatchHistoryNode >> priors [
 
-	^ { prior }
+	^ cachedPriors ifNil: [ 
+		cachedPriors := FiSet withValues: { prior } ]
 ]
 
 { #category : #accessing }
 FiPatchHistoryNode >> snapshot [
 
-	^ prior snapshot resultOf: effect edit
+	^ cachedSnapshot ifNil: [ 
+		cachedSnapshot := prior snapshot resultOf: edit ]
 ]

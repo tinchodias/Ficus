@@ -4,43 +4,40 @@ Class {
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
 	#instVars : [
-		'priorHistoryNode'
+		'priorHistoryNode',
+		'basePath'
 	],
 	#category : #FicusEpicea
 }
 
 { #category : #'instance creation' }
-FiEpiceaTranslator class >> newWithPrior: aHistoryNode [ 
-	
-	^ self basicNew
-		initializeWith: aHistoryNode;
+FiEpiceaTranslator class >> newWithBasePath: aPath [
+
+	^ self basicNew	
+		initializeWithBasePath: aPath;
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-FiEpiceaTranslator >> ficusClassFor: aMCClassDefinition [ 
-
-	^ FiClass builder
-		theName: aMCClassDefinition className;
-		metaclass: (self ficusMetaclassFor: aMCClassDefinition);
-		superclassName: aMCClassDefinition superclassName;
-		layout: (self ficusLayoutFor: aMCClassDefinition);
-		methods: (self ficusMethodsFor: aMCClassDefinition);
-		traitComposition: aMCClassDefinition traitCompositionSource;
-		category: aMCClassDefinition category;
-		classPool: (self ficusClassPoolFor: aMCClassDefinition);
-		sharedPools: (self ficusSharedPoolsFor: aMCClassDefinition);
-		comment: aMCClassDefinition comment;
-		new
+{ #category : #private }
+FiEpiceaTranslator >> editForMethodEqual: aRingMethod [
+	
+	^ FiSubEdit
+		path: FiPath root / #contents / aRingMethod className / #methods
+		edit: 
+			(FiInclude value: 
+				(FiMethod builder
+					protocol: aRingMethod protocol asSymbol;
+					sourceCode: aRingMethod sourceCode asString;
+					new))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiEpiceaTranslator >> ficusClassPoolFor: aMCClassDefinition [ 
 
 	^ self ficusSymbolSetFor: aMCClassDefinition classVarNames 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiEpiceaTranslator >> ficusLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout builder 
@@ -48,116 +45,60 @@ FiEpiceaTranslator >> ficusLayoutFor: aMCClassDefinition [
 		new
 ]
 
-{ #category : #'as yet unclassified' }
-FiEpiceaTranslator >> ficusMetaclassFor: aMCClassDefinition [ 
-
-	^ FiMetaclass builder 
-		methods: (self ficusMetaclassMethodsFor: aMCClassDefinition);
-		layout: (self ficusMetaclassLayoutFor: aMCClassDefinition);
-		traitComposition: aMCClassDefinition theMetaClass traitCompositionSource;
-		new
-]
-
-{ #category : #'as yet unclassified' }
-FiEpiceaTranslator >> ficusMetaclassLayoutFor: aMCClassDefinition [
-			
-	^ FiFixedLayout builder 
-		slotNames: (self ficusSymbolSetFor: aMCClassDefinition theMetaClass instVarNames );
-		new
-		
-]
-
-{ #category : #'as yet unclassified' }
-FiEpiceaTranslator >> ficusMetaclassMethodsFor: aMCClassDefinition [ 
-	
-	^ priorHistoryNode snapshot contents 
-		shotAt: aMCClassDefinition name
-		ifPresent: [ :aClass | aClass metaclass methods ]
-		ifAbsent: [ FiSet new ]
-]
-
-{ #category : #'as yet unclassified' }
-FiEpiceaTranslator >> ficusMethodsFor: aMCClassDefinition [ 
-	
-	^ priorHistoryNode snapshot contents 
-		shotAt: aMCClassDefinition name
-		ifPresent: [ :aClass | aClass methods ]
-		ifAbsent: [ FiSet new ]
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiEpiceaTranslator >> ficusSharedPoolsFor: aMCClassDefinition [ 
 
 	^ self ficusSymbolSetFor: aMCClassDefinition sharedPools
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiEpiceaTranslator >> ficusSymbolSetFor: aCollection [
 
 	^ FiSet withValues: (aCollection collect: #asSymbol as: Set) 
 ]
 
 { #category : #initialization }
-FiEpiceaTranslator >> initializeWith: aHistoryNode [
-	
+FiEpiceaTranslator >> initializeWithBasePath: aPath [
+
 	self initialize.
 	
-	priorHistoryNode := aHistoryNode.
-	
-]
-
-{ #category : #visitor }
-FiEpiceaTranslator >> resultOfClassEqual: aRingClass [
-	
-	| priorSnapshot edit |
-	priorSnapshot := priorHistoryNode snapshot.
-
-	edit := priorSnapshot
-		at: #contents
-		edit: [ :contents |
-			contents include: (self ficusClassFor: aRingClass) ].
-						
-	^ priorSnapshot resultOf: edit
-]
-
-{ #category : #visitor }
-FiEpiceaTranslator >> resultOfMethodEqual: aRingMethod [
-	
-	| priorSnapshot edit |
-	priorSnapshot := priorHistoryNode snapshot.
-	
-	edit := priorSnapshot
-		at: #contents
-		edit: [ :contents |
-			contents 
-				at: aRingMethod className
-				edit: [ :aClassOrTrait |
-					aClassOrTrait 
-						at: #methods
-						edit: [ :methods |
-							methods include: 
-								(FiMethod builder
-									protocol: aRingMethod protocol asSymbol;
-									sourceCode: aRingMethod sourceCode asString;
-									new) ] ] ].
-						
-	^ priorSnapshot resultOf: edit
+	basePath := aPath.
 ]
 
 { #category : #visitor }
 FiEpiceaTranslator >> visitBehaviorChange: aChange [
 
-	^ self resultOfClassEqual: aChange behaviorAffected 
+	| aRingClass classPath |
+	aRingClass := aChange behaviorAffected.	
+	classPath := basePath / aRingClass name.
+
+	^ FiCompositeEdit withAll: {
+		FiSubEdit
+			path: classPath / #superclassName
+			equal: aRingClass superclassName.
+		FiSubEdit
+			path: classPath / #layout
+			equal: (self ficusLayoutFor: aRingClass).
+		FiSubEdit
+			path: classPath / #category
+			equal: aRingClass category.
+		FiSubEdit
+			path: classPath / #classPool
+			equal: (self ficusClassPoolFor: aRingClass).
+		FiSubEdit
+			path: classPath / #sharedPools
+			equal: (self ficusSharedPoolsFor: aRingClass).
+			}
 ]
 
 { #category : #visitor }
 FiEpiceaTranslator >> visitMethodCreated: aChange [
 
-	^ self resultOfMethodEqual: aChange methodAdded
+	^ self editForMethodEqual: aChange methodAdded
 ]
 
 { #category : #visitor }
 FiEpiceaTranslator >> visitMethodModified: aChange [
 	
-	^ self resultOfMethodEqual: aChange newMethod
+	^ self editForMethodEqual: aChange newMethod
 ]

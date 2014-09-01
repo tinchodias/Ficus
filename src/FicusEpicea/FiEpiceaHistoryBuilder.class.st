@@ -9,6 +9,15 @@ Class {
 }
 
 { #category : #examples }
+FiEpiceaHistoryBuilder class >> forErgoPlaygroundCached [
+
+	^ self new
+		theLog: EpMonitor current log;
+		packageName: 'ErgoPlayground';
+		yourself
+]
+
+{ #category : #examples }
 FiEpiceaHistoryBuilder class >> forFuelTestsCached [
 
 	^ self new
@@ -49,26 +58,101 @@ FiEpiceaHistoryBuilder >> browse [
 ]
 
 { #category : #private }
-FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
+FiEpiceaHistoryBuilder >> compositeHistoryNodeFor: anEntry priors: priors and: aMonticelloHistoryNode [ 
 	
-	| origin |		
-	origin := FiSingleCommit builder reference: (log referenceTo: anEntry); new.
+	| origin epiceaOrigin monticelloOrigin |
+	epiceaOrigin := FiSingleCommit builder reference: (log referenceTo: anEntry); new.
+	monticelloOrigin := aMonticelloHistoryNode origin.
+
+	origin := 
+		FiCompositeOrigin builder 
+			origins: (FiSet withValues: {epiceaOrigin. monticelloOrigin});
+			new.
 
 	^ FiSnapshotHistoryNode builder
 		origin: origin;
-		snapshot: (self snapshotFor: anEntry content prior: priorHistoryNode);
-		priors: (FiSet withValues: { priorHistoryNode });
+		snapshot: aMonticelloHistoryNode snapshot;
+		priors: priors;
 		new
+]
+
+{ #category : #private }
+FiEpiceaHistoryBuilder >> editFor: anEpCodeChange [
+
+	^ anEpCodeChange accept: (FiEpiceaTranslator newWithBasePath: FiPath root / #contents)
+]
+
+{ #category : #private }
+FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
+	
+	| origin             node |		
+	origin := FiSingleCommit builder reference: (log referenceTo: anEntry); new.
+
+	node := FiPatchHistoryNode builder
+		origin: origin;
+		edit: (self editFor: anEntry content);
+		prior: priorHistoryNode;
+		new.
+		
+	Halt if: [ node printString = 'a FiPatchHistoryNode(a FiSingleCommit(an OmReference(Yrupe-505-Mix-1_2vzn6fh:47)))' ].
+
+	^ node
 ]
 
 { #category : #accessing }
 FiEpiceaHistoryBuilder >> historyNodes [
 	
-	| result |
-	result := OrderedCollection withAll: (FiMonticelloHistoryBuilder forCachedPackageNamed: packageName) historyNodes.
+	| mcNodes result interestingEntries |
+	mcNodes := (FiMonticelloHistoryBuilder forCachedPackageNamed: packageName) historyNodes.
+	result := OrderedCollection new.
+
+	interestingEntries := self interestingEntries.
+	self assert: (self isInterestingMCLoad: interestingEntries last).
 	
-	self interestingEntries reverseDo: [ :anEntry |
-		result addLast: (self historyNodeFor: anEntry prior: result last) ].
+	interestingEntries reverseDo: [ :anEntry |
+
+		"LOAD"
+		(self isInterestingMCLoad: anEntry) ifTrue: [ 
+			| mcNode | 
+			self assert: anEntry content versionNames size = 1.
+
+			mcNode := 
+				mcNodes detect: [ :each | 
+					each origin shortDescription = anEntry content versionNames anyOne ].
+
+			result 
+				addAll: (mcNodes readStream upTo: mcNode); "Append mc nodes first"
+				addLast:
+					(self 
+						compositeHistoryNodeFor: anEntry 
+						priors: mcNode priors 
+						and: mcNode)
+			].
+
+		"SAVE"
+		(self isInterestingMCSave: anEntry) ifTrue: [ 
+			| mcNode translatedMcPriors | 
+			mcNode := 
+				mcNodes detect: [ :each | 
+					each origin shortDescription = anEntry content versionName ].
+
+			translatedMcPriors := mcNode priors asArray collect: [ :aNodeToTranslate |
+				| translatedNodes |
+				translatedNodes := result select: [ :aCandidateNode | aCandidateNode origin contains: aNodeToTranslate origin ].
+				self assert: translatedNodes size = 1.
+				translatedNodes anyOne ].
+
+			result addLast:
+				(self 
+					compositeHistoryNodeFor: anEntry 
+					priors: (FiSet withValues: ({ result last } "it's the prior for epicea history", translatedMcPriors))
+					and: mcNode) ].
+
+		"EPICEA CODE CHANGE"
+		(self isInterestingCodeChange: anEntry) ifTrue: [ 
+			result addLast: (self historyNodeFor: anEntry prior: result last) ].
+		
+		 ].
 	
 	^ result
 ]
@@ -80,7 +164,9 @@ FiEpiceaHistoryBuilder >> interestingEntries [
 	result := OrderedCollection new.
 
 	log priorEntriesFromHeadDo: [ :entry |
-		(self isInterestingCodeChange: entry)
+		((self isInterestingCodeChange: entry) 
+			or: [ (self isInterestingMCLoad: entry) 
+			or: [ self isInterestingMCSave: entry ]])
 			ifTrue: [ result add: entry ].
 			
 		(self isInterestingMCLoad: entry)
@@ -111,6 +197,13 @@ FiEpiceaHistoryBuilder >> isInterestingMCLoad: entry [
 ]
 
 { #category : #private }
+FiEpiceaHistoryBuilder >> isInterestingMCSave: entry [
+
+	^ (entry content isKindOf: EpMonticelloVersionSave) and: [ 
+		entry content packageName = packageName ]
+]
+
+{ #category : #private }
 FiEpiceaHistoryBuilder >> isInterestingPackage: entry [
 	
 	^ entry content affectedPackageName = packageName
@@ -135,12 +228,6 @@ FiEpiceaHistoryBuilder >> isTriggeredByMonticelloLoad: entry [
 FiEpiceaHistoryBuilder >> packageName: anObject [
 	
 	packageName := anObject
-]
-
-{ #category : #private }
-FiEpiceaHistoryBuilder >> snapshotFor: anEpCodeChange prior: priorHistoryNode [
-
-	^ anEpCodeChange accept: (FiEpiceaTranslator newWithPrior: priorHistoryNode)
 ]
 
 { #category : #accessing }

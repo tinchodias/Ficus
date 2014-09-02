@@ -5,7 +5,7 @@ Class {
 		'target',
 		'contents'
 	],
-	#category : #'FicusStore-HistoryNodes'
+	#category : #'FicusStore-History-Models'
 }
 
 { #category : #testing }

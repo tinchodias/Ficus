@@ -8,7 +8,7 @@ Class {
 		'cachedEffect',
 		'cachedPriors'
 	],
-	#category : #'FicusStore-HistoryNodes'
+	#category : #'FicusStore-History-Models'
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 		'differenceModel',
 		'differenceTabModel'
 	],
-	#category : #'FicusStore-HistoryNodes'
+	#category : #'FicusStore-History-UI'
 }
 
 { #category : #specs }

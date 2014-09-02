@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'commentsTreeModel'
 	],
-	#category : #'FicusStore-HistoryNodes'
+	#category : #'FicusStore-History-UI'
 }
 
 { #category : #specs }

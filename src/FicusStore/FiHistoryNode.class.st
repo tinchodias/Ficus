@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'origin'
 	],
-	#category : #'FicusStore-HistoryNodes'
+	#category : #'FicusStore-History-Models'
 }
 
 { #category : #accessing }

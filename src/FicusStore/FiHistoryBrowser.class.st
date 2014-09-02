@@ -6,7 +6,7 @@ Class {
 		'hiedraRulerController',
 		'notes'
 	],
-	#category : #'FicusStore-HistoryNodes'
+	#category : #'FicusStore-History-UI'
 }
 
 { #category : #'as yet unclassified' }

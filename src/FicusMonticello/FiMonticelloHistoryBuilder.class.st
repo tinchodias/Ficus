@@ -8,7 +8,7 @@ Class {
 		'notFoundVersions',
 		'historyNodes'
 	],
-	#category : #'FicusMonticello-Marshaling-New'
+	#category : #'FicusMonticello-Marshaling-HistoryNodes'
 }
 
 { #category : #examples }

@@ -103,11 +103,12 @@ FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
 FiEpiceaHistoryBuilder >> historyNodes [
 	
 	| mcNodes result interestingEntries |
+	interestingEntries := self interestingEntries.
+	self assert: interestingEntries isNotEmpty.
+	self assert: (self isInterestingMCLoad: interestingEntries last).
+
 	mcNodes := (FiMonticelloHistoryBuilder forCachedPackageNamed: packageName) historyNodes.
 	result := OrderedCollection new.
-
-	interestingEntries := self interestingEntries.
-	self assert: (self isInterestingMCLoad: interestingEntries last).
 	
 	interestingEntries reverseDo: [ :anEntry |
 

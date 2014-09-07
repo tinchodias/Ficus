@@ -70,6 +70,26 @@ FiMonticelloHistoryBuilder class >> forFuelTestsCached [
 	^ self forCachedPackageNamed: 'FuelTests'
 ]
 
+{ #category : #examples }
+FiMonticelloHistoryBuilder class >> forTipsOfCachedPackageNamed: packageName [
+
+	| repositoryGroup tipVersionInfos cachedRepository |
+	cachedRepository := MCCacheRepository uniqueInstance.
+
+	repositoryGroup := 
+		MCRepositoryGroup withRepositories: {
+			cachedRepository }.
+	
+	cachedRepository cacheAllFileNamesDuring:	[
+		tipVersionInfos := self tipVersionInfosFor: packageName in: cachedRepository.
+
+		^ self new
+			repository: repositoryGroup;
+			addAllVersionInfos: tipVersionInfos;
+			run;
+			yourself ]
+]
+
 { #category : #'examples-private' }
 FiMonticelloHistoryBuilder class >> fuelRepository [
 
@@ -95,6 +115,52 @@ FiMonticelloHistoryBuilder class >> pharo30Repository [
 		location: 'http://smalltalkhub.com/mc/Pharo/Pharo30/main'
 		user: ''
 		password: ''
+]
+
+{ #category : #'examples-private' }
+FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aRepository [
+
+	| versionNames versionInfos sorter |
+	versionNames := aRepository versionNamesForPackageNamed: aPackageName. 
+
+	versionInfos := 
+		versionNames 
+			collect: [ :e | aRepository versionInfoFromFileNamed: e ] 
+			thenReject: [ :e | e isNil ].
+
+	sorter := MCVersionSorter new 
+		addAllVersionInfos: versionInfos;
+		sortedVersionInfos;
+		yourself.
+
+	^ sorter layers first
+]
+
+{ #category : #'examples-private' }
+FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aRepository upTo: targetVersionInfo [
+
+	| versionNames versionInfos sorter |
+	versionNames := aRepository versionNamesForPackageNamed: aPackageName. 
+
+	versionInfos := 
+		versionNames 
+			collect: [ :e | aRepository versionInfoFromFileNamed: e ] 
+			thenReject: [ :e | e isNil ].
+
+	sorter := MCFilteredVersionSorter new 
+		target: targetVersionInfo;
+		addAllVersionInfos: versionInfos;
+		sortedVersionInfos;
+		yourself.
+
+	^ sorter layers first
+]
+
+{ #category : #accessing }
+FiMonticelloHistoryBuilder >> addAllVersionInfos: aCollectionOfMCVersionInfo [ 
+
+	aCollectionOfMCVersionInfo do: [ :each |
+		self addVersionInfo: each ]
 ]
 
 { #category : #accessing }

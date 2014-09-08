@@ -115,6 +115,11 @@ ConfigurationOfFicus >> baseline01: spec [
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
 		spec repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main/'.
+		spec project: #Epicea with: [
+			spec
+				className: #ConfigurationOfEpicea;
+				versionString: #'bleedingEdge';
+				repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ].
 		spec
 			package: #Hiedra with: [ 
 				spec repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ];
@@ -128,7 +133,7 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #FicusMonticello with: [
 				spec requires: #(#Ficus #FicusStore) ];
 			package: #FicusEpicea with: [
-				spec requires: #(#Ficus #FicusMonticello) ] ].
+				spec requires: #(#Ficus #FicusMonticello #Epicea) ] ].
 
 ]
 

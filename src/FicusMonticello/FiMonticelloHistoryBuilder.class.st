@@ -170,6 +170,14 @@ FiMonticelloHistoryBuilder >> addVersionInfo: aMCVersionInfo [
 ]
 
 { #category : #private }
+FiMonticelloHistoryBuilder >> checkNoRepetitions [
+	
+	self 
+		assert: historyNodes asSet size = historyNodes size 
+		description: 'Integrity error in history: ', (historyNodes asBag valuesAndCounts associations select:[ :valueAndCount | valueAndCount value > 1 ]) asString
+]
+
+{ #category : #private }
 FiMonticelloHistoryBuilder >> ficusPackageFor: mcSnapshot named: packageName [
 
 	^ FiMonticelloMarshaler new marshaled: mcSnapshot name: packageName
@@ -262,5 +270,7 @@ FiMonticelloHistoryBuilder >> run [
 		aVersionInfo := pendingVersionInfos pop.
 
 		self historyNodeFor: aVersionInfo.
-		 ] 
+		 ].
+	
+	self checkNoRepetitions.
 ]

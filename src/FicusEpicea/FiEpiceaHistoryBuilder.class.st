@@ -36,7 +36,7 @@ FiEpiceaHistoryBuilder >> editFor: anEpCodeChange [
 ]
 
 { #category : #accessing }
-FiEpiceaHistoryBuilder >> headHistoryNodes [
+FiEpiceaHistoryBuilder >> headHistoryNode [
 	
 	^ headHistoryNode
 ]
@@ -169,8 +169,7 @@ FiEpiceaHistoryBuilder >> run [
 						compositeHistoryNodeFor: anEntry 
 						priors: mcNode priors 
 						and: mcNode).
-						
-			headHistoryNode := historyNodes last. ].
+			 ].
 
 		"SAVE"
 		(self isInterestingMCSave: anEntry) ifTrue: [ 
@@ -196,6 +195,8 @@ FiEpiceaHistoryBuilder >> run [
 			historyNodes addLast: (self historyNodeFor: anEntry prior: historyNodes last) ].
 		
 		 ].
+	
+	headHistoryNode := historyNodes last.
 ]
 
 { #category : #accessing }

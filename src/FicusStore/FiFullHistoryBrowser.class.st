@@ -32,7 +32,7 @@ FiFullHistoryBrowser class >> example [
 	"
 
 	^ self new
-		historyNodes: FiMonticelloHistoryBuilder forFuelTests historyNodes;
+		historyNodes: (FiMonticelloStore forPackageNamed: #Tetris) historyNodes;
 		openWithSpec;
 		yourself
 
@@ -68,6 +68,8 @@ FiFullHistoryBrowser >> initializePresenter [
 
 	super initializePresenter.
 
+	self notes: #(). 
+	
 	self title: 'Ficus Full History Browser'.
  	
 	self initializeTabs. 
@@ -124,7 +126,7 @@ FiFullHistoryBrowser >> initializeWidgets [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #notes }
 FiFullHistoryBrowser >> notes: someNotes [ 
 	
 	historyBrowserModel notes: someNotes

@@ -7,7 +7,13 @@ Class {
 	#category : #'FicusStore-History-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #enumerating }
+FiSingleCommit >> anySatisfy: aBlock [
+	
+	^ aBlock value: self
+]
+
+{ #category : #comparing }
 FiSingleCommit >> contains: anOrigin [ 
 	
 	^ self = anOrigin

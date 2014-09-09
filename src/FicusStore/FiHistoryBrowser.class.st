@@ -25,7 +25,7 @@ FiHistoryBrowser class >> example [
 	"
 
 	^ self new
-		historyNodes: FiMonticelloHistoryBuilder forFuelTests historyNodes;
+		historyNodes: (FiMonticelloStore forPackageNamed: #Tetris) historyNodes;
 		openWithSpec;
 		yourself
 

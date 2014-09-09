@@ -7,19 +7,25 @@ Class {
 	#category : #'FicusStore-History-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #enumerating }
+FiCompositeOrigin >> anySatisfy: aBlock [
+	
+	^ origins values anySatisfy: aBlock
+]
+
+{ #category : #comparing }
 FiCompositeOrigin >> contains: anOrigin [
 	
 	^ origins values anySatisfy: [ :each | each contains: anOrigin ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 FiCompositeOrigin >> isComposite [
 
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 FiCompositeOrigin >> printOn: aStream [
 
 	super printOn: aStream.
@@ -34,7 +40,7 @@ FiCompositeOrigin >> printOn: aStream [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 FiCompositeOrigin >> shortDescription [
 	
 	^ String streamContents: [ :stream |
@@ -43,7 +49,7 @@ FiCompositeOrigin >> shortDescription [
 			separatedBy: [ stream nextPutAll: '+' ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiCompositeOrigin >> someTimeStamp [
 
 	^ (origins values collect: #someTimeStamp) min

@@ -2,73 +2,14 @@ Class {
 	#name : #FiMonticelloHistoryBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'repository',
 		'pendingVersionInfos',
 		'historyNodeByUUID',
 		'notFoundVersions',
-		'historyNodes'
+		'historyNodes',
+		'repositoryGroup'
 	],
 	#category : #'FicusMonticello-Marshaling-HistoryNodes'
 }
-
-{ #category : #examples }
-FiMonticelloHistoryBuilder class >> forCachedPackageNamed: packageName [
-
-	| repositoryGroup initialVersionInfo cachedRepository |
-	cachedRepository := MCCacheRepository uniqueInstance.
-
-	repositoryGroup := 
-		MCRepositoryGroup withRepositories: {
-			cachedRepository }.
-
-	initialVersionInfo := 
-		(MCWorkingCopy allManagers 
-			detect: [ :each | each packageName = packageName ]) 
-			ancestry ancestors first.
-	
-	cachedRepository cacheAllFileNamesDuring:	[
-		^ self new
-			repository: repositoryGroup;
-			addVersionInfo: initialVersionInfo;
-			run;
-			yourself ]
-]
-
-{ #category : #examples }
-FiMonticelloHistoryBuilder class >> forFuelTests [
-
-	| repositoryGroup initialVersionInfo fuelRepository pharoInboxRepository pharoRepository |
-	fuelRepository := self fuelRepository.
-	pharoInboxRepository := self pharo30InboxRepository.
-	pharoRepository := self pharo30Repository.
-
-	repositoryGroup := 
-		MCRepositoryGroup withRepositories: {
-			fuelRepository.
-			pharoInboxRepository.
-			pharoRepository }.
-
-	initialVersionInfo := 
-		(MCWorkingCopy allManagers 
-			detect: [ :each | each packageName = 'FuelTests' ]) 
-			ancestry ancestors first.
-	
-	fuelRepository cacheAllFileNamesDuring:	[
-		pharoInboxRepository cacheAllFileNamesDuring: [
-			pharoRepository cacheAllFileNamesDuring: [
-				^ self new
-					repository: repositoryGroup;
-					addVersionInfo: initialVersionInfo;
-					run;
-					yourself ] ] ]
-		
-]
-
-{ #category : #examples }
-FiMonticelloHistoryBuilder class >> forFuelTestsCached [
-
-	^ self forCachedPackageNamed: 'FuelTests'
-]
 
 { #category : #examples }
 FiMonticelloHistoryBuilder class >> forTipsOfCachedPackageNamed: packageName [
@@ -84,44 +25,17 @@ FiMonticelloHistoryBuilder class >> forTipsOfCachedPackageNamed: packageName [
 		tipVersionInfos := self tipVersionInfosFor: packageName in: cachedRepository.
 
 		^ self new
-			repository: repositoryGroup;
+			repositoryGroup: repositoryGroup;
 			addAllVersionInfos: tipVersionInfos;
 			run;
 			yourself ]
 ]
 
 { #category : #'examples-private' }
-FiMonticelloHistoryBuilder class >> fuelRepository [
-
-	^ MCHttpRepository
-		location: 'http://smalltalkhub.com/mc/Pharo/Fuel/main'
-		user: ''
-		password: ''
-]
-
-{ #category : #'examples-private' }
-FiMonticelloHistoryBuilder class >> pharo30InboxRepository [
-
-	^ MCHttpRepository
-		location: 'http://smalltalkhub.com/mc/Pharo/Pharo30Inbox/main'
-		user: ''
-		password: ''
-]
-
-{ #category : #'examples-private' }
-FiMonticelloHistoryBuilder class >> pharo30Repository [
-
-	^ MCHttpRepository
-		location: 'http://smalltalkhub.com/mc/Pharo/Pharo30/main'
-		user: ''
-		password: ''
-]
-
-{ #category : #'examples-private' }
 FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aRepository [
 
 	| versionNames versionInfos sorter |
-	versionNames := aRepository versionNamesForPackageNamed: aPackageName. 
+	versionNames := aRepository fileNamesForPackageNamed: aPackageName. 
 
 	versionInfos := 
 		versionNames 
@@ -140,7 +54,7 @@ FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aReposi
 FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aRepository upTo: targetVersionInfo [
 
 	| versionNames versionInfos sorter |
-	versionNames := aRepository versionNamesForPackageNamed: aPackageName. 
+	versionNames := aRepository fileNamesForPackageNamed: aPackageName. 
 
 	versionInfos := 
 		versionNames 
@@ -195,7 +109,7 @@ FiMonticelloHistoryBuilder >> historyNodeFor: aVersionInfo [
 	
 	versionInfo := aVersionInfo.
 	
-	mcSnapshot := (repository 
+	mcSnapshot := (repositoryGroup 
 		versionWithInfo: aVersionInfo
 		ifAbsent: [ notFoundVersions add: aVersionInfo. nil ]) 
 		ifNotNil: [ :foundVersion | 
@@ -257,9 +171,9 @@ FiMonticelloHistoryBuilder >> initialize [
 ]
 
 { #category : #accessing }
-FiMonticelloHistoryBuilder >> repository: aMCRepository [
+FiMonticelloHistoryBuilder >> repositoryGroup: aMCRepositoryGroup [
 
-	repository := aMCRepository
+	repositoryGroup := aMCRepositoryGroup
 ]
 
 { #category : #running }

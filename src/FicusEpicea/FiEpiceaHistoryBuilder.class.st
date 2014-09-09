@@ -3,7 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'log',
-		'packageName'
+		'packageName',
+		'headHistoryNode',
+		'historyNodes'
 	],
 	#category : #FicusEpicea
 }
@@ -33,6 +35,12 @@ FiEpiceaHistoryBuilder >> editFor: anEpCodeChange [
 	^ anEpCodeChange accept: (FiEpiceaTranslator newWithBasePath: FiPath root / #contents)
 ]
 
+{ #category : #accessing }
+FiEpiceaHistoryBuilder >> headHistoryNodes [
+	
+	^ headHistoryNode
+]
+
 { #category : #private }
 FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
 	
@@ -49,60 +57,15 @@ FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
 { #category : #accessing }
 FiEpiceaHistoryBuilder >> historyNodes [
 	
-	| mcNodes result interestingEntries |
-	interestingEntries := self interestingEntries.
-	self assert: interestingEntries isNotEmpty.
-	self assert: (self isInterestingMCLoad: interestingEntries last).
+	^ historyNodes
+]
 
-	mcNodes := (FiMonticelloStore forPackageNamed: packageName) historyNodes.
-	result := OrderedCollection new.
+{ #category : #initialization }
+FiEpiceaHistoryBuilder >> initialize [
+
+	super initialize.
 	
-	interestingEntries reverseDo: [ :anEntry |
-
-		"LOAD"
-		(self isInterestingMCLoad: anEntry) ifTrue: [ 
-			| mcNode | 
-			self assert: anEntry content versionNames size = 1.
-
-			mcNode := 
-				mcNodes detect: [ :each | 
-					each origin shortDescription = anEntry content versionNames anyOne ].
-
-			result 
-				addAll: (mcNodes readStream upTo: mcNode); "Append mc nodes first"
-				addLast:
-					(self 
-						compositeHistoryNodeFor: anEntry 
-						priors: mcNode priors 
-						and: mcNode)
-			].
-
-		"SAVE"
-		(self isInterestingMCSave: anEntry) ifTrue: [ 
-			| mcNode translatedMcPriors | 
-			mcNode := 
-				mcNodes detect: [ :each | 
-					each origin shortDescription = anEntry content versionName ].
-
-			translatedMcPriors := mcNode priors asArray collect: [ :aNodeToTranslate |
-				| translatedNodes |
-				translatedNodes := result select: [ :aCandidateNode | aCandidateNode origin contains: aNodeToTranslate origin ].
-				self assert: translatedNodes size = 1.
-				translatedNodes anyOne ].
-
-			result addLast:
-				(self 
-					compositeHistoryNodeFor: anEntry 
-					priors: (FiSet withValues: ({ result last } "it's the prior for epicea history", translatedMcPriors))
-					and: mcNode) ].
-
-		"EPICEA CODE CHANGE"
-		(self isInterestingCodeChange: anEntry) ifTrue: [ 
-			result addLast: (self historyNodeFor: anEntry prior: result last) ].
-		
-		 ].
-	
-	^ result
+	historyNodes := OrderedCollection new.
 ]
 
 { #category : #private }
@@ -176,6 +139,63 @@ FiEpiceaHistoryBuilder >> isTriggeredByMonticelloLoad: entry [
 FiEpiceaHistoryBuilder >> packageName: anObject [
 	
 	packageName := anObject
+]
+
+{ #category : #accessing }
+FiEpiceaHistoryBuilder >> run [
+	
+	| mcNodes interestingEntries |
+	interestingEntries := self interestingEntries.
+	self assert: interestingEntries isNotEmpty.
+	self assert: (self isInterestingMCLoad: interestingEntries last).
+
+	mcNodes := (FiMonticelloStore forPackageNamed: packageName) historyNodes.
+	
+	interestingEntries reverseDo: [ :anEntry |
+
+		"LOAD"
+		(self isInterestingMCLoad: anEntry) ifTrue: [ 
+			| mcNode | 
+			self assert: anEntry content versionNames size = 1.
+
+			mcNode := 
+				mcNodes detect: [ :each | 
+					each origin shortDescription = anEntry content versionNames anyOne ].
+
+			historyNodes
+				addAll: (mcNodes readStream upTo: mcNode); "Append mc nodes first"
+				addLast:
+					(self 
+						compositeHistoryNodeFor: anEntry 
+						priors: mcNode priors 
+						and: mcNode).
+						
+			headHistoryNode := historyNodes last. ].
+
+		"SAVE"
+		(self isInterestingMCSave: anEntry) ifTrue: [ 
+			| mcNode translatedMcPriors | 
+			mcNode := 
+				mcNodes detect: [ :each | 
+					each origin shortDescription = anEntry content versionName ].
+
+			translatedMcPriors := mcNode priors asArray collect: [ :aNodeToTranslate |
+				| translatedNodes |
+				translatedNodes := historyNodes select: [ :aCandidateNode | aCandidateNode origin contains: aNodeToTranslate origin ].
+				self assert: translatedNodes size = 1.
+				translatedNodes anyOne ].
+
+			historyNodes addLast:
+				(self 
+					compositeHistoryNodeFor: anEntry 
+					priors: (FiSet withValues: ({ historyNodes last } "it's the prior for epicea history", translatedMcPriors))
+					and: mcNode) ].
+
+		"EPICEA CODE CHANGE"
+		(self isInterestingCodeChange: anEntry) ifTrue: [ 
+			historyNodes addLast: (self historyNodeFor: anEntry prior: historyNodes last) ].
+		
+		 ].
 ]
 
 { #category : #accessing }

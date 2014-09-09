@@ -10,20 +10,17 @@ Class {
 { #category : #refreshing }
 FiEpiceaStore >> refresh [
 
-	| historyBuilder  |
+	| historyBuilder |
 	historyBuilder := 
 		FiEpiceaHistoryBuilder new 
 			packageName: packageName;
 			theLog: self theLog;
+			run;
 			yourself. 
+
 	cachedHistoryNodes := historyBuilder historyNodes.
 	
-"	headReference := self theLog headReference."
-	cachedHeadHistoryNodes := 
-		cachedHistoryNodes last"
-			detect: [ :node | node origin anySatisfy: [ :origin | origin reference = headReference ] ]
-			ifNone: [ self notYetImplemented ]
-"
+	cachedHeadHistoryNodes := historyBuilder headHistoryNode.
 ]
 
 { #category : #accessing }

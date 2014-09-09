@@ -32,7 +32,8 @@ FiFullHistoryBrowser class >> example [
 	"
 
 	^ self new
-		historyNodes: (FiMonticelloStore forPackageNamed: #Tetris) historyNodes;
+		store: (FiMonticelloStore forPackageNamed: #Tetris);
+		refresh;
 		openWithSpec;
 		yourself
 
@@ -55,12 +56,6 @@ FiFullHistoryBrowser >> differenceTabModel [
 FiFullHistoryBrowser >> historyBrowserModel [
 	
 	^ historyBrowserModel
-]
-
-{ #category : #accessing }
-FiFullHistoryBrowser >> historyNodes: someNodes [ 
-	
-	historyBrowserModel historyNodes: someNodes
 ]
 
 { #category : #initialization }
@@ -132,6 +127,12 @@ FiFullHistoryBrowser >> notes: someNotes [
 	historyBrowserModel notes: someNotes
 ]
 
+{ #category : #refreshing }
+FiFullHistoryBrowser >> refresh [
+	
+	historyBrowserModel refresh
+]
+
 { #category : #private }
 FiFullHistoryBrowser >> refreshDifferenceTab [
 
@@ -175,6 +176,12 @@ FiFullHistoryBrowser >> snapshotModel [
 FiFullHistoryBrowser >> snapshotTabModel [
 	
 	^ snapshotTabModel
+]
+
+{ #category : #accessing }
+FiFullHistoryBrowser >> store: aFiStore [
+	
+	historyBrowserModel store: aFiStore
 ]
 
 { #category : #accessing }

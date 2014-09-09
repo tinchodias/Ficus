@@ -4,12 +4,13 @@ Class {
 	#instVars : [
 		'historyTreeModel',
 		'hiedraRulerController',
-		'notes'
+		'notes',
+		'store'
 	],
 	#category : #'FicusStore-History-UI'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #specs }
 FiHistoryBrowser class >> defaultSpec [
 	<spec>
 	
@@ -25,17 +26,21 @@ FiHistoryBrowser class >> example [
 	"
 
 	^ self new
-		historyNodes: (FiMonticelloStore forPackageNamed: #Tetris) historyNodes;
+		store: (FiMonticelloStore forPackageNamed: #Tetris);
+		notes: #();
+		refresh;
 		openWithSpec;
 		yourself
 
 
 ]
 
-{ #category : #accessing }
-FiHistoryBrowser >> historyNodes: someNodes [ 
-	
-	historyTreeModel roots: someNodes
+{ #category : #private }
+FiHistoryBrowser >> descriptionMorphFor: aHistoryNode [ 
+
+	^ ((store headHistoryNode = aHistoryNode
+		ifTrue: [ '[head] ' asText allBold ]
+		ifFalse: [ '' ]), aHistoryNode origin shortDescription) asMorph
 ]
 
 { #category : #accessing }
@@ -84,7 +89,7 @@ FiHistoryBrowser >> initializePresenter [
 				yourself.
 				
 			TreeColumnModel new
-				displayBlock: [ :item | item content origin shortDescription ];
+				displayBlock: [ :item | self descriptionMorphFor: item content ];
 				initialWidth: 400;
 				yourself.				
 
@@ -127,6 +132,12 @@ FiHistoryBrowser >> notesMorphFor: aHistoryNode [
 				theNotes size asString asMorph } ]
 ]
 
+{ #category : #refreshing }
+FiHistoryBrowser >> refresh [
+	
+	historyTreeModel roots: (store historyNodes)
+]
+
 { #category : #private }
 FiHistoryBrowser >> rowMorphWithAll: someMophs [
 
@@ -144,4 +155,10 @@ FiHistoryBrowser >> rowMorphWithAll: someMophs [
 FiHistoryBrowser >> rowSize [
 
 	^ 23
+]
+
+{ #category : #accessing }
+FiHistoryBrowser >> store: aFiStore [
+	
+	store := aFiStore
 ]

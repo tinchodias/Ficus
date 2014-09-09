@@ -5,7 +5,8 @@ Class {
 		'historyTreeModel',
 		'hiedraRulerController',
 		'notes',
-		'store'
+		'store',
+		'refreshButton'
 	],
 	#category : #'FicusStore-History-UI'
 }
@@ -14,8 +15,11 @@ Class {
 FiHistoryBrowser class >> defaultSpec [
 	<spec>
 	
-	^ SpecLayout composed
-		add: #historyTreeModel;
+	^ SpecLayout composed 
+		newColumn: [ :column | 
+			column
+				add: #historyTreeModel;
+				add: #refreshButton height: self buttonHeight ];
 		yourself
 ]
 
@@ -40,7 +44,7 @@ FiHistoryBrowser >> descriptionMorphFor: aHistoryNode [
 
 	^ ((store headHistoryNode = aHistoryNode
 		ifTrue: [ '[head] ' asText allBold ]
-		ifFalse: [ '' ]), aHistoryNode origin shortDescription) asMorph
+		ifFalse: [ '' ]), aHistoryNode origin shortDescription) asMorph lock: true; yourself
 ]
 
 { #category : #accessing }
@@ -97,15 +101,20 @@ FiHistoryBrowser >> initializePresenter [
 				displayBlock: [ :item | self notesMorphFor: item content ];
 				initialWidth: 20;
 				yourself.				
-
-			}
+			}.
+			
+	refreshButton
+		label: 'Refresh';
+		icon: Smalltalk ui icons refreshIcon;
+		action: [ self refresh ]
 ]
 
 { #category : #initialization }
 FiHistoryBrowser >> initializeWidgets [
 
 	self instantiateModels: #(
-		historyTreeModel TreeModel).
+		historyTreeModel TreeModel
+		refreshButton ButtonModel).
 
 ]
 
@@ -135,7 +144,15 @@ FiHistoryBrowser >> notesMorphFor: aHistoryNode [
 { #category : #refreshing }
 FiHistoryBrowser >> refresh [
 	
+	store refresh.
+	
 	historyTreeModel roots: (store historyNodes)
+]
+
+{ #category : #accessing }
+FiHistoryBrowser >> refreshButton [
+
+	^ refreshButton
 ]
 
 { #category : #private }
@@ -151,7 +168,7 @@ FiHistoryBrowser >> rowMorphWithAll: someMophs [
 		yourself
 ]
 
-{ #category : #'accessing - building API' }
+{ #category : #private }
 FiHistoryBrowser >> rowSize [
 
 	^ 23

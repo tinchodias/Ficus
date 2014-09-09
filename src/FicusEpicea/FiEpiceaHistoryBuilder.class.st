@@ -8,55 +8,6 @@ Class {
 	#category : #FicusEpicea
 }
 
-{ #category : #examples }
-FiEpiceaHistoryBuilder class >> forErgoPlaygroundCached [
-
-	^ self new
-		theLog: EpMonitor current log;
-		packageName: 'ErgoPlayground';
-		yourself
-]
-
-{ #category : #examples }
-FiEpiceaHistoryBuilder class >> forFuelTestsCached [
-
-	^ self new
-		theLog: EpMonitor current log;
-		packageName: 'FuelTests';
-		yourself
-]
-
-{ #category : #examples }
-FiEpiceaHistoryBuilder class >> forTetrisCached [
-
-	^ self new
-		theLog: EpMonitor current log;
-		packageName: 'Tetris';
-		yourself
-]
-
-{ #category : #accessing }
-FiEpiceaHistoryBuilder >> browse [
-
-	| initialHistoryNodes browser |
-	1halt.
-	initialHistoryNodes := FiEpiceaHistoryBuilder forTetrisCached historyNodes.
-
-	browser := FiFullHistoryBrowser new
-		notes: #();
-		historyNodes: initialHistoryNodes;
-		yourself.
-
-	log announcer weak
-		when: EpEntryAdded
-		send: #entryAdded:
-		to: self.
-		
-	^ browser 
-		openWithSpec;
-		yourself
-]
-
 { #category : #private }
 FiEpiceaHistoryBuilder >> compositeHistoryNodeFor: anEntry priors: priors and: aMonticelloHistoryNode [ 
 	
@@ -85,18 +36,14 @@ FiEpiceaHistoryBuilder >> editFor: anEpCodeChange [
 { #category : #private }
 FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
 	
-	| origin             node |		
+	| origin |
 	origin := FiSingleCommit builder reference: (log referenceTo: anEntry); new.
 
-	node := FiPatchHistoryNode builder
+	^ FiPatchHistoryNode builder
 		origin: origin;
 		edit: (self editFor: anEntry content);
 		prior: priorHistoryNode;
-		new.
-		
-	Halt if: [ node printString = 'a FiPatchHistoryNode(a FiSingleCommit(an OmReference(Yrupe-505-Mix-1_2vzn6fh:47)))' ].
-
-	^ node
+		new
 ]
 
 { #category : #accessing }
@@ -107,7 +54,7 @@ FiEpiceaHistoryBuilder >> historyNodes [
 	self assert: interestingEntries isNotEmpty.
 	self assert: (self isInterestingMCLoad: interestingEntries last).
 
-	mcNodes := (FiMonticelloHistoryBuilder forCachedPackageNamed: packageName) historyNodes.
+	mcNodes := (FiMonticelloStore forPackageNamed: packageName) historyNodes.
 	result := OrderedCollection new.
 	
 	interestingEntries reverseDo: [ :anEntry |

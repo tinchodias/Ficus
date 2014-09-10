@@ -11,7 +11,7 @@ Class {
 { #category : #testing }
 FiComment >> appliesTo: anOrigin [
 	
-	^ target = anOrigin
+	^ target contains: anOrigin
 ]
 
 { #category : #accessing }

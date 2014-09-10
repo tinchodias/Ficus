@@ -7,6 +7,14 @@ Class {
 	#category : #'FicusStore-History-Models'
 }
 
+{ #category : #'instance creation' }
+FiCompositeOrigin class >> withOrigins: aCollectionOfOrigins [
+
+	^ self builder 
+		origins: (FiSet withValues: aCollectionOfOrigins);
+		new
+]
+
 { #category : #enumerating }
 FiCompositeOrigin >> anySatisfy: aBlock [
 	

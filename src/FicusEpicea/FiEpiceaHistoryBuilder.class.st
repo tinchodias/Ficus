@@ -13,17 +13,12 @@ Class {
 { #category : #private }
 FiEpiceaHistoryBuilder >> compositeHistoryNodeFor: anEntry priors: priors and: aMonticelloHistoryNode [ 
 	
-	| origin epiceaOrigin monticelloOrigin |
+	| epiceaOrigin monticelloOrigin |
 	epiceaOrigin := FiSingleCommit builder reference: (log referenceTo: anEntry); new.
 	monticelloOrigin := aMonticelloHistoryNode origin.
 
-	origin := 
-		FiCompositeOrigin builder 
-			origins: (FiSet withValues: {epiceaOrigin. monticelloOrigin});
-			new.
-
 	^ FiSnapshotHistoryNode builder
-		origin: origin;
+		origin: (FiCompositeOrigin withOrigins: {epiceaOrigin. monticelloOrigin});
 		snapshot: aMonticelloHistoryNode snapshot;
 		priors: priors;
 		new

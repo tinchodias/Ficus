@@ -2,7 +2,8 @@ Class {
 	#name : #FiCommentBrowser,
 	#superclass : #ComposableModel,
 	#instVars : [
-		'commentsTreeModel'
+		'commentsTreeModel',
+		'plugin'
 	],
 	#category : #'FicusStore-History-UI'
 }
@@ -16,39 +17,19 @@ FiCommentBrowser class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
-FiCommentBrowser class >> example [
-	"
-	self example
-	"
-
-	| someComments |
-	someComments := { 
-		FiComment builder 
-			target: nil;
-			contents: 'I like it';
-			new.
-		FiComment builder 
-			target: nil;
-			contents: 'It should be improved';
-			new }.
-
-	^ self new
-		comments: someComments;
-		openWithSpec;
-		yourself
-]
-
-{ #category : #accessing }
-FiCommentBrowser >> comments: someComments [
-
-	commentsTreeModel roots: someComments 
-]
-
 { #category : #accessing }
 FiCommentBrowser >> commentsTreeModel [
 
 	^ commentsTreeModel
+]
+
+{ #category : #accessing }
+FiCommentBrowser >> historyNodes: aCollectionOfHistoryNodes [
+
+	| comments |
+	comments := aCollectionOfHistoryNodes flatCollect: [ :node | plugin commentsFor: node ].
+
+	commentsTreeModel roots: comments.
 ]
 
 { #category : #initialization }
@@ -74,5 +55,23 @@ FiCommentBrowser >> initializeWidgets [
 { #category : #private }
 FiCommentBrowser >> morphFor: aComment [
 
-	^ aComment contents asText asMorph lock: true; yourself
+	^ ((aComment target asString asText 
+			addAttribute: (TextFontChange fontNumber: 1); "the smaller one"
+			addAttribute: (TextColor color: Color gray);
+			yourself), 
+			String cr, 
+			aComment contents) 
+				asText asMorph lock: true; yourself
+]
+
+{ #category : #accessing }
+FiCommentBrowser >> plugin [
+
+	^ plugin
+]
+
+{ #category : #accessing }
+FiCommentBrowser >> plugin: aPlugin [
+
+	plugin := aPlugin
 ]

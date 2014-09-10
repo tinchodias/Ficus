@@ -16,10 +16,11 @@ FiCommentHistoryBrowserPlugin class >> forStore: aFiStore [
 ]
 
 { #category : #'as yet unclassified' }
-FiCommentHistoryBrowserPlugin >> browseComments: aCollection [ 
-	
+FiCommentHistoryBrowserPlugin >> browseComments: aHistoryNode [
+
 	FiCommentBrowser new
-		comments: aCollection;
+		plugin: self;
+		historyNodes: { aHistoryNode };
 		openWithSpec
 ]
 
@@ -43,10 +44,9 @@ FiCommentHistoryBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryN
 		button := IconicButton new 
 			target: self;
 			actionSelector: #browseComments:;
-			arguments: { nodeComments };
+			arguments: { aHistoryNode };
 			labelGraphic: Smalltalk ui icons announcementIcon;
 			color: Color transparent;
-			extent: 12 @ 12;
 			helpText: 'Browse the comments';
 			borderWidth: 0.
 		

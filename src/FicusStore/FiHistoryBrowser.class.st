@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'historyTreeModel',
 		'hiedraRulerController',
-		'notes',
 		'store',
-		'refreshButton'
+		'refreshButton',
+		'plugin'
 	],
 	#category : #'FicusStore-History-UI'
 }
@@ -31,7 +31,6 @@ FiHistoryBrowser class >> example [
 
 	^ self new
 		store: (FiMonticelloStore forPackageNamed: #Tetris);
-		notes: #();
 		refresh;
 		openWithSpec;
 		yourself
@@ -42,9 +41,19 @@ FiHistoryBrowser class >> example [
 { #category : #private }
 FiHistoryBrowser >> descriptionMorphFor: aHistoryNode [ 
 
-	^ ((store headHistoryNode = aHistoryNode
-		ifTrue: [ '[head] ' asText allBold ]
-		ifFalse: [ '' ]), aHistoryNode origin shortDescription) asMorph lock: true; yourself
+	| morphs |
+	morphs := OrderedCollection new.
+
+	store headHistoryNode = aHistoryNode
+		ifTrue: [ morphs add: ('[head]' asText allBold asMorph lock: true; yourself) ].
+		
+	morphs add: aHistoryNode origin shortDescription asMorph.
+	
+	self plugin 
+		prepareDescriptionMorphs: morphs 
+		for: aHistoryNode.
+	
+	^ self rowMorphWithAll: morphs
 ]
 
 { #category : #accessing }
@@ -94,12 +103,7 @@ FiHistoryBrowser >> initializePresenter [
 				
 			TreeColumnModel new
 				displayBlock: [ :item | self descriptionMorphFor: item content ];
-				initialWidth: 400;
-				yourself.				
-
-			TreeColumnModel new
-				displayBlock: [ :item | self notesMorphFor: item content ];
-				initialWidth: 20;
+				initialWidth: 800;
 				yourself.				
 			}.
 			
@@ -119,26 +123,15 @@ FiHistoryBrowser >> initializeWidgets [
 ]
 
 { #category : #accessing }
-FiHistoryBrowser >> notes: someNotes [ 
-	
-	notes := someNotes
+FiHistoryBrowser >> plugin [
+
+	^ plugin ifNil: [ plugin := FiNullHistoryBrowserPlugin new ]
 ]
 
-{ #category : #private }
-FiHistoryBrowser >> notesFor: aHistoryNode [ 
+{ #category : #accessing }
+FiHistoryBrowser >> plugin: aPlugin [
 
-	^ notes select: [ :each | each appliesTo: aHistoryNode origin ]
-]
-
-{ #category : #private }
-FiHistoryBrowser >> notesMorphFor: aHistoryNode [ 
-
-	^ (self notesFor: aHistoryNode)
-		ifEmpty: [ Smalltalk ui icons emptyIcon ]
-		ifNotEmpty: [ :theNotes | 
-			self rowMorphWithAll: {
-				Smalltalk ui icons announcementIcon asMorph.
-				theNotes size asString asMorph } ]
+	plugin := aPlugin
 ]
 
 { #category : #refreshing }

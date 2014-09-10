@@ -58,13 +58,18 @@ FiFullHistoryBrowser >> historyBrowserModel [
 	^ historyBrowserModel
 ]
 
+{ #category : #protocol }
+FiFullHistoryBrowser >> initialExtent [
+
+	^ 850 @ 600
+
+]
+
 { #category : #initialization }
 FiFullHistoryBrowser >> initializePresenter [
 
 	super initializePresenter.
 
-	self notes: #(). 
-	
 	self title: 'Ficus Full History Browser'.
  	
 	self initializeTabs. 
@@ -121,10 +126,16 @@ FiFullHistoryBrowser >> initializeWidgets [
 
 ]
 
-{ #category : #notes }
-FiFullHistoryBrowser >> notes: someNotes [ 
+{ #category : #accessing }
+FiFullHistoryBrowser >> plugin [
 	
-	historyBrowserModel notes: someNotes
+	^ historyBrowserModel plugin
+]
+
+{ #category : #accessing }
+FiFullHistoryBrowser >> plugin: aPlugin [
+	
+	historyBrowserModel plugin: aPlugin
 ]
 
 { #category : #refreshing }

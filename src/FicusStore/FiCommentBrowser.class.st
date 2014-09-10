@@ -56,6 +56,8 @@ FiCommentBrowser >> initializePresenter [
 
 	super initializePresenter.
 
+	self title: 'Ficus Comment Browser'.
+
 	commentsTreeModel 
 		displayBlock: [ :aComment | self morphFor: aComment ]	
 
@@ -72,5 +74,5 @@ FiCommentBrowser >> initializeWidgets [
 { #category : #private }
 FiCommentBrowser >> morphFor: aComment [
 
-	^ aComment contents asText asMorph
+	^ aComment contents asText asMorph lock: true; yourself
 ]

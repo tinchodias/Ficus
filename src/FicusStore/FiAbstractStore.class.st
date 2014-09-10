@@ -40,6 +40,15 @@ FiAbstractStore >> historyNodes [
 		cachedHistoryNodes ]
 ]
 
+{ #category : #refreshing }
+FiAbstractStore >> invalidateCaches [
+	
+	cachedHeadHistoryNodes := nil.
+	cachedHistoryNodes := nil.
+	
+	self flag: #fix.
+]
+
 { #category : #accessing }
 FiAbstractStore >> packageName [
 	^ packageName

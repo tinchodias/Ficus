@@ -55,7 +55,7 @@ FiCommentBrowser >> initializeWidgets [
 { #category : #private }
 FiCommentBrowser >> morphFor: aComment [
 
-	^ ((aComment target asString asText 
+	^ ((aComment target shortDescription asText 
 			addAttribute: (TextFontChange fontNumber: 1); "the smaller one"
 			addAttribute: (TextColor color: Color gray);
 			yourself), 

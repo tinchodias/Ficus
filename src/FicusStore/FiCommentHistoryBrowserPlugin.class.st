@@ -18,10 +18,11 @@ FiCommentHistoryBrowserPlugin class >> forStore: aFiStore [
 { #category : #'as yet unclassified' }
 FiCommentHistoryBrowserPlugin >> browseComments: aHistoryNode [
 
-	FiCommentBrowser new
+	(FiCommentBrowser new
 		plugin: self;
 		historyNodes: { aHistoryNode };
-		openWithSpec
+		yourself)
+		openDialogWithSpec modalRelativeTo: World.
 ]
 
 { #category : #accessing }

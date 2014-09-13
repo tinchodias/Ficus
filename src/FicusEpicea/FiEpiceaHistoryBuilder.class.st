@@ -176,8 +176,8 @@ FiEpiceaHistoryBuilder >> run [
 			translatedMcPriors := mcNode priors asArray collect: [ :aNodeToTranslate |
 				| translatedNodes |
 				translatedNodes := historyNodes select: [ :aCandidateNode | aCandidateNode origin contains: aNodeToTranslate origin ].
-				self assert: translatedNodes size = 1.
-				translatedNodes anyOne ].
+				translatedNodes size = 1 ifFalse: [ self inform: (self class name, ': multiple candidates for ', aNodeToTranslate asString) ].
+				translatedNodes last ].
 
 			historyNodes addLast:
 				(self 

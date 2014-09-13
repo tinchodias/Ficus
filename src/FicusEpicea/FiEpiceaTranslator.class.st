@@ -102,3 +102,15 @@ FiEpiceaTranslator >> visitMethodModified: aChange [
 	
 	^ self editForMethodEqual: aChange newMethod
 ]
+
+{ #category : #visitor }
+FiEpiceaTranslator >> visitProtocolAddition: aProtocolAddition [
+
+	^ FiNoEdit new
+]
+
+{ #category : #visitor }
+FiEpiceaTranslator >> visitProtocolRemoval: aProtocolRemoved [
+
+	^ FiNoEdit new
+]

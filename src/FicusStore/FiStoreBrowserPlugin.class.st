@@ -1,7 +1,7 @@
 Class {
 	#name : #FiStoreBrowserPlugin,
 	#superclass : #Object,
-	#category : #'FicusStore-History-UI'
+	#category : #'FicusStore-UI'
 }
 
 { #category : #'as yet unclassified' }

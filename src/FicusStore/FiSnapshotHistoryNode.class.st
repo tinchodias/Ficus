@@ -5,7 +5,7 @@ Class {
 		'snapshot',
 		'priors'
 	],
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #comparing }

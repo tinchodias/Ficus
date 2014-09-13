@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'historyNodes'
 	],
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #'as yet unclassified' }

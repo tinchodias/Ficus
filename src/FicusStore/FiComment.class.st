@@ -6,7 +6,7 @@ Class {
 		'contents',
 		'path'
 	],
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #testing }

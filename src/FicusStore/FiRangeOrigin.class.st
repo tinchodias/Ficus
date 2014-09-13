@@ -5,7 +5,7 @@ Class {
 		'fromReference',
 		'toReference'
 	],
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #accessing }

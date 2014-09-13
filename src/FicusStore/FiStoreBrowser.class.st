@@ -9,7 +9,7 @@ Class {
 		'deltasModel',
 		'deltasTabModel'
 	],
-	#category : #'FicusStore-History-UI'
+	#category : #'FicusStore-UI'
 }
 
 { #category : #specs }

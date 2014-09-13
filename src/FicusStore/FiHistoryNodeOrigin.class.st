@@ -1,7 +1,7 @@
 Class {
 	#name : #FiHistoryNodeOrigin,
 	#superclass : #FiFixedObject,
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #testing }

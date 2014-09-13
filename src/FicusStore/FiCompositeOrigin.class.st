@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'origins'
 	],
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #'instance creation' }

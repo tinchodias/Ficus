@@ -7,7 +7,7 @@ Class {
 		'cachedHeadHistoryNodes',
 		'packageName'
 	],
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #'instance creation' }

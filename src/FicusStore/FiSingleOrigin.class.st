@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'reference'
 	],
-	#category : #'FicusStore-History-Models'
+	#category : #'FicusStore-Models'
 }
 
 { #category : #enumerating }

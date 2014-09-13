@@ -1,5 +1,5 @@
 Class {
-	#name : #FiHistoryBrowser,
+	#name : #FiHistoryNodesBrowser,
 	#superclass : #ComposableModel,
 	#instVars : [
 		'historyTreeModel',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #specs }
-FiHistoryBrowser class >> defaultSpec [
+FiHistoryNodesBrowser class >> defaultSpec [
 	<spec>
 	
 	^ SpecLayout composed 
@@ -24,7 +24,7 @@ FiHistoryBrowser class >> defaultSpec [
 ]
 
 { #category : #example }
-FiHistoryBrowser class >> example [
+FiHistoryNodesBrowser class >> example [
 	"
 	self example
 	"
@@ -39,7 +39,7 @@ FiHistoryBrowser class >> example [
 ]
 
 { #category : #private }
-FiHistoryBrowser >> descriptionMorphFor: aHistoryNode [ 
+FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [ 
 
 	| morphs |
 	morphs := OrderedCollection new.
@@ -57,13 +57,13 @@ FiHistoryBrowser >> descriptionMorphFor: aHistoryNode [
 ]
 
 { #category : #accessing }
-FiHistoryBrowser >> historyTreeModel [
+FiHistoryNodesBrowser >> historyTreeModel [
 
 	^ historyTreeModel
 ]
 
 { #category : #initialization }
-FiHistoryBrowser >> initializeHiedraController [
+FiHistoryNodesBrowser >> initializeHiedraController [
 
 	hiedraRulerController := HiRulerController new.
 	
@@ -88,7 +88,7 @@ FiHistoryBrowser >> initializeHiedraController [
 ]
 
 { #category : #initialization }
-FiHistoryBrowser >> initializePresenter [
+FiHistoryNodesBrowser >> initializePresenter [
 
 	super initializePresenter.
 
@@ -114,7 +114,7 @@ FiHistoryBrowser >> initializePresenter [
 ]
 
 { #category : #initialization }
-FiHistoryBrowser >> initializeWidgets [
+FiHistoryNodesBrowser >> initializeWidgets [
 
 	self instantiateModels: #(
 		historyTreeModel TreeModel
@@ -123,19 +123,19 @@ FiHistoryBrowser >> initializeWidgets [
 ]
 
 { #category : #accessing }
-FiHistoryBrowser >> plugin [
+FiHistoryNodesBrowser >> plugin [
 
-	^ plugin ifNil: [ plugin := FiNullHistoryBrowserPlugin new ]
+	^ plugin ifNil: [ plugin := FiNullStoreBrowserPlugin new ]
 ]
 
 { #category : #accessing }
-FiHistoryBrowser >> plugin: aPlugin [
+FiHistoryNodesBrowser >> plugin: aPlugin [
 
 	plugin := aPlugin
 ]
 
 { #category : #refreshing }
-FiHistoryBrowser >> refresh [
+FiHistoryNodesBrowser >> refresh [
 	
 	store refresh.
 	
@@ -143,13 +143,13 @@ FiHistoryBrowser >> refresh [
 ]
 
 { #category : #accessing }
-FiHistoryBrowser >> refreshButton [
+FiHistoryNodesBrowser >> refreshButton [
 
 	^ refreshButton
 ]
 
 { #category : #private }
-FiHistoryBrowser >> rowMorphWithAll: someMophs [
+FiHistoryNodesBrowser >> rowMorphWithAll: someMophs [
 
 	^ PanelMorph new
 		changeTableLayout;
@@ -162,13 +162,13 @@ FiHistoryBrowser >> rowMorphWithAll: someMophs [
 ]
 
 { #category : #private }
-FiHistoryBrowser >> rowSize [
+FiHistoryNodesBrowser >> rowSize [
 
 	^ 23
 ]
 
 { #category : #accessing }
-FiHistoryBrowser >> store: aFiStore [
+FiHistoryNodesBrowser >> store: aFiStore [
 	
 	store := aFiStore
 ]

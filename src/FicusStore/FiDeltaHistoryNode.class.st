@@ -1,5 +1,5 @@
 Class {
-	#name : #FiPatchHistoryNode,
+	#name : #FiDeltaHistoryNode,
 	#superclass : #FiHistoryNode,
 	#instVars : [
 		'prior',
@@ -12,39 +12,39 @@ Class {
 }
 
 { #category : #accessing }
-FiPatchHistoryNode class >> excludedInstanceVariableNamesForSteps [
+FiDeltaHistoryNode class >> excludedInstanceVariableNamesForSteps [
 
 	^ super excludedInstanceVariableNamesForSteps, #(cachedSnapshot cachedEffect cachedPriors)
 ]
 
 { #category : #accessing }
-FiPatchHistoryNode >> edit [
+FiDeltaHistoryNode >> deltas [
+
+	^ { prior -> self effect }
+]
+
+{ #category : #accessing }
+FiDeltaHistoryNode >> edit [
 
 	^ edit
 ]
 
 { #category : #accessing }
-FiPatchHistoryNode >> effect [
+FiDeltaHistoryNode >> effect [
 
 	^ cachedEffect ifNil: [ 
 		cachedEffect := prior snapshot effectOf: edit ]
 ]
 
 { #category : #accessing }
-FiPatchHistoryNode >> patches [
-
-	^ { prior -> self effect }
-]
-
-{ #category : #accessing }
-FiPatchHistoryNode >> priors [
+FiDeltaHistoryNode >> priors [
 
 	^ cachedPriors ifNil: [ 
 		cachedPriors := FiSet withValues: { prior } ]
 ]
 
 { #category : #accessing }
-FiPatchHistoryNode >> snapshot [
+FiDeltaHistoryNode >> snapshot [
 
 	^ cachedSnapshot ifNil: [ 
 		cachedSnapshot := prior snapshot resultOf: edit ]

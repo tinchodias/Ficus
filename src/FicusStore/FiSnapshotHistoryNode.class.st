@@ -18,6 +18,13 @@ FiSnapshotHistoryNode >> = other [
 		and: [ self priors hash = other priors hash ] ]
 ]
 
+{ #category : #accessing }
+FiSnapshotHistoryNode >> deltas [
+
+	^ priors asArray collect: [ :aPrior |
+		aPrior -> (snapshot differenceFrom: aPrior snapshot) ]
+]
+
 { #category : #comparing }
 FiSnapshotHistoryNode >> hash [
 
@@ -26,13 +33,6 @@ FiSnapshotHistoryNode >> hash [
 	^ (self class hash
 		bitXor: self snapshot hash)
 		bitXor: self priors hash
-]
-
-{ #category : #accessing }
-FiSnapshotHistoryNode >> patches [
-
-	^ priors asArray collect: [ :aPrior |
-		aPrior -> (snapshot differenceFrom: aPrior snapshot) ]
 ]
 
 { #category : #accessing }

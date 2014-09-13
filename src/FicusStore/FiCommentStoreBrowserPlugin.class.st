@@ -1,6 +1,6 @@
 Class {
-	#name : #FiCommentHistoryBrowserPlugin,
-	#superclass : #FiHistoryBrowserPlugin,
+	#name : #FiCommentStoreBrowserPlugin,
+	#superclass : #FiStoreBrowserPlugin,
 	#instVars : [
 		'store'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiCommentHistoryBrowserPlugin class >> forStore: aFiStore [ 
+FiCommentStoreBrowserPlugin class >> forStore: aFiStore [ 
 	
 	^ self new
 		store: aFiStore;
@@ -16,7 +16,7 @@ FiCommentHistoryBrowserPlugin class >> forStore: aFiStore [
 ]
 
 { #category : #'as yet unclassified' }
-FiCommentHistoryBrowserPlugin >> browseComments: aHistoryNode [
+FiCommentStoreBrowserPlugin >> browseComments: aHistoryNode [
 
 	(FiCommentBrowser new
 		plugin: self;
@@ -26,19 +26,19 @@ FiCommentHistoryBrowserPlugin >> browseComments: aHistoryNode [
 ]
 
 { #category : #accessing }
-FiCommentHistoryBrowserPlugin >> comments [
+FiCommentStoreBrowserPlugin >> comments [
 	
 	^ store headHistoryNode snapshot
 ]
 
 { #category : #private }
-FiCommentHistoryBrowserPlugin >> commentsFor: aHistoryNode [ 
+FiCommentStoreBrowserPlugin >> commentsFor: aHistoryNode [ 
 
 	^ self comments asArray select: [ :each | each appliesTo: aHistoryNode origin ]
 ]
 
 { #category : #'as yet unclassified' }
-FiCommentHistoryBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
+FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 
 	(self commentsFor: aHistoryNode) ifNotEmpty: [ :nodeComments | 
 		| button |	
@@ -58,7 +58,7 @@ FiCommentHistoryBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryN
 ]
 
 { #category : #accessing }
-FiCommentHistoryBrowserPlugin >> store: aFiStore [ 
+FiCommentStoreBrowserPlugin >> store: aFiStore [ 
 
 	store := aFiStore
 ]

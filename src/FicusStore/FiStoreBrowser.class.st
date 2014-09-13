@@ -1,19 +1,19 @@
 Class {
-	#name : #FiFullHistoryBrowser,
+	#name : #FiStoreBrowser,
 	#superclass : #ComposableModel,
 	#instVars : [
 		'historyBrowserModel',
 		'tabManagerModel',
 		'snapshotModel',
 		'snapshotTabModel',
-		'differenceModel',
-		'differenceTabModel'
+		'deltasModel',
+		'deltasTabModel'
 	],
 	#category : #'FicusStore-History-UI'
 }
 
 { #category : #specs }
-FiFullHistoryBrowser class >> defaultSpec [
+FiStoreBrowser class >> defaultSpec [
 	<spec>
 	
 	^ SpecLayout composed
@@ -26,7 +26,7 @@ FiFullHistoryBrowser class >> defaultSpec [
 ]
 
 { #category : #example }
-FiFullHistoryBrowser class >> example [
+FiStoreBrowser class >> example [
 	"
 	self example
 	"
@@ -41,32 +41,32 @@ FiFullHistoryBrowser class >> example [
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> differenceModel [
+FiStoreBrowser >> deltasModel [
 	
-	^ differenceModel
+	^ deltasModel
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> differenceTabModel [
+FiStoreBrowser >> deltasTabModel [
 	
-	^ differenceTabModel
+	^ deltasTabModel
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> historyBrowserModel [
+FiStoreBrowser >> historyBrowserModel [
 	
 	^ historyBrowserModel
 ]
 
 { #category : #protocol }
-FiFullHistoryBrowser >> initialExtent [
+FiStoreBrowser >> initialExtent [
 
 	^ 850 @ 600
 
 ]
 
 { #category : #initialization }
-FiFullHistoryBrowser >> initializePresenter [
+FiStoreBrowser >> initializePresenter [
 
 	super initializePresenter.
 
@@ -86,7 +86,7 @@ FiFullHistoryBrowser >> initializePresenter [
 ]
 
 { #category : #initialization }
-FiFullHistoryBrowser >> initializeTabs [
+FiStoreBrowser >> initializeTabs [
 
 	snapshotTabModel
 		label: 'Snapshot';
@@ -95,57 +95,57 @@ FiFullHistoryBrowser >> initializeTabs [
 		whenTabSelected: [ self refreshSnapshotTab ];
 		closeable: false.
 		
-	differenceTabModel
-		label: 'Difference';
+	deltasTabModel
+		label: 'Deltas';
 		icon: Smalltalk ui icons smallJustifiedIcon;
-		model: self differenceModel;
-		whenTabSelected: [ self refreshDifferenceTab ];
+		model: self deltasModel;
+		whenTabSelected: [ self refreshDeltasTab ];
 		closeable: false.
 
 	tabManagerModel 
 		addTab: snapshotTabModel;
-		addTab: differenceTabModel;
+		addTab: deltasTabModel;
 		selectTabModel: snapshotTabModel.
 ]
 
 { #category : #initialization }
-FiFullHistoryBrowser >> initializeWidgets [
+FiStoreBrowser >> initializeWidgets [
 
 	self instantiateModels: {
-		#historyBrowserModel -> #FiHistoryBrowser.
+		#historyBrowserModel -> #FiHistoryNodesBrowser.
 
 		"tabs"
 		#tabManagerModel -> #TabManagerModel.
 		#snapshotTabModel -> #TabModel.
-		#differenceTabModel -> #TabModel.
+		#deltasTabModel -> #TabModel.
 		
 		"tabs content"
 		#snapshotModel -> #FiInspector. 
-		#differenceModel -> #FiEffectInspector. 
+		#deltasModel -> #FiEffectInspector. 
 		}.
 
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> plugin [
+FiStoreBrowser >> plugin [
 	
 	^ historyBrowserModel plugin
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> plugin: aPlugin [
+FiStoreBrowser >> plugin: aPlugin [
 	
 	historyBrowserModel plugin: aPlugin
 ]
 
 { #category : #refreshing }
-FiFullHistoryBrowser >> refresh [
+FiStoreBrowser >> refresh [
 	
 	historyBrowserModel refresh
 ]
 
 { #category : #private }
-FiFullHistoryBrowser >> refreshDifferenceTab [
+FiStoreBrowser >> refreshDeltasTab [
 
 	| difference selection |
 	selection := self selectedHistoryNodes. 
@@ -153,15 +153,15 @@ FiFullHistoryBrowser >> refreshDifferenceTab [
 	difference := selection 
 		ifEmpty: [ FiNoEffect new ]
 		ifNotEmpty: [ 
-			selection anyOne patches 
+			selection anyOne deltas 
 				ifEmpty: [ FiNoEffect new ]
 				ifNotEmpty: [ :patches | patches first value ] ].
 		
-	differenceModel rootEffect: difference
+	deltasModel rootEffect: difference
 ]
 
 { #category : #private }
-FiFullHistoryBrowser >> refreshSnapshotTab [
+FiStoreBrowser >> refreshSnapshotTab [
 
 	| selection |
 	selection := self selectedHistoryNodes. 
@@ -173,31 +173,31 @@ FiFullHistoryBrowser >> refreshSnapshotTab [
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> selectedHistoryNodes [
+FiStoreBrowser >> selectedHistoryNodes [
 	
 	^ historyBrowserModel historyTreeModel selectedItems collect: #content
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> snapshotModel [
+FiStoreBrowser >> snapshotModel [
 	
 	^ snapshotModel
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> snapshotTabModel [
+FiStoreBrowser >> snapshotTabModel [
 	
 	^ snapshotTabModel
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> store: aFiStore [
+FiStoreBrowser >> store: aFiStore [
 	
 	historyBrowserModel store: aFiStore
 ]
 
 { #category : #accessing }
-FiFullHistoryBrowser >> tabManagerModel [
+FiStoreBrowser >> tabManagerModel [
 	
 	^ tabManagerModel
 ]

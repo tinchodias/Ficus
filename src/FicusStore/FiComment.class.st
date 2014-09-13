@@ -3,7 +3,8 @@ Class {
 	#superclass : #FiFixedObject,
 	#instVars : [
 		'target',
-		'contents'
+		'contents',
+		'path'
 	],
 	#category : #'FicusStore-History-Models'
 }
@@ -24,6 +25,12 @@ FiComment >> contents [
 FiComment >> defaultStep [
 
 	^ ('comment:', target shortDescription, ':', self hash asString) asSymbol
+]
+
+{ #category : #accessing }
+FiComment >> path [
+	
+	^ path
 ]
 
 { #category : #printing }

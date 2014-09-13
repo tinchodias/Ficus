@@ -1,10 +1,10 @@
 Class {
-	#name : #FiHistoryBrowserPlugin,
+	#name : #FiStoreBrowserPlugin,
 	#superclass : #Object,
 	#category : #'FicusStore-History-UI'
 }
 
 { #category : #'as yet unclassified' }
-FiHistoryBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
+FiStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 
 ]

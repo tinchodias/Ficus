@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #accessing }
-FiHistoryNode >> origin [
+FiHistoryNode >> deltas [
 
-	^ origin
+	^ self shouldBeImplemented 
 ]
 
 { #category : #accessing }
-FiHistoryNode >> patches [
+FiHistoryNode >> origin [
 
-	^ self shouldBeImplemented 
+	^ origin
 ]
 
 { #category : #printing }

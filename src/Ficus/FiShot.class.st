@@ -15,7 +15,6 @@ Class {
 	#name : #FiShot,
 	#superclass : #Object,
 	#instVars : [
-		'tag',
 		'cachedHash'
 	],
 	#category : #'Ficus-Model-Core'
@@ -30,7 +29,7 @@ FiShot class >> builder [
 { #category : #accessing }
 FiShot class >> excludedInstanceVariableNamesForSteps [
 
-	^ #(tag cachedHash)
+	^ #(cachedHash)
 ]
 
 { #category : #'instance creation' }
@@ -139,12 +138,6 @@ FiShot >> flattened [
 
 ]
 
-{ #category : #testing }
-FiShot >> hasTag [
-
-	^ self tag isNotNil
-]
-
 { #category : #comparing }
 FiShot >> hash [
 	
@@ -161,24 +154,6 @@ FiShot >> initializeFromStepsAndValues: aDictionary [
 FiShot >> isShot [
 	
 	^ true
-]
-
-{ #category : #printing }
-FiShot >> printOn: aStream [
-
-	super printOn: aStream.
-
-	self tag ifNil: [ ^ self ].
-
-	aStream 
-		space;
-		nextPut: $[.
-
-	self tag printOn: aStream.
-
-	aStream 
-		nextPut: $];
-		space.
 ]
 
 { #category : #results }
@@ -272,18 +247,6 @@ FiShot >> stonOn: stonWriter [
 		streamMap: [ :dictionary | 
 			self stepsAndValuesDo: [ :step :value | 
 				dictionary at: step put: value ] ]
-]
-
-{ #category : #accessing }
-FiShot >> tag [
-	
-	^ tag
-]
-
-{ #category : #accessing }
-FiShot >> tag: anObject [
-
-	tag := anObject
 ]
 
 { #category : #comparing }

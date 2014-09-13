@@ -3,7 +3,9 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'treeModel',
-		'iconByClassName'
+		'contentsModel',
+		'iconByClassName',
+		'currentSelection'
 	],
 	#category : #'Ficus-UI'
 }
@@ -15,7 +17,9 @@ FiInspector class >> defaultSpec [
 	^ SpecLayout composed
 		newColumn: [ :column |
 			column 
-				add: #treeModel ];
+				add: #treeModel origin: 0@0 corner: 1@0.6;
+				addSplitter;
+				add: #contentsModel origin: 0@0.6 corner: 1@1];
 		yourself.
 
 ]
@@ -60,6 +64,12 @@ FiInspector class >> newWith: someAssociations [
 	^ self new
 		rootAssociations: someAssociations;
 		yourself
+]
+
+{ #category : #accessing }
+FiInspector >> contentsModel [
+
+	^ contentsModel
 ]
 
 { #category : #accessing }
@@ -126,18 +136,25 @@ FiInspector >> initializePresenter [
 		windowIcon: Smalltalk ui icons smallInspectItIcon;
 		title: 'Ficus Inspector'.
 
+	contentsModel
+		displayBlock: [ :morph | morph ].
+		
 	treeModel
-		displayBlock: [ :assoc | 
-			self panelMorphWithAll: { 
-				(assoc key, ' ·') asMorph.
-				(assoc value isShot 
-					ifTrue: [  self stringMorphWith: ('a ', assoc value species asString) color: Color blue muchDarker ]
-					ifFalse: [ self stringMorphWith: (assoc value printStringLimitedTo: 60) color: Color red muchDarker ]) } ];
+		evenRowColor: treeModel oddRowColor;
+		displayBlock: [ :assoc | assoc key asMorph ];
 		childrenBlock: [ :assoc | 
 			assoc value isShot 
 				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
 				ifFalse: [ #() ] ];
-		iconBlock: [ :assoc | self iconFor: assoc value ].
+		iconBlock: [ :assoc | self iconFor: assoc value ];
+		autoDeselection:true;
+		whenRootsChanged: [ 
+			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 
+				when it changed due to roots update."
+			self showContentsFor: nil ];
+		whenSelectedItemChanged: [ :assocOrNil | 
+			self showContentsFor: assocOrNil ].
+
 
 ]
 
@@ -145,7 +162,8 @@ FiInspector >> initializePresenter [
 FiInspector >> initializeWidgets [ 
 	
 	self instantiateModels: #(
-		treeModel TreeModel)
+		treeModel			TreeModel
+		contentsModel	TreeModel)
 
 
 ]
@@ -178,13 +196,28 @@ FiInspector >> panelMorphWithAll: someMophs [
 { #category : #accessing }
 FiInspector >> rootAssociations: someAssociations [
 
-	treeModel roots: someAssociations
+	treeModel roots: someAssociations.
+	
+	treeModel expandRoots
 ]
 
 { #category : #accessing }
 FiInspector >> rootShot: aShot [
 
 	self rootAssociations: { #root -> aShot }
+]
+
+{ #category : #initialization }
+FiInspector >> showContentsFor: assocOrNil [
+
+	self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
+	currentSelection = assocOrNil ifTrue: [ ^ self ].
+	currentSelection := assocOrNil.
+
+	assocOrNil ifNil: [ ^ contentsModel roots: #() ].
+	
+	contentsModel roots: {assocOrNil value asString asText asMorph lock: true; yourself}
+
 ]
 
 { #category : #private }

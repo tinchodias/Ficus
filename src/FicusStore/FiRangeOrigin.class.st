@@ -1,5 +1,5 @@
 Class {
-	#name : #FiCommitRange,
+	#name : #FiRangeOrigin,
 	#superclass : #FiHistoryNodeOrigin,
 	#instVars : [
 		'fromReference',
@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : #accessing }
-FiCommitRange >> fromReference [
+FiRangeOrigin >> fromReference [
 
 	^ fromReference
 ]
 
 { #category : #printing }
-FiCommitRange >> printOn: aStream [
+FiRangeOrigin >> printOn: aStream [
 
 	super printOn: aStream.
 
@@ -29,13 +29,13 @@ FiCommitRange >> printOn: aStream [
 ]
 
 { #category : #accessing }
-FiCommitRange >> someTimeStamp [
+FiRangeOrigin >> someTimeStamp [
 
 	^ toReference timeStamp
 ]
 
 { #category : #accessing }
-FiCommitRange >> toReference [
+FiRangeOrigin >> toReference [
 
 	^ toReference
 ]

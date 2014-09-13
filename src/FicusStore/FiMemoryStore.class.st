@@ -14,7 +14,7 @@ FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 	
 	historyNodes add: 
 		(FiSnapshotHistoryNode builder
-			origin: (FiSingleCommit builder reference: ('Mem:', self hash asString, ':', historyNodes size asString); new);
+			origin: (FiSingleOrigin builder reference: ('Mem:', self hash asString, ':', historyNodes size asString); new);
 			snapshot: aSnapshot;
 			priors: priors;
 			new)

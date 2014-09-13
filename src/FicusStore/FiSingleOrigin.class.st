@@ -1,5 +1,5 @@
 Class {
-	#name : #FiSingleCommit,
+	#name : #FiSingleOrigin,
 	#superclass : #FiHistoryNodeOrigin,
 	#instVars : [
 		'reference'
@@ -8,36 +8,36 @@ Class {
 }
 
 { #category : #enumerating }
-FiSingleCommit >> anySatisfy: aBlock [
+FiSingleOrigin >> anySatisfy: aBlock [
 	
 	^ aBlock value: self
 ]
 
 { #category : #comparing }
-FiSingleCommit >> contains: anOrigin [ 
+FiSingleOrigin >> contains: anOrigin [ 
 	
 	^ self = anOrigin
 ]
 
 { #category : #converting }
-FiSingleCommit >> followedBy: aFiCommit [ 
+FiSingleOrigin >> followedBy: aFiCommit [ 
 	
 	self flag: #todo. "refactor!"
-	^ (aFiCommit isKindOf: FiSingleCommit) 
+	^ (aFiCommit isKindOf: FiSingleOrigin) 
 		ifTrue: [	
-			FiCommitRange builder
+			FiRangeOrigin builder
 				fromReference: self reference;
 				toReference: aFiCommit reference;
 				new ]
 		ifFalse: [ 
-			FiCommitRange builder
+			FiRangeOrigin builder
 				fromReference: self reference;
 				toReference: aFiCommit toReference;
 				new ]
 ]
 
 { #category : #printing }
-FiSingleCommit >> printOn: aStream [
+FiSingleOrigin >> printOn: aStream [
 
 	super printOn: aStream.
 
@@ -49,20 +49,20 @@ FiSingleCommit >> printOn: aStream [
 ]
 
 { #category : #accessing }
-FiSingleCommit >> reference [
+FiSingleOrigin >> reference [
 
 	^ reference
 ]
 
 { #category : #printing }
-FiSingleCommit >> shortDescription [
+FiSingleOrigin >> shortDescription [
 
 	^ reference name
 	
 ]
 
 { #category : #accessing }
-FiSingleCommit >> someTimeStamp [
+FiSingleOrigin >> someTimeStamp [
 
 	^ reference timeStamp
 ]

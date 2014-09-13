@@ -42,7 +42,7 @@ FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
 	| origin |
 	origin := FiSingleOrigin builder reference: (log referenceTo: anEntry); new.
 
-	^ FiPatchHistoryNode builder
+	^ FiDeltaHistoryNode builder
 		origin: origin;
 		edit: (self editFor: anEntry content);
 		prior: priorHistoryNode;

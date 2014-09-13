@@ -21,6 +21,23 @@ FiComment >> contents [
 ]
 
 { #category : #accessing }
+FiComment >> defaultStep [
+
+	^ ('comment:', target shortDescription, ':', self hash asString) asSymbol
+]
+
+{ #category : #printing }
+FiComment >> printOn: aStream [
+
+	super printOn: aStream. 
+	
+	aStream 
+		nextPut: $(;
+	 	print: self hash;
+		nextPut:$).
+]
+
+{ #category : #accessing }
 FiComment >> target [
 	
 	^ target

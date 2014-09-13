@@ -168,7 +168,8 @@ FiFullHistoryBrowser >> refreshSnapshotTab [
 	
 	selection 
 		ifEmpty: [ snapshotModel emptyRoots ]
-		ifNotEmpty: [ snapshotModel rootAssociations: (selection anyOne snapshot contents stepsAndValues sorted: [ :a :b | a key <= b key ]) ]
+		ifNotEmpty: [ 
+			snapshotModel rootAssociations: (selection anyOne snapshot stepsAndValues sorted: [ :a :b | a key <= b key ]) ]
 ]
 
 { #category : #accessing }

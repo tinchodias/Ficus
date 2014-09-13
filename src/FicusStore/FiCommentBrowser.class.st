@@ -40,7 +40,8 @@ FiCommentBrowser >> initializePresenter [
 	self title: 'Ficus Comment Browser'.
 
 	commentsTreeModel 
-		displayBlock: [ :aComment | self morphFor: aComment ]	
+		displayBlock: [ :aComment | self morphFor: aComment ]	";
+		menu: [ :aMenu | self setUpMenu: aMenu ]"
 
 ]
 
@@ -74,4 +75,20 @@ FiCommentBrowser >> plugin [
 FiCommentBrowser >> plugin: aPlugin [
 
 	plugin := aPlugin
+]
+
+{ #category : #initialization }
+FiCommentBrowser >> setUpMenu: aMenu [
+
+	aMenu addGroup: [ :aGroup |
+		
+		aGroup addItem: [ :anItem |
+			anItem 
+				name: 'New ';
+				description: 'Create a new comment';
+				icon: Smalltalk ui icons addIcon;
+				shortcut: $n command;
+				action: [ self halt ] ].
+		].
+
 ]

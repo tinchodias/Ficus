@@ -106,7 +106,8 @@ FiEpiceaHistoryBuilder >> isInterestingMCLoad: entry [
 FiEpiceaHistoryBuilder >> isInterestingMCSave: entry [
 
 	^ (entry content isKindOf: EpMonticelloVersionSave) and: [ 
-		entry content packageName = packageName ]
+		entry content packageName = packageName and: [
+		entry content repositoryDescription beginsWith: '/' ] ] "FIX: workaround to reject saves to local"
 ]
 
 { #category : #private }

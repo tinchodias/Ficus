@@ -120,8 +120,8 @@ FiFullHistoryBrowser >> initializeWidgets [
 		#differenceTabModel -> #TabModel.
 		
 		"tabs content"
-		#snapshotModel -> #FiInspector2. 
-		#differenceModel -> #FiEffectInspector2. 
+		#snapshotModel -> #FiInspector. 
+		#differenceModel -> #FiEffectInspector. 
 		}.
 
 ]

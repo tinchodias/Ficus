@@ -196,7 +196,9 @@ FiInspector2 >> panelMorphWithAll: someMophs [
 { #category : #accessing }
 FiInspector2 >> rootAssociations: someAssociations [
 
-	treeModel roots: someAssociations
+	treeModel roots: someAssociations.
+	
+	treeModel expandRoots
 ]
 
 { #category : #accessing }

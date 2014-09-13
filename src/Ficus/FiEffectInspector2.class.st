@@ -220,10 +220,6 @@ FiEffectInspector2 >> treeModel [
 { #category : #private }
 FiEffectInspector2 >> treeRootsFor: anEffect [
 
-	| summary |
-	summary := anEffect hierarchicalSummary.
-
-	^ summary size = 1
-		ifTrue: [ summary anyOne subSummary ] "TODO: avoiding #contents in a hacky way"
-		ifFalse: [ summary ]
+	^ anEffect hierarchicalSummary
+	
 ]

@@ -121,7 +121,7 @@ FiStoreBrowser >> initializeWidgets [
 		
 		"tabs content"
 		#snapshotModel -> #FiInspector. 
-		#deltasModel -> #FiEffectInspector. 
+		#deltasModel -> #FiDeltasInspector. 
 		}.
 
 ]
@@ -147,17 +147,12 @@ FiStoreBrowser >> refresh [
 { #category : #private }
 FiStoreBrowser >> refreshDeltasTab [
 
-	| difference selection |
-	selection := self selectedHistoryNodes. 
-	
-	difference := selection 
-		ifEmpty: [ FiNoEffect new ]
-		ifNotEmpty: [ 
-			selection anyOne deltas 
-				ifEmpty: [ FiNoEffect new ]
-				ifNotEmpty: [ :patches | patches first value ] ].
-		
-	deltasModel rootEffect: difference
+	deltasModel deltas: 
+		(self selectedHistoryNodes
+			ifEmpty: [ #() ]
+			ifNotEmpty: [ :selection |
+				selection anyOne deltas ])
+
 ]
 
 { #category : #private }

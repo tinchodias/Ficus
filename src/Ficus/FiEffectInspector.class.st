@@ -178,9 +178,20 @@ FiEffectInspector >> open [
 { #category : #private }
 FiEffectInspector >> pathMorphWith: aPath [
 
-	^ ('/' join: (aPath steps collect: #asString)) asMorph
-"		emphasis: 1;"
-		color: Color darkGray;
+	| separator |
+	separator := 
+		'  /  ' asText 
+			addAttribute: (TextColor color: Color lightGray); 
+			addAttribute: (TextFontChange fontNumber: 1); 
+			yourself. 
+	
+	^ (separator join: (aPath steps collect: [ :each | 
+			each asString asText 
+				addAttribute: (TextColor color: Color darkGray); 
+				addAttribute: (TextFontChange fontNumber: 2); 
+				yourself ])) 
+		asMorph
+		lock: true;
 		yourself
 ]
 

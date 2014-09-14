@@ -15,12 +15,6 @@ FiCompositeOrigin class >> withOrigins: aCollectionOfOrigins [
 		new
 ]
 
-{ #category : #enumerating }
-FiCompositeOrigin >> anySatisfy: aBlock [
-	
-	^ origins values anySatisfy: aBlock
-]
-
 { #category : #comparing }
 FiCompositeOrigin >> contains: anOrigin [
 	
@@ -55,10 +49,4 @@ FiCompositeOrigin >> shortDescription [
 		origins values 
 			do: [ :each | stream nextPutAll: each shortDescription ] 
 			separatedBy: [ stream nextPutAll: '+' ] ]
-]
-
-{ #category : #accessing }
-FiCompositeOrigin >> someTimeStamp [
-
-	^ (origins values collect: #someTimeStamp) min
 ]

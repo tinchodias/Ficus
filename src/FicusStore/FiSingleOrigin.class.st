@@ -7,12 +7,6 @@ Class {
 	#category : #'FicusStore-Models'
 }
 
-{ #category : #enumerating }
-FiSingleOrigin >> anySatisfy: aBlock [
-	
-	^ aBlock value: self
-]
-
 { #category : #comparing }
 FiSingleOrigin >> contains: anOrigin [ 
 	
@@ -59,10 +53,4 @@ FiSingleOrigin >> shortDescription [
 
 	^ reference name
 	
-]
-
-{ #category : #accessing }
-FiSingleOrigin >> someTimeStamp [
-
-	^ reference timeStamp
 ]

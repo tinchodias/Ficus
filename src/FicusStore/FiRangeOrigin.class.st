@@ -29,12 +29,6 @@ FiRangeOrigin >> printOn: aStream [
 ]
 
 { #category : #accessing }
-FiRangeOrigin >> someTimeStamp [
-
-	^ toReference timeStamp
-]
-
-{ #category : #accessing }
 FiRangeOrigin >> toReference [
 
 	^ toReference

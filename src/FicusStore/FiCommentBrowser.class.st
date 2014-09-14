@@ -37,7 +37,7 @@ FiCommentBrowser >> initializePresenter [
 
 	super initializePresenter.
 
-	self title: 'Ficus Comment Browser'.
+	self title: 'Ficus Comments Browser'.
 
 	commentsTreeModel 
 		displayBlock: [ :aComment | self morphFor: aComment ]	";

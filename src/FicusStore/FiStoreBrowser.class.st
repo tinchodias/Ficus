@@ -70,7 +70,7 @@ FiStoreBrowser >> initializePresenter [
 
 	super initializePresenter.
 
-	self title: 'Ficus Full History Browser'.
+	self title: 'Ficus Store Browser'.
  	
 	self initializeTabs. 
 	

@@ -75,6 +75,18 @@ FiEffectInspector >> diffChunkMorphFor: aSummary at: aPath [
 		}
 ]
 
+{ #category : #private }
+FiEffectInspector >> diffChunkMorphsFor: anEffectOrNil [
+
+	^ Array 
+		streamContents: [ :stream |
+			anEffectOrNil
+				leavesDo: [ :aLeafSummary :aPath | 
+					stream nextPut: (self diffChunkMorphFor: aLeafSummary at: aPath) ]
+				basePath: FiPath root ] 
+		limitedTo: 15
+]
+
 { #category : #accessing }
 FiEffectInspector >> diffModel [
 
@@ -211,15 +223,10 @@ FiEffectInspector >> showDiffFor: anEffectOrNil [
 	currentSelection = anEffectOrNil ifTrue: [ ^ self ].
 	currentSelection := anEffectOrNil.
 
-	anEffectOrNil ifNil: [ ^ diffModel roots: #() ].
-	
-	diffModel roots: (Array 
-		streamContents: [ :stream |
-			anEffectOrNil
-				leavesDo: [ :aLeafSummary :aPath | 
-					stream nextPut: (self diffChunkMorphFor: aLeafSummary at: aPath) ]
-				basePath: FiPath root ] 
-		limitedTo: 15).
+	diffModel roots: 
+		(anEffectOrNil 
+			ifNil: [ #() ]
+			ifNotNil: [ self diffChunkMorphsFor: anEffectOrNil ])
 ]
 
 { #category : #accessing }

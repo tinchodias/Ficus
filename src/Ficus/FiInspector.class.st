@@ -180,19 +180,6 @@ FiInspector >> open [
 
 ]
 
-{ #category : #private }
-FiInspector >> panelMorphWithAll: someMophs [
-
-	^ PanelMorph new
-		changeTableLayout;
-		vResizing: #shrinkWrap;
-		hResizing: #shrinkWrap;
-		listDirection: #leftToRight;
-		cellInset: 3;
-		addAllMorphs: someMophs;
-		yourself
-]
-
 { #category : #accessing }
 FiInspector >> rootAssociations: someAssociations [
 

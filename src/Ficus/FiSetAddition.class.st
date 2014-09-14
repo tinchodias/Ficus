@@ -14,16 +14,16 @@ FiSetAddition >> edit [
 ]
 
 { #category : #summary }
-FiSetAddition >> hierarchicalSummary [
+FiSetAddition >> hierarchicalSummaryFrom: aBasePath [
 	
 	^ { newValue 
 		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
 			FiSummaryAdd builder 
-				step: path step;
+				path: path;
 				newValue: shot; 
 				subSummary: collectionFromChildren;
 				new ] 
-		basePath: FiPath root / newValue defaultStep }
+		basePath: aBasePath / newValue defaultStep }
 ]
 
 { #category : #accessing }

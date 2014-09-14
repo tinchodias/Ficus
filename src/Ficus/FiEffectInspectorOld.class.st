@@ -83,7 +83,7 @@ FiEffectInspectorOld >> initializePresenter [
 	treeModel
 		evenRowColor: Color white;
 		roots: self treeRoots;
-		displayBlock: [ :summary | summary step ];
+		displayBlock: [ :summary | summary path step ];
 		childrenBlock: [ :summary | summary subSummary ];
 		iconBlock: [ :summary | self iconFor: summary ];
 		whenSelectedItemChanged: [ :summary | self showDiffFor: summary value ].

@@ -16,16 +16,16 @@ FiDictionaryAddition >> edit [
 ]
 
 { #category : #summary }
-FiDictionaryAddition >> hierarchicalSummary [
+FiDictionaryAddition >> hierarchicalSummaryFrom: aBasePath [
 	
 	^ { newValue 
 		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
 			FiSummaryAdd builder 
-				step: path step;
+				path: path;
 				newValue: shot; 
 				subSummary: collectionFromChildren;
 				new ] 
-		basePath: FiPath root / key }
+		basePath: aBasePath / key }
 ]
 
 { #category : #accessing }

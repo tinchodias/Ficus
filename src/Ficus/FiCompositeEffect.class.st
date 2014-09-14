@@ -14,9 +14,10 @@ FiCompositeEffect >> edit [
 ]
 
 { #category : #summary }
-FiCompositeEffect >> hierarchicalSummary [
+FiCompositeEffect >> hierarchicalSummaryFrom: aBasePath [
 
-	^ subEffects values flatCollect: #hierarchicalSummary
+	^ subEffects values flatCollect: [ :each |
+		each hierarchicalSummaryFrom: aBasePath ]
 ]
 
 { #category : #accessing }

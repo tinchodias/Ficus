@@ -35,7 +35,7 @@ FiEffectTest >> testAddClass [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryAdd).
-	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne path equals: #A asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
 
@@ -95,18 +95,18 @@ FiEffectTest >> testAddSharedPoolAndUpdateComment [
 		assert: effect hierarchicalSummary asSet
 		equals: {
 			(FiSummaryUpdate builder 
-				step: #sharedPools;
+				path: #sharedPools asFicusPath;
 				oldValue: source sharedPools; 
 				newValue: result sharedPools; 
 				subSummary: { 
 					(FiSummaryAdd builder 
-						step: #X; 
+						path: #sharedPools asFicusPath / #X; 
 						newValue: #X; 
 						subSummary: #();
 						new). };
 				new).
 			(FiSummaryUpdate builder 
-				step: #comment;
+				path: #comment asFicusPath;
 				oldValue: ''; 
 				newValue: '42'; 
 				subSummary: #();
@@ -171,7 +171,7 @@ FiEffectTest >> testRemoveClass [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryRemove).
-	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne path equals: #A asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
 
@@ -204,7 +204,7 @@ FiEffectTest >> testSetAddClass [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryAdd).
-	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne path equals: #A asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
 
@@ -270,7 +270,7 @@ FiEffectTest >> testSetRemoveClass [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryRemove).
-	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne path equals: #A asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
 
@@ -311,7 +311,7 @@ FiEffectTest >> testSetUpdateClass [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryUpdate).
-	self assert: summary anyOne step equals: #A.
+	self assert: summary anyOne path equals: #A asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryUpdate ]).
 
@@ -387,7 +387,7 @@ FiEffectTest >> testUpdateClass [
 		assert: effect hierarchicalSummary asArray
 		equals: 
 			{ FiSummaryUpdate builder 
-				step: #A;
+				path: #A asFicusPath;
 				oldValue: shot; 
 				newValue: otherShot; 
 				subSummary: #();
@@ -416,7 +416,7 @@ FiEffectTest >> testUpdateComment [
 		assert: effect hierarchicalSummary asArray
 		equals: 
 			{ FiSummaryUpdate builder 
-				step: #comment;
+				path: #comment asFicusPath;
 				oldValue: ''; 
 				newValue: '42'; 
 				subSummary: #();

@@ -10,8 +10,8 @@ FiNoEffect >> edit [
 	^ FiNoEdit new
 ]
 
-{ #category : #'as yet unclassified' }
-FiNoEffect >> hierarchicalSummary [
+{ #category : #summary }
+FiNoEffect >> hierarchicalSummaryFrom: aBasePath [
 	
 	^ #()
 ]

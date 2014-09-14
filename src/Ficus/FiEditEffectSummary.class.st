@@ -2,19 +2,18 @@ Class {
 	#name : #FiEditEffectSummary,
 	#superclass : #FiFixedObject,
 	#instVars : [
-		'step',
-		'subSummary'
+		'subSummary',
+		'path'
 	],
 	#category : #'Ficus-UI-Model'
 }
 
 { #category : #enumerating }
-FiEditEffectSummary >> leavesDo: aBlockClosure basePath: aPath [ 
+FiEditEffectSummary >> leavesDo: aBlockClosure [
 	
 	^ subSummary 
-		ifEmpty: [ aBlockClosure value: self value: aPath ]
-		ifNotEmpty: [ subSummary do: [ :each |
-			each leavesDo: aBlockClosure basePath: aPath / each step ] ].
+		ifEmpty: [ aBlockClosure value: self ]
+		ifNotEmpty: [ subSummary do: [ :each | each leavesDo: aBlockClosure ] ].
 ]
 
 { #category : #printing }
@@ -29,6 +28,12 @@ FiEditEffectSummary >> oldValueString [
 	^ ''
 ]
 
+{ #category : #accessing }
+FiEditEffectSummary >> path [
+	
+	^ path
+]
+
 { #category : #printing }
 FiEditEffectSummary >> printOn: aStream [
 
@@ -36,14 +41,8 @@ FiEditEffectSummary >> printOn: aStream [
 	
 	aStream 
 		nextPut: $(;
-		print: step;
+		print: path;
 		nextPut: $).
-]
-
-{ #category : #accessing }
-FiEditEffectSummary >> step [
-	
-	^ step
 ]
 
 { #category : #accessing }

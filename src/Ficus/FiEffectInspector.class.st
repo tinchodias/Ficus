@@ -66,13 +66,12 @@ FiEffectInspector >> columnMorphWithAll: someMophs [
 		yourself
 ]
 
-{ #category : #private }
-FiEffectInspector >> diffChunkMorphFor: aSummary at: aPath [ 
+{ #category : #'as yet unclassified' }
+FiEffectInspector >> diffChunkMorphFor: aSummary [
 
 	^ self columnMorphWithAll: { 
-		self pathMorphWith: aPath.
-		self diffMorphFrom: aSummary oldValueString to: aSummary newValueString.
-		}
+		self pathMorphWith: aSummary path.
+		self diffMorphFrom: aSummary oldValueString to: aSummary newValueString }
 ]
 
 { #category : #private }
@@ -81,9 +80,8 @@ FiEffectInspector >> diffChunkMorphsFor: anEffectOrNil [
 	^ Array 
 		streamContents: [ :stream |
 			anEffectOrNil
-				leavesDo: [ :aLeafSummary :aPath | 
-					stream nextPut: (self diffChunkMorphFor: aLeafSummary at: aPath) ]
-				basePath: FiPath root ] 
+				leavesDo: [ :aLeafSummary | 
+					stream nextPut: (self diffChunkMorphFor: aLeafSummary) ] ] 
 		limitedTo: 15
 ]
 
@@ -152,7 +150,7 @@ FiEffectInspector >> initializePresenter [
  
 	treeModel
 		evenRowColor: treeModel oddRowColor;
-		displayBlock: [ :summary | summary step ];
+		displayBlock: [ :summary | summary path step ];
 		childrenBlock: [ :summary | summary subSummary ];
 		iconBlock: [ :summary | self iconFor: summary ];
 		autoDeselection:true;

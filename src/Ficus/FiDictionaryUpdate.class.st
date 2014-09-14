@@ -18,24 +18,24 @@ FiDictionaryUpdate >> edit [
 ]
 
 { #category : #summary }
-FiDictionaryUpdate >> hierarchicalSummary [
+FiDictionaryUpdate >> hierarchicalSummaryFrom: aBasePath [
 
 	self flag: #todo. "FIX"
 	
 	^ {(subEffect isKindOf: FiReplacement) 
 		ifTrue: [ 
 			FiSummaryUpdate builder 
-				step: key;
+				path: aBasePath / key;
 				oldValue: subEffect oldValue; 
 				newValue: subEffect newValue; 
 				subSummary: #();
 				new ]
 		ifFalse: [	
 			FiSummaryUpdate builder 
-				step: key;
+				path: aBasePath / key;
 				oldValue: oldValue; 
 				newValue: newValue; 
-				subSummary: subEffect hierarchicalSummary;
+				subSummary: (subEffect hierarchicalSummaryFrom: aBasePath / key);
 				new ]}
 ]
 

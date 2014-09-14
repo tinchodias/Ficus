@@ -19,24 +19,24 @@ FiSlotUpdate >> edit [
 ]
 
 { #category : #summary }
-FiSlotUpdate >> hierarchicalSummary [
+FiSlotUpdate >> hierarchicalSummaryFrom: aBasePath [
 
 	self flag: #todo. "FIX"
 	
 	^ {(subEffect isKindOf: FiReplacement) 
 		ifTrue: [ 
 			FiSummaryUpdate builder 
-				step: slotName;
+				path: aBasePath / slotName;
 				oldValue: subEffect oldValue; 
 				newValue: subEffect newValue; 
 				subSummary: #();
 				new ]
 		ifFalse: [ 
 			FiSummaryUpdate builder 
-				step: slotName;
+				path: aBasePath / slotName;
 				oldValue: oldValue; 
 				newValue: newValue; 
-				subSummary: subEffect hierarchicalSummary;
+				subSummary: (subEffect hierarchicalSummaryFrom: aBasePath / slotName);
 				new ]}
 ]
 

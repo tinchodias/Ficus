@@ -25,6 +25,12 @@ FiEditEffect >> flattenedLeafEffects [
 
 ]
 
+{ #category : #summary }
+FiEditEffect >> hierarchicalSummary [
+
+	^ self hierarchicalSummaryFrom: FiPath root
+]
+
 { #category : #accessing }
 FiEditEffect >> inverse [
 

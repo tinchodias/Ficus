@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #accessing }
+FiHistoryNode >> defaultStep [
+
+	^ origin printString asSymbol
+]
+
+{ #category : #accessing }
 FiHistoryNode >> deltas [
 
 	^ self shouldBeImplemented 

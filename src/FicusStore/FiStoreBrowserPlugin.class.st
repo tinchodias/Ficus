@@ -4,7 +4,16 @@ Class {
 	#category : #'FicusStore-UI'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 
+]
+
+{ #category : #accessing }
+FiStoreBrowserPlugin >> prepareEffectInspectorTreeMorphs: morphs for: aSummary [
+
+]
+
+{ #category : #accessing }
+FiStoreBrowserPlugin >> selectedHistoryNode: aHistoryNode [
 ]

@@ -81,7 +81,10 @@ FiStoreBrowser >> initializePresenter [
 				tabManagerModel selectedTab 
 					ifNil: [ 	snapshotTabModel ] "This is a workaround because you can not convince Spec that the tab initially selected is actually selected."
 					ifNotNil: [ :tabModel | tabModel ].
-					
+			
+			selectedItems ifNotEmpty: [
+				self plugin selectedHistoryNode: selectedItems anyOne. self flag: #fix. "Transmit to plugin" ].
+
 			actuallySelectedTab tabSelected ]
 ]
 
@@ -135,7 +138,8 @@ FiStoreBrowser >> plugin [
 { #category : #accessing }
 FiStoreBrowser >> plugin: aPlugin [
 	
-	historyBrowserModel plugin: aPlugin
+	historyBrowserModel plugin: aPlugin.
+	deltasModel plugin: aPlugin.
 ]
 
 { #category : #refreshing }

@@ -15,7 +15,7 @@ FiCommentStoreBrowserPlugin class >> forStore: aFiStore [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiCommentStoreBrowserPlugin >> browseComments: aHistoryNode [
 
 	(FiCommentBrowser new
@@ -37,7 +37,7 @@ FiCommentStoreBrowserPlugin >> commentsFor: aHistoryNode [
 	^ self comments asArray select: [ :each | each appliesTo: aHistoryNode origin ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 
 	(self commentsFor: aHistoryNode) ifNotEmpty: [ :nodeComments | 

@@ -63,3 +63,9 @@ FiDeltasInspector >> initializeWidgets [
 		effectInspector FiEffectInspector).
 
 ]
+
+{ #category : #accessing }
+FiDeltasInspector >> plugin: aPlugin [
+
+	effectInspector plugin: aPlugin
+]

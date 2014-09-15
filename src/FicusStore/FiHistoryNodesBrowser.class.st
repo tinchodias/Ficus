@@ -53,7 +53,7 @@ FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [
 		prepareDescriptionMorphs: morphs 
 		for: aHistoryNode.
 	
-	^ self rowMorphWithAll: morphs
+	^ FiMorphBuilder default rowMorphWithAll: morphs
 ]
 
 { #category : #accessing }
@@ -92,7 +92,7 @@ FiHistoryNodesBrowser >> initializePresenter [
 
 	super initializePresenter.
 
-	self initializeHiedraController.
+	self initializeHiedraController. 
 
 	historyTreeModel
 		rowInset: 0;
@@ -146,19 +146,6 @@ FiHistoryNodesBrowser >> refresh [
 FiHistoryNodesBrowser >> refreshButton [
 
 	^ refreshButton
-]
-
-{ #category : #private }
-FiHistoryNodesBrowser >> rowMorphWithAll: someMophs [
-
-	^ PanelMorph new
-		changeTableLayout;
-		vResizing: #shrinkWrap;
-		hResizing: #shrinkWrap;
-		listDirection: #leftToRight;
-		cellInset: 3;
-		addAllMorphs: someMophs;
-		yourself
 ]
 
 { #category : #private }

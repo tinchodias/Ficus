@@ -5,7 +5,8 @@ Class {
 		'treeModel',
 		'iconByClassName',
 		'diffModel',
-		'currentSelection'
+		'currentSelection',
+		'plugin'
 	],
 	#category : #'Ficus-UI'
 }
@@ -53,23 +54,9 @@ FiEffectInspector class >> newWith: aRootEffect [
 ]
 
 { #category : #private }
-FiEffectInspector >> columnMorphWithAll: someMophs [
-
-	^ PanelMorph new
-		changeTableLayout;
-		vResizing: #shrinkWrap;
-		hResizing: #shrinkWrap;
-		listDirection: #topToBottom;
-		cellPositioning: #topLeft;
-		cellInset: 8;
-		addAllMorphs: someMophs;
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
 FiEffectInspector >> diffChunkMorphFor: aSummary [
 
-	^ self columnMorphWithAll: { 
+	^ FiMorphBuilder default columnMorphWithAll: { 
 		self pathMorphWith: aSummary path.
 		self diffMorphFrom: aSummary oldValueString to: aSummary newValueString }
 ]
@@ -106,6 +93,21 @@ FiEffectInspector >> diffMorphFrom: aString to: otherString [
 		lock: true;
 		yourself
 
+]
+
+{ #category : #private }
+FiEffectInspector >> displayMorphFor: summary [
+		
+	| morphs |
+	morphs := OrderedCollection new.
+
+	morphs add: summary path step asMorph.
+	
+	self plugin 
+		prepareEffectInspectorTreeMorphs: morphs 
+		for: summary.
+	
+	^ FiMorphBuilder default rowMorphWithAll: morphs
 ]
 
 { #category : #private }
@@ -150,7 +152,7 @@ FiEffectInspector >> initializePresenter [
  
 	treeModel
 		evenRowColor: treeModel oddRowColor;
-		displayBlock: [ :summary | summary path step ];
+		displayBlock: [ :summary | self displayMorphFor: summary ];
 		childrenBlock: [ :summary | summary subSummary ];
 		iconBlock: [ :summary | self iconFor: summary ];
 		autoDeselection:true;
@@ -203,6 +205,18 @@ FiEffectInspector >> pathMorphWith: aPath [
 		asMorph
 		lock: true;
 		yourself
+]
+
+{ #category : #accessing }
+FiEffectInspector >> plugin [
+
+	^ plugin
+]
+
+{ #category : #accessing }
+FiEffectInspector >> plugin: aPlugin [
+
+	plugin := aPlugin
 ]
 
 { #category : #opening }

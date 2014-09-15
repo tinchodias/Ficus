@@ -5,7 +5,7 @@ Class {
 		'commentsTreeModel',
 		'plugin'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-Comments-UI'
 }
 
 { #category : #specs }
@@ -56,13 +56,14 @@ FiCommentBrowser >> initializeWidgets [
 { #category : #private }
 FiCommentBrowser >> morphFor: aComment [
 
-	^ ((aComment target shortDescription asText 
-			addAttribute: (TextFontChange fontNumber: 1); "the smaller one"
-			addAttribute: (TextColor color: Color gray);
+	^ ((aComment score prettyPrintString asText 
+			addAttribute: (TextFontChange fontNumber: 3); "bigger than normal"
+"			addAttribute: (TextColor color: Color gray);"
 			yourself), 
 			String cr, 
-			aComment contents) 
-				asText asMorph lock: true; yourself
+			aComment contents) asText asMorph 
+				lock: true; 
+				yourself
 ]
 
 { #category : #accessing }

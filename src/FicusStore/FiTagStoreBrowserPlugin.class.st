@@ -5,7 +5,7 @@ Class {
 		'store',
 		'selectedHistoryNode'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-Tags-Plugin'
 }
 
 { #category : #'instance creation' }

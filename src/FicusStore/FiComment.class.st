@@ -4,9 +4,10 @@ Class {
 	#instVars : [
 		'target',
 		'contents',
-		'path'
+		'path',
+		'score'
 	],
-	#category : #'FicusStore-Models'
+	#category : #'FicusStore-Comments-Model'
 }
 
 { #category : #examples }
@@ -17,21 +18,24 @@ FiComment class >> exampleStoreFor: store [
 		FiComment builder 
 			target: store historyNodes first origin;
 			path: #contents asFicusPath; 
+			score: FiCommentAgree new;
 			contents: 'Good start!';
 			new.
 		FiComment builder 
 			target: store historyNodes first origin;
 			path: #contents asFicusPath; 
-			contents: 'Rock&roll man!';
+			score: FiCommentDisagree new;
+			contents: 'Should be splitted';
 			new.
 		FiComment builder 
-			target: 
-				(FiCompositeOrigin withOrigins: {
+			target: store historyNodes third origin;
+"				(FiCompositeOrigin withOrigins: {
 					store historyNodes third origin.
 					store historyNodes fourth origin.
 					 });
-			path: #contents asFicusPath; 
-			contents: 'I like it';
+"			path: #contents asFicusPath; 
+			score: FiCommentAgree new;
+			contents: 'Rock&roll :)';
 			new.
 	 }.
 
@@ -79,6 +83,12 @@ FiComment >> printOn: aStream [
 		nextPut: $(;
 	 	print: self hash;
 		nextPut:$).
+]
+
+{ #category : #accessing }
+FiComment >> score [
+	
+	^ score
 ]
 
 { #category : #accessing }

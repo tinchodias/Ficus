@@ -1,5 +1,5 @@
 Class {
-	#name : #FiDeltaTag,
+	#name : #FiTag,
 	#superclass : #FiFixedObject,
 	#instVars : [
 		'origin',
@@ -7,21 +7,21 @@ Class {
 		'path',
 		'contents'
 	],
-	#category : #'FicusStore-Models'
+	#category : #'FicusStore-Tags-Model'
 }
 
 { #category : #examples }
-FiDeltaTag class >> exampleStoreFor: store [
+FiTag class >> exampleStoreFor: store [
 
 	| tags tagsStore |
 	tags := { 
-		FiDeltaTag builder 
+		FiTag builder 
 			origin: store historyNodes second origin;
 			priorDefaultStep: store historyNodes second priors asArray first defaultStep;
 			path: #contents asFicusPath; 
 			contents: 'Code formatting';
 			new.
-		FiDeltaTag builder 
+		FiTag builder 
 			origin: store historyNodes third origin;
 			priorDefaultStep: store historyNodes third priors asArray first defaultStep;
 			path: #contents asFicusPath; 
@@ -41,31 +41,33 @@ FiDeltaTag class >> exampleStoreFor: store [
 ]
 
 { #category : #testing }
-FiDeltaTag >> appliesToOrigin: anOrigin prior: aPriorDefaultStep summaryPath: aPath [
+FiTag >> appliesToOrigin: anOrigin prior: aPriorDefaultStep summaryPath: aPath [
 
-	^ (self origin contains: anOrigin) and: [ aPriorDefaultStep = priorDefaultStep and: [ aPath = path ] ]
+	^ (self origin contains: anOrigin) and: [ 
+		aPriorDefaultStep = priorDefaultStep and: [ 
+		aPath = path ] ]
 ]
 
 { #category : #accessing }
-FiDeltaTag >> contents [
+FiTag >> contents [
 	
 	^ contents
 ]
 
 { #category : #accessing }
-FiDeltaTag >> origin [
+FiTag >> origin [
 	
 	^ origin
 ]
 
 { #category : #accessing }
-FiDeltaTag >> path [
+FiTag >> path [
 	
 	^ path
 ]
 
 { #category : #accessing }
-FiDeltaTag >> priorDefaultStep [
+FiTag >> priorDefaultStep [
 	
 	^ priorDefaultStep
 ]

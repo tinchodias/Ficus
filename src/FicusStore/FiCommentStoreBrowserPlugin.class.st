@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'store'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-Comments-Plugin'
 }
 
 { #category : #'instance creation' }
@@ -41,19 +41,24 @@ FiCommentStoreBrowserPlugin >> commentsFor: aHistoryNode [
 FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 
 	(self commentsFor: aHistoryNode) ifNotEmpty: [ :nodeComments | 
-		| button |	
+		| button scores |
+		scores := 
+			FiMorphBuilder default rowMorphWithAll: 
+				(nodeComments collect: [ :each |  
+					(FiMorphBuilder default 
+						tagWith: each score prettyPrintString, ' '
+						color: Color lightBrown) ]).
+		
 		button := IconicButton new 
 			target: self;
 			actionSelector: #browseComments:;
 			arguments: { aHistoryNode };
-			labelGraphic: Smalltalk ui icons announcementIcon;
+			labelGraphic: scores imageForm;
 			color: Color transparent;
 			helpText: 'Browse the comments';
 			borderWidth: 0.
-		
-		morphs 
-			add: button;
-			add: nodeComments size asString asMorph ]
+
+		morphs add: button ]
 
 ]
 

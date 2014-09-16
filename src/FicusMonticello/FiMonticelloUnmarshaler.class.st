@@ -7,7 +7,7 @@ Class {
 { #category : #private }
 FiMonticelloUnmarshaler >> classInstVarNamesFrom: aFiClass [ 
 	
-	^ aFiClass metaclass layout slotNames values
+	^ aFiClass metaclass layout instanceVariables values
 ]
 
 { #category : #private }
@@ -19,7 +19,7 @@ FiMonticelloUnmarshaler >> classVarNamesFrom: aFiClass [
 { #category : #private }
 FiMonticelloUnmarshaler >> instVarNamesFrom: aFiClass [ 
 	
-	^ aFiClass layout slotNames values
+	^ aFiClass layout instanceVariables values
 ]
 
 { #category : #private }

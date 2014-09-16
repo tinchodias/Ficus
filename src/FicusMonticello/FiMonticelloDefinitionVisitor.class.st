@@ -49,7 +49,7 @@ FiMonticelloDefinitionVisitor >> ficusExtensionMethodsForHostName: hostName meth
 FiMonticelloDefinitionVisitor >> ficusLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout builder 
-		slotNames: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
+		instanceVariables: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
 		new
 ]
 
@@ -67,7 +67,7 @@ FiMonticelloDefinitionVisitor >> ficusMetaclassFor: aMCClassDefinition [
 FiMonticelloDefinitionVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout builder 
-		slotNames: (self ficusSymbolSetFor: aMCClassDefinition classInstVarNames);
+		instanceVariables: (self ficusSymbolSetFor: aMCClassDefinition classInstVarNames);
 		new
 		
 ]

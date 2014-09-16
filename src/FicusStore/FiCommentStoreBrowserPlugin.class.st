@@ -47,7 +47,7 @@ FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNod
 				(nodeComments collect: [ :each |  
 					(FiMorphBuilder default 
 						tagWith: each score prettyPrintString, ' '
-						color: Color lightBrown) ]).
+						color: Color lightBrown muchLighter) ]).
 		
 		button := IconicButton new 
 			target: self;

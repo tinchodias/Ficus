@@ -212,7 +212,7 @@ FiRGClass >> innerBindingOf: aSymbol [
 { #category : #polymorphism }
 FiRGClass >> instVarNames [
 
-	^ self shot layout slotNames values asArray
+	^ self shot layout instanceVariables asArray
 ]
 
 { #category : #polymorphism }

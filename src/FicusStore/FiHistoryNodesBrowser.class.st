@@ -139,7 +139,7 @@ FiHistoryNodesBrowser >> refresh [
 	
 	store refresh.
 	
-	historyTreeModel roots: (store historyNodes)
+	historyTreeModel roots: store historyNodes reversed
 ]
 
 { #category : #accessing }

@@ -41,7 +41,7 @@ FiEpiceaTranslator >> ficusClassPoolFor: aMCClassDefinition [
 FiEpiceaTranslator >> ficusLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout builder 
-		slotNames: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
+		instanceVariables: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
 		new
 ]
 

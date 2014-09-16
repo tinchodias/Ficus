@@ -5,7 +5,7 @@ Class {
 	#name : #FiPointerLayout,
 	#superclass : #FiLayout,
 	#instVars : [
-		'slotNames'
+		'instanceVariables'
 	],
 	#category : #'Ficus-Examples-Metamodel'
 }
@@ -15,7 +15,13 @@ FiPointerLayout >> initialize [
 
 	super initialize.
 
-	slotNames := FiSet new
+	instanceVariables := FiSet new
+]
+
+{ #category : #accessing }
+FiPointerLayout >> instanceVariables [
+	
+	^ instanceVariables
 ]
 
 { #category : #printing }
@@ -23,12 +29,6 @@ FiPointerLayout >> printOn: aStream [
 
 	super printOn: aStream.
 
-	slotNames values printElementsOn: aStream.
+	instanceVariables values printElementsOn: aStream.
 	
-]
-
-{ #category : #accessing }
-FiPointerLayout >> slotNames [
-	
-	^ slotNames
 ]

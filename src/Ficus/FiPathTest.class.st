@@ -19,7 +19,7 @@ Class {
 		'path',
 		'shot'
 	],
-	#category : #'Ficus-Tests'
+	#category : #'Ficus-Tests-Path'
 }
 
 { #category : #running }
@@ -31,11 +31,11 @@ FiPathTest >> assertStoreStringRoundTripOf: aPath [
 { #category : #running }
 FiPathTest >> sampleShot [
 	
-	| aSet aClass |
-	aClass := FiClass named: #A.
+	| aSet aShot |
+	aShot := FiChef nickname: #A.
 	
 	aSet := FiSet new.
-	^ aSet resultOf: (aSet include: aClass)
+	^ aSet resultOf: (aSet include: aShot)
 ]
 
 { #category : #tests }
@@ -44,15 +44,15 @@ FiPathTest >> testClass [
 	shot := self sampleShot.
 	path := FiPath root / #A.
 		
-	self assert: ((path resolvedOn: shot) isKindOf: FiClass).
+	self assert: ((path resolvedOn: shot) isKindOf: FiChef).
 ]
 
 { #category : #tests }
 FiPathTest >> testEquals [
 
 	| pathA pathB |
-	pathA := FiPath root / #A / #sharedPools / #X.
-	pathB := FiPath root / #A / #sharedPools / #X.
+	pathA := FiPath root / #A / #admiredChefs / #X.
+	pathB := FiPath root / #A / #admiredChefs / #X.
 		
 	self assert: pathA equals: pathB.
 	self assert: pathB equals: pathA.
@@ -61,17 +61,17 @@ FiPathTest >> testEquals [
 { #category : #tests }
 FiPathTest >> testFlattened [
 
-	| aSet aMethod |
-	aMethod := FiMethod sourceCode: 'fortyTwo ^42' protocol: #accessing.
-	aSet := FiSet withValues: { aMethod }.
+	| aSet aShot |
+	aShot := FiRecipe title: 'fortyTwo' kind: #accessing.
+	aSet := FiSet withValues: { aShot }.
 
 	self 
 		assert: aSet flattened 
 		equals: { 
 			FiPath root -> aSet.
-			FiPath root / #fortyTwo -> aMethod.
-			FiPath root / #fortyTwo / #sourceCode -> 'fortyTwo ^42'.
-			FiPath root / #fortyTwo / #protocol -> #accessing.
+			FiPath root / #fortyTwo -> aShot.
+			FiPath root / #fortyTwo / #title -> 'fortyTwo'.
+			FiPath root / #fortyTwo / #kind -> #accessing.
 			}.
 ]
 
@@ -79,8 +79,8 @@ FiPathTest >> testFlattened [
 FiPathTest >> testNotEquals [
 
 	| pathA pathB |
-	pathA := FiPath root / #A / #sharedPools / #X.
-	pathB := FiPath root / #A / #sharedPools / #Y.
+	pathA := FiPath root / #A / #admiredChefs / #X.
+	pathB := FiPath root / #A / #admiredChefs / #Y.
 	
 	self deny: pathA = pathB.
 	self deny: pathB = pathA.
@@ -90,7 +90,7 @@ FiPathTest >> testNotEquals [
 FiPathTest >> testSharedPools [
 
 	shot := self sampleShot.
-	path := FiPath root / #A / #sharedPools.
+	path := FiPath root / #A / #admiredChefs.
 		
 	self assert: ((path resolvedOn: shot) isKindOf: FiSet).
 ]
@@ -98,9 +98,9 @@ FiPathTest >> testSharedPools [
 { #category : #tests }
 FiPathTest >> testSteps [
 
-	path := FiPath root / #A / #sharedPools / #X.
+	path := FiPath root / #A / #admiredChefs / #X.
 		
-	self assert: path steps equals: #(A sharedPools X).
+	self assert: path steps equals: #(A admiredChefs X).
 ]
 
 { #category : #tests }

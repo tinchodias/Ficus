@@ -4,15 +4,15 @@ A FiSetTest is a test class for testing the behavior of FiSet
 Class {
 	#name : #FiSetTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core'
+	#category : #'Ficus-Tests-Core-Edits'
 }
 
 { #category : #tests }
-FiSetTest >> testAddClass [
+FiSetTest >> testAddition [
 
 	| edit source result shot |
 	source := FiSet new.
-	shot := FiClass named: #A.
+	shot := FiChef nickname: #A.
 	
 	edit := source include: shot.
 	result := source resultOf: edit.
@@ -43,21 +43,21 @@ FiSetTest >> testInstanciationWithStepsAndValues [
 	shot := 
 		FiSet newFromStepsAndValues: 
 			(Dictionary new
-				at: #A put: (FiClass named: #A);
-				at: #B put: (FiClass named: #B);
+				at: #A put: (FiChef nickname: #A);
+				at: #B put: (FiChef nickname: #B);
 				yourself).
 
 	self assert: shot steps asSet equals: #(A B) asSet.
-	self assert: (shot shotAt: #A) equals: (FiClass named: #A).
-	self assert: (shot shotAt: #B) equals: (FiClass named: #B).
+	self assert: (shot shotAt: #A) equals: (FiChef nickname: #A).
+	self assert: (shot shotAt: #B) equals: (FiChef nickname: #B).
 ]
 
 { #category : #tests }
-FiSetTest >> testRemoveClass [
+FiSetTest >> testRemoval [
 
 	| edit source result shot intermediate |
 	source := FiSet new.
-	shot := FiClass named: #A.
+	shot := FiChef nickname: #A.
 
 	edit := source include: shot.
 	intermediate := source resultOf: edit.
@@ -72,12 +72,12 @@ FiSetTest >> testRemoveClass [
 ]
 
 { #category : #tests }
-FiSetTest >> testUpdateClass [
+FiSetTest >> testUpdate [
 
 	| shot otherShot edit source result intermediate |
 	source := FiSet new.
-	shot := FiClass named: #A.
-	otherShot := shot resultOf: (shot at: #comment equal: '42').
+	shot := FiChef nickname: #A.
+	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
 
 	edit := source include: shot.
 	intermediate := source resultOf: edit.

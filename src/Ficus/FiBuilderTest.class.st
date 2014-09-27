@@ -5,23 +5,21 @@ Class {
 		'aShot',
 		'anotherShot'
 	],
-	#category : #'Ficus-Tests'
+	#category : #'Ficus-Tests-Builder'
 }
 
 { #category : #tests }
 FiBuilderTest >> testCached [
 
 	aShot := 
-		FiMethod builder
-			protocol: #accessing;
-			sourceCode: 'fortyTwo  ^42';
-			new.
+		FiRecipe 
+			title: 'fortyTwo  ^42'
+			kind: #accessing.
 
 	anotherShot := 
-		FiMethod builder
-			protocol: #accessing;
-			sourceCode: 'fortyTwo  ^42';
-			new.
+		FiRecipe 
+			title: 'fortyTwo  ^42'
+			kind: #accessing.
 			
 	self assert: aShot == anotherShot
 ]
@@ -30,15 +28,13 @@ FiBuilderTest >> testCached [
 FiBuilderTest >> testErrorWhenSettingAnExcludedVariable [
 
 	self 
-		assert: (FiMethod excludedInstanceVariableNamesForSteps includes: #selector)
+		assert: (FiRecipe excludedInstanceVariableNamesForSteps includes: #cachedHash)
 		description: 'This is an assumption of this test'.
 	
 	self 
 		should: [ 
-			FiMethod builder
-				protocol: #accessing;
-				sourceCode: 'fortyTwo  ^42';
-				selector: #fortyTwo;
+			FiRecipe builder
+				cachedHash: 123; "<- this is invalid"
 				new ]
 		raise: Error.
 
@@ -48,16 +44,14 @@ FiBuilderTest >> testErrorWhenSettingAnExcludedVariable [
 FiBuilderTest >> testNotCached [
 
 	aShot := 
-		FiMethod builder
-			protocol: #accessing;
-			sourceCode: 'fortyTwo  ^42';
-			new.
+		FiRecipe 
+			title: 'fortyTwo  ^42'
+			kind: #accessing.
 
 	anotherShot := 
-		FiMethod builder
-			protocol: #testing;
-			sourceCode: 'fortyTwo  ^42';
-			new.
+		FiRecipe 
+			title: 'fortyTwo  ^42'
+			kind: #testing.
 			
 	self deny: aShot == anotherShot
 ]
@@ -66,11 +60,10 @@ FiBuilderTest >> testNotCached [
 FiBuilderTest >> testSingleNew [
 
 	aShot := 
-		FiMethod builder
-			protocol: #accessing;
-			sourceCode: 'fortyTwo  ^42';
-			new.
+		FiRecipe 
+			title: 'fortyTwo  ^42'
+			kind: #accessing.
 			
-	self assert: aShot class equals: FiMethod.
-	self assert: aShot protocol equals: #accessing.
+	self assert: aShot class equals: FiRecipe.
+	self assert: aShot kind equals: #accessing.
 ]

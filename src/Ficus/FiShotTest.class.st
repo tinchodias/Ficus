@@ -1,101 +1,101 @@
 Class {
 	#name : #FiShotTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core'
+	#category : #'Ficus-Tests-Core-Edits'
 }
 
 { #category : #tests }
-FiShotTest >> testAddMethod [
-
-	| edit source method result |
-	source := FiClass named: #A.
-	method := FiMethod sourceCode: 'fortyTwo ^42' protocol: 'accessing'. 
-
-	edit := 
-		source 
-			at: #methods
-			edit: [ :methods | methods include: method ].
-	result := source resultOf: edit.
-
-	self assert: source methods values isEmpty.
-	self assert: result methods values asSet equals: { method } asSet.
-	self assert: result methods stepsAndValues asSet equals: { method selector -> method } asSet.
-]
-
-{ #category : #tests }
-FiShotTest >> testAddSharedPool [
+FiShotTest >> testSubAddition [
 
 	| edit source result |
-	source := FiClass named: #A.
+	source := FiChef nickname: #A.
 
 	edit := 
 		source 
-			at: #sharedPools
-			edit: [ :sharedPools | sharedPools include: #X ].
+			at: #admiredChefs
+			edit: [ :admiredChefs | admiredChefs include: #X ].
 	result := source resultOf: edit.
 
-	self assert: source sharedPools values isEmpty.
-	self assert: result sharedPools values asSet equals: { #X } asSet.
+	self assert: source admiredChefs isEmpty.
+	self assert: result admiredChefs asArray equals: { #X }.
 
 ]
 
 { #category : #tests }
-FiShotTest >> testAddSharedPoolAndUpdateComment [
+FiShotTest >> testSubAddition2 [
+
+	| edit source item result |
+	source := FiChef nickname: #A.
+	item := FiRecipe title: 'fortyTwo ^42' kind: 'accessing'. 
+
+	edit := 
+		source 
+			at: #recipes
+			edit: [ :spells | spells include: item ].
+	result := source resultOf: edit.
+
+	self assert: source recipes values isEmpty.
+	self assert: result recipes values asSet equals: { item } asSet.
+	self assert: result recipes stepsAndValues asSet equals: { item title -> item } asSet.
+]
+
+{ #category : #tests }
+FiShotTest >> testSubAdditionAndUpdate [
 
 	| edit source result |
-	source := FiClass named: #A.
+	source := FiChef nickname: #A.
 
 	edit := source edits: {
 		source 
-			at: #sharedPools
-			edit: [ :sharedPools | sharedPools include: #X ].
+			at: #admiredChefs
+			edit: [ :admiredChefs | admiredChefs include: #X ].
 		source
-			at: #comment
+			at: #shortBio
 			equal: '42'.
 		}.
 			
 	result := source resultOf: edit.
 
-	self assert: source sharedPools values isEmpty.
-	self assert: source comment isEmpty.
-	self assert: result sharedPools values asSet equals: { #X } asSet.
-	self assert: result comment equals: '42'.
+	self assert: source admiredChefs isEmpty.
+	self assert: source shortBio isEmpty.
+	self assert: result admiredChefs asArray equals: { #X }.
+	self assert: result shortBio equals: '42'.
 
 ]
 
 { #category : #tests }
-FiShotTest >> testRemoveSharedPool [
+FiShotTest >> testSubRemoval [
 
 	| edit preSource source result |
-	preSource := FiClass named: #A.
+	preSource := FiChef nickname: #A.
 
 	edit := 
 		preSource 
-			at: #sharedPools
-			edit: [ :sharedPools | sharedPools include: #X ].
+			at: #admiredChefs
+			edit: [ :admiredChefs | admiredChefs include: #X ].
 	source := preSource resultOf: edit.
 
 	edit := 
 		source 
-			at: #sharedPools
-			edit: [ :sharedPools | sharedPools exclude: #X ].
+			at: #admiredChefs
+			edit: [ :admiredChefs | admiredChefs exclude: #X ].
 	result := source resultOf: edit.
 
-	self assert: source sharedPools values asSet equals: { #X } asSet.
-	self assert: result sharedPools values isEmpty.
+	self assert: source admiredChefs asArray equals: { #X }.
+	self assert: result admiredChefs isEmpty.
 
 ]
 
 { #category : #tests }
-FiShotTest >> testUpdateComment [
+FiShotTest >> testUpdate [
 
 	| edit source result |
-	source := FiClass named: #A.
+	source := FiChef nickname: #A.
 
-	edit :=  source at: #comment equal: '42'.
+	edit :=  source at: #shortBio equal: '42'.
 	result := source resultOf: edit.
 	
-	self assert: source comment isEmpty.
-	self assert: result comment equals: '42'.
+	self assert: source shortBio isEmpty.
+	self assert: result shortBio equals: '42'.
 
 ]

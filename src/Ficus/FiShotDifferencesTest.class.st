@@ -1,0 +1,84 @@
+Class {
+	#name : #FiShotDifferencesTest,
+	#superclass : #TestCase,
+	#category : #'Ficus-Tests-Core-Effects'
+}
+
+{ #category : #tests }
+FiShotDifferencesTest >> testReplacement [
+
+	| source result |
+	result := FiChef nickname: #A.
+	source := 42.
+
+	self 
+		assert: (result differenceFrom: source) 
+		equals: (result effectOfReplace: source).
+
+]
+
+{ #category : #tests }
+FiShotDifferencesTest >> testReplacement2 [
+
+	| source result |
+	result := 17.
+	source := 42.
+
+	self 
+		assert: (result differenceFrom: source) 
+		equals: (result effectOfReplace: source).
+
+]
+
+{ #category : #tests }
+FiShotDifferencesTest >> testSubAddition [
+	"Test difference with a sub edit."
+
+	| edit inverseEdit source result effect inverseEffect |
+	source := FiChef nickname: #A.
+
+	edit := source 
+		at: #admiredChefs
+		edit: [ :admiredChefs | admiredChefs include: #X ].
+	
+	result := source resultOf: edit.
+	effect := source effectOf: edit.
+
+	inverseEdit := result 
+		at: #admiredChefs
+		edit: [ :admiredChefs | admiredChefs exclude: #X ].
+	inverseEffect := result effectOf: inverseEdit.
+
+	self assert: (result differenceFrom: source) equals: effect.
+	self assert: (source differenceFrom: result) equals: inverseEffect.
+]
+
+{ #category : #tests }
+FiShotDifferencesTest >> testUpdateAndSubAddition [
+
+	| edit inverseEdit source result |
+	source := FiChef nickname: #A.
+
+	edit := source edits: {
+		source 
+			at: #admiredChefs
+			edit: [ :admiredChefs | admiredChefs include: #X ].
+		source
+			at: #shortBio
+			equal: '42'.
+		}.
+			
+	result := source resultOf: edit.
+
+	inverseEdit := result edits: {
+		result 
+			at: #admiredChefs
+			edit: [ :admiredChefs | admiredChefs exclude: #X ].
+		result 
+			at: #shortBio
+			equal: ''.
+		}.
+
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (source differenceFrom: result) equals: (result effectOf: inverseEdit).
+]

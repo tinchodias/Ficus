@@ -1,15 +1,15 @@
 Class {
 	#name : #FiDictionaryTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core'
+	#category : #'Ficus-Tests-Core-Edits'
 }
 
 { #category : #tests }
-FiDictionaryTest >> testAddClass [
+FiDictionaryTest >> testAddition [
 
 	| edit source result shot |
 	source := FiDictionary new.
-	shot := FiClass named: #A.
+	shot := FiChef nickname: #A.
 	
 	edit := source at: #A equal: shot.
 	result := source resultOf: edit.
@@ -27,26 +27,26 @@ FiDictionaryTest >> testInstanciationWithStepsAndValues [
 	shot := 
 		FiSet newFromStepsAndValues: 
 			(Dictionary new
-				at: #A put: (FiClass named: #A);
-				at: #B put: (FiClass named: #B);
+				at: #A put: (FiChef nickname: #A);
+				at: #B put: (FiChef nickname: #B);
 				yourself).
 
 	self assert: shot steps asSet equals: #(A B) asSet.
-	self assert: (shot shotAt: #A) equals: (FiClass named: #A).
-	self assert: (shot shotAt: #B) equals: (FiClass named: #B).
+	self assert: (shot shotAt: #A) equals: (FiChef nickname: #A).
+	self assert: (shot shotAt: #B) equals: (FiChef nickname: #B).
 ]
 
 { #category : #tests }
-FiDictionaryTest >> testRemoveClass [
+FiDictionaryTest >> testRemoval [
 
 	| edit source result shot intermediate |
 	source := FiDictionary new.
-	shot := FiClass named: #A.
+	shot := FiChef nickname: #A.
 
 	edit := source at: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate exclude: shot theName.
+	edit := intermediate exclude: shot nickname.
 	result := intermediate resultOf: edit.
 	
 	self assert: source values isEmpty.
@@ -56,12 +56,12 @@ FiDictionaryTest >> testRemoveClass [
 ]
 
 { #category : #tests }
-FiDictionaryTest >> testUpdateClass [
+FiDictionaryTest >> testUpdate [
 
 	| shot otherShot edit source result intermediate |
 	source := FiDictionary new.
-	shot := FiClass named: #A.
-	otherShot := shot resultOf: (shot at: #comment equal: '42').
+	shot := FiChef nickname: #A.
+	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
 
 	edit := source at: #A equal: shot.
 	intermediate := source resultOf: edit.

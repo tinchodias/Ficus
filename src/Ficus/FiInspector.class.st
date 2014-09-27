@@ -114,13 +114,6 @@ FiInspector >> initializeIconByClassName [
 
 			at: #FiReplacement put: #changeUpdateIcon;
 			
-			"meta"
-			at: #FiPackage put: #packageIcon;
-			at: #FiClass put: #classIcon;
-			at: #FiMetaclass put: #classIcon;
-			at: #FiTrait put: #traitIcon;
-			at: #FiMethod put: #testGreenIcon;
-			
 			"core"
 			at: #FiSet put: #collectionIcon;
 			at: #FiDictionary put: #collectionIcon;

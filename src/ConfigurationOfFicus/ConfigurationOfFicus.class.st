@@ -124,16 +124,18 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #Hiedra with: [ 
 				spec repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ];
 			package: #Ficus;
-			package: #FicusRing with: [
+			package: #FicusMetalevel with: [
 				spec requires: #(#Ficus ) ];
+			package: #FicusRing with: [
+				spec requires: #(#FicusMetalevel ) ];
 			package: #FicusImpact with: [
 				spec requires: #(#FicusRing ) ];
 			package: #FicusStore with: [
-				spec requires: #(#Ficus #Hiedra ) ];
+				spec requires: #(#FicusMetalevel #Hiedra ) ];
 			package: #FicusMonticello with: [
-				spec requires: #(#Ficus #FicusStore) ];
+				spec requires: #(#FicusMetalevel #FicusStore) ];
 			package: #FicusEpicea with: [
-				spec requires: #(#Ficus #FicusMonticello #Epicea) ] ].
+				spec requires: #(#FicusMetalevel #FicusMonticello #Epicea) ] ].
 
 ]
 

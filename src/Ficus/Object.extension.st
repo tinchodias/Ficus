@@ -70,12 +70,6 @@ Object >> noEdit [
 ]
 
 { #category : #'*Ficus' }
-Object >> pruned [
-	
-	^ self
-]
-
-{ #category : #'*Ficus' }
 Object >> replaceBy: aValue [
 
 	^ FiEqual value: aValue

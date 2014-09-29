@@ -1,7 +1,7 @@
 Class {
 	#name : #FiShotDifferencesTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core-Effects'
+	#category : #'Ficus-Tests-Core-Differences'
 }
 
 { #category : #tests }

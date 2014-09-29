@@ -5,7 +5,7 @@ A FiEnvironmentEditsTest is xxxxxxxxx.
 Class {
 	#name : #FiDictionaryDifferencesTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core-Effects'
+	#category : #'Ficus-Tests-Core-Differences'
 }
 
 { #category : #tests }

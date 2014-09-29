@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 FiDictionaryEffectsTest >> testAddition [
 
-	| shot edit source result effect summary |
+	| shot edit source result effect |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -21,20 +21,6 @@ FiDictionaryEffectsTest >> testAddition [
 	self assert: source values isEmpty.
 	self assert: result values asSet equals: { shot } asSet.
 	self assert: (result resultOf: effect inverse) values isEmpty.
-
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root -> effect }.
-
-	self flag: #todo. "refactor"
-	summary := effect hierarchicalSummary.
-	self assert: summary isCollection.
-	self assert: summary size equals: 1.
-	self assert: (summary anyOne isKindOf: FiSummaryAdd).
-	self assert: summary anyOne path equals: #A asFicusPath.
-	self assert: summary anyOne subSummary isNotEmpty.
-	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
-
 ]
 
 { #category : #tests }
@@ -57,15 +43,12 @@ FiDictionaryEffectsTest >> testNoEffect [
 	self assert: source values isEmpty.
 	self assert: intermediate values asSet equals: { shot } asSet.
 	self assert: result values asSet equals: { shot } asSet.
-
-	self assert: effect flattenedLeafEffects isEmpty.
-	self assert: effect hierarchicalSummary isEmpty.
 ]
 
 { #category : #tests }
 FiDictionaryEffectsTest >> testRemoval [
 
-	| edit source result shot intermediate reverted effect summary |
+	| edit source result shot intermediate reverted effect |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -85,20 +68,6 @@ FiDictionaryEffectsTest >> testRemoval [
 	self assert: intermediate values asSet equals: { shot } asSet.
 	self assert: result values isEmpty.
 	self assert: reverted values asSet equals: { shot } asSet.
-
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root -> effect }.
-
-	self flag: #todo. "refactor"
-	summary := effect hierarchicalSummary.
-	self assert: summary isCollection.
-	self assert: summary size equals: 1.
-	self assert: (summary anyOne isKindOf: FiSummaryRemove).
-	self assert: summary anyOne path equals: #A asFicusPath.
-	self assert: summary anyOne subSummary isNotEmpty.
-	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
-
 ]
 
 { #category : #tests }
@@ -125,19 +94,4 @@ FiDictionaryEffectsTest >> testUpdate [
 	self assert: intermediate values asSet equals: { shot } asSet.
 	self assert: result values asSet equals: { otherShot } asSet.
 	self assert: reverted values asSet equals: { shot } asSet.
-
-	self flag: #todo. "For coherence with other dictionary effects, we should expect: FiPath root / -> a FiUpdateEffect"
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root / #A -> effect subEffect }.
-
-	self 
-		assert: effect hierarchicalSummary asArray
-		equals: 
-			{ FiSummaryUpdate builder 
-				path: #A asFicusPath;
-				oldValue: shot; 
-				newValue: otherShot; 
-				subSummary: #();
-				new }
 ]

@@ -7,6 +7,30 @@ Class {
 	#category : #'FicusStore-Comments-Plugin'
 }
 
+{ #category : #example }
+FiCommentStoreBrowserPlugin class >> example [
+	"
+	Gofer new package: #ErgoPlayground; load.
+	self example.
+	"
+
+	| store pluginStore |
+	store := FiMonticelloStore forPackageNamed: #ErgoPlayground.
+	pluginStore := FiComment exampleStoreFor: store.
+
+	FiStoreBrowser new
+		store: store;
+		plugin: (FiCommentStoreBrowserPlugin forStore: pluginStore);
+		refresh;
+		openWithSpec.
+		
+	FiStoreBrowser new
+		store: pluginStore;
+		plugin: FiNullStoreBrowserPlugin new;
+		refresh;
+		openWithSpec.
+]
+
 { #category : #'instance creation' }
 FiCommentStoreBrowserPlugin class >> forStore: aFiStore [ 
 	

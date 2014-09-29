@@ -54,36 +54,36 @@ FiShotEffectsTest >> testUpdate [
 { #category : #tests }
 FiShotEffectsTest >> testUpdateAndSubAddition [
 
-	| source editAdmiredChefs editComment edit effect leafEffectOfEditAdmiredChefs leafEffectOfEditComment result |
+	| source editAdmiredChefs editShortBio edit effect leafEffectOfEditAdmiredChefs leafEffectOfEditShortBio result |
 	source := FiChef nickname: #A.
 
 	editAdmiredChefs := 
 		source 
 			at: #admiredChefs
 			edit: [ :admiredChefs | admiredChefs include: #X ].
-	editComment := 
+	editShortBio := 
 		source
 			at: #shortBio
 			equal: '42'.
 
-	edit := source edits: { editAdmiredChefs. editComment }.			
+	edit := source edits: { editAdmiredChefs. editShortBio }.			
 	effect := source effectOf: edit.
 	result := source resultOf: edit.
 
 	"These are the 'leaf effects' we expect of #flattenedEffects"
 	leafEffectOfEditAdmiredChefs := (source effectOf: editAdmiredChefs) subEffect.
-	leafEffectOfEditComment := (source effectOf: editComment) subEffect.
+	leafEffectOfEditShortBio := (source effectOf: editShortBio) subEffect.
 
 	self assert: effect edit equals: edit.
 	self 
 		assert: effect inverse 
-		equals: (result edits: {(source effectOf: editAdmiredChefs) inverse. (source effectOf: editComment) inverse }).
+		equals: (result edits: {(source effectOf: editAdmiredChefs) inverse. (source effectOf: editShortBio) inverse }).
 	
 	self flag: #todo. "Smells bad that both oldValues are the old comment..."
-	self assert: (source effectOf: editComment) edit equals: editComment.
-	self assert: (source effectOf: editComment) oldValue equals: ''.
-	self assert: leafEffectOfEditComment edit equals: editComment edit.
-	self assert: leafEffectOfEditComment oldValue equals: ''.
+	self assert: (source effectOf: editShortBio) edit equals: editShortBio.
+	self assert: (source effectOf: editShortBio) oldValue equals: ''.
+	self assert: leafEffectOfEditShortBio edit equals: editShortBio edit.
+	self assert: leafEffectOfEditShortBio oldValue equals: ''.
 	
 	
 	self 
@@ -91,14 +91,14 @@ FiShotEffectsTest >> testUpdateAndSubAddition [
 		equals: { FiPath root -> leafEffectOfEditAdmiredChefs }.
 
 	self 
-		assert: leafEffectOfEditComment flattenedLeafEffects 
-		equals: { FiPath root -> leafEffectOfEditComment }.
+		assert: leafEffectOfEditShortBio flattenedLeafEffects 
+		equals: { FiPath root -> leafEffectOfEditShortBio }.
 			
 	self 
 		assert: effect flattenedLeafEffects 
 		equals: { 
 			FiPath root / #admiredChefs -> leafEffectOfEditAdmiredChefs.
-			FiPath root / #shortBio -> leafEffectOfEditComment.
+			FiPath root / #shortBio -> leafEffectOfEditShortBio.
 			} .
 
 	self 

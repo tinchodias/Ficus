@@ -31,12 +31,18 @@ FiRGMetaclass >> isMeta [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 FiRGMetaclass >> methods [
 
 	"FIX"
 	^ theNonMetaClass shot metaclass methods values collect: [ :aMethodShot |
 		self ringMethodFor: aMethodShot ]
+]
+
+{ #category : #polymorphism }
+FiRGMetaclass >> subclasses [
+	
+	^ self theNonMetaClass subclasses collect: #theMetaClass
 ]
 
 { #category : #polymorphism }

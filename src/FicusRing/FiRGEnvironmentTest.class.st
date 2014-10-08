@@ -28,6 +28,17 @@ FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
 ]
 
 { #category : #tests }
+FiRGEnvironmentTest >> testAllClassesDo [
+
+	| items |
+	items := IdentitySet new.
+
+	ringShotResource environmentWithClassesABC allClassesDo: [ :each | items add: each ].
+
+	self deny: items isEmpty
+]
+
+{ #category : #tests }
 FiRGEnvironmentTest >> testBindingOf [
 
 	self 

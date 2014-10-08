@@ -87,6 +87,29 @@ FiRGMethod >> printOn: aStream [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+FiRGMethod >> protocol [
+	
+	^ shot protocol
+]
+
+{ #category : #'as yet unclassified' }
+FiRGMethod >> refersToLiteral: literal [ 
+
+	| tree allChildren |
+	self flag: #todo. "fix:this is not precise"
+	
+	tree := self parseTree.
+	allChildren := tree allChildren.
+	
+	^ literal isSymbol 
+		ifFalse: [ "Then, an association" 
+			(allChildren select: #isVariable) anySatisfy: [ :each | each name = literal key ] ]
+		ifTrue: [
+			tree sentMessages includes: literal.
+			"(allChildren select: #isLiteralNode) anySatisfy: [ :each | each value = literal ]" ]
+]
+
 { #category : #accessing }
 FiRGMethod >> ringEnvironment: anObject [
 	

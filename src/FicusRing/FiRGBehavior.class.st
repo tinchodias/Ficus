@@ -1,8 +1,37 @@
 Class {
 	#name : #FiRGBehavior,
 	#superclass : #FiRGShot,
+	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:})',
+	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
 	#category : #'FicusRing-Core'
 }
+
+{ #category : #initialization }
+FiRGBehavior >> initialize [
+	super initialize.
+
+]
+
+{ #category : #'as yet unclassified' }
+FiRGBehavior >> isObsolete [
+
+	^ false
+]
+
+{ #category : #printing }
+FiRGBehavior >> printOn: arg1 [ 
+	super printOn: arg1 
+]
+
+{ #category : #private }
+FiRGBehavior >> ringMethodFor: aMethodShot [
+
+	^ FiRGMethod new 
+		ringEnvironment: environment; 
+		ringMethodClass: self;
+		shot: aMethodShot;
+		yourself
+]
 
 { #category : #polymorphism }
 FiRGBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
@@ -10,4 +39,15 @@ FiRGBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 
 	^ self methods do: [ :each | 
 		selectorAndMethodBlock value: each selector value: each ]
+]
+
+{ #category : #organization }
+FiRGBehavior >> whichCategoryIncludesSelector: aSelector [ 
+	"Answer the category of the argument, aSelector, in the organization of 
+	the receiver, or answer nil if the receiver does not inlcude this selector."
+
+	^ self 
+		compiledMethodAt: aSelector
+		ifPresent: [ :method | method protocol ]
+		ifAbsent: [ nil ]
 ]

@@ -51,6 +51,21 @@ FiRGEnvironment >> allClassesAndTraitsDo: aBlockClosure [
 	^ self allClassesAndTraits do: aBlockClosure 
 ]
 
+{ #category : #private }
+FiRGEnvironment >> allClassesDo: aBlockClosure [ 
+
+	^ self allClasses do: aBlockClosure 
+]
+
+{ #category : #'as yet unclassified' }
+FiRGEnvironment >> associationAt: key ifAbsent: aBlock [ 
+
+	^ (self 
+		at: key 
+		ifAbsent: [ ^ aBlock value ])
+		in: [ :found | key -> found ]
+]
+
 { #category : #polymorphism }
 FiRGEnvironment >> at: aName ifAbsent: aBlockClosure [ 
 

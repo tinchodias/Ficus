@@ -46,6 +46,14 @@ Class {
 	#category : #'FicusRing-AST'
 }
 
+{ #category : #'accessing-classes' }
+FiRBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
+
+	^ ringEnvironment 
+		at: aKey
+		ifAbsent: aBlock
+]
+
 { #category : #accessing }
 FiRBBrowserEnvironment >> ringEnvironment [
 	^ ringEnvironment

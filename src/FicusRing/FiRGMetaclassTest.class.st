@@ -24,6 +24,16 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testSubclasses [
+
+	self 
+		assert: ringShotResource classA theMetaClass subclasses 
+		equals: { ringShotResource classB theMetaClass }.
+
+	self assert: ringShotResource classB theMetaClass subclasses isEmpty.
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testTheNonMetaClass [
 
 	| classA |

@@ -146,6 +146,15 @@ FiRGClass >> compiledMethodAt: selector [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> compiledMethodAt: selector ifAbsent: aBlock [
+
+	^ self 
+		compiledMethodAt: selector
+		ifPresent: [ :method | method ]
+		ifAbsent: aBlock
+]
+
+{ #category : #polymorphism }
 FiRGClass >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock [
 	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
 
@@ -153,15 +162,6 @@ FiRGClass >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock
 		detect: [ :aMethod | aMethod selector = selector ]
 		ifFound: [ :aMethod | anotherBlock cull: aMethod ]
 		ifNone: aBlock
-]
-
-{ #category : #polymorphism }
-FiRGClass >> compiler [
-	"Answer a compiler appropriate for source methods of this class."
-
-	^ Smalltalk compilerClass new
-		environment: self environment;
-		class: self
 ]
 
 { #category : #polymorphism }
@@ -294,16 +294,6 @@ FiRGClass >> printOn: aStream [
 FiRGClass >> ringEnvironment: anObject [
 	
 	environment := anObject
-]
-
-{ #category : #private }
-FiRGClass >> ringMethodFor: aMethodShot [
-
-	^ FiRGMethod new 
-		ringEnvironment: environment; 
-		ringMethodClass: self;
-		shot: aMethodShot;
-		yourself
 ]
 
 { #category : #polymorphism }

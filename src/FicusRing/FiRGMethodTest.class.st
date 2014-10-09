@@ -26,7 +26,15 @@ FiRGMethodTest >> testProtocol [
 ]
 
 { #category : #tests }
+FiRGMethodTest >> testReferredInstVars [
+		
+	self flag:#todo. "Test better (it should fail easily)"
+	self assert: (ringShotResource classA >> #sum) referredInstVars asSet equals: #(a1 a2) asSet
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testRefersToLiteral [
 		
-	self assert: ((ringShotResource classA >> #sum42) refersToLiteral: #sum)
+	self flag:#todo. "Test better (it should fail easily)"
+	self assert: ((ringShotResource classA >> #sum42) refersToLiteral: #sum).
 ]

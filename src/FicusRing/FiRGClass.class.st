@@ -212,6 +212,12 @@ FiRGClass >> innerBindingOf: aSymbol [
 { #category : #polymorphism }
 FiRGClass >> instVarNames [
 
+	^ self instanceVariables
+]
+
+{ #category : #polymorphism }
+FiRGClass >> instanceVariables [
+
 	^ self shot layout instanceVariables asArray
 ]
 
@@ -376,6 +382,14 @@ FiRGClass >> whichClassIncludesSelector: aSymbol [
 	^ (self lookupSelector: aSymbol) 
 		ifNil: [ nil ]
 		ifNotNil: [ :method | method methodClass ]
+]
+
+{ #category : #polymorphism }
+FiRGClass >> whichSelectorsAccess: aSymbol [
+
+	^ self methods 
+		select: [ :aMethod | aMethod referredInstVars includes: aSymbol ]
+		thenCollect: [ :aMethod | aMethod selector ]
 ]
 
 { #category : #polymorphism }

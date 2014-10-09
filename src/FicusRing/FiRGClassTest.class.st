@@ -149,10 +149,26 @@ FiRGClassTest >> testIncludesSelector [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testInstSize [
+		
+	self assert: ringShotResource classA instSize equals: 2.
+	self assert: ringShotResource classB instSize equals: 3.
+
+]
+
+{ #category : #tests }
 FiRGClassTest >> testInstVarNames [
 		
 	self assert: ringShotResource classA instVarNames asSet equals: #('a1' 'a2') asSet.
 	self assert: ringShotResource classB instVarNames asSet equals: #('b1') asSet.
+
+]
+
+{ #category : #tests }
+FiRGClassTest >> testInstanceVariables [
+		
+	self assert: ringShotResource classA instanceVariables asSet equals: #('a1' 'a2') asSet.
+	self assert: ringShotResource classB instanceVariables asSet equals: #('b1') asSet.
 
 ]
 
@@ -285,6 +301,12 @@ FiRGClassTest >> testWhichClassIncludesSelector [
 
 	self deny: (ringShotResource classA whichClassIncludesSelector: #sum) isNil.
 	self assert: (ringShotResource classA whichClassIncludesSelector: #unexistentMethod) isNil.
+]
+
+{ #category : #tests }
+FiRGClassTest >> testWhichSelectorAccess [
+		
+	self assert: (ringShotResource classA whichSelectorsAccess: #a1) asSet equals: { #sum } asSet
 ]
 
 { #category : #tests }

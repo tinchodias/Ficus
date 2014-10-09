@@ -12,6 +12,14 @@ FiRGBehavior >> initialize [
 
 ]
 
+{ #category : #testing }
+FiRGBehavior >> instSize [
+	"Answer the number of named instance variables
+	(as opposed to indexed variables) of the receiver."
+	
+	^ self allInstVarNames size
+]
+
 { #category : #'as yet unclassified' }
 FiRGBehavior >> isObsolete [
 

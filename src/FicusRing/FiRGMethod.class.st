@@ -94,6 +94,18 @@ FiRGMethod >> protocol [
 ]
 
 { #category : #'as yet unclassified' }
+FiRGMethod >> referredInstVars [
+
+	| tree allChildren |
+	self flag: #todo. "fix:this is not precise"
+	
+	tree := self parseTree.
+	allChildren := tree allChildren.
+	
+	^ (allChildren select: #isVariable) collect: [ :each | each name ]
+]
+
+{ #category : #'as yet unclassified' }
 FiRGMethod >> refersToLiteral: literal [ 
 
 	| tree allChildren |

@@ -6,6 +6,14 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #hacks }
+FiRGBehavior >> basicLocalSelectors [
+	
+	self flag: #fix. "It is not considering Traits"
+	
+	^ self selectors
+]
+
 { #category : #initialization }
 FiRGBehavior >> initialize [
 	super initialize.
@@ -39,6 +47,12 @@ FiRGBehavior >> ringMethodFor: aMethodShot [
 		ringMethodClass: self;
 		shot: aMethodShot;
 		yourself
+]
+
+{ #category : #polymorphism }
+FiRGBehavior >> selectors [
+
+	^ self methods collect: #selector
 ]
 
 { #category : #polymorphism }

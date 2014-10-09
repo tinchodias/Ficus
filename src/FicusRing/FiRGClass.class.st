@@ -303,12 +303,6 @@ FiRGClass >> ringEnvironment: anObject [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> selectors [
-
-	^ self methods collect: #selector
-]
-
-{ #category : #polymorphism }
 FiRGClass >> sharedPoolNames [
 
 	^ shot sharedPools values

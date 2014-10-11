@@ -14,6 +14,14 @@ FiPath class >> canonicalArgumentName [
 		ifFalse: [ 'aPath' ]
 ]
 
+{ #category : #'instance creation' }
+FiPath class >> fromSequenceableCollection: aCollection [
+
+	^ aCollection 
+		inject: FiPath root 
+		into: [ :path :step | path / step ]
+]
+
 { #category : #ston }
 FiPath class >> fromSton: stonReader [
 
@@ -25,7 +33,7 @@ FiPath class >> fromSton: stonReader [
 	^ result
 ]
 
-{ #category : #ston }
+{ #category : #'instance creation' }
 FiPath class >> fromStream: aStream [
 
 	| result |

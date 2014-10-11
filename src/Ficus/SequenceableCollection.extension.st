@@ -3,5 +3,5 @@ Extension { #name : #SequenceableCollection }
 { #category : #'*Ficus' }
 SequenceableCollection >> asFicusPath [
 
-	^ FiPath fromStream: self readStream
+	^ FiPath fromSequenceableCollection: self
 ]

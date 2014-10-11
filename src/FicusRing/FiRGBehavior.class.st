@@ -1,3 +1,6 @@
+"
+I am polymorphic with Behavior/ClassDescription.
+"
 Class {
 	#name : #FiRGBehavior,
 	#superclass : #FiRGShot,
@@ -43,7 +46,6 @@ FiRGBehavior >> printOn: arg1 [
 FiRGBehavior >> ringMethodFor: aMethodShot [
 
 	^ FiRGMethod new 
-		ringEnvironment: environment; 
 		ringMethodClass: self;
 		shot: aMethodShot;
 		yourself

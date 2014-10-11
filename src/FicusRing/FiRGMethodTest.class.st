@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #tests }
+FiRGMethodTest >> testEnvironment [
+		
+	| environment |
+	environment := ringShotResource environmentWithClassesABC.
+	
+	self assert: ((environment classNamed: #A) >> #sum) environment == environment
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testMessages [
 		
 	self deny: ((ringShotResource classA methods collect: #messages) anySatisfy: #isNil)

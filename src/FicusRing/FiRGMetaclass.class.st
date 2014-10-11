@@ -19,6 +19,12 @@ FiRGMetaclass >> = other [
 	^ self theNonMetaClass = other theNonMetaClass
 ]
 
+{ #category : #polymorphism }
+FiRGMetaclass >> environment [
+
+	^ theNonMetaClass environment
+]
+
 { #category : #comparing }
 FiRGMetaclass >> hash [
 

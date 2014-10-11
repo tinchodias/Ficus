@@ -6,7 +6,6 @@ Class {
 	#superclass : #FiRGShot,
 	#instVars : [
 		'shot',
-		'ringEnvironment',
 		'ringMethodClass'
 	],
 	#category : #'FicusRing-Core'
@@ -25,7 +24,7 @@ FiRGMethod >> = other [
 { #category : #polymorphism }
 FiRGMethod >> environment [
 	
-	^ ringEnvironment
+	^ ringMethodClass environment
 ]
 
 { #category : #comparing }
@@ -46,10 +45,7 @@ FiRGMethod >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound
 { #category : #polymorphism }
 FiRGMethod >> messages [
 
-	^ FiSentSelectorsCollector new
-		in: [ :visitor | self parseTree acceptVisitor: visitor ];
-		selectors.
-
+	^ self parseTree sentMessages
 ]
 
 { #category : #polymorphism }

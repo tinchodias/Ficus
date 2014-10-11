@@ -1,8 +1,17 @@
 Class {
 	#name : #FiRGMetaclassTest,
-	#superclass : #FiRGShotTest,
+	#superclass : #FiRGBehaviorTest,
 	#category : #'FicusRing-Tests'
 }
+
+{ #category : #tests }
+FiRGMetaclassTest >> testEnvironment [
+		
+	| environment |
+	environment := ringShotResource environmentWithClassesABC.
+	
+	self assert: (environment classNamed: #A) theMetaClass environment == environment
+]
 
 { #category : #tests }
 FiRGMetaclassTest >> testMethods [

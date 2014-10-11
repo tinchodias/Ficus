@@ -1,6 +1,6 @@
 Class {
 	#name : #FiRGClassTest,
-	#superclass : #FiRGShotTest,
+	#superclass : #FiRGBehaviorTest,
 	#category : #'FicusRing-Tests'
 }
 

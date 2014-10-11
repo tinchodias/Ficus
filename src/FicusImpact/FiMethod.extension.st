@@ -3,11 +3,7 @@ Extension { #name : #FiMethod }
 { #category : #'*FicusImpact' }
 FiMethod >> messages [
 
-	| visitor |
-	visitor := FiSentSelectorsCollector new.
-	(RBParser parseMethod: sourceCode) acceptVisitor: visitor.
-	
-	^ visitor selectors
+	^ (RBParser parseMethod: sourceCode) sentMessages
 ]
 
 { #category : #'*FicusImpact' }

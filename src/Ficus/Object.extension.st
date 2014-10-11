@@ -1,12 +1,6 @@
 Extension { #name : #Object }
 
 { #category : #'*Ficus' }
-Object >> asFicusPath [
-	
-	^ FiPath root / self
-]
-
-{ #category : #'*Ficus' }
 Object >> defaultStep [
 	"Answer a default value, a kind of suggestion to use it as step."
 	

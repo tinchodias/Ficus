@@ -23,7 +23,7 @@ FiSetSummariesTest >> testAddition [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryAdd).
-	self assert: summary anyOne path equals: #A asFicusPath.
+	self assert: summary anyOne path equals: #(A) asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
 
@@ -67,7 +67,7 @@ FiSetSummariesTest >> testRemoval [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryRemove).
-	self assert: summary anyOne path equals: #A asFicusPath.
+	self assert: summary anyOne path equals: #(A) asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
 
@@ -97,7 +97,7 @@ FiSetSummariesTest >> testUpdate [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryUpdate).
-	self assert: summary anyOne path equals: #A asFicusPath.
+	self assert: summary anyOne path equals: #(A) asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryUpdate ]).
 

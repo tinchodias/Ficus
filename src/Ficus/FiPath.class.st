@@ -25,6 +25,18 @@ FiPath class >> fromSton: stonReader [
 	^ result
 ]
 
+{ #category : #ston }
+FiPath class >> fromStream: aStream [
+
+	| result |
+	result := FiPath root.
+
+	[ aStream atEnd ] whileFalse: [
+		result := result / aStream next ].
+
+	^ result
+]
+
 { #category : #'instance creation' }
 FiPath class >> root [
 	^ FiRootPath instance
@@ -43,12 +55,6 @@ FiPath >> / anObject [
 	^ FiRelativePath 
 		on: self 
 		step: anObject
-]
-
-{ #category : #converting }
-FiPath >> asFicusPath [ 
-
-	^ self
 ]
 
 { #category : #accessing }

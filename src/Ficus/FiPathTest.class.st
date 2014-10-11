@@ -39,6 +39,17 @@ FiPathTest >> sampleShot [
 ]
 
 { #category : #tests }
+FiPathTest >> testAsFicusPath [
+
+	| pathA pathB |
+	pathA := FiPath root / #A / #admiredChefs / #X.
+	pathB := #(A admiredChefs X) asFicusPath.
+		
+	self assert: pathB equals: pathA.
+
+]
+
+{ #category : #tests }
 FiPathTest >> testClass [
 
 	shot := self sampleShot.
@@ -73,6 +84,17 @@ FiPathTest >> testFlattened [
 			FiPath root / #fortyTwo / #title -> 'fortyTwo'.
 			FiPath root / #fortyTwo / #kind -> #accessing.
 			}.
+]
+
+{ #category : #tests }
+FiPathTest >> testFromStream [
+
+	| pathA pathB |
+	pathA := FiPath root / #A / #admiredChefs / #X.
+	pathB := FiPath fromStream: #(A admiredChefs X) readStream.
+		
+	self assert: pathA equals: pathB.
+
 ]
 
 { #category : #tests }

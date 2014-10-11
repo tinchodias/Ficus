@@ -23,7 +23,7 @@ FiDictionarySummariesTest >> testAddition [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryAdd).
-	self assert: summary anyOne path equals: #A asFicusPath.
+	self assert: summary anyOne path equals: #(A) asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
 
@@ -68,7 +68,7 @@ FiDictionarySummariesTest >> testRemoval [
 	self assert: summary isCollection.
 	self assert: summary size equals: 1.
 	self assert: (summary anyOne isKindOf: FiSummaryRemove).
-	self assert: summary anyOne path equals: #A asFicusPath.
+	self assert: summary anyOne path equals: #(A) asFicusPath.
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
 
@@ -97,7 +97,7 @@ FiDictionarySummariesTest >> testUpdate [
 		assert: effect hierarchicalSummary asArray
 		equals: 
 			{ FiSummaryUpdate builder 
-				path: #A asFicusPath;
+				path: #(A) asFicusPath;
 				oldValue: shot; 
 				newValue: otherShot; 
 				subSummary: #();

@@ -35,7 +35,7 @@ FiShotSummariesTest >> testUpdate [
 		assert: effect hierarchicalSummary asArray
 		equals: 
 			{ FiSummaryUpdate builder 
-				path: #shortBio asFicusPath;
+				path: #(shortBio) asFicusPath;
 				oldValue: ''; 
 				newValue: '42'; 
 				subSummary: #();
@@ -88,18 +88,18 @@ FiShotSummariesTest >> testUpdateAndSubAddition [
 		assert: effect hierarchicalSummary asSet
 		equals: {
 			(FiSummaryUpdate builder 
-				path: #admiredChefs asFicusPath;
+				path: #(admiredChefs) asFicusPath;
 				oldValue: source admiredChefs; 
 				newValue: result admiredChefs; 
 				subSummary: { 
 					(FiSummaryAdd builder 
-						path: #admiredChefs asFicusPath / #X; 
+						path: #(admiredChefs X) asFicusPath; 
 						newValue: #X; 
 						subSummary: #();
 						new). };
 				new).
 			(FiSummaryUpdate builder 
-				path: #shortBio asFicusPath;
+				path: #(shortBio) asFicusPath;
 				oldValue: ''; 
 				newValue: '42'; 
 				subSummary: #();

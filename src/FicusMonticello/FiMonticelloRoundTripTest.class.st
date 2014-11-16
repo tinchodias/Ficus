@@ -2,8 +2,8 @@ Class {
 	#name : #FiMonticelloRoundTripTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'marshaler',
-		'unmarshaler'
+		'writer',
+		'reader'
 	],
 	#category : #'FicusMonticello-Marshaling'
 }
@@ -11,16 +11,16 @@ Class {
 { #category : #running }
 FiMonticelloRoundTripTest >> assertRoundTripEquals: someMCDefinitions [
 
-	| marshaled unmarshaled snapshot |
+	| written read snapshot |
 	snapshot := MCSnapshot fromDefinitions: someMCDefinitions.	
 
-	marshaled := self marshaled: snapshot.
-	unmarshaled := self unmarshaled: marshaled.
+	written := self written: snapshot.
+	read := self read: written.
 		
-	self assert: unmarshaled equals: snapshot.
+	self assert: read equals: snapshot.
 
 	"
-	MCPatch fromBase: snapshot target: unmarshaled.
+	MCPatch fromBase: snapshot target: read.
 	"
 
 ]
@@ -29,12 +29,6 @@ FiMonticelloRoundTripTest >> assertRoundTripEquals: someMCDefinitions [
 FiMonticelloRoundTripTest >> expectedFailures [
 
 	^ #(test04Organization test08ClassTrait)
-]
-
-{ #category : #running }
-FiMonticelloRoundTripTest >> marshaled: aMCSnapshot [
-	
-	^ marshaler marshaled: aMCSnapshot name: 'TestingName'
 ]
 
 { #category : #running }
@@ -106,22 +100,28 @@ FiMonticelloRoundTripTest >> mockTrait [
 ]
 
 { #category : #running }
+FiMonticelloRoundTripTest >> read: aFicusShot [
+	
+	^ reader read: aFicusShot 
+]
+
+{ #category : #running }
 FiMonticelloRoundTripTest >> setUp [
 
-	self setUpMarshaler.
-	self setUpUnmarshaler.
+	self setUpWriter.
+	self setUpReader.
 ]
 
 { #category : #running }
-FiMonticelloRoundTripTest >> setUpMarshaler [
+FiMonticelloRoundTripTest >> setUpReader [
 
-	marshaler := FiMonticelloMarshaler new
+	reader := FiMonticelloReader new
 ]
 
 { #category : #running }
-FiMonticelloRoundTripTest >> setUpUnmarshaler [
+FiMonticelloRoundTripTest >> setUpWriter [
 
-	unmarshaler := FiMonticelloUnmarshaler new
+	writer := FiMonticelloWriter new
 ]
 
 { #category : #tests }
@@ -197,7 +197,7 @@ FiMonticelloRoundTripTest >> test08ClassTrait [
 ]
 
 { #category : #running }
-FiMonticelloRoundTripTest >> unmarshaled: aFicusShot [
+FiMonticelloRoundTripTest >> written: aMCSnapshot [
 	
-	^ unmarshaler unmarshaled: aFicusShot 
+	^ writer written: aMCSnapshot name: 'TestingName'
 ]

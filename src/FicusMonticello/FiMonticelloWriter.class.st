@@ -1,11 +1,11 @@
 Class {
-	#name : #FiMonticelloMarshaler,
+	#name : #FiMonticelloWriter,
 	#superclass : #Object,
 	#category : #'FicusMonticello-Marshaling'
 }
 
-{ #category : #marshaling }
-FiMonticelloMarshaler >> marshaled: aMCSnapshot name: packageName [
+{ #category : #writing }
+FiMonticelloWriter >> written: aMCSnapshot name: packageName [
 	
 	| visitor |
 	visitor := FiMonticelloDefinitionVisitor new.

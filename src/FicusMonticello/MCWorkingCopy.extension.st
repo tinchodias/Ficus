@@ -23,7 +23,7 @@ MCWorkingCopy >> ficusPackage [
 { #category : #'*FicusMonticello' }
 MCWorkingCopy >> ficusPackageWith: aMCSnapshot [
 
-	^ FiMonticelloMarshaler new 
-		marshaled: aMCSnapshot
+	^ FiMonticelloWriter new 
+		written: aMCSnapshot
 		name: self packageName
 ]

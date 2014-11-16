@@ -94,7 +94,7 @@ FiMonticelloHistoryBuilder >> checkNoRepetitions [
 { #category : #private }
 FiMonticelloHistoryBuilder >> ficusPackageFor: mcSnapshot named: packageName [
 
-	^ FiMonticelloMarshaler new marshaled: mcSnapshot name: packageName
+	^ FiMonticelloWriter new written: mcSnapshot name: packageName
 ]
 
 { #category : #private }

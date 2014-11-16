@@ -1,29 +1,29 @@
 Class {
-	#name : #FiMonticelloUnmarshaler,
+	#name : #FiMonticelloReader,
 	#superclass : #Object,
 	#category : #'FicusMonticello-Marshaling'
 }
 
 { #category : #private }
-FiMonticelloUnmarshaler >> classInstVarNamesFrom: aFiClass [ 
+FiMonticelloReader >> classInstVarNamesFrom: aFiClass [ 
 	
 	^ aFiClass metaclass layout instanceVariables values
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> classVarNamesFrom: aFiClass [ 
+FiMonticelloReader >> classVarNamesFrom: aFiClass [ 
 	
 	^ aFiClass classPool values
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> instVarNamesFrom: aFiClass [ 
+FiMonticelloReader >> instVarNamesFrom: aFiClass [ 
 	
 	^ aFiClass layout instanceVariables values
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloClassDefinitionFrom: aFiClass [ 
+FiMonticelloReader >> monticelloClassDefinitionFrom: aFiClass [ 
 
 	^ MCClassDefinition
 		name: aFiClass theName
@@ -41,7 +41,7 @@ FiMonticelloUnmarshaler >> monticelloClassDefinitionFrom: aFiClass [
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloClassDefinitionsFrom: aFiClass [
+FiMonticelloReader >> monticelloClassDefinitionsFrom: aFiClass [
 
 	^ Array streamContents: [ :stream | 
 		stream 
@@ -51,7 +51,7 @@ FiMonticelloUnmarshaler >> monticelloClassDefinitionsFrom: aFiClass [
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloDefinitionsFrom: aFiPackage [ 
+FiMonticelloReader >> monticelloDefinitionsFrom: aFiPackage [ 
 
 	| definitions |
 	definitions := Set new.
@@ -71,7 +71,7 @@ FiMonticelloUnmarshaler >> monticelloDefinitionsFrom: aFiPackage [
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloExtensionMethodDefinitionsFrom: aFiExtensionMethods [ 
+FiMonticelloReader >> monticelloExtensionMethodDefinitionsFrom: aFiExtensionMethods [ 
 
 	^ aFiExtensionMethods methods values 
 		collect: [ :aFicusMethod |
@@ -86,7 +86,7 @@ FiMonticelloUnmarshaler >> monticelloExtensionMethodDefinitionsFrom: aFiExtensio
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloMethodDefinitionsFrom: aFicusBehavior className: className classIsMeta: classIsMeta [
+FiMonticelloReader >> monticelloMethodDefinitionsFrom: aFicusBehavior className: className classIsMeta: classIsMeta [
 
 	| methods |
 	methods := Set new.
@@ -106,7 +106,7 @@ FiMonticelloUnmarshaler >> monticelloMethodDefinitionsFrom: aFicusBehavior class
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloTraitDefinitionFrom: aFiTrait [
+FiMonticelloReader >> monticelloTraitDefinitionFrom: aFiTrait [
 
 	^ MCTraitDefinition
 		name: aFiTrait theName
@@ -117,7 +117,7 @@ FiMonticelloUnmarshaler >> monticelloTraitDefinitionFrom: aFiTrait [
 ]
 
 { #category : #private }
-FiMonticelloUnmarshaler >> monticelloTraitDefinitionsFrom: aFiTrait [
+FiMonticelloReader >> monticelloTraitDefinitionsFrom: aFiTrait [
 
 	self flag: #todo. "fix!"
 	
@@ -128,15 +128,15 @@ FiMonticelloUnmarshaler >> monticelloTraitDefinitionsFrom: aFiTrait [
 			"nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass metaclass className: aFiClass theName classIsMeta: true)" ]
 ]
 
+{ #category : #reading }
+FiMonticelloReader >> read: aFiPackage [
+	
+	^ MCSnapshot fromDefinitions: (self monticelloDefinitionsFrom: aFiPackage)
+]
+
 { #category : #private }
-FiMonticelloUnmarshaler >> typeOfClassFrom: aFiClass [ 
+FiMonticelloReader >> typeOfClassFrom: aFiClass [ 
 	
 	self flag: #todo. "fix!"
 	^ #normal
-]
-
-{ #category : #unmarshaling }
-FiMonticelloUnmarshaler >> unmarshaled: aFiPackage [
-	
-	^ MCSnapshot fromDefinitions: (self monticelloDefinitionsFrom: aFiPackage)
 ]

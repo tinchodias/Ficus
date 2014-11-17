@@ -11,13 +11,13 @@ Class {
 { #category : #accessing }
 FiReplacement >> edit [
 	
-	^ oldValue replaceBy: newValue
+	^ oldValue editReplaceBy: newValue
 ]
 
 { #category : #accessing }
 FiReplacement >> inverse [
 
-	^ newValue replaceBy: oldValue
+	^ newValue editReplaceBy: oldValue
 ]
 
 { #category : #accessing }

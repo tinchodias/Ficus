@@ -11,7 +11,7 @@ FiDictionarySummariesTest >> testAddition [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	effect := source effectOf: edit.
 
 	self 
@@ -36,10 +36,10 @@ FiDictionarySummariesTest >> testNoEffect [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate at: #A equal: shot.
+	edit := intermediate editAt: #A equal: shot.
 	effect := intermediate effectOf: edit.
 
 	self assert: effect flattenedLeafEffects isEmpty.
@@ -53,10 +53,10 @@ FiDictionarySummariesTest >> testRemoval [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate exclude: shot nickname.
+	edit := intermediate editExclude: shot nickname.
 	effect := intermediate effectOf: edit.
 
 	self 
@@ -80,12 +80,12 @@ FiDictionarySummariesTest >> testUpdate [
 	| shot otherShot edit source intermediate effect |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
-	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
+	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate at: #A equal: otherShot.
+	edit := intermediate editAt: #A equal: otherShot.
 	effect := intermediate effectOf: edit.
 
 	self flag: #todo. "For coherence with other dictionary effects, we should expect: FiPath root / -> a FiUpdateEffect"

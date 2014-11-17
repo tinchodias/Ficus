@@ -57,15 +57,6 @@ FiSet >> asDictionary [
 	^ result
 ]
 
-{ #category : #edits }
-FiSet >> at: step edit: aBlockClosure [ 
-
-	| aShot |
-	aShot := self shotAt: step.
-
-	^ self include: (aShot resultOf: (aBlockClosure value: aShot))
-]
-
 { #category : #differencing }
 FiSet >> differenceFrom: other [
 
@@ -112,6 +103,27 @@ FiSet >> differenceFrom: other [
 					new ] ]
 ]
 
+{ #category : #edits }
+FiSet >> editAt: step do: aBlockClosure [ 
+
+	| aShot |
+	aShot := self shotAt: step.
+
+	^ self editInclude: (aShot resultOf: (aBlockClosure value: aShot))
+]
+
+{ #category : #edits }
+FiSet >> editExclude: aValue [
+
+	^ FiExclude value: aValue
+]
+
+{ #category : #edits }
+FiSet >> editInclude: aValue [
+
+	^ FiInclude value: aValue
+]
+
 { #category : #effects }
 FiSet >> effectOfExclude: anExclude [ 
 
@@ -139,18 +151,6 @@ FiSet >> effectOfInclude: anInclude [
 						subEffect: difference;
 						new ] ] 
 		ifAbsent: [ anInclude effectAdd ].
-]
-
-{ #category : #edits }
-FiSet >> exclude: aValue [
-
-	^ FiExclude value: aValue
-]
-
-{ #category : #edits }
-FiSet >> include: aValue [
-
-	^ FiInclude value: aValue
 ]
 
 { #category : #private }

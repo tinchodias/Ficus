@@ -12,8 +12,8 @@ FiShotTest >> testSubAddition [
 
 	edit := 
 		source 
-			at: #admiredChefs
-			edit: [ :admiredChefs | admiredChefs include: #X ].
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editInclude: #X ].
 	result := source resultOf: edit.
 
 	self assert: source admiredChefs isEmpty.
@@ -30,8 +30,8 @@ FiShotTest >> testSubAddition2 [
 
 	edit := 
 		source 
-			at: #recipes
-			edit: [ :spells | spells include: item ].
+			editAt: #recipes
+			do: [ :spells | spells editInclude: item ].
 	result := source resultOf: edit.
 
 	self assert: source recipes values isEmpty.
@@ -45,12 +45,12 @@ FiShotTest >> testSubAdditionAndUpdate [
 	| edit source result |
 	source := FiChef nickname: #A.
 
-	edit := source edits: {
+	edit := source editAll: {
 		source 
-			at: #admiredChefs
-			edit: [ :admiredChefs | admiredChefs include: #X ].
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editInclude: #X ].
 		source
-			at: #shortBio
+			editAt: #shortBio
 			equal: '42'.
 		}.
 			
@@ -71,14 +71,14 @@ FiShotTest >> testSubRemoval [
 
 	edit := 
 		preSource 
-			at: #admiredChefs
-			edit: [ :admiredChefs | admiredChefs include: #X ].
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editInclude: #X ].
 	source := preSource resultOf: edit.
 
 	edit := 
 		source 
-			at: #admiredChefs
-			edit: [ :admiredChefs | admiredChefs exclude: #X ].
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editExclude: #X ].
 	result := source resultOf: edit.
 
 	self assert: source admiredChefs asArray equals: { #X }.
@@ -92,7 +92,7 @@ FiShotTest >> testUpdate [
 	| edit source result |
 	source := FiChef nickname: #A.
 
-	edit :=  source at: #shortBio equal: '42'.
+	edit :=  source editAt: #shortBio equal: '42'.
 	result := source resultOf: edit.
 	
 	self assert: source shortBio isEmpty.

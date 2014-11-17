@@ -11,7 +11,7 @@ FiDictionaryTest >> testAddition [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 	
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	result := source resultOf: edit.
 
 	self assert: source values isEmpty.
@@ -43,10 +43,10 @@ FiDictionaryTest >> testRemoval [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate exclude: shot nickname.
+	edit := intermediate editExclude: shot nickname.
 	result := intermediate resultOf: edit.
 	
 	self assert: source values isEmpty.
@@ -61,12 +61,12 @@ FiDictionaryTest >> testUpdate [
 	| shot otherShot edit source result intermediate |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
-	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
+	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate at: #A equal: otherShot.
+	edit := intermediate editAt: #A equal: otherShot.
 	result := intermediate resultOf: edit.
 	
 	self assert: source values isEmpty.

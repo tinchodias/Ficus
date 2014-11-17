@@ -38,15 +38,15 @@ FiShotDifferencesTest >> testSubAddition [
 	source := FiChef nickname: #A.
 
 	edit := source 
-		at: #admiredChefs
-		edit: [ :admiredChefs | admiredChefs include: #X ].
+		editAt: #admiredChefs
+		do: [ :admiredChefs | admiredChefs editInclude: #X ].
 	
 	result := source resultOf: edit.
 	effect := source effectOf: edit.
 
 	inverseEdit := result 
-		at: #admiredChefs
-		edit: [ :admiredChefs | admiredChefs exclude: #X ].
+		editAt: #admiredChefs
+		do: [ :admiredChefs | admiredChefs editExclude: #X ].
 	inverseEffect := result effectOf: inverseEdit.
 
 	self assert: (result differenceFrom: source) equals: effect.
@@ -59,23 +59,23 @@ FiShotDifferencesTest >> testUpdateAndSubAddition [
 	| edit inverseEdit source result |
 	source := FiChef nickname: #A.
 
-	edit := source edits: {
+	edit := source editAll: {
 		source 
-			at: #admiredChefs
-			edit: [ :admiredChefs | admiredChefs include: #X ].
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editInclude: #X ].
 		source
-			at: #shortBio
+			editAt: #shortBio
 			equal: '42'.
 		}.
 			
 	result := source resultOf: edit.
 
-	inverseEdit := result edits: {
+	inverseEdit := result editAll: {
 		result 
-			at: #admiredChefs
-			edit: [ :admiredChefs | admiredChefs exclude: #X ].
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editExclude: #X ].
 		result 
-			at: #shortBio
+			editAt: #shortBio
 			equal: ''.
 		}.
 

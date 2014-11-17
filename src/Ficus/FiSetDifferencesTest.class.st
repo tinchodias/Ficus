@@ -10,7 +10,7 @@ FiSetDifferencesTest >> testAddition [
 	|   edit  result source  |
 	source := FiSet new.
 
-	edit := source include: #A.
+	edit := source editInclude: #A.
 	result := source resultOf: edit.
 	
 	self assert: (source differenceFrom: source) isNoEffect.
@@ -26,16 +26,16 @@ FiSetDifferencesTest >> testRemoval [
 	preSource := FiSet new.
 	shot := FiChef nickname: #A.
 
-	edit := preSource include: shot.
+	edit := preSource editInclude: shot.
 	source := preSource resultOf: edit.
 
-	edit := source exclude: shot.
+	edit := source editExclude: shot.
 	result := source resultOf: edit.
 	
 	self assert: (source differenceFrom: source) isNoEffect.
 	self assert: (result differenceFrom: result) isNoEffect.
 	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
-	self assert: (source differenceFrom: result) equals: (result effectOf: (result include: shot)).
+	self assert: (source differenceFrom: result) equals: (result effectOf: (result editInclude: shot)).
 ]
 
 { #category : #tests }
@@ -57,19 +57,19 @@ FiSetDifferencesTest >> testUpdate [
 	| shot otherShot edit preSource result source expectedDifference |
 	preSource := FiSet new.
 	shot := FiChef nickname: #A.
-	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
+	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
 
-	edit := preSource include: shot.
+	edit := preSource editInclude: shot.
 	source := preSource resultOf: edit.
 
-	edit := source include: otherShot.
+	edit := source editInclude: otherShot.
 	result := source resultOf: edit.
 	
 	expectedDifference := 
 		source 
-			at: #A
-			edit: [ :class | 
-				class at: #shortBio equal: '42' ].		
+			editAt: #A
+			do: [ :class | 
+				class editAt: #shortBio equal: '42' ].		
 	
 	self assert: (source differenceFrom: source) isNoEffect.
 	self assert: (result differenceFrom: result) isNoEffect.

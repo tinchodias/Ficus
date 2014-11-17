@@ -11,12 +11,12 @@ FiDictionaryEffectsTest >> testAddition [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	effect := source effectOf: edit.
 	result := source resultOf: edit.
 
 	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (source exclude: #A).
+	self assert: effect inverse equals: (source editExclude: #A).
 	
 	self assert: source values isEmpty.
 	self assert: result values asSet equals: { shot } asSet.
@@ -30,10 +30,10 @@ FiDictionaryEffectsTest >> testNoEffect [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate at: #A equal: shot.
+	edit := intermediate editAt: #A equal: shot.
 	effect := intermediate effectOf: edit.
 	result := intermediate resultOf: edit.
 
@@ -52,15 +52,15 @@ FiDictionaryEffectsTest >> testRemoval [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate exclude: shot nickname.
+	edit := intermediate editExclude: shot nickname.
 	effect := intermediate effectOf: edit.
 	result := intermediate resultOf: edit.
 
 	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (result at: #A equal: shot).
+	self assert: effect inverse equals: (result editAt: #A equal: shot).
 
 	reverted := result resultOf: effect inverse.
 		
@@ -76,17 +76,17 @@ FiDictionaryEffectsTest >> testUpdate [
 	| shot otherShot edit source result intermediate effect reverted |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
-	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
+	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate at: #A equal: otherShot.
+	edit := intermediate editAt: #A equal: otherShot.
 	effect := intermediate effectOf: edit.
 	result := intermediate resultOf: edit.
 
 	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (result at: #A equal: shot).
+	self assert: effect inverse equals: (result editAt: #A equal: shot).
 
 	reverted := result resultOf: effect inverse.
 	

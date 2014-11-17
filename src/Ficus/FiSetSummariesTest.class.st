@@ -11,7 +11,7 @@ FiSetSummariesTest >> testAddition [
 	source := FiSet new.
 	shot := FiChef nickname: #A.
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	effect := source effectOf: edit.
 
 	self 
@@ -36,10 +36,10 @@ FiSetSummariesTest >> testNoEffect [
 	source := FiSet new.
 	shot := FiChef nickname: #A.
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate include: shot.
+	edit := intermediate editInclude: shot.
 	effect := intermediate effectOf: edit.
 
 	self assert: effect flattenedLeafEffects isEmpty.
@@ -52,10 +52,10 @@ FiSetSummariesTest >> testRemoval [
 	source := FiSet new.
 	shot := FiChef nickname: #A.
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate exclude: shot.
+	edit := intermediate editExclude: shot.
 	effect := intermediate effectOf: edit.
 
 	self 
@@ -79,12 +79,12 @@ FiSetSummariesTest >> testUpdate [
 	| shot otherShot edit source intermediate effect summary |
 	source := FiSet new.
 	shot := FiChef nickname: #A.
-	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
+	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate include: otherShot.
+	edit := intermediate editInclude: otherShot.
 	effect := intermediate effectOf: edit.
 
 	self flag: #todo. "For coherence with other set effects, we should expect: FiPath root / -> a FiUpdateEffect"

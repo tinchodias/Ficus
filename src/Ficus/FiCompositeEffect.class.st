@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 FiCompositeEffect >> edit [
 	
-	^ self edits: (subEffects values collect: #edit)
+	^ self editAll: (subEffects values collect: #edit)
 ]
 
 { #category : #summary }
@@ -23,7 +23,7 @@ FiCompositeEffect >> hierarchicalSummaryFrom: aBasePath [
 { #category : #accessing }
 FiCompositeEffect >> inverse [
 	
-	^ self edits: (subEffects values collect: #inverse)
+	^ self editAll: (subEffects values collect: #inverse)
 ]
 
 { #category : #enumerating }

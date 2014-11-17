@@ -7,22 +7,6 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
-{ #category : #edits }
-FiFixedObject >> at: aSlotName edit: aBlockClosure [ 
-	
-	^ FiAcceptSlot
-		slotName: aSlotName
-		edit: (aBlockClosure value: (self shotAt: aSlotName))
-]
-
-{ #category : #edits }
-FiFixedObject >> at: step equal: value [
-
-	^ FiAcceptSlot 
-		slotName: step
-		edit: (FiEqual value: value)
-]
-
 { #category : #differencing }
 FiFixedObject >> differenceFrom: other [
 
@@ -54,6 +38,22 @@ FiFixedObject >> differenceFrom: other [
 				FiCompositeEffect builder
 					subEffects: (FiSet withValues: subEffects);
 					new ] ]
+]
+
+{ #category : #edits }
+FiFixedObject >> editAt: aSlotName do: aBlockClosure [ 
+	
+	^ FiAcceptSlot
+		slotName: aSlotName
+		edit: (aBlockClosure value: (self shotAt: aSlotName))
+]
+
+{ #category : #edits }
+FiFixedObject >> editAt: step equal: value [
+
+	^ FiAcceptSlot 
+		slotName: step
+		edit: (FiEqual value: value)
 ]
 
 { #category : #effects }

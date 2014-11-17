@@ -20,6 +20,12 @@ Object >> differenceFrom: other [
 ]
 
 { #category : #'*Ficus' }
+Object >> editReplaceBy: aValue [
+
+	^ FiEqual value: aValue
+]
+
+{ #category : #'*Ficus' }
 Object >> effectOfReplace: oldValue [ 
 	
 	^ FiReplacement builder
@@ -55,18 +61,6 @@ Object >> ficusDeepDo: aBlock basePath: aPath [
 Object >> isShot [
 
 	^ false
-]
-
-{ #category : #'*Ficus' }
-Object >> noEdit [
-	
-	^ FiNoEdit new
-]
-
-{ #category : #'*Ficus' }
-Object >> replaceBy: aValue [
-
-	^ FiEqual value: aValue
 ]
 
 { #category : #'*Ficus' }

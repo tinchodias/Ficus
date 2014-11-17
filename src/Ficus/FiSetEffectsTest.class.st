@@ -11,12 +11,12 @@ FiSetEffectsTest >> testAddition [
 	source := FiSet new.
 	shot := FiChef nickname: #A.
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	effect := source effectOf: edit.
 	result := source resultOf: edit.
 
 	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (result exclude: shot).
+	self assert: effect inverse equals: (result editExclude: shot).
 	
 	self assert: source values isEmpty.
 	self assert: result values asSet equals: { shot } asSet.
@@ -30,10 +30,10 @@ FiSetEffectsTest >> testNoEffect [
 	source := FiSet new.
 	shot := FiChef nickname: #A.
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate include: shot.
+	edit := intermediate editInclude: shot.
 	effect := intermediate effectOf: edit.
 	result := intermediate resultOf: edit.
 
@@ -55,15 +55,15 @@ FiSetEffectsTest >> testRemoval [
 	source := FiSet new.
 	shot := FiChef nickname: #A.
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate exclude: shot.
+	edit := intermediate editExclude: shot.
 	effect := intermediate effectOf: edit.
 	result := intermediate resultOf: edit.
 
 	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (result include: shot).
+	self assert: effect inverse equals: (result editInclude: shot).
 
 	reverted := result resultOf: effect inverse.
 		
@@ -79,17 +79,17 @@ FiSetEffectsTest >> testUpdate [
 	| shot otherShot edit source result intermediate effect reverted |
 	source := FiSet new.
 	shot := FiChef nickname: #A.
-	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
+	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
 
-	edit := source include: shot.
+	edit := source editInclude: shot.
 	intermediate := source resultOf: edit.
 
-	edit := intermediate include: otherShot.
+	edit := intermediate editInclude: otherShot.
 	effect := intermediate effectOf: edit.
 	result := intermediate resultOf: edit.
 
 	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (result include: shot).
+	self assert: effect inverse equals: (result editInclude: shot).
 
 	reverted := result resultOf: effect inverse.
 	

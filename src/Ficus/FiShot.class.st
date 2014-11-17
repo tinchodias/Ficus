@@ -3,7 +3,7 @@ I represent an immutable object which must not form cycles with other FiShots (i
 
 A shot has #steps, which are Symbol names which can be used to access corresponding #values.
 
-Each shot provides an #editing protocol that builds ""edits"", i.e. instances of a class in the hierarchy of FiEdit.
+Each shot provides an #edits protocol that builds ""edits"", i.e. instances of a class in the hierarchy of FiEdit.
 
 Then, an edit can be used to calculate either:
 - the result of the application of the edit, with: aShot resultOf: anEdit.
@@ -65,7 +65,7 @@ FiShot >> differenceFrom: other [
 ]
 
 { #category : #edits }
-FiShot >> edits: aCollectionOfEdits [
+FiShot >> editAll: aCollectionOfEdits [
 	
 	^ FiCompositeEdit withAll: aCollectionOfEdits
 ]
@@ -179,8 +179,8 @@ FiShot >> resultOfSubEdit: aSubEdit steps: anArrayOfSteps [
 			| anEdit |
 			anEdit := 
 				self 
-					at: anArrayOfSteps first
-					edit: [ :aValue | 
+					editAt: anArrayOfSteps first
+					do: [ :aValue | 
 						FiEqual value: 
 							(aValue 
 								resultOfSubEdit: aSubEdit 

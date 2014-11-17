@@ -10,7 +10,7 @@ FiShotSummariesTest >> testNoEffect [
 	| edit effect source |
 	source := FiChef nickname: #A.
 
-	edit :=  source at: #nickname equal: #A.
+	edit :=  source editAt: #nickname equal: #A.
 	effect := source effectOf: edit.
 	
 	self assert: effect flattenedLeafEffects isEmpty.
@@ -24,7 +24,7 @@ FiShotSummariesTest >> testUpdate [
 	| edit effect source |
 	source := FiChef nickname: #A.
 
-	edit :=  source at: #shortBio equal: '42'.
+	edit :=  source editAt: #shortBio equal: '42'.
 	effect := source effectOf: edit.
 	
 	self 
@@ -51,14 +51,14 @@ FiShotSummariesTest >> testUpdateAndSubAddition [
 
 	editAdmiredChefs := 
 		source 
-			at: #admiredChefs
-			edit: [ :admiredChefs | admiredChefs include: #X ].
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editInclude: #X ].
 	editShortBio := 
 		source
-			at: #shortBio
+			editAt: #shortBio
 			equal: '42'.
 
-	edit := source edits: { editAdmiredChefs. editShortBio }.			
+	edit := source editAll: { editAdmiredChefs. editShortBio }.			
 	effect := source effectOf: edit.
 	result := source resultOf: edit.
 

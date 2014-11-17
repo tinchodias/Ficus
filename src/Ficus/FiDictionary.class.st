@@ -16,22 +16,6 @@ FiDictionary class >> new [
 	^ self builder new
 ]
 
-{ #category : #edits }
-FiDictionary >> at: step edit: aBlockClosure [ 
-	
-	^ FiAcceptKey 
-		key: step
-		edit: (aBlockClosure value: (self shotAt: step))
-]
-
-{ #category : #edits }
-FiDictionary >> at: step equal: value [
-
-	^ FiAcceptKey 
-		key: step
-		edit: (FiEqual value: value)
-]
-
 { #category : #differencing }
 FiDictionary >> differenceFrom: other [
 
@@ -81,6 +65,28 @@ FiDictionary >> differenceFrom: other [
 					new ] ]
 ]
 
+{ #category : #edits }
+FiDictionary >> editAt: step do: aBlockClosure [ 
+	
+	^ FiAcceptKey 
+		key: step
+		edit: (aBlockClosure value: (self shotAt: step))
+]
+
+{ #category : #edits }
+FiDictionary >> editAt: step equal: value [
+
+	^ FiAcceptKey 
+		key: step
+		edit: (FiEqual value: value)
+]
+
+{ #category : #edits }
+FiDictionary >> editExclude: key [
+
+	^ FiExcludeKey key: key
+]
+
 { #category : #effects }
 FiDictionary >> effectOfAcceptKey: anAcceptKey [ 
 
@@ -100,12 +106,6 @@ FiDictionary >> effectOfExcludeKey: anExcludeKey [
 		shotAt: anExcludeKey key
 		ifPresent: [ :aValue | anExcludeKey effectRemove: aValue ]
 		ifAbsent: [ anExcludeKey effectNothing ]
-]
-
-{ #category : #edits }
-FiDictionary >> exclude: key [
-
-	^ FiExcludeKey key: key
 ]
 
 { #category : #initialization }

@@ -15,13 +15,13 @@ FiDictionaryDifferencesTest >> testAddition [
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 	
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	result := source resultOf: edit.
 
 	self assert: (source differenceFrom: source) isNoEffect.
 	self assert: (result differenceFrom: result) isNoEffect.
 	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
-	self assert: (source differenceFrom: result) equals: (result effectOf: (result exclude: #A)).
+	self assert: (source differenceFrom: result) equals: (result effectOf: (result editExclude: #A)).
 ]
 
 { #category : #tests }
@@ -37,11 +37,11 @@ FiDictionaryDifferencesTest >> testAdditionAndUpdate [
 
 	edit := 
 		source 
-			at: #A
-			edit: [ :class | 
+			editAt: #A
+			do: [ :class | 
 				class 
-					at: #admiredChefs
-					edit: [ :admiredChefs | admiredChefs include: #X ] ].		
+					editAt: #admiredChefs
+					do: [ :admiredChefs | admiredChefs editInclude: #X ] ].		
 	
 	result := source resultOf: edit.
 
@@ -56,10 +56,10 @@ FiDictionaryDifferencesTest >> testNoEdit [
 	preSource := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := preSource at: #A equal: shot.
+	edit := preSource editAt: #A equal: shot.
 	source := preSource resultOf: edit.
 
-	edit := source at: #A equal: shot.
+	edit := source editAt: #A equal: shot.
 	result := source resultOf: edit.
 	
 	self assert: (source differenceFrom: source) isNoEffect.
@@ -75,16 +75,16 @@ FiDictionaryDifferencesTest >> testRemoval [
 	preSource := FiDictionary new.
 	shot := FiChef nickname: #A.
 
-	edit := preSource at: #A equal: shot.
+	edit := preSource editAt: #A equal: shot.
 	source := preSource resultOf: edit.
 
-	edit := source exclude: shot nickname.
+	edit := source editExclude: shot nickname.
 	result := source resultOf: edit.
 	
 	self assert: (source differenceFrom: source) isNoEffect.
 	self assert: (result differenceFrom: result) isNoEffect.
 	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
-	self assert: (source differenceFrom: result) equals: (result effectOf: (result at: #A equal: shot)).
+	self assert: (source differenceFrom: result) equals: (result effectOf: (result editAt: #A equal: shot)).
 ]
 
 { #category : #tests }
@@ -106,15 +106,15 @@ FiDictionaryDifferencesTest >> testTwoAdditions [
 	| edit inverseEdit source result |
 	source := FiDictionary new.
 	
-	edit := source edits: {
-		source at: #A equal: (FiChef nickname: #A).
-		source at: #B equal: (FiChef nickname: #B) }.
+	edit := source editAll: {
+		source editAt: #A equal: (FiChef nickname: #A).
+		source editAt: #B equal: (FiChef nickname: #B) }.
 
 	result := source resultOf: edit.
 
-	inverseEdit := result edits: {
-		result exclude: #A.
-		result exclude: #B }.
+	inverseEdit := result editAll: {
+		result editExclude: #A.
+		result editExclude: #B }.
 
 	self assert: (source differenceFrom: source) isNoEffect.
 	self assert: (result differenceFrom: result) isNoEffect.
@@ -128,19 +128,19 @@ FiDictionaryDifferencesTest >> testUpdate [
 	| shot otherShot edit preSource result source expectedDifference |
 	preSource := FiDictionary new.
 	shot := FiChef nickname: #A.
-	otherShot := shot resultOf: (shot at: #shortBio equal: '42').
+	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
 
-	edit := preSource at: #A equal: shot.
+	edit := preSource editAt: #A equal: shot.
 	source := preSource resultOf: edit.
 
-	edit := source at: #A equal: otherShot.
+	edit := source editAt: #A equal: otherShot.
 	result := source resultOf: edit.
 	
 	expectedDifference := 
 		source 
-			at: #A
-			edit: [ :class | 
-				class at: #shortBio equal: '42' ].		
+			editAt: #A
+			do: [ :class | 
+				class editAt: #shortBio equal: '42' ].		
 	
 	self assert: (source differenceFrom: source) isNoEffect.
 	self assert: (result differenceFrom: result) isNoEffect.

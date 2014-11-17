@@ -35,7 +35,7 @@ FiPathTest >> sampleShot [
 	aShot := FiChef nickname: #A.
 	
 	aSet := FiSet new.
-	^ aSet resultOf: (aSet include: aShot)
+	^ aSet resultOf: (aSet editInclude: aShot)
 ]
 
 { #category : #tests }

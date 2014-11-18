@@ -26,11 +26,11 @@ Object >> editReplaceBy: aValue [
 ]
 
 { #category : #'*Ficus' }
-Object >> effectOfReplace: oldValue [ 
+Object >> effectOfReplaceBy: newValue [ 
 	
 	^ FiReplacement builder
-		oldValue: oldValue;
-		newValue: self;
+		oldValue: self;
+		newValue: newValue;
 		new
 ]
 

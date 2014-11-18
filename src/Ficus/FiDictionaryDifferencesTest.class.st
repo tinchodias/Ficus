@@ -96,7 +96,7 @@ FiDictionaryDifferencesTest >> testReplacement [
 
 	self 
 		assert: (result differenceFrom: source) 
-		equals: (result effectOfReplace: source).
+		equals: (source effectOfReplaceBy: result).
 
 ]
 

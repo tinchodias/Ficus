@@ -13,7 +13,7 @@ FiShotDifferencesTest >> testReplacement [
 
 	self 
 		assert: (result differenceFrom: source) 
-		equals: (result effectOfReplace: source).
+		equals: (source effectOfReplaceBy: result).
 
 ]
 
@@ -26,7 +26,7 @@ FiShotDifferencesTest >> testReplacement2 [
 
 	self 
 		assert: (result differenceFrom: source) 
-		equals: (result effectOfReplace: source).
+		equals: (source effectOfReplaceBy: result).
 
 ]
 

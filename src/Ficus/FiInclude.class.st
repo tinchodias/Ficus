@@ -24,7 +24,7 @@ FiInclude >> effectUpdate: oldValue [
 	^ FiSetUpdate builder
 		newValue: theValue;
 		oldValue: oldValue;
-		subEffect: (theValue effectOfReplace: oldValue);
+		subEffect: (oldValue effectOfReplaceBy: theValue);
 		new
 ]
 

@@ -9,7 +9,7 @@ FiEqual >> effectOn: aValue [
 
 	^ theValue = aValue
 		ifTrue: [ self effectNothing ]
-		ifFalse: [ theValue effectOfReplace: aValue ]
+		ifFalse: [ aValue effectOfReplaceBy: theValue ]
 ]
 
 { #category : #results }

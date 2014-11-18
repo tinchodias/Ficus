@@ -18,7 +18,7 @@ FiFixedObject >> differenceFrom: other [
 	
 	other stepsAndValuesDo: [ :step :otherValue | 
 		| value subDifference |
-		value := self shotAt: step.
+		value := self valueAt: step.
 		subDifference := value differenceFrom: otherValue.
 		
 		subDifference isNoEffect ifFalse: [
@@ -45,7 +45,7 @@ FiFixedObject >> editAt: aSlotName do: aBlockClosure [
 	
 	^ FiAcceptSlot
 		slotName: aSlotName
-		edit: (aBlockClosure value: (self shotAt: aSlotName))
+		edit: (aBlockClosure value: (self valueAt: aSlotName))
 ]
 
 { #category : #edits }
@@ -60,7 +60,7 @@ FiFixedObject >> editAt: step equal: value [
 FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 
 	| oldValue |
-	oldValue := self shotAt: anAcceptSlot slotName.
+	oldValue := self valueAt: anAcceptSlot slotName.
 
 	^ oldValue = (oldValue resultOf: anAcceptSlot edit)
 		ifTrue: [ anAcceptSlot effectNothing ]
@@ -93,14 +93,6 @@ FiFixedObject >> resultOfAcceptSlot: anAcceptSlot [
 ]
 
 { #category : #accessing }
-FiFixedObject >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
-
-	step isSymbol ifFalse: [ ^ absentBlock value ].
-
-	^ presentBlock value: (self instVarNamed: step)
-]
-
-{ #category : #accessing }
 FiFixedObject >> stepCount [
 	
 	^ self class allInstVarNames size - self class excludedInstanceVariableNamesForSteps size
@@ -118,4 +110,12 @@ FiFixedObject >> stepsAndValuesDo: aBlockClosure [
 				value: name 
 				value: (self instVarNamed: name)] ]
 
+]
+
+{ #category : #accessing }
+FiFixedObject >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	step isSymbol ifFalse: [ ^ absentBlock value ].
+
+	^ presentBlock value: (self instVarNamed: step)
 ]

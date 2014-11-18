@@ -50,7 +50,7 @@ FiShot >> = another [
 	
 	self stepsAndValuesDo: [ :step :value | 
 		another 
-			shotAt: step 
+			valueAt: step 
 			ifPresent: [ :otherValue | value = otherValue ifFalse: [ ^ false ] ]
 			ifAbsent: [ ^ false ] ].
 		
@@ -189,21 +189,6 @@ FiShot >> resultOfSubEdit: aSubEdit steps: anArrayOfSteps [
 ]
 
 { #category : #accessing }
-FiShot >> shotAt: step [
-
-	^ self 
-		shotAt: step 
-		ifPresent: [ :shot | shot ]
-		ifAbsent: [ NotFound signal ]
-]
-
-{ #category : #accessing }
-FiShot >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
-
-	^ self subclassResponsibility 
-]
-
-{ #category : #accessing }
 FiShot >> stepCount [
 	
 	^ self steps size
@@ -259,6 +244,21 @@ FiShot >> uncachedHash [
 		hash := (hash bitXor: step hash) bitXor: value hash ].
 		
 	^ hash
+]
+
+{ #category : #accessing }
+FiShot >> valueAt: step [
+
+	^ self 
+		valueAt: step 
+		ifPresent: [ :shot | shot ]
+		ifAbsent: [ NotFound signal ]
+]
+
+{ #category : #accessing }
+FiShot >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }

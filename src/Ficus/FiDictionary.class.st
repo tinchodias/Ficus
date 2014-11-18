@@ -27,7 +27,7 @@ FiDictionary >> differenceFrom: other [
 	
 	other stepsAndValuesDo: [ :key :otherValue | 
 		self
-			shotAt: key
+			valueAt: key
 			ifPresent: [ :value | 
 				| subDifference |
 				subDifference := value differenceFrom: otherValue.
@@ -70,7 +70,7 @@ FiDictionary >> editAt: step do: aBlockClosure [
 	
 	^ FiAcceptKey 
 		key: step
-		edit: (aBlockClosure value: (self shotAt: step))
+		edit: (aBlockClosure value: (self valueAt: step))
 ]
 
 { #category : #edits }
@@ -91,7 +91,7 @@ FiDictionary >> editExclude: key [
 FiDictionary >> effectOfAcceptKey: anAcceptKey [ 
 
 	^ self 
-		shotAt: anAcceptKey key
+		valueAt: anAcceptKey key
 		ifPresent: [ :aValue | 
 			aValue = (anAcceptKey edit resultOn: aValue)
 				ifTrue: [ anAcceptKey effectNothing ]
@@ -103,7 +103,7 @@ FiDictionary >> effectOfAcceptKey: anAcceptKey [
 FiDictionary >> effectOfExcludeKey: anExcludeKey [
 
 	^ self 
-		shotAt: anExcludeKey key
+		valueAt: anExcludeKey key
 		ifPresent: [ :aValue | anExcludeKey effectRemove: aValue ]
 		ifAbsent: [ anExcludeKey effectNothing ]
 ]
@@ -129,7 +129,7 @@ FiDictionary >> resultOfAcceptKey: anAcceptKey [
 
 	| newValue |
 	newValue := self 
-		shotAt: anAcceptKey key
+		valueAt: anAcceptKey key
 		ifPresent: [ :aValue | 
 			anAcceptKey edit resultOn: aValue ]
 		ifAbsent: [ 
@@ -154,21 +154,6 @@ FiDictionary >> resultOfExcludeKey: anExcludeKey [
 				yourself)
 ]
 
-{ #category : #accessing }
-FiDictionary >> shotAt: key [
-	
-	^ valueByKey at: key
-]
-
-{ #category : #accessing }
-FiDictionary >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
-
-	^ valueByKey 
-		at: step
-		ifPresent: presentBlock
-		ifAbsent: absentBlock
-]
-
 { #category : #enumerating }
 FiDictionary >> stepCount [
 	
@@ -179,6 +164,21 @@ FiDictionary >> stepCount [
 FiDictionary >> stepsAndValuesDo: aBlock [
 
 	^ valueByKey keysAndValuesDo: aBlock
+]
+
+{ #category : #accessing }
+FiDictionary >> valueAt: key [
+	
+	^ valueByKey at: key
+]
+
+{ #category : #accessing }
+FiDictionary >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ valueByKey 
+		at: step
+		ifPresent: presentBlock
+		ifAbsent: absentBlock
 ]
 
 { #category : #accessing }

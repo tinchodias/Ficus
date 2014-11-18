@@ -19,7 +19,7 @@ FiSetTest >> testAddition [
 
 	self assert: source values isEmpty.
 	self assert: result values equals: { shot }.
-	self assert: (result shotAt: shot defaultStep) equals: shot.
+	self assert: (result valueAt: shot defaultStep) equals: shot.
 	self assert: result stepsAndValues equals: { shot defaultStep -> shot } asSet.
 ]
 
@@ -48,8 +48,8 @@ FiSetTest >> testInstanciationWithStepsAndValues [
 				yourself).
 
 	self assert: shot steps asSet equals: #(A B) asSet.
-	self assert: (shot shotAt: #A) equals: (FiChef nickname: #A).
-	self assert: (shot shotAt: #B) equals: (FiChef nickname: #B).
+	self assert: (shot valueAt: #A) equals: (FiChef nickname: #A).
+	self assert: (shot valueAt: #B) equals: (FiChef nickname: #B).
 ]
 
 { #category : #tests }

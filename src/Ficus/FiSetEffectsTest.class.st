@@ -112,8 +112,8 @@ FiSetEffectsTest >> testUpdateWithSubEdit [
 
 	result := source resultOf: edit.
 	
-	self assert: (source shotAt: #A) shortBio equals: ''.
-	self assert: (result shotAt: #A) shortBio equals: '42'.
+	self assert: (source valueAt: #A) shortBio equals: ''.
+	self assert: (result valueAt: #A) shortBio equals: '42'.
 	self assert: (source effectOf: edit) equals: (result differenceFrom: source).
 
 ]

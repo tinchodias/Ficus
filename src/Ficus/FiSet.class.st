@@ -68,7 +68,7 @@ FiSet >> differenceFrom: other [
 	
 	other stepsAndValuesDo: [ :key :otherValue | 
 		self
-			shotAt: key
+			valueAt: key
 			ifPresent: [ :value | 
 				| subDifference |
 				subDifference := value differenceFrom: otherValue.
@@ -107,7 +107,7 @@ FiSet >> differenceFrom: other [
 FiSet >> editAt: step do: aBlockClosure [ 
 
 	| aShot |
-	aShot := self shotAt: step.
+	aShot := self valueAt: step.
 
 	^ self editInclude: (aShot resultOf: (aBlockClosure value: aShot))
 ]
@@ -128,7 +128,7 @@ FiSet >> editInclude: aValue [
 FiSet >> effectOfExclude: anExclude [ 
 
 	^ self 
-		shotAt: anExclude theValue defaultStep
+		valueAt: anExclude theValue defaultStep
 		ifPresent: [ :aValue | anExclude effectRemove: aValue ]
 		ifAbsent: [ anExclude effectNothing ]
 ]
@@ -137,7 +137,7 @@ FiSet >> effectOfExclude: anExclude [
 FiSet >> effectOfInclude: anInclude [ 
 
 	^ self 
-		shotAt: anInclude theValue defaultStep
+		valueAt: anInclude theValue defaultStep
 		ifPresent: [ :aValue | 
 			| difference |
 			difference := anInclude theValue differenceFrom: aValue.
@@ -193,7 +193,7 @@ FiSet >> resultOfAcceptKey: anAcceptKey [
 
 	| newValue newValues |
 	newValue := self 
-		shotAt: anAcceptKey key
+		valueAt: anAcceptKey key
 		ifPresent: [ :aValue | 
 			anAcceptKey edit resultOn: aValue ]
 		ifAbsent: [ 
@@ -230,15 +230,6 @@ FiSet >> resultOfInclude: anInclude [
 	^ self species withValues: newValues
 ]
 
-{ #category : #accessing }
-FiSet >> shotAt: step ifPresent: presentBlock ifAbsent: absentBlock [
-
-	^ self 
-		indexOf: step 
-		ifPresent: [ :index | presentBlock value: (self at: index) ]
-		ifAbsent: absentBlock
-]
-
 { #category : #enumerating }
 FiSet >> stepCount [
 	
@@ -261,6 +252,15 @@ FiSet >> stonOn: stonWriter [
 	stonWriter writeObject: self do: [
 		stonWriter encodeList: self values ]
 
+]
+
+{ #category : #accessing }
+FiSet >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ self 
+		indexOf: step 
+		ifPresent: [ :index | presentBlock value: (self at: index) ]
+		ifAbsent: absentBlock
 ]
 
 { #category : #enumerating }

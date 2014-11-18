@@ -63,7 +63,7 @@ FiRelativePath >> printOn: aStream [
 { #category : #resolving }
 FiRelativePath >> resolvedOn: anObject [ 
 
-	^ (basePath resolvedOn: anObject) shotAt: step
+	^ (basePath resolvedOn: anObject) valueAt: step
 ]
 
 { #category : #resolving }
@@ -73,7 +73,7 @@ FiRelativePath >> resolvedOn: anObject targetCollect: targetBlockClosure stepCol
 		value: anObject
 		value: step
 		value: (basePath
-			resolvedOn: (anObject shotAt: step)
+			resolvedOn: (anObject valueAt: step)
 			targetCollect: targetBlockClosure 
 			stepCollect: stepBlockClosure)
 ]

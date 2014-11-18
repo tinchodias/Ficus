@@ -32,8 +32,8 @@ FiDictionaryTest >> testInstanciationWithStepsAndValues [
 				yourself).
 
 	self assert: shot steps asSet equals: #(A B) asSet.
-	self assert: (shot shotAt: #A) equals: (FiChef nickname: #A).
-	self assert: (shot shotAt: #B) equals: (FiChef nickname: #B).
+	self assert: (shot valueAt: #A) equals: (FiChef nickname: #A).
+	self assert: (shot valueAt: #B) equals: (FiChef nickname: #B).
 ]
 
 { #category : #tests }

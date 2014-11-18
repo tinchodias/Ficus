@@ -1,5 +1,5 @@
 "
-I represent a class.
+I am an object used for testing Ficus.
 "
 Class {
 	#name : #FiChef,

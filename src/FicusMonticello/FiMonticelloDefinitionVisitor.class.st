@@ -104,9 +104,9 @@ FiMonticelloDefinitionVisitor >> ficusMethodsFor: aMCClassDefinition [
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusMethodsForAll: monticelloMethods [
 	
-	^ FiSet withValues: 
-		(monticelloMethods collect: [ :aMCMethodDefinition | 
-			self ficusMethodFor: aMCMethodDefinition ])
+	^ (monticelloMethods 
+		collect: [ :aMCMethodDefinition | self ficusMethodFor: aMCMethodDefinition ]) 
+		asFiSet
 ]
 
 { #category : #private }
@@ -127,7 +127,7 @@ FiMonticelloDefinitionVisitor >> ficusPackageContents [
 	monticelloMetaclassExtensionMethodsByHostName keysAndValuesDo: [ :hostName :each |
 		children add: (self ficusExtensionMethodsForHostName: hostName methods: each isMetaSide: true) ].
 	
-	^ FiSet withValues: children
+	^ children asFiSet
 ]
 
 { #category : #private }
@@ -139,7 +139,7 @@ FiMonticelloDefinitionVisitor >> ficusSharedPoolsFor: aMCClassDefinition [
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusSymbolSetFor: aCollection [
 
-	^ FiSet withValues: (aCollection collect: #asSymbol as: Set) 
+	^ (aCollection collect: #asSymbol as: Set) asFiSet
 ]
 
 { #category : #private }

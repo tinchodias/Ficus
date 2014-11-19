@@ -139,7 +139,7 @@ FiMonticelloHistoryBuilder >> historyNodeFor: aVersionInfo [
 			node := FiSnapshotHistoryNode builder
 				origin: (FiSingleOrigin builder reference: versionInfo; new);
 				snapshot: ficusPackage;
-				priors: (FiSet withValues: priors);
+				priors: priors asFiSet;
 				new ].
 			
 	

@@ -183,7 +183,7 @@ FiEpiceaHistoryBuilder >> run [
 			historyNodes addLast:
 				(self 
 					compositeHistoryNodeFor: anEntry 
-					priors: (FiSet withValues: ({ historyNodes last } "it's the prior for epicea history", translatedMcPriors))
+					priors: ({ historyNodes last } "it's the prior for epicea history", translatedMcPriors) asFiSet
 					and: mcNode) ].
 
 		"EPICEA CODE CHANGE"

@@ -54,7 +54,7 @@ FiEpiceaTranslator >> ficusSharedPoolsFor: aMCClassDefinition [
 { #category : #private }
 FiEpiceaTranslator >> ficusSymbolSetFor: aCollection [
 
-	^ FiSet withValues: (aCollection collect: #asSymbol as: Set) 
+	^ (aCollection collect: #asSymbol as: Set) asFiSet
 ]
 
 { #category : #initialization }

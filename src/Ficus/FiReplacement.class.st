@@ -14,6 +14,12 @@ FiReplacement >> edit [
 	^ oldValue editReplaceBy: newValue
 ]
 
+{ #category : #'as yet unclassified' }
+FiReplacement >> hierarchicalSummaryFrom: aBasePath [
+	
+	^ #()
+]
+
 { #category : #accessing }
 FiReplacement >> inverse [
 

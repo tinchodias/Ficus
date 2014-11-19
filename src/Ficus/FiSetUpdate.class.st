@@ -18,23 +18,12 @@ FiSetUpdate >> edit [
 { #category : #summary }
 FiSetUpdate >> hierarchicalSummaryFrom: aBasePath [
 
-	self flag: #todo. "FIX"
-	
-	^ {(subEffect isKindOf: FiReplacement) 
-		ifTrue: [ 
-			FiSummaryUpdate builder 
-				path: aBasePath / newValue defaultStep;
-				oldValue: subEffect oldValue; 
-				newValue: subEffect newValue; 
-				subSummary: #();
-				new ]	
-		ifFalse: [
-			FiSummaryUpdate builder 
-				path: aBasePath / newValue defaultStep;
-				oldValue: oldValue; 
-				newValue: newValue; 
-				subSummary: (subEffect hierarchicalSummaryFrom: aBasePath / newValue defaultStep);
-				new ]}
+	^ { FiSummaryUpdate builder 
+			path: aBasePath / newValue defaultStep;
+			oldValue: oldValue; 
+			newValue: newValue; 
+			subSummary: (subEffect hierarchicalSummaryFrom: aBasePath / newValue defaultStep);
+			new }
 ]
 
 { #category : #accessing }

@@ -16,14 +16,14 @@ FiDictionaryRemoval >> edit [
 { #category : #summary }
 FiDictionaryRemoval >> hierarchicalSummaryFrom: aBasePath [
 	
-	^ {oldValue 
-		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
-			FiSummaryRemove builder 
-				path: path;
-				oldValue: shot; 
-				subSummary: collectionFromChildren;
-				new ] 
-		basePath: aBasePath / key }
+	^ { oldValue 
+			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+				FiSummaryRemove builder 
+					path: path;
+					oldValue: shot; 
+					subSummary: collectionFromChildren;
+					new ] 
+			basePath: aBasePath / key }
 ]
 
 { #category : #accessing }

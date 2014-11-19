@@ -19,13 +19,13 @@ FiDictionaryAddition >> edit [
 FiDictionaryAddition >> hierarchicalSummaryFrom: aBasePath [
 	
 	^ { newValue 
-		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
-			FiSummaryAdd builder 
-				path: path;
-				newValue: shot; 
-				subSummary: collectionFromChildren;
-				new ] 
-		basePath: aBasePath / key }
+			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+				FiSummaryAdd builder 
+					path: path;
+					newValue: shot; 
+					subSummary: collectionFromChildren;
+					new ] 
+			basePath: aBasePath / key }
 ]
 
 { #category : #accessing }

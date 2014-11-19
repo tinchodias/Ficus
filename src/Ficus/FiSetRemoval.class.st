@@ -17,13 +17,13 @@ FiSetRemoval >> edit [
 FiSetRemoval >> hierarchicalSummaryFrom: aBasePath [
 	
 	^ { oldValue 
-		ficusDeepCollect: [ :shot :path :collectionFromChildren | 
-			FiSummaryRemove builder 
-				path: path;
-				oldValue: shot; 
-				subSummary: collectionFromChildren;
-				new ] 
-		basePath: aBasePath / oldValue defaultStep }
+			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+				FiSummaryRemove builder 
+					path: path;
+					oldValue: shot; 
+					subSummary: collectionFromChildren;
+					new ] 
+			basePath: aBasePath / oldValue defaultStep }
 ]
 
 { #category : #accessing }

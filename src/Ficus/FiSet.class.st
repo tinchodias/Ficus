@@ -189,28 +189,6 @@ FiSet >> printOn: aStream [
 ]
 
 { #category : #results }
-FiSet >> resultOfAcceptKey: anAcceptKey [ 
-
-	| newValue newValues |
-	newValue := self 
-		valueAt: anAcceptKey key
-		ifPresent: [ :aValue | 
-			anAcceptKey edit resultOn: aValue ]
-		ifAbsent: [ 
-			self flag: #todo. "FIX".
-			anAcceptKey edit resultOn: nil ].
-		
-	newValues := self asArray copyWith: newValue.
-
-	self 
-		indexOf: newValue defaultStep 
-		ifPresent: [ :index | newValues := newValues copyWithoutIndex: index ]
-		ifAbsent: [ ].
-		
-	^ self species withValues: newValues
-]
-
-{ #category : #results }
 FiSet >> resultOfExclude: anExclude [ 
 
 	^ self species withValues: (self values copyWithout: anExclude theValue)

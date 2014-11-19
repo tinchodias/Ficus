@@ -51,10 +51,10 @@ FiMethodDependencyInterpreterTest >> testClassASum42 [
 		in: (ringShotResource classA >> #sum42)
 		equals: 
 			(FiPossibleMethodInvocation builder
-				methods: (FiSet withValues: {
+				methods: {
 					ringShotResource classA >> #sum.
 					ringShotResource classB >> #sum.
-					});
+					} asFiSet;
 				new)
 ]
 
@@ -85,9 +85,9 @@ FiMethodDependencyInterpreterTest >> testClassBSum [
 		in: (ringShotResource classB >> #sum)
 		equals: 
 			(FiPossibleMethodInvocation builder
-				methods: (FiSet withValues: {
+				methods: {
 					ringShotResource classA >> #sum.
-					});
+					} asFiSet;
 				new)
 ]
 
@@ -119,11 +119,11 @@ FiMethodDependencyInterpreterTest >> testClassCSumAt [
 		in: (ringShotResource classC >> #sumAt:)
 		equals: 
 			(FiPossibleMethodInvocation builder
-				methods: (FiSet withValues: {
+				methods: {
 					ringShotResource classA >> #sum.
 					ringShotResource classB >> #sum.
 					ringShotResource classC >> #sum.
-					});
+					} asFiSet;
 				new)
 ]
 

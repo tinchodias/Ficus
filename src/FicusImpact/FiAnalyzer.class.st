@@ -29,9 +29,9 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 				FiAnalysisPossibleMethodInvocation
 					sending: selector "///(FiMessageSend of: selector)"
 					toAnyOf: 
-						(FiSet withValues: ((self register implementorsOf: selector) 
+						((self register implementorsOf: selector) 
 							collect: [ :anImpl | self analysisOf: anImpl levels: levels-1] 
-							as: Array)) ] 
+							as: Array) asFiSet ] 
 			as: Array.
 
 	impact := 
@@ -44,8 +44,8 @@ FiAnalyzer >> analysisOf: aMethod levels: levels [
 		isMeta: aMethod methodClass isMeta;
 		selector: aMethod selector;
 		sourceCode: (self sourceCodeFor: aMethod);
-		dependencies: (FiSet withValues: dependencies);
-		impact: (FiSet withValues: impact);
+		dependencies: dependencies asFiSet;
+		impact: impact asFiSet;
 		new
 
 ]

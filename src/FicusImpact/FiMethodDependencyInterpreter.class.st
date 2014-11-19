@@ -15,7 +15,7 @@ FiMethodDependencyInterpreter >> interpretationOf: aDependency in: aRingShot [
 				in: aRingShot environment.
 
 		^ FiPossibleMethodInvocation builder
-			methods: (FiSet withValues: possibleInvocations);
+			methods: possibleInvocations asFiSet;
 			new ].
 
 	(aDependency isKindOf: FiVariableAccess) ifTrue: [	

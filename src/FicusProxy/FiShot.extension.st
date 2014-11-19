@@ -62,7 +62,7 @@ FiShot >> pruned [
 { #category : #'*FicusProxy' }
 FiShot >> tag [
 	
-	^ tag
+	^ nil "tag"
 ]
 
 { #category : #'*FicusProxy' }

@@ -11,7 +11,7 @@ Class {
 FiCompositeEdit class >> withAll: aCollectionOfEdits [ 
 
 	^ self builder
-		subEdits: (FiSet withValues: aCollectionOfEdits);
+		subEdits: aCollectionOfEdits asFiSet;
 		new
 ]
 

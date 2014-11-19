@@ -74,7 +74,7 @@ FiPathTest >> testFlattened [
 
 	| aSet aShot |
 	aShot := FiRecipe title: 'fortyTwo' kind: #accessing.
-	aSet := FiSet withValues: { aShot }.
+	aSet := { aShot } asFiSet.
 
 	self 
 		assert: aSet flattened 

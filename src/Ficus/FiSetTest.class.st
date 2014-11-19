@@ -26,11 +26,11 @@ FiSetTest >> testAddition [
 { #category : #tests }
 FiSetTest >> testInstanciation [
 
-	self assert: (FiSet withValues: #()) equals: (FiSet withValues: #()).
+	self assert: #() asFiSet equals: #() asFiSet.
 
-	self assert: (FiSet withValues: #(1)) equals: (FiSet withValues: #(1)).
-	self assert: (FiSet withValues: #(1)) equals: (FiSet withValues: #(1) asSet).
-	"self assert: (FiSet withValues: #(1 1)) equals: (FiSet withValues: #(1))."
+	self assert: #(1) asFiSet equals: #(1) asFiSet.
+	self assert: #(1) asFiSet equals: #(1) asSet asFiSet.
+	"self assert: #(1 1) asFiSet equals: #(1) asFiSet."
 
 ]
 

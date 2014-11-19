@@ -36,7 +36,7 @@ FiFixedObject >> differenceFrom: other [
 			ifTrue: [ subEffects anyOne ]
 			ifFalse: [ 
 				FiCompositeEffect builder
-					subEffects: (FiSet withValues: subEffects);
+					subEffects: subEffects asFiSet;
 					new ] ]
 ]
 

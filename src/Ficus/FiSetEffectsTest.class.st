@@ -103,7 +103,7 @@ FiSetEffectsTest >> testUpdate [
 FiSetEffectsTest >> testUpdateWithSubEdit [
 
 	| edit source result |
-	source := FiSet withValues: { FiChef nickname: #A }.
+	source := { FiChef nickname: #A } asFiSet.
 
 	edit := 
 		FiSubEdit

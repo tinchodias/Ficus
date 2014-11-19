@@ -48,7 +48,7 @@ FiInspectorOld class >> inspectEffect: rootEffect [
 			into: [ :dict :each | 
 				dict 
 					at: each key
-					put: (FiSet withValues: each value).
+					put: each value asFiSet.
 				dict ].
 
 	^ (self newWith: stepsAndValues associations) open; yourself

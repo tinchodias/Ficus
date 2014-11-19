@@ -80,7 +80,7 @@ FiShot >> effectOf: anEdit [
 FiShot >> effectOfCompositeEdit: aCompositeEdit [ 
 
 	^ FiCompositeEffect builder
-		subEffects: (FiSet withValues: (aCompositeEdit subEdits values collect: [ :anEdit | anEdit effectOn: self ]));
+		subEffects: (aCompositeEdit subEdits values collect: [ :anEdit | anEdit effectOn: self ]) asFiSet;
 		new
 ]
 

@@ -34,8 +34,8 @@ FiTag class >> exampleStoreFor: store [
 
 	1 to: tags size do: [ :index |
 		tagsStore 
-			commitSnapshot: (FiSet withValues: (tags first: index)) 
-			priors: (FiSet withValues: {tagsStore headHistoryNode}) ].
+			commitSnapshot: (tags first: index) asFiSet 
+			priors: {tagsStore headHistoryNode} asFiSet ].
 
 	^ tagsStore
 ]

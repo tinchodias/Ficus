@@ -44,8 +44,8 @@ FiComment class >> exampleStoreFor: store [
 
 	1 to: comments size do: [ :index |
 		commentsStore 
-			commitSnapshot: (FiSet withValues: (comments first: index)) 
-			priors: (FiSet withValues: {commentsStore headHistoryNode}) ].
+			commitSnapshot: (comments first: index) asFiSet 
+			priors: {commentsStore headHistoryNode} asFiSet ].
 
 	^ commentsStore
 ]

@@ -11,7 +11,7 @@ Class {
 FiCompositeOrigin class >> withOrigins: aCollectionOfOrigins [
 
 	^ self builder 
-		origins: (FiSet withValues: aCollectionOfOrigins);
+		origins: aCollectionOfOrigins asFiSet;
 		new
 ]
 

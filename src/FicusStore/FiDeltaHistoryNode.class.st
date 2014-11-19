@@ -40,7 +40,7 @@ FiDeltaHistoryNode >> effect [
 FiDeltaHistoryNode >> priors [
 
 	^ cachedPriors ifNil: [ 
-		cachedPriors := FiSet withValues: { prior } ]
+		cachedPriors := { prior } asFiSet ]
 ]
 
 { #category : #accessing }

@@ -76,3 +76,9 @@ Object >> resultOfSubEdit: aSubEdit steps: aCollection [
 	
 	^ self resultOf: aSubEdit edit
 ]
+
+{ #category : #'*Ficus' }
+Object >> storeOn: aWriteStream indent: anInteger [ 
+	
+	self storeOn: aWriteStream
+]

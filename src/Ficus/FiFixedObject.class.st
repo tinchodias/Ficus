@@ -82,10 +82,17 @@ FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 			self instVarNamed: slotName put: value ]
 ]
 
+{ #category : #accessing }
+FiFixedObject >> resetCachedHash [
+
+	cachedHash := nil
+]
+
 { #category : #results }
 FiFixedObject >> resultOfAcceptSlot: anAcceptSlot [ 
 
 	^ self copy
+		resetCachedHash;
 		instVarNamed: anAcceptSlot slotName
 		put: ((self instVarNamed: anAcceptSlot slotName) resultOf: anAcceptSlot edit);
 		yourself
@@ -110,6 +117,39 @@ FiFixedObject >> stepsAndValuesDo: aBlockClosure [
 				value: name 
 				value: (self instVarNamed: name)] ]
 
+]
+
+{ #category : #printing }
+FiFixedObject >> storeOn: aStream indent: level [
+
+	aStream 
+		nextPutAll: self className;
+		space.
+		
+	self stepCount isZero 
+		ifTrue: [ 
+			aStream nextPutAll: #new.
+			^ self ]
+		ifFalse: [
+			aStream
+				nextPutAll: #builder;
+				cr ].
+		
+	self stepsAndValuesDo: [ :step :value |
+		aStream 
+			tab: level;
+			nextPutAll: step;
+			nextPutAll: ': ('.
+			
+		value storeOn: aStream indent: level + 1.
+		
+		aStream 
+			nextPutAll: ');';
+			cr. ].
+		
+	aStream 
+		tab: level;
+		nextPutAll: #new.
 ]
 
 { #category : #accessing }

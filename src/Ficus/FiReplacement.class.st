@@ -14,7 +14,7 @@ FiReplacement >> edit [
 	^ oldValue editReplaceBy: newValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #summary }
 FiReplacement >> hierarchicalSummaryFrom: aBasePath [
 	
 	^ #()

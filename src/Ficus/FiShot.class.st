@@ -234,6 +234,18 @@ FiShot >> stonOn: stonWriter [
 				dictionary at: step put: value ] ]
 ]
 
+{ #category : #printing }
+FiShot >> storeOn: aStream [
+
+	self storeOn: aStream indent: 1
+]
+
+{ #category : #printing }
+FiShot >> storeOn: aStream indent: level [
+
+	self subclassResponsibility 
+]
+
 { #category : #comparing }
 FiShot >> uncachedHash [
 	

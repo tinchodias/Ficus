@@ -232,6 +232,38 @@ FiSet >> stonOn: stonWriter [
 
 ]
 
+{ #category : #printing }
+FiSet >> storeOn: aStream indent: level [
+
+	aStream 
+		nextPutAll: self className;
+		space.
+		
+	self stepCount isZero 
+		ifTrue: [ 
+			aStream nextPutAll: #new.
+			^ self ].
+
+	aStream
+		nextPutAll: #withValues:;
+		nextPutAll: ' {';
+		cr.
+		
+	self valuesDo: [ :value |
+		aStream 
+			tab: level.
+		
+		value storeOn: aStream indent: level + 1.
+		
+		aStream 
+			nextPutAll: '.';
+			cr. ].
+		
+	aStream 
+		tab: level;
+		nextPutAll: '}'.
+]
+
 { #category : #accessing }
 FiSet >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 

@@ -13,9 +13,9 @@ FiShotResource >> classA [
 	^ FiClass builder 
 		theName: #A;
 		layout: (self fixedLayoutWithInstanceVariables: #( #a1 #a2 ));
-		methods: (FiSet withValues: { 
+		methods: { 
 			self methodWith: 'sum  ^ a1 + a2'.
-			self methodWith: 'sum42  ^ self sum + 42'. });
+			self methodWith: 'sum42  ^ self sum + 42'. } asFiSet;
 		new.
 ]
 
@@ -25,13 +25,13 @@ FiShotResource >> classB [
 	^ FiClass builder 
 		theName: #B;
 		superclassName: #A;
-		classPool: (FiSet withValues: #(BConstants));
+		classPool: #(BConstants) asFiSet;
 		layout: (self fixedLayoutWithInstanceVariables: #(b1));
-		methods: (FiSet withValues: { 
+		methods: { 
 			self methodWith: 'sum  ^ super sum + b1'.
 			self methodWith: 'variableInSuper  ^ a1'.
 			self methodWith: 'defaultClass  ^ C'.
-			});
+			} asFiSet;
 		new.
 ]
 
@@ -41,24 +41,24 @@ FiShotResource >> classC [
 	^ FiClass builder 
 		theName: #C;
 		layout: (self fixedLayoutWithInstanceVariables: #());
-		methods: (FiSet withValues: { 
+		methods: { 
 			self methodWith: 'sum  ^ 0'.
 			self methodWith: 'undeclared  ^ undeclaredVar'.
-			self methodWith: 'sumAt: argument  ^ argument sum' });
+			self methodWith: 'sumAt: argument  ^ argument sum' } asFiSet;
 		new.
 ]
 
 { #category : #resources }
 FiShotResource >> environmentWithClassesABC [
 
-	^ FiSet withValues: { self packageXWithClassesABC }
+	^ { self packageXWithClassesABC } asFiSet
 ]
 
 { #category : #resources }
 FiShotResource >> fixedLayoutWithInstanceVariables: names [
 	
 	^ FiFixedLayout builder
-		instanceVariables: (FiSet withValues: names);
+		instanceVariables: names asFiSet;
 		new
 ]
 
@@ -77,6 +77,6 @@ FiShotResource >> packageXWithClassesABC [
 	
 	^ FiPackage builder
 		theName: #X;
-		contents: (FiSet withValues: { self classA. self classB. self classC });
+		contents: { self classA. self classB. self classC } asFiSet;
 		new
 ]

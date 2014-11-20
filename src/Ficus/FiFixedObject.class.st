@@ -122,34 +122,36 @@ FiFixedObject >> stepsAndValuesDo: aBlockClosure [
 { #category : #printing }
 FiFixedObject >> storeOn: aStream indent: level [
 
+	self stepCount isZero ifTrue: [ 
+		aStream 
+			nextPutAll: self className;
+			space;
+			nextPutAll: #new.
+		^ self ].
+
 	aStream 
+		nextPut: $(;
 		nextPutAll: self className;
-		space.
-		
-	self stepCount isZero 
-		ifTrue: [ 
-			aStream nextPutAll: #new.
-			^ self ]
-		ifFalse: [
-			aStream
-				nextPutAll: #builder;
-				cr ].
-		
+		space;
+		nextPutAll: #builder;
+		cr.
+	
 	self stepsAndValuesDo: [ :step :value |
 		aStream 
 			tab: level;
 			nextPutAll: step;
-			nextPutAll: ': ('.
+			nextPutAll: ': '.
 			
 		value storeOn: aStream indent: level + 1.
 		
 		aStream 
-			nextPutAll: ');';
+			nextPutAll: ';';
 			cr. ].
 		
 	aStream 
 		tab: level;
-		nextPutAll: #new.
+		nextPutAll: #new;
+		nextPut: $).
 ]
 
 { #category : #accessing }

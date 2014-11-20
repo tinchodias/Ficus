@@ -235,16 +235,17 @@ FiSet >> stonOn: stonWriter [
 { #category : #printing }
 FiSet >> storeOn: aStream indent: level [
 
-	aStream 
-		nextPutAll: self className;
-		space.
-		
-	self stepCount isZero 
-		ifTrue: [ 
-			aStream nextPutAll: #new.
-			^ self ].
+	self isEmpty ifTrue: [ 
+		aStream 
+			nextPutAll: self className;
+			space;
+			nextPutAll: #new.
+		^ self ].
 
-	aStream
+	aStream 
+		nextPut: $(;
+		nextPutAll: self className;
+		space;
 		nextPutAll: #withValues:;
 		nextPutAll: ' {';
 		cr.
@@ -256,12 +257,13 @@ FiSet >> storeOn: aStream indent: level [
 		value storeOn: aStream indent: level + 1.
 		
 		aStream 
-			nextPutAll: '.';
+			nextPut: $.;
 			cr. ].
 		
 	aStream 
 		tab: level;
-		nextPutAll: '}'.
+		nextPutAll: '}';
+		nextPut: $).
 ]
 
 { #category : #accessing }

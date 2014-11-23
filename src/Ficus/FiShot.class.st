@@ -70,6 +70,13 @@ FiShot >> editAll: aCollectionOfEdits [
 	^ FiCompositeEdit withAll: aCollectionOfEdits
 ]
 
+{ #category : #convenience }
+FiShot >> editor [
+	"Answer a FiShotEditor associated with this instance."
+	
+	^ self subclassResponsibility
+]
+
 { #category : #effects }
 FiShot >> effectOf: anEdit [ 
 
@@ -224,7 +231,7 @@ FiShot >> stepsAndValuesDo: aBlockClosure [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #ston }
+{ #category : #printing }
 FiShot >> stonOn: stonWriter [
 
 	stonWriter 

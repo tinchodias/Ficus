@@ -56,6 +56,12 @@ FiFixedObject >> editAt: step equal: value [
 		edit: (FiEqual value: value)
 ]
 
+{ #category : #convenience }
+FiFixedObject >> editor [
+	
+	^ FiFixedObjectEditor for: self
+]
+
 { #category : #effects }
 FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 

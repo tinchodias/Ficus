@@ -223,7 +223,7 @@ FiSet >> stepsAndValuesDo: aBlockClosure [
 			value: each ]
 ]
 
-{ #category : #ston }
+{ #category : #printing }
 FiSet >> stonOn: stonWriter [
 	"Taken from Collection"
 

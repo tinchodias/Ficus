@@ -1,11 +1,11 @@
 Class {
-	#name : #FiShotDifferencesTest,
+	#name : #FiFixedObjectDifferencesTest,
 	#superclass : #TestCase,
 	#category : #'Ficus-Tests-Core-Differences'
 }
 
 { #category : #tests }
-FiShotDifferencesTest >> testReplacement [
+FiFixedObjectDifferencesTest >> testReplacement [
 
 	| source result |
 	result := FiChef nickname: #A.
@@ -18,7 +18,7 @@ FiShotDifferencesTest >> testReplacement [
 ]
 
 { #category : #tests }
-FiShotDifferencesTest >> testReplacement2 [
+FiFixedObjectDifferencesTest >> testReplacement2 [
 
 	| source result |
 	result := 17.
@@ -31,7 +31,7 @@ FiShotDifferencesTest >> testReplacement2 [
 ]
 
 { #category : #tests }
-FiShotDifferencesTest >> testSubAddition [
+FiFixedObjectDifferencesTest >> testSubAddition [
 	"Test difference with a sub edit."
 
 	| edit inverseEdit source result effect inverseEffect |
@@ -54,7 +54,7 @@ FiShotDifferencesTest >> testSubAddition [
 ]
 
 { #category : #tests }
-FiShotDifferencesTest >> testUpdateAndSubAddition [
+FiFixedObjectDifferencesTest >> testUpdateAndSubAddition [
 
 	| edit inverseEdit source result |
 	source := FiChef nickname: #A.

@@ -1,11 +1,11 @@
 Class {
-	#name : #FiShotTest,
+	#name : #FiFixedObjectTest,
 	#superclass : #TestCase,
 	#category : #'Ficus-Tests-Core-Edits'
 }
 
 { #category : #tests }
-FiShotTest >> testSubAddition [
+FiFixedObjectTest >> testSubAddition [
 
 	| edit source result |
 	source := FiChef nickname: #A.
@@ -22,7 +22,7 @@ FiShotTest >> testSubAddition [
 ]
 
 { #category : #tests }
-FiShotTest >> testSubAddition2 [
+FiFixedObjectTest >> testSubAddition2 [
 
 	| edit source item result |
 	source := FiChef nickname: #A.
@@ -40,7 +40,7 @@ FiShotTest >> testSubAddition2 [
 ]
 
 { #category : #tests }
-FiShotTest >> testSubAdditionAndUpdate [
+FiFixedObjectTest >> testSubAdditionAndUpdate [
 
 	| edit source result |
 	source := FiChef nickname: #A.
@@ -64,7 +64,7 @@ FiShotTest >> testSubAdditionAndUpdate [
 ]
 
 { #category : #tests }
-FiShotTest >> testSubRemoval [
+FiFixedObjectTest >> testSubRemoval [
 
 	| edit preSource source result |
 	preSource := FiChef nickname: #A.
@@ -87,7 +87,7 @@ FiShotTest >> testSubRemoval [
 ]
 
 { #category : #tests }
-FiShotTest >> testUpdate [
+FiFixedObjectTest >> testUpdate [
 
 	| edit source result |
 	source := FiChef nickname: #A.

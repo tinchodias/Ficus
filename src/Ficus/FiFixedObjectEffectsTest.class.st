@@ -1,11 +1,11 @@
 Class {
-	#name : #FiShotEffectsTest,
+	#name : #FiFixedObjectEffectsTest,
 	#superclass : #TestCase,
 	#category : #'Ficus-Tests-Core-Effects'
 }
 
 { #category : #tests }
-FiShotEffectsTest >> testNoEffect [
+FiFixedObjectEffectsTest >> testNoEffect [
 
 	| edit effect source result |
 	source := FiChef nickname: #A.
@@ -19,7 +19,7 @@ FiShotEffectsTest >> testNoEffect [
 ]
 
 { #category : #tests }
-FiShotEffectsTest >> testUpdate [
+FiFixedObjectEffectsTest >> testUpdate [
 
 	| edit effect source result |
 	source := FiChef nickname: #A.
@@ -34,7 +34,7 @@ FiShotEffectsTest >> testUpdate [
 ]
 
 { #category : #tests }
-FiShotEffectsTest >> testUpdateAndSubAddition [
+FiFixedObjectEffectsTest >> testUpdateAndSubAddition [
 
 	| source editAdmiredChefs editShortBio edit effect result |
 	source := FiChef nickname: #A.

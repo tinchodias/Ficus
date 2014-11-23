@@ -75,8 +75,7 @@ FiThreeWayMergerTest >> test04IdenticalModification [
 	a1 := FiChef nickname: #A.
 	b1 := FiChef nickname: #B.
 	c1 := FiChef nickname: #C.
-
-	a2 := a1 resultOf: (a1 editAt: #shortBio equal: '42').
+	a2 := a1 editor shortBio: '42'; result.
 
 	self
 		assertMergeBase: {a2. b1} asFiSet
@@ -92,8 +91,7 @@ FiThreeWayMergerTest >> test05ComplexConflictlessMerge [
 	a1 := FiChef nickname: #A.
 	b1 := FiChef nickname: #B.
 	c1 := FiChef nickname: #C.
-
-	a2 := a1 resultOf: (a1 editAt: #shortBio equal: '42').
+	a2 := a1 editor shortBio: '42'; result.
 
 	self
 		assertMergeBase: {a1. b1. d1} asFiSet

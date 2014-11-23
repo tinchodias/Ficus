@@ -124,8 +124,8 @@ FiInspectorOld >> initializePresenter [
 			self panelMorphWithAll: { 
 				(assoc key, ' ·') asMorph.
 				(assoc value isShot 
-					ifTrue: [  self stringMorphWith: ('a ', assoc value species asString) color: Color blue muchDarker ]
-					ifFalse: [ self stringMorphWith: (assoc value printStringLimitedTo: 60) color: Color red muchDarker ]) } ];
+					ifTrue: [  FiMorphBuilder default stringMorphWith: ('a ', assoc value species asString) color: Color blue muchDarker ]
+					ifFalse: [ FiMorphBuilder default stringMorphWith: (assoc value printStringLimitedTo: 60) color: Color red muchDarker ]) } ];
 		childrenBlock: [ :assoc | 
 			assoc value isShot 
 				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]

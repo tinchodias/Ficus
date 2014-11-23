@@ -41,6 +41,23 @@ FiMorphBuilder >> rowMorphWithAll: someMophs [
 ]
 
 { #category : #building }
+FiMorphBuilder >> stringMorphWith: aString [
+
+	^ self 
+		stringMorphWith: aString 
+		color: Color black
+]
+
+{ #category : #building }
+FiMorphBuilder >> stringMorphWith: aString color: aColor [
+
+	^ aString asMorph
+		lock: true;
+		color: aColor;
+		yourself
+]
+
+{ #category : #building }
 FiMorphBuilder >> tagWith: aString color: aColor [
 
 	| aText |

@@ -196,16 +196,8 @@ FiInspector >> showContentsFor: assocOrNil [
 
 	assocOrNil ifNil: [ ^ contentsModel roots: #() ].
 	
-	contentsModel roots: {assocOrNil value asString asText asMorph lock: true; yourself}
+	contentsModel roots: { FiMorphBuilder default stringMorphWith: assocOrNil value storeString asText }
 
-]
-
-{ #category : #private }
-FiInspector >> stringMorphWith: aString color: aColor [
-
-	^ aString asMorph
-		color: aColor;
-		yourself
 ]
 
 { #category : #accessing }

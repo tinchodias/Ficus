@@ -8,6 +8,41 @@ Class {
 }
 
 { #category : #accessing }
+FiMemoryStore >> allPriorsOf: aValue [ 
+	
+	| result pendingPriors |
+	result := OrderedCollection new.
+	pendingPriors := Stack withAll: aValue priors asArray.
+	
+	[ pendingPriors isEmpty ] whileFalse: [ 
+		| current |
+		current := pendingPriors pop.
+		
+		(result includes: current) ifFalse: [
+			result add: current.
+		
+			pendingPriors addAll: current priors asArray ]
+	].
+
+	^ result
+]
+
+{ #category : #accessing }
+FiMemoryStore >> closestCommonHistoryNodeFor: aCollection [ 
+	"Answer the closest common ancestor of all the received FiHistoryNodes."
+	
+	| ancestries commonPriors |
+	self assert: aCollection size >= 2.
+	
+	ancestries := aCollection collect: [ :each | {each}, (self allPriorsOf: each) ].
+	
+	commonPriors := ancestries fold: [ :commons :anAncestry | 
+		commons select: [ :each | anAncestry includes: each ] ].
+	
+	^ commonPriors first "the closest one is at the beginning"
+]
+
+{ #category : #accessing }
 FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 	
 	self invalidateCaches.
@@ -18,21 +53,6 @@ FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 			snapshot: aSnapshot;
 			priors: priors;
 			new)
-]
-
-{ #category : #accessing }
-FiMemoryStore >> commonAncestorOf: aCollection [ 
-	"Answer the closest common ancestor of all the received FiHistoryNodes."
-	
-	| ancestries commonPriors |
-	self assert: aCollection size >= 2.
-	
-	ancestries := aCollection collect: [ :each | {each}, (self priorsOf: each) ].
-	
-	commonPriors := ancestries fold: [ :commons :anAncestry | 
-		commons select: [ :each | anAncestry includes: each ] ].
-	
-	^ commonPriors first "the closest one is at the beginning"
 ]
 
 { #category : #initialization }
@@ -52,24 +72,6 @@ FiMemoryStore >> printOn: aStream [
 		nextPut: $(;
 		print: self hash;
 		nextPut: $).
-]
-
-{ #category : #accessing }
-FiMemoryStore >> priorsOf: aValue [ 
-	
-	| result pendingPriors |
-	result := OrderedCollection new.
-	pendingPriors := Stack withAll: aValue priors asArray.
-	
-	[ pendingPriors isEmpty ] whileFalse: [ 
-		| current |
-		current := pendingPriors pop.
-		result add: current.
-		
-		pendingPriors addAll: current priors asArray.		
-	].
-
-	^ result
 ]
 
 { #category : #refreshing }

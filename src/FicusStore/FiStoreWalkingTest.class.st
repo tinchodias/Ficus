@@ -13,10 +13,10 @@ Class {
 }
 
 { #category : #convenience }
-FiStoreWalkingTest >> assertCommonAncestorOf: aCollection equals: expectedValue [
+FiStoreWalkingTest >> assertClosestCommonHistoryNodeFor: aCollection equals: expectedValue [
 	
 	| commonAncestor |
-	commonAncestor := store commonAncestorOf: aCollection.
+	commonAncestor := store closestCommonHistoryNodeFor: aCollection.
 	
 	self assert: commonAncestor equals: expectedValue
 ]
@@ -59,10 +59,15 @@ FiStoreWalkingTest >> testAlreadyMerged [
 	d := self commitWithPriors: {c}.
 	e := self commitWithPriors: {c}.
 
-	self assertCommonAncestorOf: {e. d} equals: c.	
-	self assertCommonAncestorOf: {e. b} equals: a.	
-	self assertCommonAncestorOf: {e. d} equals: c.	
-	self assertCommonAncestorOf: {e. a} equals: a.	
+	self flag: #todo. "Priors could have a random order here; these are too strong assertions."
+	self assert: (store allPriorsOf: e) asArray equals: {c. a. b}.
+	self assert: (store allPriorsOf: d) asArray equals: {c. a. b}.
+	self assert: (store allPriorsOf: c) asArray equals: {a. b}.
+
+	self assertClosestCommonHistoryNodeFor: {e. d} equals: c.	
+	self assertClosestCommonHistoryNodeFor: {e. b} equals: a.	
+	self assertClosestCommonHistoryNodeFor: {e. d} equals: c.	
+	self assertClosestCommonHistoryNodeFor: {e. a} equals: a.	
 
 ]
 
@@ -80,7 +85,11 @@ FiStoreWalkingTest >> testSimple [
 	b := self commitWithPriors: {a}.
 	c := self commitWithPriors: {a}.
 
-	self assertCommonAncestorOf: {a. a} equals: a.	
-	self assertCommonAncestorOf: {a. b} equals: a.	
-	self assertCommonAncestorOf: {b. c} equals: a.
+	self assert: (store allPriorsOf: a) asArray equals: {}.
+	self assert: (store allPriorsOf: b) asArray equals: {a}.
+	self assert: (store allPriorsOf: c) asArray equals: {a}.
+	
+	self assertClosestCommonHistoryNodeFor: {a. a} equals: a.	
+	self assertClosestCommonHistoryNodeFor: {a. b} equals: a.	
+	self assertClosestCommonHistoryNodeFor: {b. c} equals: a.
 ]

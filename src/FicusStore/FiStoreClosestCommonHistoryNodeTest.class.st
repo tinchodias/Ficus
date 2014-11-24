@@ -27,11 +27,6 @@ FiStoreClosestCommonHistoryNodeTest >> testAlreadyMerged [
 	a
 	"
 	self setUpAlreadyMergedStore.
-	
-	self flag: #todo. "Priors could have a random order here; these are too strong assertions."
-	self assert: (store allPriorsOf: e) equals: {c. a. b}.
-	self assert: (store allPriorsOf: d) equals: {c. a. b}.
-	self assert: (store allPriorsOf: c) equals: {a. b}.
 
 	self assertClosestCommonHistoryNodeFor: {e. d} equals: c.	
 	self assertClosestCommonHistoryNodeFor: {e. b} equals: a.	
@@ -50,14 +45,6 @@ FiStoreClosestCommonHistoryNodeTest >> testSimple [
 	a
 	"
 	self setUpSimpleStore.
-	
-	a := self commitWithPriors: {}.
-	b := self commitWithPriors: {a}.
-	c := self commitWithPriors: {a}.
-
-	self assert: (store allPriorsOf: a) equals: {}.
-	self assert: (store allPriorsOf: b) equals: {a}.
-	self assert: (store allPriorsOf: c) equals: {a}.
 	
 	self assertClosestCommonHistoryNodeFor: {a. a} equals: a.	
 	self assertClosestCommonHistoryNodeFor: {a. b} equals: a.	

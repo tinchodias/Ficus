@@ -24,7 +24,7 @@ FiMemoryStore >> allPriorsOf: aValue [
 			pendingPriors addAll: current priors asArray ]
 	].
 
-	^ result
+	^ result asArray
 ]
 
 { #category : #accessing }

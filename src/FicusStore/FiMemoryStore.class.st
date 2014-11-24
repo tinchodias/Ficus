@@ -7,7 +7,7 @@ Class {
 	#category : #'FicusStore-Stores'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 	
 	self invalidateCaches.
@@ -20,21 +20,22 @@ FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 			new)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiMemoryStore >> commonAncestorOf: aCollection [ 
 	"Answer the closest common ancestor of all the received FiHistoryNodes."
 	
-	| allPriors commonPriors |
+	| ancestries commonPriors |
 	self assert: aCollection size >= 2.
 	
-	allPriors := aCollection collect: [ :each | {each}, (self priorsOf: each) ].
+	ancestries := aCollection collect: [ :each | {each}, (self priorsOf: each) ].
 	
-	commonPriors := allPriors fold: [ :each :another | each intersection: another ].
+	commonPriors := ancestries fold: [ :commons :anAncestry | 
+		commons select: [ :each | anAncestry includes: each ] ].
 	
 	^ commonPriors first "the closest one is at the beginning"
 ]
 
-{ #category : #refreshing }
+{ #category : #initialization }
 FiMemoryStore >> initialize [
 
 	super initialize.
@@ -53,7 +54,7 @@ FiMemoryStore >> printOn: aStream [
 		nextPut: $).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiMemoryStore >> priorsOf: aValue [ 
 	
 	| result pendingPriors |

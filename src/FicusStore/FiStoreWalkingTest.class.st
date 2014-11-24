@@ -5,6 +5,8 @@ Class {
 		'a',
 		'b',
 		'c',
+		'd',
+		'e',
 		'store'
 	],
 	#category : #'FicusStore-Stores'
@@ -38,6 +40,33 @@ FiStoreWalkingTest >> setUp [
 ]
 
 { #category : #tests }
+FiStoreWalkingTest >> testAlreadyMerged [
+	"
+	e
+	|
+	| d
+	|/
+	c
+	|\
+	| b
+	|/
+	a
+	"
+	
+	a := self commitWithPriors: {}.
+	b := self commitWithPriors: {a}.
+	c := self commitWithPriors: {a. b}.
+	d := self commitWithPriors: {c}.
+	e := self commitWithPriors: {c}.
+
+	self assertCommonAncestorOf: {e. d} equals: c.	
+	self assertCommonAncestorOf: {e. b} equals: a.	
+	self assertCommonAncestorOf: {e. d} equals: c.	
+	self assertCommonAncestorOf: {e. a} equals: a.	
+
+]
+
+{ #category : #tests }
 FiStoreWalkingTest >> testSimple [
 	"
 	c
@@ -53,6 +82,5 @@ FiStoreWalkingTest >> testSimple [
 
 	self assertCommonAncestorOf: {a. a} equals: a.	
 	self assertCommonAncestorOf: {a. b} equals: a.	
-	self assertCommonAncestorOf: {b. a} equals: a.	
 	self assertCommonAncestorOf: {b. c} equals: a.
 ]

@@ -20,12 +20,6 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
-{ #category : #'instance creation' }
-FiShot class >> builder [
-	
-	^ FiShotBuilder forClass: self
-]
-
 { #category : #accessing }
 FiShot class >> excludedInstanceVariableNamesForSteps [
 

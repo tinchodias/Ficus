@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 FiDictionary class >> new [
 
-	^ self builder new
+	^ self newFromStepsAndValues: Dictionary new
 ]
 
 { #category : #differencing }
@@ -183,5 +183,6 @@ FiDictionary >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 
 { #category : #accessing }
 FiDictionary >> valueByKey [
+
 	^ valueByKey
 ]

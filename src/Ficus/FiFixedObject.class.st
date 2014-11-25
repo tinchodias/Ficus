@@ -7,6 +7,12 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
+{ #category : #'instance creation' }
+FiFixedObject class >> builder [
+	
+	^ FiShotBuilder forClass: self
+]
+
 { #category : #differencing }
 FiFixedObject >> differenceFrom: other [
 

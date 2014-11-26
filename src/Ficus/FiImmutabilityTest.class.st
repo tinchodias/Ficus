@@ -26,9 +26,8 @@ FiImmutabilityTest class >> removeAllCandidates [
 { #category : #running }
 FiImmutabilityTest >> assertHasNotSetters: shotClass [
 
-	(shotClass allInstVarNames copyWithoutAll: shotClass excludedInstanceVariableNamesForSteps) 
-		do: [ :instanceVariableName |
-			self assertHasNotSetters: shotClass instanceVariableName: instanceVariableName ]
+	shotClass steps do: [ :instanceVariableName |
+		self assertHasNotSetters: shotClass instanceVariableName: instanceVariableName ]
 ]
 
 { #category : #running }

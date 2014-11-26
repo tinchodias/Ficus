@@ -20,18 +20,19 @@ Class {
 	#category : #'Ficus-Model-Core'
 }
 
-{ #category : #accessing }
-FiShot class >> excludedInstanceVariableNamesForSteps [
-
-	^ #(cachedHash)
-]
-
 { #category : #'instance creation' }
 FiShot class >> newFromStepsAndValues: aCollection [ 
 	
 	^ self basicNew
 		initializeFromStepsAndValues: aCollection;
 		yourself
+]
+
+{ #category : #accessing }
+FiShot class >> steps [
+	"Answer the collection of steps that all of my instances must have."
+	
+	^ #()
 ]
 
 { #category : #comparing }
@@ -240,6 +241,12 @@ FiShot >> stonOn: stonWriter [
 		streamMap: [ :dictionary | 
 			self stepsAndValuesDo: [ :step :value | 
 				dictionary at: step put: value ] ]
+]
+
+{ #category : #printing }
+FiShot >> stonString [
+
+	^ STON toStringPretty: self
 ]
 
 { #category : #printing }

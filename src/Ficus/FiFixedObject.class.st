@@ -13,6 +13,18 @@ FiFixedObject class >> builder [
 	^ FiShotBuilder forClass: self
 ]
 
+{ #category : #accessing }
+FiFixedObject class >> excludedInstanceVariableNamesForSteps [
+
+	^ #(cachedHash)
+]
+
+{ #category : #accessing }
+FiFixedObject class >> steps [
+
+	^ self allInstVarNames copyWithoutAll: self excludedInstanceVariableNamesForSteps 
+]
+
 { #category : #differencing }
 FiFixedObject >> differenceFrom: other [
 
@@ -75,14 +87,13 @@ FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 { #category : #initialization }
 FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 
-	| excludedInstanceVariableNames |
-	excludedInstanceVariableNames := self class excludedInstanceVariableNamesForSteps.
+	| availableSteps |
+	availableSteps := self class steps.
 	self initialize.
 	
 	aDictionary 
 		keysAndValuesDo: [ :slotName :value |
-			(excludedInstanceVariableNames includes: slotName)
-				ifTrue: [ self error ].
+			(availableSteps includes: slotName) ifFalse: [ self error ].
 
 			self instVarNamed: slotName put: value ]
 ]
@@ -124,20 +135,16 @@ FiFixedObject >> resultOfHierarchicalSummary: aHierarchicalSummary [
 { #category : #accessing }
 FiFixedObject >> stepCount [
 	
-	^ self class allInstVarNames size - self class excludedInstanceVariableNamesForSteps size
+	^ self class steps size
 ]
 
 { #category : #enumerating }
 FiFixedObject >> stepsAndValuesDo: aBlockClosure [ 
 
-	| excludedInstanceVariableNames |
-	excludedInstanceVariableNames := self class excludedInstanceVariableNamesForSteps.
-
-	^ self class allInstVarNames do: [ :name |
-		(excludedInstanceVariableNames includes: name) ifFalse: [
-			aBlockClosure 
-				value: name 
-				value: (self instVarNamed: name)] ]
+	^ self class steps do: [ :name |
+		aBlockClosure 
+			value: name 
+			value: (self instVarNamed: name) ]
 
 ]
 

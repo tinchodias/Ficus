@@ -27,6 +27,9 @@ FiDictionarySummariesTest >> testAddition [
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
 
+	self 
+		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		equals: (source resultOf: effect edit).
 ]
 
 { #category : #tests }
@@ -44,6 +47,10 @@ FiDictionarySummariesTest >> testNoEffect [
 
 	self assert: effect flattenedLeafEffects isEmpty.
 	self assert: effect hierarchicalSummary isEmpty.
+	
+	self 
+		assert: (intermediate resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		equals: (intermediate resultOf: effect edit).
 ]
 
 { #category : #tests }
@@ -72,6 +79,9 @@ FiDictionarySummariesTest >> testRemoval [
 	self assert: summary anyOne subSummary isNotEmpty.
 	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
 
+	self 
+		assert: (intermediate resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		equals: (intermediate resultOf: effect edit).
 ]
 
 { #category : #tests }
@@ -101,5 +111,9 @@ FiDictionarySummariesTest >> testUpdate [
 				oldValue: shot; 
 				newValue: otherShot; 
 				subSummary: #();
-				new }
+				new }.
+				
+	self 
+		assert: (intermediate resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		equals: (intermediate resultOf: effect edit).
 ]

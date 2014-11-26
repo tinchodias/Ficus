@@ -9,6 +9,21 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #convenience }
+FiEditEffect class >> fromAll: subEffects [
+
+	self flag: #todo. "Avoid this IFs using double dispatch like #composedWith: ?"
+
+	^ subEffects
+		ifEmpty: [ FiNoEffect new ]
+		ifNotEmpty: [ subEffects size = 1
+			ifTrue: [ subEffects anyOne ]
+			ifFalse: [ 
+				FiCompositeEffect builder
+					subEffects: subEffects asFiSet;
+					new ] ]
+]
+
 { #category : #accessing }
 FiEditEffect >> edit [
 

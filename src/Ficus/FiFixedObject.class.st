@@ -36,14 +36,7 @@ FiFixedObject >> differenceFrom: other [
 					subEffect: subDifference;
 					new) ] ].
 
-	^ subEffects
-		ifEmpty: [ FiNoEffect new ]
-		ifNotEmpty: [ subEffects size = 1
-			ifTrue: [ subEffects anyOne ]
-			ifFalse: [ 
-				FiCompositeEffect builder
-					subEffects: subEffects asFiSet;
-					new ] ]
+	^ FiEditEffect fromAll: subEffects
 ]
 
 { #category : #edits }
@@ -109,6 +102,23 @@ FiFixedObject >> resultOfAcceptSlot: anAcceptSlot [
 		put: ((self instVarNamed: anAcceptSlot slotName) resultOf: anAcceptSlot edit);
 		yourself
 
+]
+
+{ #category : #summary }
+FiFixedObject >> resultOfHierarchicalSummary: aHierarchicalSummary [
+	"Each item in aHierarchicalSummary is an update."
+	
+	| result |
+	result := aHierarchicalSummary 
+		inject: self 
+		into: [ :aShot :aSummary |
+			| edit |
+			edit := aShot 
+				editAt: aSummary path step 
+				equal: aSummary newValue.
+			aShot resultOf: edit ].
+		
+	^ result
 ]
 
 { #category : #accessing }

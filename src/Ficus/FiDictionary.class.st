@@ -55,14 +55,7 @@ FiDictionary >> differenceFrom: other [
 					newValue: value;
 					new) ] ].
 	
-	^ subEffects
-		ifEmpty: [ FiNoEffect new ]
-		ifNotEmpty: [ subEffects size = 1
-			ifTrue: [ subEffects anyOne ]
-			ifFalse: [ 
-				FiCompositeEffect builder
-					subEffects: subEffects asFiSet;
-					new ] ]
+	^ FiEditEffect fromAll: subEffects
 ]
 
 { #category : #edits }
@@ -152,6 +145,23 @@ FiDictionary >> resultOfExcludeKey: anExcludeKey [
 			(valueByKey copy
 				removeKey: anExcludeKey key;
 				yourself)
+]
+
+{ #category : #summary }
+FiDictionary >> resultOfHierarchicalSummary: aHierarchicalSummary [
+	
+	| result |
+	result := aHierarchicalSummary 
+		inject: self 
+		into: [ :aShot :aSummary |
+			| edit |
+			edit := aSummary 
+				ifAdd: [ aShot editAt: aSummary path step equal: aSummary newValue ] 
+				ifRemove: [ aShot editExclude: aSummary path step ] 
+				ifUpdate: [ aShot editAt: aSummary path step equal: aSummary newValue ].
+			aShot resultOf: edit ].
+		
+	^ result
 ]
 
 { #category : #enumerating }

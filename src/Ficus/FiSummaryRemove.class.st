@@ -7,6 +7,12 @@ Class {
 	#category : #'Ficus-UI-Model'
 }
 
+{ #category : #testing }
+FiSummaryRemove >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
+	
+	^ removeBlock cull: self
+]
+
 { #category : #accessing }
 FiSummaryRemove >> oldValue [
 	

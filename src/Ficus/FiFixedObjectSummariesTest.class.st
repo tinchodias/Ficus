@@ -16,6 +16,9 @@ FiFixedObjectSummariesTest >> testNoEffect [
 	self assert: effect flattenedLeafEffects isEmpty.
 	self assert: effect hierarchicalSummary isEmpty.
 
+	self 
+		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		equals: (source resultOf: effect edit).
 ]
 
 { #category : #tests }
@@ -39,8 +42,11 @@ FiFixedObjectSummariesTest >> testUpdate [
 				oldValue: ''; 
 				newValue: '42'; 
 				subSummary: #();
-				new }
+				new }.
 
+	self 
+		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		equals: (source resultOf: effect edit).
 ]
 
 { #category : #tests }
@@ -80,8 +86,8 @@ FiFixedObjectSummariesTest >> testUpdateAndSubAddition [
 	self 
 		assert: effect flattenedLeafEffects 
 		equals: { 
-			FiPath root / #admiredChefs -> leafEffectOfEditAdmiredChefs.
-			FiPath root / #shortBio -> leafEffectOfEditShortBio.
+			#(admiredChefs) asFicusPath -> leafEffectOfEditAdmiredChefs.
+			#(shortBio) asFicusPath -> leafEffectOfEditShortBio.
 			}.
 
 	self 
@@ -103,5 +109,9 @@ FiFixedObjectSummariesTest >> testUpdateAndSubAddition [
 				oldValue: ''; 
 				newValue: '42'; 
 				subSummary: #();
-				new)} asSet
+				new)} asSet.
+			
+	self 
+		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		equals: (source resultOf: effect edit).
 ]

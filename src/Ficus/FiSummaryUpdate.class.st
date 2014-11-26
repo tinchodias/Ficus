@@ -8,6 +8,12 @@ Class {
 	#category : #'Ficus-UI-Model'
 }
 
+{ #category : #testing }
+FiSummaryUpdate >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
+	
+	^ updateBlock cull: self
+]
+
 { #category : #accessing }
 FiSummaryUpdate >> newValue [
 	

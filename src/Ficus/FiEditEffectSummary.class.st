@@ -8,6 +8,12 @@ Class {
 	#category : #'Ficus-UI-Model'
 }
 
+{ #category : #testing }
+FiEditEffectSummary >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
+	
+	^ self subclassResponsibility 
+]
+
 { #category : #enumerating }
 FiEditEffectSummary >> leavesDo: aBlockClosure [
 	

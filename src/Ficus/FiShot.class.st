@@ -165,6 +165,13 @@ FiShot >> resultOfCompositeEdit: aCompositeEdit [
 		into: [ :copy :edit | copy resultOf: edit ]
 ]
 
+{ #category : #summary }
+FiShot >> resultOfHierarchicalSummary: aHierarchicalSummary [
+	"Answer the result of applying aHierarchicalSummary."
+
+	^ self subclassResponsibility 
+]
+
 { #category : #results }
 FiShot >> resultOfSubEdit: aSubEdit [ 
 	

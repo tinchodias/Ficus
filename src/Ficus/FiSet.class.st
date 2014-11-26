@@ -93,14 +93,7 @@ FiSet >> differenceFrom: other [
 					newValue: value;
 					new) ] ].
 	
-	^ subEffects
-		ifEmpty: [ FiNoEffect new ]
-		ifNotEmpty: [ subEffects size = 1
-			ifTrue: [ subEffects anyOne ]
-			ifFalse: [ 
-				FiCompositeEffect builder
-					subEffects: subEffects asFiSet;
-					new ] ]
+	^ FiEditEffect fromAll: subEffects
 ]
 
 { #category : #edits }
@@ -192,6 +185,23 @@ FiSet >> printOn: aStream [
 FiSet >> resultOfExclude: anExclude [ 
 
 	^ self species withValues: (self values copyWithout: anExclude theValue)
+]
+
+{ #category : #summary }
+FiSet >> resultOfHierarchicalSummary: aHierarchicalSummary [
+	
+	| result |
+	result := aHierarchicalSummary 
+		inject: self 
+		into: [ :aShot :aSummary |
+			| edit |
+			edit := aSummary 
+				ifAdd: [ aShot editInclude: aSummary newValue ] 
+				ifRemove: [ aShot editExclude: aSummary oldValue ] 
+				ifUpdate: [ aShot editInclude: aSummary newValue ].
+			aShot resultOf: edit ].
+		
+	^ result
 ]
 
 { #category : #results }

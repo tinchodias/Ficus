@@ -93,7 +93,7 @@ FiSet >> differenceFrom: other [
 					newValue: value;
 					new) ] ].
 	
-	^ FiEditEffect fromAll: subEffects
+	^ FiEffect fromAll: subEffects
 ]
 
 { #category : #edits }

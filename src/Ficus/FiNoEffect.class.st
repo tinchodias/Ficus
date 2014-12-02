@@ -1,6 +1,6 @@
 Class {
 	#name : #FiNoEffect,
-	#superclass : #FiEditEffect,
+	#superclass : #FiEffect,
 	#category : #'Ficus-Model-Core-Effects'
 }
 

@@ -4,13 +4,13 @@ I represent an abstract edit effect on a shot. FiEdits know how to create effect
 See class comment of FiShot.
 "
 Class {
-	#name : #FiEditEffect,
+	#name : #FiEffect,
 	#superclass : #FiFixedObject,
 	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #convenience }
-FiEditEffect class >> fromAll: subEffects [
+FiEffect class >> fromAll: subEffects [
 
 	self flag: #todo. "Avoid this IFs using double dispatch like #composedWith: ?"
 
@@ -25,19 +25,19 @@ FiEditEffect class >> fromAll: subEffects [
 ]
 
 { #category : #converting }
-FiEditEffect >> asSimpleEffects [
+FiEffect >> asSimpleEffects [
 
 	^ self asSimpleEffectAt: FiPath root
 ]
 
 { #category : #accessing }
-FiEditEffect >> edit [
+FiEffect >> edit [
 
 	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
-FiEditEffect >> flattenedLeafEffects [
+FiEffect >> flattenedLeafEffects [
 	
 	^ Array streamContents: [ :stream |
 		self 
@@ -47,19 +47,19 @@ FiEditEffect >> flattenedLeafEffects [
 ]
 
 { #category : #accessing }
-FiEditEffect >> inverse [
+FiEffect >> inverse [
 
 	^ self subclassResponsibility 
 ]
 
 { #category : #testing }
-FiEditEffect >> isNoEffect [
+FiEffect >> isNoEffect [
 
 	^ false
 ]
 
 { #category : #enumerating }
-FiEditEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
+FiEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
 	
 	^ aBlockClosure 
 		value: self 

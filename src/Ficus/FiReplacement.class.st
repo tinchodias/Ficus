@@ -1,6 +1,6 @@
 Class {
 	#name : #FiReplacement,
-	#superclass : #FiEditEffect,
+	#superclass : #FiEffect,
 	#instVars : [
 		'oldValue',
 		'newValue'

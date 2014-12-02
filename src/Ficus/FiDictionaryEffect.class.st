@@ -1,6 +1,6 @@
 Class {
 	#name : #FiDictionaryEffect,
-	#superclass : #FiEditEffect,
+	#superclass : #FiEffect,
 	#instVars : [
 		'key'
 	],

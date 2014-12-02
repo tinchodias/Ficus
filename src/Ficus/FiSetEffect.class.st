@@ -1,5 +1,5 @@
 Class {
 	#name : #FiSetEffect,
-	#superclass : #FiEditEffect,
+	#superclass : #FiEffect,
 	#category : #'Ficus-Model-Core-Effects'
 }

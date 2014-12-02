@@ -1,6 +1,6 @@
 Class {
 	#name : #FiSlotUpdate,
-	#superclass : #FiEditEffect,
+	#superclass : #FiEffect,
 	#instVars : [
 		'slotName',
 		'newValue',

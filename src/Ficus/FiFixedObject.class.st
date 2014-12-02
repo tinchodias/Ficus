@@ -48,7 +48,7 @@ FiFixedObject >> differenceFrom: other [
 					subEffect: subDifference;
 					new) ] ].
 
-	^ FiEditEffect fromAll: subEffects
+	^ FiEffect fromAll: subEffects
 ]
 
 { #category : #edits }

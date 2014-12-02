@@ -1,6 +1,6 @@
 Class {
 	#name : #FiCompositeEffect,
-	#superclass : #FiEditEffect,
+	#superclass : #FiEffect,
 	#instVars : [
 		'subEffects'
 	],

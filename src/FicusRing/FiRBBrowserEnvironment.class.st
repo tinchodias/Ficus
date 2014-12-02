@@ -41,7 +41,7 @@ Class {
 	#name : #FiRBBrowserEnvironment,
 	#superclass : #RBBrowserEnvironment,
 	#instVars : [
-		'ringEnvironment'
+		'environment'
 	],
 	#category : #'FicusRing-AST'
 }
@@ -49,23 +49,19 @@ Class {
 { #category : #'accessing-classes' }
 FiRBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
 
-	^ ringEnvironment 
+	^ environment 
 		at: aKey
 		ifAbsent: aBlock
 ]
 
 { #category : #accessing }
 FiRBBrowserEnvironment >> environment: anObject [
-	ringEnvironment := anObject
-]
 
-{ #category : #accessing }
-FiRBBrowserEnvironment >> ringEnvironment [
-	^ ringEnvironment
+	environment := anObject
 ]
 
 { #category : #private }
 FiRBBrowserEnvironment >> systemDictionary [
 
-	^ ringEnvironment
+	^ environment
 ]

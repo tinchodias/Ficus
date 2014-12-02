@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : #converting }
-FiDictionaryUpdate >> asSimpleEffectAt: aBasePath [
+FiDictionaryUpdate >> asSimpleEffectsAt: aBasePath [
 
 	^ { FiUpdate builder 
 			path: aBasePath / key;
 			oldValue: oldValue; 
 			newValue: newValue; 
-			children: (subEffect asSimpleEffectAt: aBasePath / key);
+			children: (subEffect asSimpleEffectsAt: aBasePath / key);
 			new }
 ]
 

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #converting }
-FiNoEffect >> asSimpleEffectAt: aBasePath [
+FiNoEffect >> asSimpleEffectsAt: aBasePath [
 	
 	^ #()
 ]

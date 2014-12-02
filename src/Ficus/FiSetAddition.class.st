@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #converting }
-FiSetAddition >> asSimpleEffectAt: aBasePath [
+FiSetAddition >> asSimpleEffectsAt: aBasePath [
 	
 	^ { newValue 
 			ficusDeepCollect: [ :shot :path :collectionFromChildren | 

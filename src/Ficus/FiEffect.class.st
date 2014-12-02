@@ -27,7 +27,7 @@ FiEffect class >> fromAll: subEffects [
 { #category : #converting }
 FiEffect >> asSimpleEffects [
 
-	^ self asSimpleEffectAt: FiPath root
+	^ self asSimpleEffectsAt: FiPath root
 ]
 
 { #category : #accessing }

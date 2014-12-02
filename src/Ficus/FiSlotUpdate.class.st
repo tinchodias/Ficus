@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #converting }
-FiSlotUpdate >> asSimpleEffectAt: aBasePath [
+FiSlotUpdate >> asSimpleEffectsAt: aBasePath [
 
 	^ { FiUpdate builder 
 			path: aBasePath / slotName;
 			oldValue: oldValue; 
 			newValue: newValue; 
-			children: (subEffect asSimpleEffectAt: aBasePath / slotName);
+			children: (subEffect asSimpleEffectsAt: aBasePath / slotName);
 			new }
 ]
 

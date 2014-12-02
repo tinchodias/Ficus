@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #converting }
-FiReplacement >> asSimpleEffectAt: aBasePath [
+FiReplacement >> asSimpleEffectsAt: aBasePath [
 	
 	^ #()
 ]

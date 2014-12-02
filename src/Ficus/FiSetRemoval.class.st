@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #converting }
-FiSetRemoval >> asSimpleEffectAt: aBasePath [
+FiSetRemoval >> asSimpleEffectsAt: aBasePath [
 	
 	^ { oldValue 
 			ficusDeepCollect: [ :shot :path :collectionFromChildren | 

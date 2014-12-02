@@ -2,7 +2,7 @@ Class {
 	#name : #FiClassDependenciesCollectorTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'ringShotResource'
+		'ringObjectResource'
 	],
 	#category : #'FicusImpact-Tests'
 }
@@ -20,14 +20,14 @@ FiClassDependenciesCollectorTest >> setUp [
 
 	super setUp.
 	
-	ringShotResource := FiRGShotResource new
+	ringObjectResource := FiRGObjectResource new
 ]
 
 { #category : #tests }
 FiClassDependenciesCollectorTest >> testClassA [
 
 	self 
-		assertDependenciesOf: ringShotResource classA
+		assertDependenciesOf: ringObjectResource classA
 		equals: {
 			}
 ]
@@ -36,7 +36,7 @@ FiClassDependenciesCollectorTest >> testClassA [
 FiClassDependenciesCollectorTest >> testClassB [
 
 	self 
-		assertDependenciesOf: ringShotResource classB
+		assertDependenciesOf: ringObjectResource classB
 		equals: {
 			FiClassReference builder
 				theName: #A;

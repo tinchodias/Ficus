@@ -7,10 +7,10 @@ Class {
 { #category : #public }
 FiClassDependenciesCollector >> dependenciesFor: aRingClass [ 
 
-	aRingClass shot hasNullSuperclass ifTrue: [ ^ #() ].
+	aRingClass classShot hasNullSuperclass ifTrue: [ ^ #() ].
 	
 	^ { 
 		FiClassReference builder
-			theName: aRingClass shot superclassName;
+			theName: aRingClass classShot superclassName;
 			new }
 ]

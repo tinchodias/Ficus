@@ -59,6 +59,12 @@ FiTrait >> isFicusClass [
 ]
 
 { #category : #testing }
+FiTrait >> isFicusExtensionMethods [
+
+	^ false
+]
+
+{ #category : #testing }
 FiTrait >> isFicusTrait [
 
 	^ true

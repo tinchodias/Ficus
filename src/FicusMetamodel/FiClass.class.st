@@ -83,6 +83,12 @@ FiClass >> isFicusClass [
 ]
 
 { #category : #testing }
+FiClass >> isFicusExtensionMethods [
+
+	^ false
+]
+
+{ #category : #testing }
 FiClass >> isFicusTrait [
 
 	^ false

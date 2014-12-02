@@ -62,7 +62,7 @@ FiSet >> collect: aBlockClosure [
 	
 	| newSet |
 	newSet := Set new: self size.
-	self valuesDo: [ :each | newSet add: each ].
+	self valuesDo: [ :each | newSet add: (aBlockClosure value: each) ].
 	^ newSet
 ]
 

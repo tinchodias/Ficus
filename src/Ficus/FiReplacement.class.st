@@ -8,16 +8,16 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #converting }
+FiReplacement >> asSimpleEffectAt: aBasePath [
+	
+	^ #()
+]
+
 { #category : #accessing }
 FiReplacement >> edit [
 	
 	^ oldValue editReplaceBy: newValue
-]
-
-{ #category : #summary }
-FiReplacement >> hierarchicalSummaryFrom: aBasePath [
-	
-	^ #()
 ]
 
 { #category : #accessing }

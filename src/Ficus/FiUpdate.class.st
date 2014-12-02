@@ -1,27 +1,27 @@
 Class {
-	#name : #FiSummaryUpdate,
-	#superclass : #FiEditEffectSummary,
+	#name : #FiUpdate,
+	#superclass : #FiSimpleEffect,
 	#instVars : [
 		'newValue',
 		'oldValue'
 	],
-	#category : #'Ficus-UI-Model'
+	#category : #'Ficus-Model-Core-SimpleEffects'
 }
 
 { #category : #testing }
-FiSummaryUpdate >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
+FiUpdate >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
 	
 	^ updateBlock cull: self
 ]
 
 { #category : #accessing }
-FiSummaryUpdate >> newValue [
+FiUpdate >> newValue [
 	
 	^ newValue
 ]
 
 { #category : #printing }
-FiSummaryUpdate >> newValueString [
+FiUpdate >> newValueString [
 
 	^ (newValue isShot 
 		ifTrue: [ newValue values ]
@@ -29,13 +29,13 @@ FiSummaryUpdate >> newValueString [
 ]
 
 { #category : #accessing }
-FiSummaryUpdate >> oldValue [
+FiUpdate >> oldValue [
 	
 	^ oldValue
 ]
 
 { #category : #printing }
-FiSummaryUpdate >> oldValueString [
+FiUpdate >> oldValueString [
 
 	^ (oldValue isShot 
 		ifTrue: [ oldValue values ]

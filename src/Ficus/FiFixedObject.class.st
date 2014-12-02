@@ -116,17 +116,17 @@ FiFixedObject >> resultOfAcceptSlot: anAcceptSlot [
 ]
 
 { #category : #summary }
-FiFixedObject >> resultOfHierarchicalSummary: aHierarchicalSummary [
-	"Each item in aHierarchicalSummary is an update."
+FiFixedObject >> resultOfSimpleEffects: simpleEffects [
+	"Each item in simpleEffects is an update."
 	
 	| result |
-	result := aHierarchicalSummary 
+	result := simpleEffects 
 		inject: self 
-		into: [ :aShot :aSummary |
+		into: [ :aShot :aSimpleEffect |
 			| edit |
 			edit := aShot 
-				editAt: aSummary path step 
-				equal: aSummary newValue.
+				editAt: aSimpleEffect path step 
+				equal: aSimpleEffect newValue.
 			aShot resultOf: edit ].
 		
 	^ result

@@ -166,9 +166,9 @@ FiShot >> resultOfCompositeEdit: aCompositeEdit [
 		into: [ :copy :edit | copy resultOf: edit ]
 ]
 
-{ #category : #summary }
-FiShot >> resultOfHierarchicalSummary: aHierarchicalSummary [
-	"Answer the result of applying aHierarchicalSummary."
+{ #category : #results }
+FiShot >> resultOfSimpleEffects: simpleEffects [
+	"Answer the result of applying simpleEffects."
 
 	^ self subclassResponsibility 
 ]

@@ -9,23 +9,23 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #converting }
+FiDictionaryUpdate >> asSimpleEffectAt: aBasePath [
+
+	^ { FiUpdate builder 
+			path: aBasePath / key;
+			oldValue: oldValue; 
+			newValue: newValue; 
+			children: (subEffect asSimpleEffectAt: aBasePath / key);
+			new }
+]
+
 { #category : #accessing }
 FiDictionaryUpdate >> edit [
 
 	^ FiAcceptKey 
 		key: key
 		edit: (FiEqual value: newValue)
-]
-
-{ #category : #summary }
-FiDictionaryUpdate >> hierarchicalSummaryFrom: aBasePath [
-
-	^ { FiSummaryUpdate builder 
-			path: aBasePath / key;
-			oldValue: oldValue; 
-			newValue: newValue; 
-			subSummary: (subEffect hierarchicalSummaryFrom: aBasePath / key);
-			new }
 ]
 
 { #category : #accessing }

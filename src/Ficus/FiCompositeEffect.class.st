@@ -7,17 +7,17 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #converting }
+FiCompositeEffect >> asSimpleEffectAt: aBasePath [
+
+	^ subEffects values flatCollect: [ :each |
+		each asSimpleEffectAt: aBasePath ]
+]
+
 { #category : #accessing }
 FiCompositeEffect >> edit [
 	
 	^ self editAll: (subEffects values collect: #edit)
-]
-
-{ #category : #summary }
-FiCompositeEffect >> hierarchicalSummaryFrom: aBasePath [
-
-	^ subEffects values flatCollect: [ :each |
-		each hierarchicalSummaryFrom: aBasePath ]
 ]
 
 { #category : #accessing }

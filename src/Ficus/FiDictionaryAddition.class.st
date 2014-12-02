@@ -7,25 +7,25 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #converting }
+FiDictionaryAddition >> asSimpleEffectAt: aBasePath [
+	
+	^ { newValue 
+			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+				FiAddition builder 
+					path: path;
+					newValue: shot; 
+					children: collectionFromChildren;
+					new ] 
+			basePath: aBasePath / key }
+]
+
 { #category : #accessing }
 FiDictionaryAddition >> edit [
 	
 	^ FiAcceptKey 
 		key: key
 		edit: (FiEqual value: newValue)
-]
-
-{ #category : #summary }
-FiDictionaryAddition >> hierarchicalSummaryFrom: aBasePath [
-	
-	^ { newValue 
-			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
-				FiSummaryAdd builder 
-					path: path;
-					newValue: shot; 
-					subSummary: collectionFromChildren;
-					new ] 
-			basePath: aBasePath / key }
 ]
 
 { #category : #accessing }

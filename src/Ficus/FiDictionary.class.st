@@ -147,18 +147,18 @@ FiDictionary >> resultOfExcludeKey: anExcludeKey [
 				yourself)
 ]
 
-{ #category : #summary }
-FiDictionary >> resultOfHierarchicalSummary: aHierarchicalSummary [
+{ #category : #results }
+FiDictionary >> resultOfSimpleEffects: simpleEffects [
 	
 	| result |
-	result := aHierarchicalSummary 
+	result := simpleEffects 
 		inject: self 
-		into: [ :aShot :aSummary |
+		into: [ :aShot :aSimpleEffect |
 			| edit |
-			edit := aSummary 
-				ifAdd: [ aShot editAt: aSummary path step equal: aSummary newValue ] 
-				ifRemove: [ aShot editExclude: aSummary path step ] 
-				ifUpdate: [ aShot editAt: aSummary path step equal: aSummary newValue ].
+			edit := aSimpleEffect 
+				ifAdd: [ aShot editAt: aSimpleEffect path step equal: aSimpleEffect newValue ] 
+				ifRemove: [ aShot editExclude: aSimpleEffect path step ] 
+				ifUpdate: [ aShot editAt: aSimpleEffect path step equal: aSimpleEffect newValue ].
 			aShot resultOf: edit ].
 		
 	^ result

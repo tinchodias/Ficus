@@ -7,23 +7,23 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #converting }
+FiDictionaryRemoval >> asSimpleEffectAt: aBasePath [
+	
+	^ { oldValue 
+			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+				FiRemoval builder 
+					path: path;
+					oldValue: shot; 
+					children: collectionFromChildren;
+					new ] 
+			basePath: aBasePath / key }
+]
+
 { #category : #accessing }
 FiDictionaryRemoval >> edit [
 	
 	^ FiExcludeKey key: key
-]
-
-{ #category : #summary }
-FiDictionaryRemoval >> hierarchicalSummaryFrom: aBasePath [
-	
-	^ { oldValue 
-			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
-				FiSummaryRemove builder 
-					path: path;
-					oldValue: shot; 
-					subSummary: collectionFromChildren;
-					new ] 
-			basePath: aBasePath / key }
 ]
 
 { #category : #accessing }

@@ -54,11 +54,11 @@ FiEffectInspector class >> newWith: aRootEffect [
 ]
 
 { #category : #private }
-FiEffectInspector >> diffChunkMorphFor: aSummary [
+FiEffectInspector >> diffChunkMorphFor: aSimpleEffect [
 
 	^ FiMorphBuilder default columnMorphWithAll: { 
-		self pathMorphWith: aSummary path.
-		self diffMorphFrom: aSummary oldValueString to: aSummary newValueString }
+		self pathMorphWith: aSimpleEffect path.
+		self diffMorphFrom: aSimpleEffect oldValueString to: aSimpleEffect newValueString }
 ]
 
 { #category : #private }
@@ -67,8 +67,8 @@ FiEffectInspector >> diffChunkMorphsFor: anEffectOrNil [
 	^ Array 
 		streamContents: [ :stream |
 			anEffectOrNil
-				leavesDo: [ :aLeafSummary | 
-					stream nextPut: (self diffChunkMorphFor: aLeafSummary) ] ] 
+				leavesDo: [ :aSimpleEffect | 
+					stream nextPut: (self diffChunkMorphFor: aSimpleEffect) ] ] 
 		limitedTo: 15
 ]
 
@@ -96,16 +96,16 @@ FiEffectInspector >> diffMorphFrom: aString to: otherString [
 ]
 
 { #category : #private }
-FiEffectInspector >> displayMorphFor: summary [
+FiEffectInspector >> displayMorphFor: aSimpleEffect [
 		
 	| morphs |
 	morphs := OrderedCollection new.
 
-	morphs add: summary path step asMorph.
+	morphs add: aSimpleEffect path step asMorph.
 	
 	self plugin 
 		prepareEffectInspectorTreeMorphs: morphs 
-		for: summary.
+		for: aSimpleEffect.
 	
 	^ FiMorphBuilder default rowMorphWithAll: morphs
 ]
@@ -134,9 +134,9 @@ FiEffectInspector >> initializeIconByClassName [
 
 	iconByClassName := 
 		Dictionary new
-			at: #FiSummaryAdd put: #changeAddIcon;
-			at: #FiSummaryRemove put: #changeRemoveIcon;
-			at: #FiSummaryUpdate put: #changeUpdateIcon;
+			at: #FiAddition put: #changeAddIcon;
+			at: #FiRemoval put: #changeRemoveIcon;
+			at: #FiUpdate put: #changeUpdateIcon;
 			yourself.
 	
 ]
@@ -152,16 +152,16 @@ FiEffectInspector >> initializePresenter [
  
 	treeModel
 		evenRowColor: treeModel oddRowColor;
-		displayBlock: [ :summary | self displayMorphFor: summary ];
-		childrenBlock: [ :summary | summary subSummary ];
-		iconBlock: [ :summary | self iconFor: summary ];
+		displayBlock: [ :aSimpleEffect | self displayMorphFor: aSimpleEffect ];
+		childrenBlock: [ :aSimpleEffect | aSimpleEffect children ];
+		iconBlock: [ :aSimpleEffect | self iconFor: aSimpleEffect ];
 		autoDeselection:true;
 		whenRootsChanged: [ 
 			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 
 				when it changed due to roots update."
 			self showDiffFor: nil ];
-		whenSelectedItemChanged: [ :summaryOrNil | 
-			self showDiffFor: summaryOrNil value ].
+		whenSelectedItemChanged: [ :aSimpleEffectOrNil | 
+			self showDiffFor: aSimpleEffectOrNil value ].
 
 	diffModel
 		displayBlock: [ :morph | morph ]
@@ -250,6 +250,6 @@ FiEffectInspector >> treeModel [
 { #category : #private }
 FiEffectInspector >> treeRootsFor: anEffect [
 
-	^ anEffect hierarchicalSummary
+	^ anEffect asSimpleEffects
 	
 ]

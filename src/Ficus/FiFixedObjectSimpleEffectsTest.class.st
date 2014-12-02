@@ -1,11 +1,11 @@
 Class {
-	#name : #FiFixedObjectSummariesTest,
+	#name : #FiFixedObjectSimpleEffectsTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-UI-Tests'
+	#category : #'Ficus-Tests-Core-SimpleEffects'
 }
 
 { #category : #tests }
-FiFixedObjectSummariesTest >> testNoEffect [
+FiFixedObjectSimpleEffectsTest >> testNoEffect [
 
 	| edit effect source |
 	source := FiChef nickname: #A.
@@ -14,15 +14,15 @@ FiFixedObjectSummariesTest >> testNoEffect [
 	effect := source effectOf: edit.
 	
 	self assert: effect flattenedLeafEffects isEmpty.
-	self assert: effect hierarchicalSummary isEmpty.
+	self assert: effect asSimpleEffects isEmpty.
 
 	self 
-		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (source resultOf: effect edit).
 ]
 
 { #category : #tests }
-FiFixedObjectSummariesTest >> testUpdate [
+FiFixedObjectSimpleEffectsTest >> testUpdate [
 
 	| edit effect source |
 	source := FiChef nickname: #A.
@@ -35,22 +35,22 @@ FiFixedObjectSummariesTest >> testUpdate [
 		equals: { FiPath root / #shortBio -> effect subEffect }.
 
 	self 
-		assert: effect hierarchicalSummary asArray
+		assert: effect asSimpleEffects asArray
 		equals: 
-			{ FiSummaryUpdate builder 
+			{ FiUpdate builder 
 				path: #(shortBio) asFicusPath;
 				oldValue: ''; 
 				newValue: '42'; 
-				subSummary: #();
+				children: #();
 				new }.
 
 	self 
-		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (source resultOf: effect edit).
 ]
 
 { #category : #tests }
-FiFixedObjectSummariesTest >> testUpdateAndSubAddition [
+FiFixedObjectSimpleEffectsTest >> testUpdateAndSubAddition [
 
 	| source editAdmiredChefs editShortBio edit effect leafEffectOfEditAdmiredChefs leafEffectOfEditShortBio result |
 	source := FiChef nickname: #A.
@@ -91,27 +91,27 @@ FiFixedObjectSummariesTest >> testUpdateAndSubAddition [
 			}.
 
 	self 
-		assert: effect hierarchicalSummary asSet
+		assert: effect asSimpleEffects asSet
 		equals: {
-			(FiSummaryUpdate builder 
+			(FiUpdate builder 
 				path: #(admiredChefs) asFicusPath;
 				oldValue: source admiredChefs; 
 				newValue: result admiredChefs; 
-				subSummary: { 
-					(FiSummaryAdd builder 
+				children: { 
+					(FiAddition builder 
 						path: #(admiredChefs X) asFicusPath; 
 						newValue: #X; 
-						subSummary: #();
+						children: #();
 						new). };
 				new).
-			(FiSummaryUpdate builder 
+			(FiUpdate builder 
 				path: #(shortBio) asFicusPath;
 				oldValue: ''; 
 				newValue: '42'; 
-				subSummary: #();
+				children: #();
 				new)} asSet.
 			
 	self 
-		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (source resultOf: effect edit).
 ]

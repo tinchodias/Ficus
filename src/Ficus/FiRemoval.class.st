@@ -1,26 +1,26 @@
 Class {
-	#name : #FiSummaryRemove,
-	#superclass : #FiEditEffectSummary,
+	#name : #FiRemoval,
+	#superclass : #FiSimpleEffect,
 	#instVars : [
 		'oldValue'
 	],
-	#category : #'Ficus-UI-Model'
+	#category : #'Ficus-Model-Core-SimpleEffects'
 }
 
 { #category : #testing }
-FiSummaryRemove >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
+FiRemoval >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
 	
 	^ removeBlock cull: self
 ]
 
 { #category : #accessing }
-FiSummaryRemove >> oldValue [
+FiRemoval >> oldValue [
 	
 	^ oldValue
 ]
 
 { #category : #printing }
-FiSummaryRemove >> oldValueString [
+FiRemoval >> oldValueString [
 
 	^ (oldValue isShot 
 		ifTrue: [ oldValue values ]

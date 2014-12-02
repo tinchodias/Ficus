@@ -1,13 +1,13 @@
 Class {
-	#name : #FiDictionarySummariesTest,
+	#name : #FiDictionarySimpleEffectsTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-UI-Tests'
+	#category : #'Ficus-Tests-Core-SimpleEffects'
 }
 
 { #category : #tests }
-FiDictionarySummariesTest >> testAddition [
+FiDictionarySimpleEffectsTest >> testAddition [
 
-	| shot edit source effect summary |
+	| shot edit source effect simpleEffects |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -19,21 +19,21 @@ FiDictionarySummariesTest >> testAddition [
 		equals: { FiPath root -> effect }.
 
 	self flag: #todo. "refactor"
-	summary := effect hierarchicalSummary.
-	self assert: summary isCollection.
-	self assert: summary size equals: 1.
-	self assert: (summary anyOne isKindOf: FiSummaryAdd).
-	self assert: summary anyOne path equals: #(A) asFicusPath.
-	self assert: summary anyOne subSummary isNotEmpty.
-	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryAdd ]).
+	simpleEffects := effect asSimpleEffects.
+	self assert: simpleEffects isCollection.
+	self assert: simpleEffects size equals: 1.
+	self assert: (simpleEffects anyOne isKindOf: FiAddition).
+	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
+	self assert: simpleEffects anyOne children isNotEmpty.
+	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each isKindOf: FiAddition ]).
 
 	self 
-		assert: (source resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (source resultOf: effect edit).
 ]
 
 { #category : #tests }
-FiDictionarySummariesTest >> testNoEffect [
+FiDictionarySimpleEffectsTest >> testNoEffect [
 
 	| shot edit source intermediate effect |
 	source := FiDictionary new.
@@ -46,17 +46,17 @@ FiDictionarySummariesTest >> testNoEffect [
 	effect := intermediate effectOf: edit.
 
 	self assert: effect flattenedLeafEffects isEmpty.
-	self assert: effect hierarchicalSummary isEmpty.
+	self assert: effect asSimpleEffects isEmpty.
 	
 	self 
-		assert: (intermediate resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (intermediate resultOf: effect edit).
 ]
 
 { #category : #tests }
-FiDictionarySummariesTest >> testRemoval [
+FiDictionarySimpleEffectsTest >> testRemoval [
 
-	| edit source shot intermediate effect summary |
+	| edit source shot intermediate effect simpleEffects |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -71,21 +71,21 @@ FiDictionarySummariesTest >> testRemoval [
 		equals: { FiPath root -> effect }.
 
 	self flag: #todo. "refactor"
-	summary := effect hierarchicalSummary.
-	self assert: summary isCollection.
-	self assert: summary size equals: 1.
-	self assert: (summary anyOne isKindOf: FiSummaryRemove).
-	self assert: summary anyOne path equals: #(A) asFicusPath.
-	self assert: summary anyOne subSummary isNotEmpty.
-	self assert: (summary anyOne subSummary allSatisfy: [ :each | each isKindOf: FiSummaryRemove ]).
+	simpleEffects := effect asSimpleEffects.
+	self assert: simpleEffects isCollection.
+	self assert: simpleEffects size equals: 1.
+	self assert: (simpleEffects anyOne isKindOf: FiRemoval).
+	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
+	self assert: simpleEffects anyOne children isNotEmpty.
+	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each isKindOf: FiRemoval ]).
 
 	self 
-		assert: (intermediate resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (intermediate resultOf: effect edit).
 ]
 
 { #category : #tests }
-FiDictionarySummariesTest >> testUpdate [
+FiDictionarySimpleEffectsTest >> testUpdate [
 
 	| shot otherShot edit source intermediate effect |
 	source := FiDictionary new.
@@ -104,16 +104,16 @@ FiDictionarySummariesTest >> testUpdate [
 		equals: { FiPath root / #A -> effect subEffect }.
 
 	self 
-		assert: effect hierarchicalSummary asArray
+		assert: effect asSimpleEffects asArray
 		equals: 
-			{ FiSummaryUpdate builder 
+			{ FiUpdate builder 
 				path: #(A) asFicusPath;
 				oldValue: shot; 
 				newValue: otherShot; 
-				subSummary: #();
+				children: #();
 				new }.
 				
 	self 
-		assert: (intermediate resultOfHierarchicalSummary: effect hierarchicalSummary) 
+		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (intermediate resultOf: effect edit).
 ]

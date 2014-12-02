@@ -7,23 +7,23 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #converting }
+FiSetAddition >> asSimpleEffectAt: aBasePath [
+	
+	^ { newValue 
+			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
+				FiAddition builder 
+					path: path;
+					newValue: shot; 
+					children: collectionFromChildren;
+					new ] 
+			basePath: aBasePath / newValue defaultStep }
+]
+
 { #category : #accessing }
 FiSetAddition >> edit [
 
 	^ FiInclude value: newValue
-]
-
-{ #category : #summary }
-FiSetAddition >> hierarchicalSummaryFrom: aBasePath [
-	
-	^ { newValue 
-			ficusDeepCollect: [ :shot :path :collectionFromChildren | 
-				FiSummaryAdd builder 
-					path: path;
-					newValue: shot; 
-					subSummary: collectionFromChildren;
-					new ] 
-			basePath: aBasePath / newValue defaultStep }
 ]
 
 { #category : #accessing }

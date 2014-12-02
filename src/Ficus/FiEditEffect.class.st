@@ -24,6 +24,12 @@ FiEditEffect class >> fromAll: subEffects [
 					new ] ]
 ]
 
+{ #category : #converting }
+FiEditEffect >> asSimpleEffects [
+
+	^ self asSimpleEffectAt: FiPath root
+]
+
 { #category : #accessing }
 FiEditEffect >> edit [
 
@@ -38,12 +44,6 @@ FiEditEffect >> flattenedLeafEffects [
 			leafEffectsDo: [ :anEffect :editPath | stream nextPut: editPath -> anEffect ]
 			basePath: FiPath root ]
 
-]
-
-{ #category : #summary }
-FiEditEffect >> hierarchicalSummary [
-
-	^ self hierarchicalSummaryFrom: FiPath root
 ]
 
 { #category : #accessing }

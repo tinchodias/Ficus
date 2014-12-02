@@ -187,23 +187,6 @@ FiSet >> resultOfExclude: anExclude [
 	^ self species withValues: (self values copyWithout: anExclude theValue)
 ]
 
-{ #category : #summary }
-FiSet >> resultOfHierarchicalSummary: aHierarchicalSummary [
-	
-	| result |
-	result := aHierarchicalSummary 
-		inject: self 
-		into: [ :aShot :aSummary |
-			| edit |
-			edit := aSummary 
-				ifAdd: [ aShot editInclude: aSummary newValue ] 
-				ifRemove: [ aShot editExclude: aSummary oldValue ] 
-				ifUpdate: [ aShot editInclude: aSummary newValue ].
-			aShot resultOf: edit ].
-		
-	^ result
-]
-
 { #category : #results }
 FiSet >> resultOfInclude: anInclude [ 
 
@@ -216,6 +199,23 @@ FiSet >> resultOfInclude: anInclude [
 		ifAbsent: [ ].
 		
 	^ self species withValues: newValues
+]
+
+{ #category : #results }
+FiSet >> resultOfSimpleEffects: simpleEffects [
+	
+	| result |
+	result := simpleEffects 
+		inject: self 
+		into: [ :aShot :aSimpleEffect |
+			| edit |
+			edit := aSimpleEffect 
+				ifAdd: [ aShot editInclude: aSimpleEffect newValue ] 
+				ifRemove: [ aShot editExclude: aSimpleEffect oldValue ] 
+				ifUpdate: [ aShot editInclude: aSimpleEffect newValue ].
+			aShot resultOf: edit ].
+		
+	^ result
 ]
 
 { #category : #enumerating }

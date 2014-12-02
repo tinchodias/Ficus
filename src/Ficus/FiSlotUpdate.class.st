@@ -10,23 +10,23 @@ Class {
 	#category : #'Ficus-Model-Core-Effects'
 }
 
+{ #category : #converting }
+FiSlotUpdate >> asSimpleEffectAt: aBasePath [
+
+	^ { FiUpdate builder 
+			path: aBasePath / slotName;
+			oldValue: oldValue; 
+			newValue: newValue; 
+			children: (subEffect asSimpleEffectAt: aBasePath / slotName);
+			new }
+]
+
 { #category : #accessing }
 FiSlotUpdate >> edit [
 
 	^ FiAcceptSlot 
 		slotName: slotName 
 		edit: subEffect edit
-]
-
-{ #category : #summary }
-FiSlotUpdate >> hierarchicalSummaryFrom: aBasePath [
-
-	^ { FiSummaryUpdate builder 
-			path: aBasePath / slotName;
-			oldValue: oldValue; 
-			newValue: newValue; 
-			subSummary: (subEffect hierarchicalSummaryFrom: aBasePath / slotName);
-			new }
 ]
 
 { #category : #accessing }

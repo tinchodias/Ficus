@@ -1,7 +1,7 @@
 Extension { #name : #SequenceableCollection }
 
 { #category : #'*Ficus' }
-SequenceableCollection >> asFicusPath [
+SequenceableCollection >> asFiPath [
 
 	^ FiPath fromSequenceableCollection: self
 ]

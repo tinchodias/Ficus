@@ -43,7 +43,7 @@ FiPathTest >> testAsFicusPath [
 
 	| pathA pathB |
 	pathA := FiPath root / #A / #admiredChefs / #X.
-	pathB := #(A admiredChefs X) asFicusPath.
+	pathB := #(A admiredChefs X) asFiPath.
 		
 	self assert: pathB equals: pathA.
 

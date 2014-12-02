@@ -41,7 +41,7 @@ FiTag class >> exampleStoreFor: store [
 ]
 
 { #category : #testing }
-FiTag >> appliesToOrigin: anOrigin prior: aPriorDefaultStep summaryPath: aPath [
+FiTag >> appliesToOrigin: anOrigin prior: aPriorDefaultStep path: aPath [
 
 	^ (self origin contains: anOrigin) and: [ 
 		aPriorDefaultStep = priorDefaultStep and: [ 

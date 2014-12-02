@@ -41,12 +41,12 @@ FiTagStoreBrowserPlugin class >> forStore: aFiStore [
 ]
 
 { #category : #accessing }
-FiTagStoreBrowserPlugin >> prepareEffectInspectorTreeMorphs: morphs for: aSummary [
+FiTagStoreBrowserPlugin >> prepareEffectInspectorTreeMorphs: morphs for: aSimpleEffect [
 
 	self selectedHistoryNode ifNil: [ ^ self ].
 
 	(self 
-		tagsFor: aSummary 
+		tagsFor: aSimpleEffect 
 		origin: self selectedHistoryNode origin 
 		prior: self selectedHistoryNode priors asArray first "FIX") ifNotEmpty: [ :tags | 
 			tags do: [ :each | morphs add: 
@@ -81,11 +81,11 @@ FiTagStoreBrowserPlugin >> tags [
 ]
 
 { #category : #private }
-FiTagStoreBrowserPlugin >> tagsFor: aSummary origin: anOrigin prior: aPrior [
+FiTagStoreBrowserPlugin >> tagsFor: aSimpleEffect origin: anOrigin prior: aPrior [
 
 	^ self tags asArray select: [ :each | 
 		each 
 			appliesToOrigin: anOrigin
 			prior: aPrior defaultStep "aHistoryNode priors asArray first" "FIX: should be the selected one"
-			summaryPath: aSummary path ]
+			path: aSimpleEffect path ]
 ]

@@ -10,7 +10,7 @@ FiStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 ]
 
 { #category : #accessing }
-FiStoreBrowserPlugin >> prepareEffectInspectorTreeMorphs: morphs for: aSummary [
+FiStoreBrowserPlugin >> prepareEffectInspectorTreeMorphs: morphs for: aSimpleEffect [
 
 ]
 

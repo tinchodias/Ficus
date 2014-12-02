@@ -17,7 +17,7 @@ FiDictionaryUpdate >> asSimpleEffectsAt: aBasePath [
 			oldValue: oldValue; 
 			newValue: newValue; 
 			children: (subEffect asSimpleEffectsAt: aBasePath / key);
-			new }
+			new } asFiSet
 ]
 
 { #category : #accessing }

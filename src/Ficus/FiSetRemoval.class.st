@@ -15,9 +15,9 @@ FiSetRemoval >> asSimpleEffectsAt: aBasePath [
 				FiRemoval builder 
 					path: path;
 					oldValue: shot; 
-					children: collectionFromChildren;
+					children: collectionFromChildren asFiSet;
 					new ] 
-			basePath: aBasePath / oldValue defaultStep }
+			basePath: aBasePath / oldValue defaultStep } asFiSet
 ]
 
 { #category : #accessing }

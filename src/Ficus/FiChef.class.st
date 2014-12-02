@@ -21,6 +21,15 @@ FiChef class >> nickname: aString [
 		new
 ]
 
+{ #category : #'instance creation' }
+FiChef class >> nickname: aString shortBio: anotherString [
+
+	^ self builder
+		nickname: aString;
+		shortBio: anotherString;
+		new
+]
+
 { #category : #accessing }
 FiChef >> admiredChefs [
 	

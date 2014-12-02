@@ -14,18 +14,41 @@ FiSetSimpleEffectsTest >> testAddition [
 	edit := source editInclude: shot.
 	effect := source effectOf: edit.
 
-	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
-	self assert: simpleEffects isCollection.
-	self assert: simpleEffects size equals: 1.
-	self assert: simpleEffects anyOne class equals: FiAddition.
-	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
-	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiAddition ]).
 
 	self 
-		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
+		assert: (source resultOfSimpleEffects: simpleEffects) 
 		equals: (source resultOf: effect edit).
+		
+	self assert: simpleEffects equals: 
+		(FiSet withValues: {
+			(FiAddition builder
+				path: FiPath root / #A;
+				children: (FiSet withValues: {
+					(FiAddition builder
+						path: FiPath root / #A / #admiredChefs;
+						children: FiSet new;
+						newValue: FiSet new;
+						new).
+					(FiAddition builder
+						path: FiPath root / #A / #recipes;
+						children: FiSet new;
+						newValue: FiSet new;
+						new).
+					(FiAddition builder
+						path: FiPath root / #A / #nickname;
+						children: FiSet new;
+						newValue: #A;
+						new).
+					(FiAddition builder
+						path: FiPath root / #A / #shortBio;
+						children: FiSet new;
+						newValue: '';
+						new).
+					});
+				newValue: (FiChef nickname: #A);
+				new).
+			})
 ]
 
 { #category : #tests }
@@ -59,18 +82,41 @@ FiSetSimpleEffectsTest >> testRemoval [
 	edit := intermediate editExclude: shot.
 	effect := intermediate effectOf: edit.
 
-	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
-	self assert: simpleEffects isCollection.
-	self assert: simpleEffects size equals: 1.
-	self assert: simpleEffects anyOne class equals: FiRemoval.
-	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
-	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiRemoval ]).
 
 	self 
-		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
+		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
 		equals: (intermediate resultOf: effect edit).
+	
+	self assert: simpleEffects equals: 
+		(FiSet withValues: {
+			(FiRemoval builder
+				path: FiPath root / #A;
+				children: (FiSet withValues: {
+					(FiRemoval builder
+						path: FiPath root / #A / #admiredChefs;
+						children: FiSet new;
+						oldValue: FiSet new;
+						new).
+					(FiRemoval builder
+						path: FiPath root / #A / #recipes;
+						children: FiSet new;
+						oldValue: FiSet new;
+						new).
+					(FiRemoval builder
+						path: FiPath root / #A / #nickname;
+						children: FiSet new;
+						oldValue: #A;
+						new).
+					(FiRemoval builder
+						path: FiPath root / #A / #shortBio;
+						children: FiSet new;
+						oldValue: '';
+						new).
+					});
+				oldValue: (FiChef nickname: #A);
+				new).
+			}).
 ]
 
 { #category : #tests }
@@ -87,16 +133,26 @@ FiSetSimpleEffectsTest >> testUpdate [
 	edit := intermediate editInclude: otherShot.
 	effect := intermediate effectOf: edit.
 
-	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
-	self assert: simpleEffects isCollection.
-	self assert: simpleEffects size equals: 1.
-	self assert: simpleEffects anyOne class equals: FiUpdate.
-	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
-	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiUpdate ]).
 
 	self 
 		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (intermediate resultOf: effect edit).
+	
+	self assert: simpleEffects equals: 
+		(FiSet withValues: {
+			(FiUpdate builder
+				path: FiPath root / #A;
+				children: (FiSet withValues: {
+					(FiUpdate builder
+						path: FiPath root / #A / #shortBio;
+						children: FiSet new;
+						newValue: '42';
+						oldValue: '';
+						new).
+					});
+				newValue: (FiChef nickname: #A shortBio: '42');
+				oldValue: (FiChef nickname: #A);
+				new).
+			}).	
 ]

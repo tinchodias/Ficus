@@ -14,18 +14,41 @@ FiDictionarySimpleEffectsTest >> testAddition [
 	edit := source editAt: #A equal: shot.
 	effect := source effectOf: edit.
 
-	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
-	self assert: simpleEffects isCollection.
-	self assert: simpleEffects size equals: 1.
-	self assert: simpleEffects anyOne class equals: FiAddition.
-	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
-	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiAddition ]).
 
 	self 
-		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
+		assert: (source resultOfSimpleEffects: simpleEffects) 
 		equals: (source resultOf: effect edit).
+			
+	self assert: simpleEffects equals: 
+		((FiSet withValues: {
+			(FiAddition builder
+				path: FiPath root / #A;
+				children: (FiSet withValues: {
+					(FiAddition builder
+						path: FiPath root / #A / #admiredChefs;
+						children: FiSet new;
+						newValue: FiSet new;
+						new).
+					(FiAddition builder
+						path: FiPath root / #A / #recipes;
+						children: FiSet new;
+						newValue: FiSet new;
+						new).
+					(FiAddition builder
+						path: FiPath root / #A / #nickname;
+						children: FiSet new;
+						newValue: #A;
+						new).
+					(FiAddition builder
+						path: FiPath root / #A / #shortBio;
+						children: FiSet new;
+						newValue: '';
+						new).
+					});
+				newValue: (FiChef nickname: #A);
+				new).
+			})).
 ]
 
 { #category : #tests }
@@ -61,24 +84,47 @@ FiDictionarySimpleEffectsTest >> testRemoval [
 	edit := intermediate editExclude: shot nickname.
 	effect := intermediate effectOf: edit.
 
-	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
-	self assert: simpleEffects isCollection.
-	self assert: simpleEffects size equals: 1.
-	self assert: simpleEffects anyOne class equals: FiRemoval.
-	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
-	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiRemoval ]).
 
 	self 
-		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
+		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
 		equals: (intermediate resultOf: effect edit).
+		
+	self assert: simpleEffects equals: 
+		(FiSet withValues: {
+			(FiRemoval builder
+				path: FiPath root / #A;
+				children: (FiSet withValues: {
+					(FiRemoval builder
+						path: FiPath root / #A / #admiredChefs;
+						children: FiSet new;
+						oldValue: FiSet new;
+						new).
+					(FiRemoval builder
+						path: FiPath root / #A / #recipes;
+						children: FiSet new;
+						oldValue: FiSet new;
+						new).
+					(FiRemoval builder
+						path: FiPath root / #A / #nickname;
+						children: FiSet new;
+						oldValue: #A;
+						new).
+					(FiRemoval builder
+						path: FiPath root / #A / #shortBio;
+						children: FiSet new;
+						oldValue: '';
+						new).
+					});
+				oldValue: (FiChef nickname: #A);
+				new).
+			}).
 ]
 
 { #category : #tests }
 FiDictionarySimpleEffectsTest >> testUpdate [
 
-	| shot otherShot edit source intermediate effect |
+	| shot otherShot edit source intermediate effect simpleEffects |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
@@ -89,17 +135,19 @@ FiDictionarySimpleEffectsTest >> testUpdate [
 	edit := intermediate editAt: #A equal: otherShot.
 	effect := intermediate effectOf: edit.
 
+	simpleEffects := effect asSimpleEffects.
+
 	self 
-		assert: effect asSimpleEffects asArray
-		equals: 
-			{ FiUpdate builder 
-				path: #(A) asFicusPath;
-				oldValue: shot; 
-				newValue: otherShot; 
-				children: #();
-				new }.
-				
-	self 
-		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
+		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
 		equals: (intermediate resultOf: effect edit).
+
+	self assert: simpleEffects equals: 
+		(FiSet withValues: {
+			(FiUpdate builder
+				path: FiPath root / #A;
+				children: FiSet new;
+				newValue: (FiChef nickname: #A shortBio: '42');
+				oldValue: (FiChef nickname: #A);
+				new).
+			}).	
 ]

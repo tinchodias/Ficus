@@ -11,7 +11,7 @@ Class {
 { #category : #converting }
 FiReplacement >> asSimpleEffectsAt: aBasePath [
 	
-	^ #()
+	^ #() asFiSet
 ]
 
 { #category : #accessing }

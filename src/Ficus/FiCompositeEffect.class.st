@@ -10,8 +10,8 @@ Class {
 { #category : #converting }
 FiCompositeEffect >> asSimpleEffectsAt: aBasePath [
 
-	^ children values flatCollect: [ :each |
-		each asSimpleEffectsAt: aBasePath ]
+	^ (children values flatCollect: [ :each |
+		each asSimpleEffectsAt: aBasePath ]) asFiSet
 ]
 
 { #category : #accessing }

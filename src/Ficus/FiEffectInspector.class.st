@@ -153,7 +153,7 @@ FiEffectInspector >> initializePresenter [
 	treeModel
 		evenRowColor: treeModel oddRowColor;
 		displayBlock: [ :aSimpleEffect | self displayMorphFor: aSimpleEffect ];
-		childrenBlock: [ :aSimpleEffect | aSimpleEffect children ];
+		childrenBlock: [ :aSimpleEffect | aSimpleEffect children asArray ];
 		iconBlock: [ :aSimpleEffect | self iconFor: aSimpleEffect ];
 		autoDeselection:true;
 		whenRootsChanged: [ 
@@ -250,6 +250,6 @@ FiEffectInspector >> treeModel [
 { #category : #private }
 FiEffectInspector >> treeRootsFor: anEffect [
 
-	^ anEffect asSimpleEffects
+	^ anEffect asSimpleEffects asArray
 	
 ]

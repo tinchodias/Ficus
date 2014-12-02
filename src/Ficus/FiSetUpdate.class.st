@@ -17,7 +17,7 @@ FiSetUpdate >> asSimpleEffectsAt: aBasePath [
 			oldValue: oldValue; 
 			newValue: newValue; 
 			children: (subEffect asSimpleEffectsAt: aBasePath / newValue defaultStep);
-			new }
+			new } asFiSet
 ]
 
 { #category : #accessing }

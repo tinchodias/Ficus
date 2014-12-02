@@ -15,9 +15,9 @@ FiDictionaryAddition >> asSimpleEffectsAt: aBasePath [
 				FiAddition builder 
 					path: path;
 					newValue: shot; 
-					children: collectionFromChildren;
+					children: collectionFromChildren asFiSet;
 					new ] 
-			basePath: aBasePath / key }
+			basePath: aBasePath / key } asFiSet
 ]
 
 { #category : #accessing }

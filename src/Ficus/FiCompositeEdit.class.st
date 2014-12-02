@@ -2,7 +2,7 @@ Class {
 	#name : #FiCompositeEdit,
 	#superclass : #FiEdit,
 	#instVars : [
-		'subEdits'
+		'children'
 	],
 	#category : #'Ficus-Model-Core-Edits'
 }
@@ -18,7 +18,7 @@ FiCompositeEdit class >> withAll: aCollectionOfEdits [
 { #category : #accessing }
 FiCompositeEdit >> children [
 
-	^ subEdits
+	^ children
 ]
 
 { #category : #effects }

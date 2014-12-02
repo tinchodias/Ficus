@@ -15,9 +15,9 @@ FiDictionaryRemoval >> asSimpleEffectsAt: aBasePath [
 				FiRemoval builder 
 					path: path;
 					oldValue: shot; 
-					children: collectionFromChildren;
+					children: collectionFromChildren asFiSet;
 					new ] 
-			basePath: aBasePath / key }
+			basePath: aBasePath / key } asFiSet
 ]
 
 { #category : #accessing }

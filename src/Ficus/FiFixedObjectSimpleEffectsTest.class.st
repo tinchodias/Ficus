@@ -28,24 +28,25 @@ FiFixedObjectSimpleEffectsTest >> testUpdate [
 	effect := source effectOf: edit.
 	
 	self 
-		assert: effect asSimpleEffects asArray
-		equals: 
-			{ FiUpdate builder 
-				path: #(shortBio) asFicusPath;
-				oldValue: ''; 
-				newValue: '42'; 
-				children: #();
-				new }.
-
-	self 
 		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (source resultOf: effect edit).
+		
+	self assert: effect asSimpleEffects equals: 
+		(FiSet withValues: {
+			(FiUpdate builder
+				path: FiPath root / #shortBio;
+				children: FiSet new;
+				newValue: '42';
+				oldValue: '';
+				new).
+			}).
+			
 ]
 
 { #category : #tests }
 FiFixedObjectSimpleEffectsTest >> testUpdateAndSubAddition [
 
-	| source editAdmiredChefs editShortBio edit effect result |
+	| source editAdmiredChefs editShortBio edit effect result simpleEffects |
 	source := FiChef nickname: #A.
 
 	editAdmiredChefs := 
@@ -61,28 +62,32 @@ FiFixedObjectSimpleEffectsTest >> testUpdateAndSubAddition [
 	effect := source effectOf: edit.
 	result := source resultOf: edit.
 
-	self 
-		assert: effect asSimpleEffects asSet
-		equals: {
-			(FiUpdate builder 
-				path: #(admiredChefs) asFicusPath;
-				oldValue: source admiredChefs; 
-				newValue: result admiredChefs; 
-				children: { 
-					(FiAddition builder 
-						path: #(admiredChefs X) asFicusPath; 
-						newValue: #X; 
-						children: #();
-						new). };
-				new).
-			(FiUpdate builder 
-				path: #(shortBio) asFicusPath;
-				oldValue: ''; 
-				newValue: '42'; 
-				children: #();
-				new)} asSet.
-			
+	simpleEffects := effect asSimpleEffects.
+
 	self 
 		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (source resultOf: effect edit).
+
+	self assert: simpleEffects equals: 
+		(FiSet withValues: {
+			(FiUpdate builder
+				path: FiPath root / #admiredChefs;
+				children: (FiSet withValues: {
+					(FiAddition builder
+						path: FiPath root / #admiredChefs / #X;
+						children: FiSet new;
+						newValue: #X;
+						new).
+					});
+				newValue: #(X) asFiSet;
+				oldValue: #() asFiSet;
+				new).
+			(FiUpdate builder
+				path: FiPath root / #shortBio;
+				children: FiSet new;
+				newValue: '42';
+				oldValue: '';
+				new).
+			}).
+			
 ]

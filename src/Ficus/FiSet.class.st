@@ -57,6 +57,15 @@ FiSet >> asDictionary [
 	^ result
 ]
 
+{ #category : #enumerating }
+FiSet >> collect: aBlockClosure [ 
+	
+	| newSet |
+	newSet := Set new: self size.
+	self valuesDo: [ :each | newSet add: each ].
+	^ newSet
+]
+
 { #category : #differencing }
 FiSet >> differenceFrom: other [
 
@@ -94,6 +103,12 @@ FiSet >> differenceFrom: other [
 					new) ] ].
 	
 	^ FiEffect fromAll: subEffects
+]
+
+{ #category : #enumerating }
+FiSet >> do: aBlockClosure [ 
+	
+	^ self valuesDo: aBlockClosure
 ]
 
 { #category : #edits }
@@ -165,6 +180,12 @@ FiSet >> initializeWithValues: aCollection [
 	aCollection do: [ :each | 
 		self at: index put: each. 
 		index := index + 1 ]
+]
+
+{ #category : #enumerating }
+FiSet >> inject: thisValue into: binaryBlock [ 
+	
+	^ self values inject: thisValue into: binaryBlock 
 ]
 
 { #category : #testing }

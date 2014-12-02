@@ -15,9 +15,9 @@ FiSetAddition >> asSimpleEffectsAt: aBasePath [
 				FiAddition builder 
 					path: path;
 					newValue: shot; 
-					children: collectionFromChildren;
+					children: collectionFromChildren asFiSet;
 					new ] 
-			basePath: aBasePath / newValue defaultStep }
+			basePath: aBasePath / newValue defaultStep } asFiSet
 ]
 
 { #category : #accessing }

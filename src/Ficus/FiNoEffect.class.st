@@ -7,7 +7,7 @@ Class {
 { #category : #converting }
 FiNoEffect >> asSimpleEffectsAt: aBasePath [
 	
-	^ #()
+	^ #() asFiSet
 ]
 
 { #category : #accessing }

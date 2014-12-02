@@ -18,7 +18,7 @@ FiSlotUpdate >> asSimpleEffectsAt: aBasePath [
 			oldValue: oldValue; 
 			newValue: newValue; 
 			children: (subEffect asSimpleEffectsAt: aBasePath / slotName);
-			new }
+			new } asFiSet
 ]
 
 { #category : #accessing }

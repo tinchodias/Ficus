@@ -18,10 +18,10 @@ FiDictionarySimpleEffectsTest >> testAddition [
 	simpleEffects := effect asSimpleEffects.
 	self assert: simpleEffects isCollection.
 	self assert: simpleEffects size equals: 1.
-	self assert: (simpleEffects anyOne isKindOf: FiAddition).
+	self assert: simpleEffects anyOne class equals: FiAddition.
 	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
 	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each isKindOf: FiAddition ]).
+	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiAddition ]).
 
 	self 
 		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
@@ -65,10 +65,10 @@ FiDictionarySimpleEffectsTest >> testRemoval [
 	simpleEffects := effect asSimpleEffects.
 	self assert: simpleEffects isCollection.
 	self assert: simpleEffects size equals: 1.
-	self assert: (simpleEffects anyOne isKindOf: FiRemoval).
+	self assert: simpleEffects anyOne class equals: FiRemoval.
 	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
 	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each isKindOf: FiRemoval ]).
+	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiRemoval ]).
 
 	self 
 		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 

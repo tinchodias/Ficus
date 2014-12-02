@@ -18,10 +18,10 @@ FiSetSimpleEffectsTest >> testAddition [
 	simpleEffects := effect asSimpleEffects.
 	self assert: simpleEffects isCollection.
 	self assert: simpleEffects size equals: 1.
-	self assert: (simpleEffects anyOne isKindOf: FiAddition).
+	self assert: simpleEffects anyOne class equals: FiAddition.
 	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
 	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each isKindOf: FiAddition ]).
+	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiAddition ]).
 
 	self 
 		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
@@ -63,10 +63,10 @@ FiSetSimpleEffectsTest >> testRemoval [
 	simpleEffects := effect asSimpleEffects.
 	self assert: simpleEffects isCollection.
 	self assert: simpleEffects size equals: 1.
-	self assert: (simpleEffects anyOne isKindOf: FiRemoval).
+	self assert: simpleEffects anyOne class equals: FiRemoval.
 	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
 	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each isKindOf: FiRemoval ]).
+	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiRemoval ]).
 
 	self 
 		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
@@ -91,10 +91,10 @@ FiSetSimpleEffectsTest >> testUpdate [
 	simpleEffects := effect asSimpleEffects.
 	self assert: simpleEffects isCollection.
 	self assert: simpleEffects size equals: 1.
-	self assert: (simpleEffects anyOne isKindOf: FiUpdate).
+	self assert: simpleEffects anyOne class equals: FiUpdate.
 	self assert: simpleEffects anyOne path equals: #(A) asFicusPath.
 	self assert: simpleEffects anyOne children isNotEmpty.
-	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each isKindOf: FiUpdate ]).
+	self assert: (simpleEffects anyOne children allSatisfy: [ :each | each class = FiUpdate ]).
 
 	self 
 		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 

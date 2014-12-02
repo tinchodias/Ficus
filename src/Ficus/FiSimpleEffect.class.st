@@ -23,7 +23,7 @@ FiSimpleEffect >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
 { #category : #enumerating }
 FiSimpleEffect >> leavesDo: aBlockClosure [
 	
-	^ children 
+	^ children values
 		ifEmpty: [ aBlockClosure value: self ]
 		ifNotEmpty: [ children do: [ :each | each leavesDo: aBlockClosure ] ].
 ]

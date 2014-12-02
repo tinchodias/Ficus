@@ -18,13 +18,13 @@ FiTag class >> exampleStoreFor: store [
 		FiTag builder 
 			origin: store historyNodes second origin;
 			priorDefaultStep: store historyNodes second priors asArray first defaultStep;
-			path: #(contents) asFicusPath; 
+			path: #(contents) asFiPath; 
 			contents: 'Code formatting';
 			new.
 		FiTag builder 
 			origin: store historyNodes third origin;
 			priorDefaultStep: store historyNodes third priors asArray first defaultStep;
-			path: #(contents) asFicusPath; 
+			path: #(contents) asFiPath; 
 			contents: 'Bug-fixing';
 			new.
 	 }.

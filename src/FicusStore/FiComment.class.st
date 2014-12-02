@@ -17,13 +17,13 @@ FiComment class >> exampleStoreFor: store [
 	comments := { 
 		FiComment builder 
 			target: store historyNodes first origin;
-			path: #(contents) asFicusPath; 
+			path: #(contents) asFiPath; 
 			score: FiCommentAgree new;
 			contents: 'Good start!';
 			new.
 		FiComment builder 
 			target: store historyNodes first origin;
-			path: #(contents) asFicusPath; 
+			path: #(contents) asFiPath; 
 			score: FiCommentDisagree new;
 			contents: 'Should be splitted';
 			new.
@@ -33,7 +33,7 @@ FiComment class >> exampleStoreFor: store [
 					store historyNodes third origin.
 					store historyNodes fourth origin.
 					 });
-"			path: #(contents) asFicusPath; 
+"			path: #(contents) asFiPath; 
 			score: FiCommentAgree new;
 			contents: 'Rock&roll :)';
 			new.

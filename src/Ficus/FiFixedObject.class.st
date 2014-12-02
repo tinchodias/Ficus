@@ -41,7 +41,7 @@ FiFixedObject >> differenceFrom: other [
 		
 		subDifference isNoEffect ifFalse: [
 			subEffects add: 
-				(FiSlotUpdate builder
+				(FiFixedObjectUpdate builder
 					slotName: step;
 					oldValue: otherValue;
 					newValue: value;
@@ -54,7 +54,7 @@ FiFixedObject >> differenceFrom: other [
 { #category : #edits }
 FiFixedObject >> editAt: aSlotName do: aBlockClosure [ 
 	
-	^ FiAcceptSlot
+	^ FiFixedObjectAccept
 		slotName: aSlotName
 		edit: (aBlockClosure value: (self valueAt: aSlotName))
 ]
@@ -62,7 +62,7 @@ FiFixedObject >> editAt: aSlotName do: aBlockClosure [
 { #category : #edits }
 FiFixedObject >> editAt: step equal: value [
 
-	^ FiAcceptSlot 
+	^ FiFixedObjectAccept 
 		slotName: step
 		edit: (FiEqual value: value)
 ]

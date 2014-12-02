@@ -1,5 +1,5 @@
 Class {
-	#name : #FiSlotUpdate,
+	#name : #FiFixedObjectUpdate,
 	#superclass : #FiEffect,
 	#instVars : [
 		'slotName',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #converting }
-FiSlotUpdate >> asSimpleEffectsAt: aBasePath [
+FiFixedObjectUpdate >> asSimpleEffectsAt: aBasePath [
 
 	^ { FiUpdate builder 
 			path: aBasePath / slotName;
@@ -22,35 +22,35 @@ FiSlotUpdate >> asSimpleEffectsAt: aBasePath [
 ]
 
 { #category : #accessing }
-FiSlotUpdate >> edit [
+FiFixedObjectUpdate >> edit [
 
-	^ FiAcceptSlot 
+	^ FiFixedObjectAccept 
 		slotName: slotName 
 		edit: subEffect edit
 ]
 
 { #category : #accessing }
-FiSlotUpdate >> inverse [
+FiFixedObjectUpdate >> inverse [
 
-	^ FiAcceptSlot 
+	^ FiFixedObjectAccept 
 		slotName: slotName 
 		edit: subEffect inverse
 ]
 
 { #category : #accessing }
-FiSlotUpdate >> newValue [
+FiFixedObjectUpdate >> newValue [
 
 	^ newValue
 ]
 
 { #category : #accessing }
-FiSlotUpdate >> oldValue [
+FiFixedObjectUpdate >> oldValue [
 
 	^ oldValue
 ]
 
 { #category : #printing }
-FiSlotUpdate >> printOn: aStream [
+FiFixedObjectUpdate >> printOn: aStream [
 
 	super printOn: aStream.
 	
@@ -61,13 +61,13 @@ FiSlotUpdate >> printOn: aStream [
 ]
 
 { #category : #accessing }
-FiSlotUpdate >> slotName [
+FiFixedObjectUpdate >> slotName [
 
 	^ slotName
 ]
 
 { #category : #accessing }
-FiSlotUpdate >> subEffect [
+FiFixedObjectUpdate >> subEffect [
 
 	^ subEffect
 ]

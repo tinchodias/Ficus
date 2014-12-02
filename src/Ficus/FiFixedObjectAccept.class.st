@@ -1,5 +1,5 @@
 Class {
-	#name : #FiAcceptSlot,
+	#name : #FiFixedObjectAccept,
 	#superclass : #FiEdit,
 	#instVars : [
 		'slotName',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiAcceptSlot class >> slotName: aSlotName edit: aEdit [
+FiFixedObjectAccept class >> slotName: aSlotName edit: aEdit [
 	
 	^ self builder
 		slotName: aSlotName;
@@ -18,21 +18,21 @@ FiAcceptSlot class >> slotName: aSlotName edit: aEdit [
 ]
 
 { #category : #accessing }
-FiAcceptSlot >> edit [
+FiFixedObjectAccept >> edit [
 
 	^ edit
 ]
 
 { #category : #effects }
-FiAcceptSlot >> effectOn: aValue [
+FiFixedObjectAccept >> effectOn: aValue [
 
 	^ aValue effectOfAcceptSlot: self
 ]
 
 { #category : #effects }
-FiAcceptSlot >> effectUpdate: oldValue [
+FiFixedObjectAccept >> effectUpdate: oldValue [
 
-	^ FiSlotUpdate builder
+	^ FiFixedObjectUpdate builder
 		slotName: slotName;
 		oldValue: oldValue;
 		newValue: (edit resultOn: oldValue);
@@ -41,7 +41,7 @@ FiAcceptSlot >> effectUpdate: oldValue [
 ]
 
 { #category : #printing }
-FiAcceptSlot >> printOn: aStream [
+FiFixedObjectAccept >> printOn: aStream [
 
 	super printOn: aStream.
 	
@@ -56,20 +56,20 @@ FiAcceptSlot >> printOn: aStream [
 ]
 
 { #category : #results }
-FiAcceptSlot >> resultOn: aValue [ 
+FiFixedObjectAccept >> resultOn: aValue [ 
 
 	^ aValue resultOfAcceptSlot: self
 	
 ]
 
 { #category : #accessing }
-FiAcceptSlot >> slotName [
+FiFixedObjectAccept >> slotName [
 	
 	^ slotName
 ]
 
 { #category : #accessing }
-FiAcceptSlot >> step [
+FiFixedObjectAccept >> step [
 	
 	^ slotName
 ]

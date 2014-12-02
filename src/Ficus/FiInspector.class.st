@@ -33,32 +33,6 @@ FiInspector class >> inspect: aRootShot [
 ]
 
 { #category : #inspecting }
-FiInspector class >> inspectEffect: rootEffect [
-
-	| stepsAndSets stepsAndValues |	
-	stepsAndSets := 
-		rootEffect flattenedLeafEffects
-			inject: Dictionary new
-			into: [ :dict :each | 
-				(dict 
-					at: each key asString
-					ifAbsentPut: [ OrderedCollection new ])
-					add: each value.
-				dict ].
-
-	stepsAndValues := 
-		stepsAndSets associations 
-			inject: Dictionary new
-			into: [ :dict :each | 
-				dict 
-					at: each key
-					put: each value asFiSet.
-				dict ].
-
-	^ (self newWith: stepsAndValues associations) open; yourself
-]
-
-{ #category : #inspecting }
 FiInspector class >> newWith: someAssociations [
 
 	^ self new

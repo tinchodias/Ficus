@@ -37,14 +37,6 @@ FiSlotUpdate >> inverse [
 		edit: subEffect inverse
 ]
 
-{ #category : #enumerating }
-FiSlotUpdate >> leafEffectsDo: aBlockClosure basePath: aPath [ 
-
-	^ subEffect 
-		leafEffectsDo: aBlockClosure 
-		basePath: aPath / slotName
-]
-
 { #category : #accessing }
 FiSlotUpdate >> newValue [
 

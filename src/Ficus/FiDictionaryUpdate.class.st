@@ -36,14 +36,6 @@ FiDictionaryUpdate >> inverse [
 		edit: (FiEqual value: oldValue)
 ]
 
-{ #category : #enumerating }
-FiDictionaryUpdate >> leafEffectsDo: aBlockClosure basePath: aPath [ 
-
-	^ subEffect 
-		leafEffectsDo: aBlockClosure 
-		basePath: aPath / key
-]
-
 { #category : #accessing }
 FiDictionaryUpdate >> newValue [
 

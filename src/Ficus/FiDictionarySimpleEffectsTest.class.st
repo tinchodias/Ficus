@@ -14,10 +14,6 @@ FiDictionarySimpleEffectsTest >> testAddition [
 	edit := source editAt: #A equal: shot.
 	effect := source effectOf: edit.
 
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root -> effect }.
-
 	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
 	self assert: simpleEffects isCollection.
@@ -45,7 +41,6 @@ FiDictionarySimpleEffectsTest >> testNoEffect [
 	edit := intermediate editAt: #A equal: shot.
 	effect := intermediate effectOf: edit.
 
-	self assert: effect flattenedLeafEffects isEmpty.
 	self assert: effect asSimpleEffects isEmpty.
 	
 	self 
@@ -65,10 +60,6 @@ FiDictionarySimpleEffectsTest >> testRemoval [
 
 	edit := intermediate editExclude: shot nickname.
 	effect := intermediate effectOf: edit.
-
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root -> effect }.
 
 	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
@@ -97,11 +88,6 @@ FiDictionarySimpleEffectsTest >> testUpdate [
 
 	edit := intermediate editAt: #A equal: otherShot.
 	effect := intermediate effectOf: edit.
-
-	self flag: #todo. "For coherence with other dictionary effects, we should expect: FiPath root / -> a FiUpdateEffect"
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root / #A -> effect subEffect }.
 
 	self 
 		assert: effect asSimpleEffects asArray

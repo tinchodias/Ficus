@@ -27,9 +27,3 @@ FiNoEffect >> isNoEffect [
 
 	^ true
 ]
-
-{ #category : #enumerating }
-FiNoEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
-	
-	^ self
-]

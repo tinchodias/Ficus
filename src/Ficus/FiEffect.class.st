@@ -37,16 +37,6 @@ FiEffect >> edit [
 ]
 
 { #category : #accessing }
-FiEffect >> flattenedLeafEffects [
-	
-	^ Array streamContents: [ :stream |
-		self 
-			leafEffectsDo: [ :anEffect :editPath | stream nextPut: editPath -> anEffect ]
-			basePath: FiPath root ]
-
-]
-
-{ #category : #accessing }
 FiEffect >> inverse [
 
 	^ self subclassResponsibility 
@@ -56,12 +46,4 @@ FiEffect >> inverse [
 FiEffect >> isNoEffect [
 
 	^ false
-]
-
-{ #category : #enumerating }
-FiEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
-	
-	^ aBlockClosure 
-		value: self 
-		value: aPath
 ]

@@ -32,15 +32,6 @@ FiSetUpdate >> inverse [
 	^ FiInclude value: oldValue
 ]
 
-{ #category : #enumerating }
-FiSetUpdate >> leafEffectsDo: aBlockClosure basePath: aPath [ 
-
-	^ subEffect 
-		leafEffectsDo: aBlockClosure 
-		basePath: aPath / newValue defaultStep
-
-]
-
 { #category : #accessing }
 FiSetUpdate >> newValue [
 

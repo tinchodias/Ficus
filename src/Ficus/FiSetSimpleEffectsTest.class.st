@@ -14,10 +14,6 @@ FiSetSimpleEffectsTest >> testAddition [
 	edit := source editInclude: shot.
 	effect := source effectOf: edit.
 
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root -> effect }.
-
 	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
 	self assert: simpleEffects isCollection.
@@ -45,8 +41,6 @@ FiSetSimpleEffectsTest >> testNoEffect [
 	edit := intermediate editInclude: shot.
 	effect := intermediate effectOf: edit.
 
-	self assert: effect flattenedLeafEffects isEmpty.
-	
 	self 
 		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
 		equals: (intermediate resultOf: effect edit).
@@ -64,10 +58,6 @@ FiSetSimpleEffectsTest >> testRemoval [
 
 	edit := intermediate editExclude: shot.
 	effect := intermediate effectOf: edit.
-
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root -> effect }.
 
 	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.
@@ -96,11 +86,6 @@ FiSetSimpleEffectsTest >> testUpdate [
 
 	edit := intermediate editInclude: otherShot.
 	effect := intermediate effectOf: edit.
-
-	self flag: #todo. "For coherence with other set effects, we should expect: FiPath root / -> a FiUpdateEffect"
-	self 
-		assert: effect flattenedLeafEffects 
-		equals: { FiPath root / #A / #shortBio -> effect subEffect subEffect }.
 
 	self flag: #todo. "refactor"
 	simpleEffects := effect asSimpleEffects.

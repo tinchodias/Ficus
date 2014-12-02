@@ -32,15 +32,6 @@ FiCompositeEffect >> inverse [
 	^ self editAll: (children values collect: #inverse)
 ]
 
-{ #category : #enumerating }
-FiCompositeEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
-	
-	^ children valuesDo: [ :value |
-		value 
-			leafEffectsDo: aBlockClosure 
-			basePath: aPath ]
-]
-
 { #category : #printing }
 FiCompositeEffect >> printOn: aStream [
 

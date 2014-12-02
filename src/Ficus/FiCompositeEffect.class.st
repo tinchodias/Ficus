@@ -2,7 +2,7 @@ Class {
 	#name : #FiCompositeEffect,
 	#superclass : #FiEffect,
 	#instVars : [
-		'subEffects'
+		'children'
 	],
 	#category : #'Ficus-Model-Core-Effects'
 }
@@ -10,26 +10,32 @@ Class {
 { #category : #converting }
 FiCompositeEffect >> asSimpleEffectAt: aBasePath [
 
-	^ subEffects values flatCollect: [ :each |
+	^ children values flatCollect: [ :each |
 		each asSimpleEffectAt: aBasePath ]
+]
+
+{ #category : #accessing }
+FiCompositeEffect >> children [
+	
+	^ children
 ]
 
 { #category : #accessing }
 FiCompositeEffect >> edit [
 	
-	^ self editAll: (subEffects values collect: #edit)
+	^ self editAll: (children values collect: #edit)
 ]
 
 { #category : #accessing }
 FiCompositeEffect >> inverse [
 	
-	^ self editAll: (subEffects values collect: #inverse)
+	^ self editAll: (children values collect: #inverse)
 ]
 
 { #category : #enumerating }
 FiCompositeEffect >> leafEffectsDo: aBlockClosure basePath: aPath [ 
 	
-	^ subEffects valuesDo: [ :value |
+	^ children valuesDo: [ :value |
 		value 
 			leafEffectsDo: aBlockClosure 
 			basePath: aPath ]
@@ -46,15 +52,9 @@ FiCompositeEffect >> printOn: aStream [
 	delimitingBlock := [ aStream cr; tab ].
 	delimitingBlock value.
 
-	subEffects values
+	children values
 		do: [ :each | aStream print: each ]
 		separatedBy: delimitingBlock.
 		
 	aStream nextPut: $).
-]
-
-{ #category : #accessing }
-FiCompositeEffect >> subEffects [
-	
-	^ subEffects
 ]

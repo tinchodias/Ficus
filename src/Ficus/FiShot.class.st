@@ -82,7 +82,7 @@ FiShot >> effectOf: anEdit [
 FiShot >> effectOfCompositeEdit: aCompositeEdit [ 
 
 	^ FiCompositeEffect builder
-		subEffects: (aCompositeEdit subEdits values collect: [ :anEdit | anEdit effectOn: self ]) asFiSet;
+		children: (aCompositeEdit children values collect: [ :anEdit | anEdit effectOn: self ]) asFiSet;
 		new
 ]
 
@@ -161,7 +161,7 @@ FiShot >> isShot [
 { #category : #results }
 FiShot >> resultOfCompositeEdit: aCompositeEdit [ 
 
-	^ aCompositeEdit subEdits values
+	^ aCompositeEdit children values
 		inject: self
 		into: [ :copy :edit | copy resultOf: edit ]
 ]

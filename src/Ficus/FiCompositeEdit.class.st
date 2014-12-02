@@ -11,8 +11,14 @@ Class {
 FiCompositeEdit class >> withAll: aCollectionOfEdits [ 
 
 	^ self builder
-		subEdits: aCollectionOfEdits asFiSet;
+		children: aCollectionOfEdits asFiSet;
 		new
+]
+
+{ #category : #accessing }
+FiCompositeEdit >> children [
+
+	^ subEdits
 ]
 
 { #category : #effects }
@@ -32,7 +38,7 @@ FiCompositeEdit >> printOn: aStream [
 	delimitingBlock := [ aStream cr; tab ].
 	delimitingBlock value.
 
-	self subEdits values
+	self children values
 		do: [ :each | aStream print: each ]
 		separatedBy: delimitingBlock.
 		
@@ -43,10 +49,4 @@ FiCompositeEdit >> printOn: aStream [
 FiCompositeEdit >> resultOn: aShot [ 
 
 	^ aShot resultOfCompositeEdit: self
-]
-
-{ #category : #accessing }
-FiCompositeEdit >> subEdits [
-
-	^ subEdits
 ]

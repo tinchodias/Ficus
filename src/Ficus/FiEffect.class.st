@@ -20,7 +20,7 @@ FiEffect class >> fromAll: subEffects [
 			ifTrue: [ subEffects anyOne ]
 			ifFalse: [ 
 				FiCompositeEffect builder
-					subEffects: subEffects asFiSet;
+					children: subEffects asFiSet;
 					new ] ]
 ]
 

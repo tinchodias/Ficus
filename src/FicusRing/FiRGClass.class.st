@@ -282,9 +282,9 @@ FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound:
 { #category : #polymorphism }
 FiRGClass >> methods [
 	
-	"FIX"
-	^ classShot methods values collect: [ :aMethodShot |
-		self ringMethodFor: aMethodShot ]
+	^ (environment extensionMethodsFor: self),
+		(classShot methods collect: [ :aMethodShot | 
+			self ringMethodFor: aMethodShot ])
 ]
 
 { #category : #polymorphism }

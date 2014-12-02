@@ -198,7 +198,12 @@ FiRGClassTest >> testLookupSelector [
 { #category : #tests }
 FiRGClassTest >> testMethods [
 
-	self deny: ringObjectResource classA methods isEmpty.
+	| methodsWithoutExtensions methodsWithExtensions |
+	methodsWithoutExtensions := ringObjectResource classA methods.
+	methodsWithExtensions := (ringObjectResource environmentWithClassesABCAndExtensionMethod classNamed: #A) methods.
+
+	self assert: (methodsWithoutExtensions collect: #selector) equals: #(#sum #sum42) asSet.
+	self assert: (methodsWithExtensions collect: #selector) equals: #(#sum #sum42 #sum43) asSet.
 
 ]
 

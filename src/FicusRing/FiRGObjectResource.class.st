@@ -46,3 +46,12 @@ FiRGObjectResource >> environmentWithClassesABC [
 		yourself.
 
 ]
+
+{ #category : #resources }
+FiRGObjectResource >> environmentWithClassesABCAndExtensionMethod [
+
+	^ FiRGEnvironment new
+		environmentShot: FiShotResource new environmentWithClassesABCAndExtensionMethod;
+		yourself.
+
+]

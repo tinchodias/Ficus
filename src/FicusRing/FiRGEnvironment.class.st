@@ -112,6 +112,21 @@ FiRGEnvironment >> environmentShot: anObject [
 	packagesShot := anObject
 ]
 
+{ #category : #lookup }
+FiRGEnvironment >> extensionMethodsFor: aBehavior [
+	
+	^ packagesShot values 
+		flatCollect: [ :aPackageShot |
+			(aPackageShot contents values
+				select: [ :each |
+					each isFicusExtensionMethods and: [ 
+					each hostName = aBehavior name and: [ 
+					each isMetaSide = aBehavior isMeta ] ] ])
+				flatCollect: [ :each |
+					each methods collect: [ :eachMethod | 
+						aBehavior ringMethodFor: eachMethod ] ] ]
+]
+
 { #category : #polymorphism }
 FiRGEnvironment >> hasBindingThatBeginsWith: aString [ 
 

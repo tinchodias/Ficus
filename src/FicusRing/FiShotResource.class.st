@@ -55,6 +55,23 @@ FiShotResource >> environmentWithClassesABC [
 ]
 
 { #category : #resources }
+FiShotResource >> environmentWithClassesABCAndExtensionMethod [
+
+	^ { self packageXWithClassesABC. self packageYWithExtensionMethod } asFiSet
+]
+
+{ #category : #resources }
+FiShotResource >> extensionMethodsToX [
+
+	^ FiExtensionMethods builder
+		hostName: #A;
+		methods: { 
+			self methodWith: 'sum43  ^ self sum42 + 1'. } asFiSet;
+		isMetaSide: false;
+		new
+]
+
+{ #category : #resources }
 FiShotResource >> fixedLayoutWithInstanceVariables: names [
 	
 	^ FiFixedLayout builder
@@ -78,5 +95,14 @@ FiShotResource >> packageXWithClassesABC [
 	^ FiPackage builder
 		theName: #X;
 		contents: { self classA. self classB. self classC } asFiSet;
+		new
+]
+
+{ #category : #resources }
+FiShotResource >> packageYWithExtensionMethod [
+	
+	^ FiPackage builder
+		theName: #Y;
+		contents: { self extensionMethodsToX } asFiSet;
 		new
 ]

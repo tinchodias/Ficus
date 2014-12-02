@@ -1,19 +1,19 @@
 Class {
 	#name : #FiRGEnvironmentTest,
-	#superclass : #FiRGShotTest,
+	#superclass : #FiRGObjectTest,
 	#category : #'FicusRing-Tests'
 }
 
 { #category : #tests }
 FiRGEnvironmentTest >> testAllClasses [
 
-	self deny: ringShotResource environmentWithClassesABC allClasses isEmpty
+	self deny: ringObjectResource environmentWithClassesABC allClasses isEmpty
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testAllClassesAndTraits [
 
-	self deny: ringShotResource environmentWithClassesABC allClassesAndTraits isEmpty
+	self deny: ringObjectResource environmentWithClassesABC allClassesAndTraits isEmpty
 ]
 
 { #category : #tests }
@@ -22,7 +22,7 @@ FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
 	| items |
 	items := IdentitySet new.
 
-	ringShotResource environmentWithClassesABC allClassesAndTraitsDo: [ :each | items add: each ].
+	ringObjectResource environmentWithClassesABC allClassesAndTraitsDo: [ :each | items add: each ].
 
 	self deny: items isEmpty
 ]
@@ -33,7 +33,7 @@ FiRGEnvironmentTest >> testAllClassesDo [
 	| items |
 	items := IdentitySet new.
 
-	ringShotResource environmentWithClassesABC allClassesDo: [ :each | items add: each ].
+	ringObjectResource environmentWithClassesABC allClassesDo: [ :each | items add: each ].
 
 	self deny: items isEmpty
 ]
@@ -42,22 +42,22 @@ FiRGEnvironmentTest >> testAllClassesDo [
 FiRGEnvironmentTest >> testBindingOf [
 
 	self 
-		assert: (ringShotResource environmentWithClassesABC bindingOf: #A) 
-		equals: (#A -> (ringShotResource environmentWithClassesABC classNamed: #A)).
+		assert: (ringObjectResource environmentWithClassesABC bindingOf: #A) 
+		equals: (#A -> (ringObjectResource environmentWithClassesABC classNamed: #A)).
 
-	self assert: (ringShotResource environmentWithClassesABC bindingOf: #UnexistentClass) isNil
+	self assert: (ringObjectResource environmentWithClassesABC bindingOf: #UnexistentClass) isNil
 
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testClassNamed [
 
-	self assert: (ringShotResource environmentWithClassesABC classNamed: #A) name equals: #A 
+	self assert: (ringObjectResource environmentWithClassesABC classNamed: #A) name equals: #A 
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testHasBindingThatBeginsWith [
 
-	self assert: (ringShotResource environmentWithClassesABC hasBindingThatBeginsWith: #A).
-	self deny: (ringShotResource environmentWithClassesABC hasBindingThatBeginsWith: #UnexistentClass).
+	self assert: (ringObjectResource environmentWithClassesABC hasBindingThatBeginsWith: #A).
+	self deny: (ringObjectResource environmentWithClassesABC hasBindingThatBeginsWith: #UnexistentClass).
 ]

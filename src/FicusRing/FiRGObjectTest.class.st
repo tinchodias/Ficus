@@ -1,16 +1,16 @@
 Class {
-	#name : #FiRGShotTest,
+	#name : #FiRGObjectTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'ringShotResource'
+		'ringObjectResource'
 	],
 	#category : #'FicusRing-Tests'
 }
 
 { #category : #running }
-FiRGShotTest >> setUp [
+FiRGObjectTest >> setUp [
 
 	super setUp.
 	
-	ringShotResource := FiRGShotResource new
+	ringObjectResource := FiRGObjectResource new
 ]

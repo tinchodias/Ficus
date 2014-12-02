@@ -5,8 +5,8 @@ Class {
 	#name : #FiRGClass,
 	#superclass : #FiRGBehavior,
 	#instVars : [
-		'environment',
-		'shot'
+		'classShot',
+		'environment'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -17,8 +17,8 @@ FiRGClass >> = other [
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
 
-	^ self environment = other environment 
-		and: [ self shot = other shot ]
+	^ environment = other environment 
+		and: [ classShot = other classShot ]
 ]
 
 { #category : #polymorphism }
@@ -34,7 +34,7 @@ FiRGClass >> >> selector [
 { #category : #polymorphism }
 FiRGClass >> allInstVarNames [
 
-	^ shot hasNullSuperclass
+	^ classShot hasNullSuperclass
 		ifTrue: [ self instVarNames ]
 		ifFalse: [ self superclass allInstVarNames, self instVarNames ].
 
@@ -80,7 +80,7 @@ FiRGClass >> allSuperclasses [
 FiRGClass >> allSuperclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
-	shot hasNullSuperclass ifFalse: [
+	classShot hasNullSuperclass ifFalse: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
 ]
@@ -115,25 +115,37 @@ FiRGClass >> canUnderstand: aSymbol [
 { #category : #polymorphism }
 FiRGClass >> category [
 
-	^ shot category
+	^ classShot category
 ]
 
 { #category : #polymorphism }
 FiRGClass >> classPool [
 
-	^ shot classPool asDictionary
+	^ classShot classPool asDictionary
+]
+
+{ #category : #accessing }
+FiRGClass >> classShot [
+	
+	^ classShot
+]
+
+{ #category : #accessing }
+FiRGClass >> classShot: anObject [
+	
+	classShot := anObject
 ]
 
 { #category : #polymorphism }
 FiRGClass >> classVarNames [
 
-	^ shot classPool values
+	^ classShot classPool values
 ]
 
 { #category : #polymorphism }
 FiRGClass >> comment [
 
-	^ shot comment
+	^ classShot comment
 ]
 
 { #category : #polymorphism }
@@ -171,17 +183,23 @@ FiRGClass >> environment [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> environment: anObject [
+	
+	environment := anObject
+]
+
+{ #category : #polymorphism }
 FiRGClass >> hasComment [
 	
-	^ shot comment isNotEmpty
+	^ classShot comment isNotEmpty
 ]
 
 { #category : #comparing }
 FiRGClass >> hash [
 
 	^ (self class hash 
-		bitXor: self environment hash)
-		bitXor: self shot hash
+		bitXor: environment hash)
+		bitXor: classShot hash
 ]
 
 { #category : #polymorphism }
@@ -218,7 +236,7 @@ FiRGClass >> instVarNames [
 { #category : #polymorphism }
 FiRGClass >> instanceVariables [
 
-	^ self shot layout instanceVariables asArray
+	^ classShot layout instanceVariables asArray
 ]
 
 { #category : #polymorphism }
@@ -265,14 +283,14 @@ FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound:
 FiRGClass >> methods [
 	
 	"FIX"
-	^ shot methods values collect: [ :aMethodShot |
+	^ classShot methods values collect: [ :aMethodShot |
 		self ringMethodFor: aMethodShot ]
 ]
 
-{ #category : #accessing }
+{ #category : #polymorphism }
 FiRGClass >> name [
 
-	^ self shot theName
+	^ classShot theName
 ]
 
 { #category : #polymorphism }
@@ -296,34 +314,16 @@ FiRGClass >> printOn: aStream [
 	
 ]
 
-{ #category : #accessing }
-FiRGClass >> ringEnvironment: anObject [
-	
-	environment := anObject
-]
-
 { #category : #polymorphism }
 FiRGClass >> sharedPoolNames [
 
-	^ shot sharedPools values
+	^ classShot sharedPools values
 ]
 
 { #category : #polymorphism }
 FiRGClass >> sharedPools [
 
-	^ shot sharedPools asArray
-]
-
-{ #category : #accessing }
-FiRGClass >> shot [
-	
-	^ shot
-]
-
-{ #category : #accessing }
-FiRGClass >> shot: anObject [
-	
-	shot := anObject
+	^ classShot sharedPools asArray
 ]
 
 { #category : #polymorphism }
@@ -338,7 +338,7 @@ FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
 { #category : #polymorphism }
 FiRGClass >> subclasses [
 	
-	^ environment allClasses select: [ :aClass | aClass shot superclassName = self name ]
+	^ environment allClasses select: [ :aClass | aClass classShot superclassName = self name ]
 ]
 
 { #category : #polymorphism }
@@ -351,9 +351,9 @@ FiRGClass >> subclassesDo: aBlock [
 { #category : #polymorphism }
 FiRGClass >> superclass [
 	
-	shot hasNullSuperclass ifTrue: [ ^ nil ].
+	classShot hasNullSuperclass ifTrue: [ ^ nil ].
 	
-	^ environment classNamed: shot superclassName
+	^ environment classNamed: classShot superclassName
 ]
 
 { #category : #polymorphism }

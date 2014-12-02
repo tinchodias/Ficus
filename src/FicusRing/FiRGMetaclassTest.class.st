@@ -8,7 +8,7 @@ Class {
 FiRGMetaclassTest >> testEnvironment [
 		
 	| environment |
-	environment := ringShotResource environmentWithClassesABC.
+	environment := ringObjectResource environmentWithClassesABC.
 	
 	self assert: (environment classNamed: #A) theMetaClass environment == environment
 ]
@@ -16,7 +16,7 @@ FiRGMetaclassTest >> testEnvironment [
 { #category : #tests }
 FiRGMetaclassTest >> testMethods [
 
-	self assert: ringShotResource classA theMetaClass methods isEmpty.
+	self assert: ringObjectResource classA theMetaClass methods isEmpty.
 
 ]
 
@@ -26,7 +26,7 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 	| results |
 	results := OrderedCollection new.
 	
-	ringShotResource classA theMetaClass selectorsAndMethodsDo: [ :selector :method |
+	ringObjectResource classA theMetaClass selectorsAndMethodsDo: [ :selector :method |
 		results add: selector -> method ].
 
 	self assert: results isEmpty.
@@ -36,16 +36,16 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 FiRGMetaclassTest >> testSubclasses [
 
 	self 
-		assert: ringShotResource classA theMetaClass subclasses 
-		equals: { ringShotResource classB theMetaClass }.
+		assert: ringObjectResource classA theMetaClass subclasses 
+		equals: { ringObjectResource classB theMetaClass }.
 
-	self assert: ringShotResource classB theMetaClass subclasses isEmpty.
+	self assert: ringObjectResource classB theMetaClass subclasses isEmpty.
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testTheNonMetaClass [
 
 	| classA |
-	classA := ringShotResource classA.
+	classA := ringObjectResource classA.
 	self assert: classA theMetaClass theNonMetaClass == classA
 ]

@@ -41,7 +41,7 @@ FiRGMetaclass >> isMeta [
 FiRGMetaclass >> methods [
 
 	"FIX"
-	^ theNonMetaClass shot metaclass methods values collect: [ :aMethodShot |
+	^ theNonMetaClass classShot metaclass methods values collect: [ :aMethodShot |
 		self ringMethodFor: aMethodShot ]
 ]
 

@@ -3,7 +3,7 @@ I am polymorphic with Behavior/ClassDescription.
 "
 Class {
 	#name : #FiRGBehavior,
-	#superclass : #FiRGShot,
+	#superclass : #FiRGObject,
 	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:})',
 	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
 	#category : #'FicusRing-Core'
@@ -46,8 +46,8 @@ FiRGBehavior >> printOn: arg1 [
 FiRGBehavior >> ringMethodFor: aMethodShot [
 
 	^ FiRGMethod new 
-		ringMethodClass: self;
-		shot: aMethodShot;
+		methodClass: self;
+		methodShot: aMethodShot;
 		yourself
 ]
 

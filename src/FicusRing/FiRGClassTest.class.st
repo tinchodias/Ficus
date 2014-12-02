@@ -7,23 +7,23 @@ Class {
 { #category : #tests }
 FiRGClassTest >> testAllInstVarNames [
 
-	self assert: ringShotResource classA allInstVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: ringShotResource classB allInstVarNames asSet equals: #('a1' 'a2' 'b1') asSet
+	self assert: ringObjectResource classA allInstVarNames asSet equals: #('a1' 'a2') asSet.
+	self assert: ringObjectResource classB allInstVarNames asSet equals: #('a1' 'a2' 'b1') asSet
 ]
 
 { #category : #tests }
 FiRGClassTest >> testAllSelectors [
 
 	self 
-		assert: ringShotResource classB allSelectors
-		equals: (ringShotResource classA selectors, ringShotResource classB selectors) asSet
+		assert: ringObjectResource classB allSelectors
+		equals: (ringObjectResource classA selectors, ringObjectResource classB selectors) asSet
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testAllSubclasses [
 
-	self assert: ringShotResource classA allSubclasses asArray equals: { ringShotResource classB }.
+	self assert: ringObjectResource classA allSubclasses asArray equals: { ringObjectResource classB }.
 ]
 
 { #category : #tests }
@@ -31,15 +31,15 @@ FiRGClassTest >> testAllSubclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	ringShotResource classA allSubclassesDo: [ :aSubclass | result add: aSubclass ].
+	ringObjectResource classA allSubclassesDo: [ :aSubclass | result add: aSubclass ].
 	
-	self assert: result asArray equals: { ringShotResource classB }.
+	self assert: result asArray equals: { ringObjectResource classB }.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testAllSuperclasses [
 
-	self assert: ringShotResource classB allSuperclasses asArray equals: { ringShotResource classA }.
+	self assert: ringObjectResource classB allSuperclasses asArray equals: { ringObjectResource classA }.
 ]
 
 { #category : #tests }
@@ -47,23 +47,23 @@ FiRGClassTest >> testAllSuperclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	ringShotResource classB allSuperclassesDo: [ :aSuperclass | result add: aSuperclass ].
+	ringObjectResource classB allSuperclassesDo: [ :aSuperclass | result add: aSuperclass ].
 	
-	self assert: result asArray equals: { ringShotResource classA }.
+	self assert: result asArray equals: { ringObjectResource classA }.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testBindingOf [
 
 	| classB |
-	classB := ringShotResource environmentWithClassesABC classNamed: #B.
+	classB := ringObjectResource environmentWithClassesABC classNamed: #B.
 
 	"for an undeclared"
 	self assert: (classB bindingOf: #UnexistentClass) isNil.
 
 	"for a global"	
 	self deny: (classB bindingOf: #A) isNil.
-	self assert: (classB bindingOf: #A) equals: (ringShotResource environmentWithClassesABC bindingOf: #A).
+	self assert: (classB bindingOf: #A) equals: (ringObjectResource environmentWithClassesABC bindingOf: #A).
 
 	"for a class variable"
 	self deny: (classB bindingOf: #BConstants) isNil.
@@ -77,33 +77,33 @@ FiRGClassTest >> testBindingOf [
 { #category : #tests }
 FiRGClassTest >> testCanUnderstand [
 
-	self assert: (ringShotResource classA canUnderstand: #sum42).
-	self assert: (ringShotResource classB canUnderstand: #sum42).
+	self assert: (ringObjectResource classA canUnderstand: #sum42).
+	self assert: (ringObjectResource classB canUnderstand: #sum42).
 
-	self deny: (ringShotResource classA canUnderstand: #defaultClass).
-	self assert: (ringShotResource classB canUnderstand: #defaultClass).
+	self deny: (ringObjectResource classA canUnderstand: #defaultClass).
+	self assert: (ringObjectResource classB canUnderstand: #defaultClass).
 
 ]
 
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testClassPool [
 
-	self assert: ringShotResource classA classPool isEmpty.
-	self deny: ringShotResource classB classPool isEmpty.
+	self assert: ringObjectResource classA classPool isEmpty.
+	self deny: ringObjectResource classB classPool isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testClassVarNames [
 
-	self assert: ringShotResource classA classVarNames isEmpty.
-	self assert: ringShotResource classB classVarNames asArray equals: #('BConstants')
+	self assert: ringObjectResource classA classVarNames isEmpty.
+	self assert: ringObjectResource classB classVarNames asArray equals: #('BConstants')
 ]
 
 { #category : #tests }
 FiRGClassTest >> testCompiledMethodAt [
 		
-	self assert: (ringShotResource classA compiledMethodAt: #sum) isNotNil.
-	self assert: (ringShotResource classA >> #sum) isNotNil.
+	self assert: (ringObjectResource classA compiledMethodAt: #sum) isNotNil.
+	self assert: (ringObjectResource classA >> #sum) isNotNil.
 
 ]
 
@@ -113,7 +113,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 	| presentOrNil |
 	presentOrNil := nil.
 		
-	ringShotResource classA 
+	ringObjectResource classA 
 		compiledMethodAt: #sum
 		ifPresent: [ :method | presentOrNil := true ]
 		ifAbsent: [ presentOrNil := false ].
@@ -123,7 +123,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 	
 	presentOrNil := nil.
 		
-	ringShotResource classA 
+	ringObjectResource classA 
 		compiledMethodAt: #unexistentMethod
 		ifPresent: [ :method | presentOrNil := true ]
 		ifAbsent: [ presentOrNil := false ].
@@ -135,7 +135,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 FiRGClassTest >> testEnvironment [
 		
 	| environment |
-	environment := ringShotResource environmentWithClassesABC.
+	environment := ringObjectResource environmentWithClassesABC.
 	
 	self assert: (environment classNamed: #A) environment == environment
 ]
@@ -143,78 +143,78 @@ FiRGClassTest >> testEnvironment [
 { #category : #tests }
 FiRGClassTest >> testIncludesSelector [
 		
-	self assert: (ringShotResource classA includesSelector: #sum).
-	self deny: (ringShotResource classA includesSelector: #unexistentMethod).
+	self assert: (ringObjectResource classA includesSelector: #sum).
+	self deny: (ringObjectResource classA includesSelector: #unexistentMethod).
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testInstSize [
 		
-	self assert: ringShotResource classA instSize equals: 2.
-	self assert: ringShotResource classB instSize equals: 3.
+	self assert: ringObjectResource classA instSize equals: 2.
+	self assert: ringObjectResource classB instSize equals: 3.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testInstVarNames [
 		
-	self assert: ringShotResource classA instVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: ringShotResource classB instVarNames asSet equals: #('b1') asSet.
+	self assert: ringObjectResource classA instVarNames asSet equals: #('a1' 'a2') asSet.
+	self assert: ringObjectResource classB instVarNames asSet equals: #('b1') asSet.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testInstanceVariables [
 		
-	self assert: ringShotResource classA instanceVariables asSet equals: #('a1' 'a2') asSet.
-	self assert: ringShotResource classB instanceVariables asSet equals: #('b1') asSet.
+	self assert: ringObjectResource classA instanceVariables asSet equals: #('a1' 'a2') asSet.
+	self assert: ringObjectResource classB instanceVariables asSet equals: #('b1') asSet.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testIsBehavior [
 		
-	self assert: ringShotResource classA isBehavior.
-	self assert: ringShotResource classB isBehavior.
+	self assert: ringObjectResource classA isBehavior.
+	self assert: ringObjectResource classB isBehavior.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testIsObsolete [
 
-	self deny: ringShotResource classA isObsolete.
+	self deny: ringObjectResource classA isObsolete.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testLookupSelector [
 		
-	self deny: (ringShotResource classA lookupSelector: #sum) isNil.
-	self assert: (ringShotResource classA lookupSelector: #unexistentMethod) isNil.
+	self deny: (ringObjectResource classA lookupSelector: #sum) isNil.
+	self assert: (ringObjectResource classA lookupSelector: #unexistentMethod) isNil.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testMethods [
 
-	self deny: ringShotResource classA methods isEmpty.
+	self deny: ringObjectResource classA methods isEmpty.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testParseTreeFor [
 		
-	self deny: (ringShotResource classA parseTreeFor: #sum) isNil.
-	self assert: (ringShotResource classA parseTreeFor: #unexistentMethod) isNil.
+	self deny: (ringObjectResource classA parseTreeFor: #sum) isNil.
+	self assert: (ringObjectResource classA parseTreeFor: #unexistentMethod) isNil.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSelectors [
 
-	self deny: ringShotResource classA selectors isEmpty.
-	self assert: (ringShotResource classA selectors allSatisfy: #isSymbol).
+	self deny: ringObjectResource classA selectors isEmpty.
+	self assert: (ringObjectResource classA selectors allSatisfy: #isSymbol).
 
 ]
 
@@ -224,7 +224,7 @@ FiRGClassTest >> testSelectorsAndMethodsDo [
 	| results |
 	results := OrderedCollection new.
 	
-	ringShotResource classA selectorsAndMethodsDo: [ :selector :method |
+	ringObjectResource classA selectorsAndMethodsDo: [ :selector :method |
 		results add: selector -> method ].
 
 	self assert: results isNotEmpty.
@@ -235,24 +235,24 @@ FiRGClassTest >> testSelectorsAndMethodsDo [
 { #category : #tests }
 FiRGClassTest >> testSharedPoolNames [
 
-	self assert: ringShotResource classA sharedPoolNames isEmpty.
+	self assert: ringObjectResource classA sharedPoolNames isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSourceCodeAtIfAbsent [
 		
-	self assert: (ringShotResource classA sourceCodeAt: #unexistentMethod ifAbsent: [ '' ]) equals: ''.
+	self assert: (ringObjectResource classA sourceCodeAt: #unexistentMethod ifAbsent: [ '' ]) equals: ''.
 	self 
-		assert: (ringShotResource classA sourceCodeAt: #sum ifAbsent: [ '' ]) 
-		equals: (ringShotResource classA >> #sum) sourceCode.
+		assert: (ringObjectResource classA sourceCodeAt: #sum ifAbsent: [ '' ]) 
+		equals: (ringObjectResource classA >> #sum) sourceCode.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSubclasses [
 
-	self assert: ringShotResource classA subclasses equals: { ringShotResource classB }.
-	self assert: ringShotResource classB subclasses isEmpty.
+	self assert: ringObjectResource classA subclasses equals: { ringObjectResource classB }.
+	self assert: ringObjectResource classB subclasses isEmpty.
 ]
 
 { #category : #tests }
@@ -260,22 +260,22 @@ FiRGClassTest >> testSubclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	ringShotResource classA subclassesDo: [ :aSubclass | result add: aSubclass ].
+	ringObjectResource classA subclassesDo: [ :aSubclass | result add: aSubclass ].
 	
-	self assert: result asArray equals: { ringShotResource classB }.
+	self assert: result asArray equals: { ringObjectResource classB }.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSuperclass [
 
-	self assert: ringShotResource classA superclass isNil.
-	self assert: ringShotResource classB superclass name equals: #A.
+	self assert: ringObjectResource classA superclass isNil.
+	self assert: ringObjectResource classB superclass name equals: #A.
 ]
 
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testTheMetaClass [
 
-	self assert: ringShotResource classA theMetaClass isMeta.
+	self assert: ringObjectResource classA theMetaClass isMeta.
 
 ]
 
@@ -283,7 +283,7 @@ FiRGClassTest >> testTheMetaClass [
 FiRGClassTest >> testTheNonMetaClass [
 		
 	| aClass |
-	aClass := ringShotResource classA.
+	aClass := ringObjectResource classA.
 
 	self assert: aClass theNonMetaClass == aClass.
 
@@ -292,27 +292,27 @@ FiRGClassTest >> testTheNonMetaClass [
 { #category : #tests }
 FiRGClassTest >> testWhichCategoryIncludesSelector [
 		
-	self assert: (ringShotResource classA whichCategoryIncludesSelector: #sum) equals: #autogenerated.
+	self assert: (ringObjectResource classA whichCategoryIncludesSelector: #sum) equals: #autogenerated.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testWhichClassIncludesSelector [
 
-	self deny: (ringShotResource classA whichClassIncludesSelector: #sum) isNil.
-	self assert: (ringShotResource classA whichClassIncludesSelector: #unexistentMethod) isNil.
+	self deny: (ringObjectResource classA whichClassIncludesSelector: #sum) isNil.
+	self assert: (ringObjectResource classA whichClassIncludesSelector: #unexistentMethod) isNil.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testWhichSelectorAccess [
 		
-	self assert: (ringShotResource classA whichSelectorsAccess: #a1) asSet equals: { #sum } asSet
+	self assert: (ringObjectResource classA whichSelectorsAccess: #a1) asSet equals: { #sum } asSet
 ]
 
 { #category : #tests }
 FiRGClassTest >> testWithAllSubclasses [
 
-	self assert: ringShotResource classA withAllSubclasses asArray equals: { ringShotResource classB. ringShotResource classA }.
+	self assert: ringObjectResource classA withAllSubclasses asArray equals: { ringObjectResource classB. ringObjectResource classA }.
 ]
 
 { #category : #tests }
@@ -320,15 +320,15 @@ FiRGClassTest >> testWithAllSuperAndSubclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	ringShotResource classA withAllSuperAndSubclassesDo: [ :aSubclass | result add: aSubclass ].
+	ringObjectResource classA withAllSuperAndSubclassesDo: [ :aSubclass | result add: aSubclass ].
 	
-	self assert: result asArray equals: { ringShotResource classA. ringShotResource classB }.
+	self assert: result asArray equals: { ringObjectResource classA. ringObjectResource classB }.
 ]
 
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testWithAllSuperclasses [
 
 	self 
-		assert: ringShotResource classB withAllSuperclasses asArray 
-		equals: { ringShotResource classB. ringShotResource classA }.
+		assert: ringObjectResource classB withAllSuperclasses asArray 
+		equals: { ringObjectResource classB. ringObjectResource classA }.
 ]

@@ -3,7 +3,7 @@ I am polymorphic with SystemDictionary, fetching everything needed from a Ficus 
 "
 Class {
 	#name : #FiRGEnvironment,
-	#superclass : #FiRGShot,
+	#superclass : #FiRGObject,
 	#instVars : [
 		'packagesShot',
 		'allClasses'
@@ -33,8 +33,8 @@ FiRGEnvironment >> allClasses [
 						select: #isFicusClass 
 						thenCollect: [ :classShot |
 							FiRGClass new 
-								ringEnvironment: self; 
-								shot: classShot;
+								environment: self; 
+								classShot: classShot;
 								yourself ]) ] ]
 ]
 
@@ -57,7 +57,7 @@ FiRGEnvironment >> allClassesDo: aBlockClosure [
 	^ self allClasses do: aBlockClosure 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 FiRGEnvironment >> associationAt: key ifAbsent: aBlock [ 
 
 	^ (self 

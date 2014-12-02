@@ -55,13 +55,13 @@ FiRBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
 ]
 
 { #category : #accessing }
-FiRBBrowserEnvironment >> ringEnvironment [
-	^ ringEnvironment
+FiRBBrowserEnvironment >> environment: anObject [
+	ringEnvironment := anObject
 ]
 
 { #category : #accessing }
-FiRBBrowserEnvironment >> ringEnvironment: anObject [
-	ringEnvironment := anObject
+FiRBBrowserEnvironment >> ringEnvironment [
+	^ ringEnvironment
 ]
 
 { #category : #private }

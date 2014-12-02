@@ -3,10 +3,10 @@ I am polymorphic with CompilerMethod, fetching everything needed from a Ficus en
 "
 Class {
 	#name : #FiRGMethod,
-	#superclass : #FiRGShot,
+	#superclass : #FiRGObject,
 	#instVars : [
-		'shot',
-		'ringMethodClass'
+		'methodShot',
+		'methodClass'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -17,22 +17,22 @@ FiRGMethod >> = other [
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
 
-	^ self environment = other environment 
-		and: [ self shot = other shot ]
+	^ self methodClass = other methodClass 
+		and: [ methodShot = other methodShot ]
 ]
 
 { #category : #polymorphism }
 FiRGMethod >> environment [
 	
-	^ ringMethodClass environment
+	^ methodClass environment
 ]
 
 { #category : #comparing }
 FiRGMethod >> hash [
 
 	^ (self class hash 
-		bitXor: self environment hash)
-		bitXor: self shot hash
+		bitXor: methodClass hash)
+		bitXor: methodShot hash
 ]
 
 { #category : #lookup }
@@ -51,7 +51,25 @@ FiRGMethod >> messages [
 { #category : #polymorphism }
 FiRGMethod >> methodClass [
 	
-	^ ringMethodClass
+	^ methodClass
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> methodClass: anObject [
+	
+	methodClass := anObject
+]
+
+{ #category : #accessing }
+FiRGMethod >> methodShot [
+	
+	^ methodShot
+]
+
+{ #category : #accessing }
+FiRGMethod >> methodShot: anObject [
+	
+	methodShot := anObject
 ]
 
 { #category : #polymorphism }
@@ -83,13 +101,13 @@ FiRGMethod >> printOn: aStream [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 FiRGMethod >> protocol [
 	
-	^ shot protocol
+	^ methodShot protocol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 FiRGMethod >> referredInstVars [
 
 	| tree allChildren |
@@ -101,7 +119,7 @@ FiRGMethod >> referredInstVars [
 	^ (allChildren select: #isVariable) collect: [ :each | each name ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 FiRGMethod >> refersToLiteral: literal [ 
 
 	| tree allChildren |
@@ -118,38 +136,14 @@ FiRGMethod >> refersToLiteral: literal [
 			"(allChildren select: #isLiteralNode) anySatisfy: [ :each | each value = literal ]" ]
 ]
 
-{ #category : #accessing }
-FiRGMethod >> ringEnvironment: anObject [
-	
-	ringEnvironment := anObject
-]
-
-{ #category : #accessing }
-FiRGMethod >> ringMethodClass: anObject [
-	
-	ringMethodClass := anObject
-]
-
 { #category : #polymorphism }
 FiRGMethod >> selector [
 
-	^ shot selector
-]
-
-{ #category : #accessing }
-FiRGMethod >> shot [
-	
-	^ shot
-]
-
-{ #category : #accessing }
-FiRGMethod >> shot: anObject [
-	
-	shot := anObject
+	^ methodShot selector
 ]
 
 { #category : #polymorphism }
 FiRGMethod >> sourceCode [
 
-	^ shot sourceCode
+	^ methodShot sourceCode
 ]

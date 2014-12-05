@@ -23,6 +23,26 @@ FiMonticelloStore class >> downloadToCache: aPackageName from: anMCHttpRepositor
 ]
 
 { #category : #utility }
+FiMonticelloStore class >> downloadToCacheAllFrom: anMCHttpRepository [
+	"
+	self downloadToCacheAllFrom: (MCHttpRepository location: 'http://smalltalkhub.com/mc/maxi/Chalten/main')
+	"
+
+	| versionNames |
+	versionNames := anMCHttpRepository allFileNamesOrCache.
+	
+	versionNames 
+		do: [ :aFileName | 
+			(MCCacheRepository uniqueInstance includesFileNamed: aFileName) ifFalse: [ 
+				[ anMCHttpRepository readStreamForFileNamed: aFileName do: [ :e | ] ] 
+					on: Error 
+					do: [ "just retry once more" 
+						anMCHttpRepository readStreamForFileNamed: aFileName do: [ :e | ] ]
+			] ]
+		displayingProgress: [ :aFileName | 'Downloading ', aFileName, ' (total: ', versionNames size asString, ')' ]
+]
+
+{ #category : #utility }
 FiMonticelloStore class >> downloadToCacheFuelTests [
 
 	{ self fuelRepository. self pharo30InboxRepository. self pharo30Repository } 
@@ -30,11 +50,31 @@ FiMonticelloStore class >> downloadToCacheFuelTests [
 			self downloadToCache: #FuelTests from: aRepository ]
 ]
 
+{ #category : #utility }
+FiMonticelloStore class >> downloadToCachePharo20andPharo30 [
+	"
+	self downloadToCachePharo20andPharo30
+	"
+
+	{ self pharo20Repository. self pharo30Repository } 
+		do: [ :aRepository |
+			self downloadToCacheAllFrom: aRepository ]
+]
+
 { #category : #private }
 FiMonticelloStore class >> fuelRepository [
 
 	^ MCHttpRepository
 		location: 'http://smalltalkhub.com/mc/Pharo/Fuel/main'
+		user: ''
+		password: ''
+]
+
+{ #category : #private }
+FiMonticelloStore class >> pharo20Repository [
+
+	^ MCHttpRepository
+		location: 'http://smalltalkhub.com/mc/Pharo/Pharo20/main'
 		user: ''
 		password: ''
 ]

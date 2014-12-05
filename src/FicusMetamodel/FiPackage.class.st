@@ -17,6 +17,12 @@ FiPackage >> contents [
 	^ contents
 ]
 
+{ #category : #accessing }
+FiPackage >> defaultStep [
+
+	^ theName asSymbol
+]
+
 { #category : #printing }
 FiPackage >> printOn: aStream [
 

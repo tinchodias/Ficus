@@ -43,6 +43,16 @@ FiMonticelloStore class >> downloadToCacheAllFrom: anMCHttpRepository [
 ]
 
 { #category : #utility }
+FiMonticelloStore class >> downloadToCacheAllPharoXX [
+	"
+	self downloadToCacheAllPharoXX
+	"
+
+	{ self pharo10Repository. self pharo14Repository. self pharo20Repository. self pharo30Repository. self pharo40Repository } 
+		do: [ :aRepository | self downloadToCacheAllFrom: aRepository ]
+]
+
+{ #category : #utility }
 FiMonticelloStore class >> downloadToCacheFuelTests [
 
 	{ self fuelRepository. self pharo30InboxRepository. self pharo30Repository } 
@@ -71,6 +81,24 @@ FiMonticelloStore class >> fuelRepository [
 ]
 
 { #category : #private }
+FiMonticelloStore class >> pharo10Repository [
+
+	^ MCHttpRepository
+		location: 'http://smalltalkhub.com/mc/Pharo/Pharo10/main'
+		user: ''
+		password: ''
+]
+
+{ #category : #private }
+FiMonticelloStore class >> pharo14Repository [
+
+	^ MCHttpRepository
+		location: 'http://smalltalkhub.com/mc/Pharo/Pharo14/main'
+		user: ''
+		password: ''
+]
+
+{ #category : #private }
 FiMonticelloStore class >> pharo20Repository [
 
 	^ MCHttpRepository
@@ -93,6 +121,15 @@ FiMonticelloStore class >> pharo30Repository [
 
 	^ MCHttpRepository
 		location: 'http://smalltalkhub.com/mc/Pharo/Pharo30/main'
+		user: ''
+		password: ''
+]
+
+{ #category : #private }
+FiMonticelloStore class >> pharo40Repository [
+
+	^ MCHttpRepository
+		location: 'http://smalltalkhub.com/mc/Pharo/Pharo40/main'
 		user: ''
 		password: ''
 ]

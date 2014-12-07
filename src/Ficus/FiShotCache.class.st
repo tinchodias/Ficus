@@ -49,3 +49,9 @@ FiShotCache >> like: aShot [
 			aWeakSet add: aShot.
 			aShot ]
 ]
+
+{ #category : #accessing }
+FiShotCache >> size [
+	
+	^ cacheByClass sum: [ :aWeakSet | aWeakSet slowSize ]
+]

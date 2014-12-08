@@ -202,8 +202,8 @@ FiRGClassTest >> testMethods [
 	methodsWithoutExtensions := ringObjectResource classA methods.
 	methodsWithExtensions := (ringObjectResource environmentWithClassesABCAndExtensionMethod classNamed: #A) methods.
 
-	self assert: (methodsWithoutExtensions collect: #selector) equals: #(#sum #sum42) asSet.
-	self assert: (methodsWithExtensions collect: #selector) equals: #(#sum #sum42 #sum43) asSet.
+	self assert: (methodsWithoutExtensions collect: #selector) asSet equals: #(#sum #sum42) asSet.
+	self assert: (methodsWithExtensions collect: #selector) asSet equals: #(#sum #sum42 #sum43) asSet.
 
 ]
 

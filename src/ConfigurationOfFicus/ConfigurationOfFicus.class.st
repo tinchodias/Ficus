@@ -135,7 +135,9 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #FicusMonticello with: [
 				spec requires: #(#FicusMetamodel #FicusStore) ];
 			package: #FicusEpicea with: [
-				spec requires: #(#FicusMetamodel #FicusMonticello #Epicea) ] ].
+				spec requires: #(#FicusMetamodel #FicusMonticello #Epicea) ].
+		spec
+			group: 'default' with: #('Ficus' 'FicusEpicea' 'FicusStore' 'FicusImpact') ].
 
 ]
 

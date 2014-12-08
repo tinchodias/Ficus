@@ -53,5 +53,5 @@ FiShotCache >> like: aShot [
 { #category : #accessing }
 FiShotCache >> size [
 	
-	^ cacheByClass sum: [ :aWeakSet | aWeakSet slowSize ]
+	^ cacheByClass inject: 0 into: [ :sum :aWeakSet | sum + aWeakSet slowSize ]
 ]

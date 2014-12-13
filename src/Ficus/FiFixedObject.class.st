@@ -25,6 +25,21 @@ FiFixedObject class >> steps [
 	^ self allInstVarNames copyWithoutAll: self excludedInstanceVariableNamesForSteps 
 ]
 
+{ #category : #comparing }
+FiFixedObject >> = another [
+	"The difference with the super-implementation is that my #stepCount is fixed."
+	
+	self == another ifTrue: [ ^ true ].
+	self class = another class ifFalse: [ ^ false ].
+	self hash = another hash ifFalse: [ ^ false ].
+	
+	self stepsAndValuesDo: [ :step :value | 
+		((another valueAt: step) = value) ifFalse: [ ^ false ] ].
+		
+	^ true	
+
+]
+
 { #category : #differencing }
 FiFixedObject >> differenceFrom: other [
 

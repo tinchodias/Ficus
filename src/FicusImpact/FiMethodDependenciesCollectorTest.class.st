@@ -2,7 +2,7 @@ Class {
 	#name : #FiMethodDependenciesCollectorTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'ringObjectResource'
+		'resources'
 	],
 	#category : #'FicusImpact-Tests'
 }
@@ -20,14 +20,14 @@ FiMethodDependenciesCollectorTest >> setUp [
 
 	super setUp.
 	
-	ringObjectResource := FiRGObjectResource new
+	resources := FiRGObjectResources new
 ]
 
 { #category : #tests }
 FiMethodDependenciesCollectorTest >> testClassASum [
 
 	self 
-		assertDependenciesOf: ringObjectResource classA >> #sum
+		assertDependenciesOf: resources classA >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
@@ -46,7 +46,7 @@ FiMethodDependenciesCollectorTest >> testClassASum [
 FiMethodDependenciesCollectorTest >> testClassASum42 [
 
 	self 
-		assertDependenciesOf: ringObjectResource classA >> #sum42
+		assertDependenciesOf: resources classA >> #sum42
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSelfMessageReceiver new;
@@ -63,7 +63,7 @@ FiMethodDependenciesCollectorTest >> testClassASum42 [
 FiMethodDependenciesCollectorTest >> testClassBDefaultClass [
 
 	self 
-		assertDependenciesOf: ringObjectResource classB >> #defaultClass
+		assertDependenciesOf: resources classB >> #defaultClass
 		equals: {
 			FiVariableAccess builder
 				variableName: #C;
@@ -75,7 +75,7 @@ FiMethodDependenciesCollectorTest >> testClassBDefaultClass [
 FiMethodDependenciesCollectorTest >> testClassBSum [
 
 	self 
-		assertDependenciesOf: ringObjectResource classB >> #sum
+		assertDependenciesOf: resources classB >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSuperMessageReceiver new;
@@ -95,7 +95,7 @@ FiMethodDependenciesCollectorTest >> testClassBSum [
 FiMethodDependenciesCollectorTest >> testClassBVariableInSuper [
 
 	self 
-		assertDependenciesOf: ringObjectResource classB >> #variableInSuper
+		assertDependenciesOf: resources classB >> #variableInSuper
 		equals: {
 			FiVariableAccess builder
 				variableName: #a1;
@@ -107,7 +107,7 @@ FiMethodDependenciesCollectorTest >> testClassBVariableInSuper [
 FiMethodDependenciesCollectorTest >> testClassCSum [
 
 	self 
-		assertDependenciesOf: ringObjectResource classC >> #sum
+		assertDependenciesOf: resources classC >> #sum
 		equals: { }
 ]
 
@@ -115,7 +115,7 @@ FiMethodDependenciesCollectorTest >> testClassCSum [
 FiMethodDependenciesCollectorTest >> testClassCSumAt [
 
 	self 
-		assertDependenciesOf: ringObjectResource classC >> #sumAt:
+		assertDependenciesOf: resources classC >> #sumAt:
 		equals: {
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
@@ -129,7 +129,7 @@ FiMethodDependenciesCollectorTest >> testClassCSumAt [
 FiMethodDependenciesCollectorTest >> testClassCUndeclared [
 
 	self 
-		assertDependenciesOf: ringObjectResource classC >> #undeclared
+		assertDependenciesOf: resources classC >> #undeclared
 		equals: {
 			FiVariableAccess builder
 				variableName: #undeclaredVar;

@@ -2,7 +2,7 @@ Class {
 	#name : #FiMethodDependencyInterpreterTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'ringObjectResource'
+		'resources'
 	],
 	#category : #'FicusImpact-Tests'
 }
@@ -23,7 +23,7 @@ FiMethodDependencyInterpreterTest >> setUp [
 
 	super setUp.
 	
-	ringObjectResource := FiRGObjectResource new
+	resources := FiRGObjectResources new
 ]
 
 { #category : #tests }
@@ -35,7 +35,7 @@ FiMethodDependencyInterpreterTest >> testClassASum [
 				receiver: FiAnyMessageReceiver new;
 				selector: #+;
 				new)
-		in: (ringObjectResource classA >> #sum)
+		in: (resources classA >> #sum)
 		equals: FiPossibleMethodInvocation empty
 ]
 
@@ -48,12 +48,12 @@ FiMethodDependencyInterpreterTest >> testClassASum42 [
 				receiver: (FiSelfMessageReceiver builder behaviorName: #A; new);
 				selector: #sum;
 				new)
-		in: (ringObjectResource classA >> #sum42)
+		in: (resources classA >> #sum42)
 		equals: 
 			(FiPossibleMethodInvocation builder
 				methods: {
-					ringObjectResource classA >> #sum.
-					ringObjectResource classB >> #sum.
+					resources classA >> #sum.
+					resources classB >> #sum.
 					} asFiSet;
 				new)
 ]
@@ -66,10 +66,10 @@ FiMethodDependencyInterpreterTest >> testClassBDefaultClass [
 			FiVariableAccess builder
 				variableName: #C;
 				new)
-		in: (ringObjectResource classB >> #defaultClass)
+		in: (resources classB >> #defaultClass)
 		equals: 
 			(FiVariableBinding builder
-				target: ringObjectResource classC;
+				target: resources classC;
 				new)
 ]
 
@@ -82,11 +82,11 @@ FiMethodDependencyInterpreterTest >> testClassBSum [
 				receiver: (FiSuperMessageReceiver builder behaviorName: #B; new);
 				selector: #sum;
 				new)
-		in: (ringObjectResource classB >> #sum)
+		in: (resources classB >> #sum)
 		equals: 
 			(FiPossibleMethodInvocation builder
 				methods: {
-					ringObjectResource classA >> #sum.
+					resources classA >> #sum.
 					} asFiSet;
 				new)
 ]
@@ -99,10 +99,10 @@ FiMethodDependencyInterpreterTest >> testClassBVariableInSuper [
 			FiVariableAccess builder
 				variableName: #a1;
 				new)
-		in: (ringObjectResource classB >> #variableInSuper)
+		in: (resources classB >> #variableInSuper)
 		equals: 
 			(FiVariableBinding builder
-				target: ringObjectResource classA;
+				target: resources classA;
 				new)
 
 ]
@@ -116,13 +116,13 @@ FiMethodDependencyInterpreterTest >> testClassCSumAt [
 				receiver: FiAnyMessageReceiver new;
 				selector: #sum;
 				new)
-		in: (ringObjectResource classC >> #sumAt:)
+		in: (resources classC >> #sumAt:)
 		equals: 
 			(FiPossibleMethodInvocation builder
 				methods: {
-					ringObjectResource classA >> #sum.
-					ringObjectResource classB >> #sum.
-					ringObjectResource classC >> #sum.
+					resources classA >> #sum.
+					resources classB >> #sum.
+					resources classC >> #sum.
 					} asFiSet;
 				new)
 ]
@@ -135,6 +135,6 @@ FiMethodDependencyInterpreterTest >> testClassCUndeclared [
 			FiVariableAccess builder
 				variableName: #undeclaredVar;
 				new)
-		in: (ringObjectResource classC >> #undeclared)
+		in: (resources classC >> #undeclared)
 		equals: FiVariableBinding undeclared
 ]

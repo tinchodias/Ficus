@@ -1,5 +1,5 @@
 Class {
-	#name : #FiMethodDependencyInterpreterTest,
+	#name : #FiDependencyInterpreterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,18 +8,18 @@ Class {
 }
 
 { #category : #private }
-FiMethodDependencyInterpreterTest >> assertInterpretationOf: aDependency in: aFiRGShot equals: anInterpretation [
+FiDependencyInterpreterTest >> assertInterpretationOf: aDependency in: aFiRGShot equals: anInterpretation [
 
 	self 
 		assert: 
-			(FiMethodDependencyInterpreter new 
+			(FiDependencyInterpreter new 
 				interpretationOf: aDependency 
 				in: aFiRGShot)
 		equals: anInterpretation
 ]
 
 { #category : #running }
-FiMethodDependencyInterpreterTest >> setUp [
+FiDependencyInterpreterTest >> setUp [
 
 	super setUp.
 	
@@ -27,7 +27,7 @@ FiMethodDependencyInterpreterTest >> setUp [
 ]
 
 { #category : #tests }
-FiMethodDependencyInterpreterTest >> testClassASum [
+FiDependencyInterpreterTest >> testClassASum [
 
 	self 
 		assertInterpretationOf: (
@@ -40,7 +40,7 @@ FiMethodDependencyInterpreterTest >> testClassASum [
 ]
 
 { #category : #tests }
-FiMethodDependencyInterpreterTest >> testClassASum42 [
+FiDependencyInterpreterTest >> testClassASum42 [
 
 	self 
 		assertInterpretationOf: (
@@ -59,7 +59,7 @@ FiMethodDependencyInterpreterTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-FiMethodDependencyInterpreterTest >> testClassBDefaultClass [
+FiDependencyInterpreterTest >> testClassBDefaultClass [
 
 	self 
 		assertInterpretationOf: (
@@ -74,7 +74,7 @@ FiMethodDependencyInterpreterTest >> testClassBDefaultClass [
 ]
 
 { #category : #tests }
-FiMethodDependencyInterpreterTest >> testClassBSum [
+FiDependencyInterpreterTest >> testClassBSum [
 
 	self 
 		assertInterpretationOf: (
@@ -92,7 +92,7 @@ FiMethodDependencyInterpreterTest >> testClassBSum [
 ]
 
 { #category : #tests }
-FiMethodDependencyInterpreterTest >> testClassBVariableInSuper [
+FiDependencyInterpreterTest >> testClassBVariableInSuper [
 
 	self 
 		assertInterpretationOf: (
@@ -108,7 +108,7 @@ FiMethodDependencyInterpreterTest >> testClassBVariableInSuper [
 ]
 
 { #category : #tests }
-FiMethodDependencyInterpreterTest >> testClassCSumAt [
+FiDependencyInterpreterTest >> testClassCSumAt [
 
 	self 
 		assertInterpretationOf: (
@@ -128,7 +128,7 @@ FiMethodDependencyInterpreterTest >> testClassCSumAt [
 ]
 
 { #category : #tests }
-FiMethodDependencyInterpreterTest >> testClassCUndeclared [
+FiDependencyInterpreterTest >> testClassCUndeclared [
 
 	self 
 		assertInterpretationOf: (

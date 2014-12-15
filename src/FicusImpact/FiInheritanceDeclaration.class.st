@@ -1,14 +1,14 @@
 Class {
-	#name : #FiClassReference,
+	#name : #FiInheritanceDeclaration,
 	#superclass : #FiDependency,
 	#instVars : [
-		'theName'
+		'theClassName'
 	],
 	#category : #'FicusImpact-Dependencies'
 }
 
 { #category : #accessing }
-FiClassReference >> theName [
+FiInheritanceDeclaration >> theClassName [
 	
-	^ theName
+	^ theClassName
 ]

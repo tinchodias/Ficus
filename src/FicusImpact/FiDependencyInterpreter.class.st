@@ -1,11 +1,11 @@
 Class {
-	#name : #FiMethodDependencyInterpreter,
+	#name : #FiDependencyInterpreter,
 	#superclass : #Object,
 	#category : #'FicusImpact-Interpretations'
 }
 
 { #category : #public }
-FiMethodDependencyInterpreter >> interpretationOf: aDependency in: aRingShot [
+FiDependencyInterpreter >> interpretationOf: aDependency in: aRingShot [
 
 	(aDependency isKindOf: FiMessageSend) ifTrue: [ 
 		| possibleInvocations |

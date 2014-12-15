@@ -10,7 +10,7 @@ FiClassDependenciesCollector >> dependenciesFor: aRingClass [
 	aRingClass classShot hasNullSuperclass ifTrue: [ ^ #() ].
 	
 	^ { 
-		FiClassReference builder
-			theName: aRingClass classShot superclassName;
+		FiInheritanceDeclaration builder
+			theClassName: aRingClass classShot superclassName;
 			new }
 ]

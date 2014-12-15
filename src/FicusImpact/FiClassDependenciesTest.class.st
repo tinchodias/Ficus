@@ -1,5 +1,5 @@
 Class {
-	#name : #FiClassDependenciesCollectorTest,
+	#name : #FiClassDependenciesTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #private }
-FiClassDependenciesCollectorTest >> assertDependenciesOf: aRingMethod equals: dependencies [
+FiClassDependenciesTest >> assertDependenciesOf: aFiRGClass equals: dependencies [
 	
 	self 
-		assert: (FiClassDependenciesCollector new dependenciesFor: aRingMethod) asSet 
+		assert: aFiRGClass ficusDependencies asSet 
 		equals: dependencies asSet
 ]
 
 { #category : #running }
-FiClassDependenciesCollectorTest >> setUp [
+FiClassDependenciesTest >> setUp [
 
 	super setUp.
 	
@@ -24,7 +24,7 @@ FiClassDependenciesCollectorTest >> setUp [
 ]
 
 { #category : #tests }
-FiClassDependenciesCollectorTest >> testClassA [
+FiClassDependenciesTest >> testClassA [
 
 	self 
 		assertDependenciesOf: resources classA
@@ -33,13 +33,13 @@ FiClassDependenciesCollectorTest >> testClassA [
 ]
 
 { #category : #tests }
-FiClassDependenciesCollectorTest >> testClassB [
+FiClassDependenciesTest >> testClassB [
 
 	self 
 		assertDependenciesOf: resources classB
 		equals: {
-			FiClassReference builder
-				theName: #A;
+			FiInheritanceDeclaration builder
+				theClassName: #A;
 				new
 				}
 ]

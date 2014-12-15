@@ -1,5 +1,5 @@
 Class {
-	#name : #FiMethodDependenciesCollectorTest,
+	#name : #FiMethodDependenciesTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #private }
-FiMethodDependenciesCollectorTest >> assertDependenciesOf: aRingMethod equals: dependencies [
+FiMethodDependenciesTest >> assertDependenciesOf: aRingMethod equals: dependencies [
 	
 	self 
-		assert: (FiMethodDependenciesCollector new dependenciesFor: aRingMethod) asSet 
+		assert: aRingMethod ficusDependencies asSet 
 		equals: dependencies asSet
 ]
 
 { #category : #running }
-FiMethodDependenciesCollectorTest >> setUp [
+FiMethodDependenciesTest >> setUp [
 
 	super setUp.
 	
@@ -24,7 +24,7 @@ FiMethodDependenciesCollectorTest >> setUp [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassASum [
+FiMethodDependenciesTest >> testClassASum [
 
 	self 
 		assertDependenciesOf: resources classA >> #sum
@@ -43,7 +43,7 @@ FiMethodDependenciesCollectorTest >> testClassASum [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassASum42 [
+FiMethodDependenciesTest >> testClassASum42 [
 
 	self 
 		assertDependenciesOf: resources classA >> #sum42
@@ -60,7 +60,7 @@ FiMethodDependenciesCollectorTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassBDefaultClass [
+FiMethodDependenciesTest >> testClassBDefaultClass [
 
 	self 
 		assertDependenciesOf: resources classB >> #defaultClass
@@ -72,7 +72,7 @@ FiMethodDependenciesCollectorTest >> testClassBDefaultClass [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassBSum [
+FiMethodDependenciesTest >> testClassBSum [
 
 	self 
 		assertDependenciesOf: resources classB >> #sum
@@ -92,7 +92,7 @@ FiMethodDependenciesCollectorTest >> testClassBSum [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassBVariableInSuper [
+FiMethodDependenciesTest >> testClassBVariableInSuper [
 
 	self 
 		assertDependenciesOf: resources classB >> #variableInSuper
@@ -104,7 +104,7 @@ FiMethodDependenciesCollectorTest >> testClassBVariableInSuper [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassCSum [
+FiMethodDependenciesTest >> testClassCSum [
 
 	self 
 		assertDependenciesOf: resources classC >> #sum
@@ -112,7 +112,7 @@ FiMethodDependenciesCollectorTest >> testClassCSum [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassCSumAt [
+FiMethodDependenciesTest >> testClassCSumAt [
 
 	self 
 		assertDependenciesOf: resources classC >> #sumAt:
@@ -126,7 +126,7 @@ FiMethodDependenciesCollectorTest >> testClassCSumAt [
 ]
 
 { #category : #tests }
-FiMethodDependenciesCollectorTest >> testClassCUndeclared [
+FiMethodDependenciesTest >> testClassCUndeclared [
 
 	self 
 		assertDependenciesOf: resources classC >> #undeclared

@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #lookup }
-FiAnyMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
+FiAnyMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 
-	^  anEnvironment implementorsOf: aSelector
+	^  aFiRGMethod environment implementorsOf: aSelector
 ]
 
 { #category : #printing }

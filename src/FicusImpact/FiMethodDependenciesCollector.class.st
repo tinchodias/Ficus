@@ -8,28 +8,32 @@ Class {
 }
 
 { #category : #public }
-FiMethodDependenciesCollector >> dependenciesFor: aRBMethodNode [ 
+FiMethodDependenciesCollector >> dependenciesFor: aFiRGMethod [ 
 
 	dependencies := OrderedCollection new.
 
-	aRBMethodNode parseTree acceptVisitor: self.
+	aFiRGMethod parseTree acceptVisitor: self.
 	
 	^ dependencies asArray
 ]
 
-{ #category : #initialization }
-FiMethodDependenciesCollector >> initialize [
+{ #category : #public }
+FiMethodDependenciesCollector >> messageReceiverFor: aRBNode [ 
 
-	super initialize.
+	aRBNode isSelf ifTrue: [ 
+		^ FiSelfMessageReceiver new ].
+
+	aRBNode isSuper ifTrue: [ 
+		^ FiSuperMessageReceiver new ].
 	
-	dependencies := OrderedCollection new.
+	^ FiAnyMessageReceiver new
 ]
 
 { #category : #visitor }
 FiMethodDependenciesCollector >> visitMessageNode: aMessageNode [
 
 	| receiver |
-	receiver := FiMessageReceiverFactory new messageReceiverFor: aMessageNode receiver.
+	receiver := self messageReceiverFor: aMessageNode receiver.
 
 	dependencies add: 
 		(FiMessageSend builder

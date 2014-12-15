@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #private }
-FiDependencyInterpreterTest >> assertInterpretationOf: aDependency in: aFiRGShot equals: anInterpretation [
+FiDependencyInterpreterTest >> assertInterpretationOf: aDependency in: aFiRGMethod equals: anInterpretation [
 
 	self 
 		assert: 
 			(FiDependencyInterpreter new 
 				interpretationOf: aDependency 
-				in: aFiRGShot)
+				in: aFiRGMethod)
 		equals: anInterpretation
 ]
 
@@ -45,7 +45,7 @@ FiDependencyInterpreterTest >> testClassASum42 [
 	self 
 		assertInterpretationOf: (
 			FiMessageSend builder 
-				receiver: (FiSelfMessageReceiver builder behaviorName: #A; new);
+				receiver: FiSelfMessageReceiver new;
 				selector: #sum;
 				new)
 		in: (resources classA >> #sum42)
@@ -79,7 +79,7 @@ FiDependencyInterpreterTest >> testClassBSum [
 	self 
 		assertInterpretationOf: (
 			FiMessageSend builder 
-				receiver: (FiSuperMessageReceiver builder behaviorName: #B; new);
+				receiver: FiSuperMessageReceiver new;
 				selector: #sum;
 				new)
 		in: (resources classB >> #sum)

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #lookup }
-FiMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
+FiMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 
 	^ self subclassResponsibility 
 ]

@@ -1,24 +1,15 @@
 Class {
 	#name : #FiSelfMessageReceiver,
 	#superclass : #FiMessageReceiver,
-	#instVars : [
-		'behaviorName'
-	],
 	#category : #'FicusImpact-Dependencies'
 }
 
-{ #category : #accessing }
-FiSelfMessageReceiver >> behaviorName [
-	
-	^ behaviorName
-]
-
 { #category : #lookup }
-FiSelfMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
+FiSelfMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 
-	^ anEnvironment 
+	^ aFiRGMethod environment
 		implementorsOf: aSelector 
-		inHierarchyOf: (anEnvironment classNamed: behaviorName)
+		inHierarchyOf: aFiRGMethod methodClass
 ]
 
 { #category : #printing }

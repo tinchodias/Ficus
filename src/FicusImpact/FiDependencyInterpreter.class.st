@@ -5,21 +5,21 @@ Class {
 }
 
 { #category : #public }
-FiDependencyInterpreter >> interpretationOf: aDependency in: aRingShot [
+FiDependencyInterpreter >> interpretationOf: aDependency in: aFiRGMethod [
 
 	(aDependency isKindOf: FiMessageSend) ifTrue: [ 
 		| possibleInvocations |
 		possibleInvocations := 
 			aDependency receiver 
 				implementorsOf: aDependency selector 
-				in: aRingShot environment.
+				in: aFiRGMethod.
 
 		^ FiPossibleMethodInvocation builder
 			methods: possibleInvocations asFiSet;
 			new ].
 
 	(aDependency isKindOf: FiVariableAccess) ifTrue: [	
-		^ aRingShot 
+		^ aFiRGMethod 
 			lookupVariableNamed: aDependency variableName 
 			ifFound: [ :variable | 
 				FiVariableBinding builder 

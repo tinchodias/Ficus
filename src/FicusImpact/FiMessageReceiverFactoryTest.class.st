@@ -13,7 +13,9 @@ FiMessageReceiverFactoryTest >> assertMessageReceiverOf: sourceCodeFragment equa
 	| node |
 	node := self receiverNodeFor: sourceCodeFragment.
 	
-	self assert: (FiMessageReceiverFactory new messageReceiverFor: node) equals: aMessageReceiver 
+	self 
+		assert: (FiMethodDependenciesCollector new messageReceiverFor: node) 
+		equals: aMessageReceiver 
 ]
 
 { #category : #private }

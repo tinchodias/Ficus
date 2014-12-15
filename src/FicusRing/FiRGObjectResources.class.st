@@ -15,43 +15,43 @@ DiffModel new
 
 "
 Class {
-	#name : #FiRGObjectResource,
+	#name : #FiRGObjectResources,
 	#superclass : #Object,
 	#category : #'FicusRing-Tests'
 }
 
 { #category : #resources }
-FiRGObjectResource >> classA [
+FiRGObjectResources >> classA [
 
 	^ self environmentWithClassesABC classNamed: #A
 ]
 
 { #category : #resources }
-FiRGObjectResource >> classB [
+FiRGObjectResources >> classB [
 
 	^ self environmentWithClassesABC classNamed: #B
 ]
 
 { #category : #resources }
-FiRGObjectResource >> classC [
+FiRGObjectResources >> classC [
 
 	^ self environmentWithClassesABC classNamed: #C
 ]
 
 { #category : #resources }
-FiRGObjectResource >> environmentWithClassesABC [
+FiRGObjectResources >> environmentWithClassesABC [
 
 	^ FiRGEnvironment new
-		environmentShot: FiShotResource new environmentWithClassesABC;
+		environmentShot: FiShotResources new environmentWithClassesABC;
 		yourself.
 
 ]
 
 { #category : #resources }
-FiRGObjectResource >> environmentWithClassesABCAndExtensionMethod [
+FiRGObjectResources >> environmentWithClassesABCAndExtensionMethod [
 
 	^ FiRGEnvironment new
-		environmentShot: FiShotResource new environmentWithClassesABCAndExtensionMethod;
+		environmentShot: FiShotResources new environmentWithClassesABCAndExtensionMethod;
 		yourself.
 
 ]

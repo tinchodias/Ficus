@@ -7,13 +7,13 @@ Class {
 { #category : #tests }
 FiRGEnvironmentTest >> testAllClasses [
 
-	self deny: ringObjectResource environmentWithClassesABC allClasses isEmpty
+	self deny: resources environmentWithClassesABC allClasses isEmpty
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testAllClassesAndTraits [
 
-	self deny: ringObjectResource environmentWithClassesABC allClassesAndTraits isEmpty
+	self deny: resources environmentWithClassesABC allClassesAndTraits isEmpty
 ]
 
 { #category : #tests }
@@ -22,7 +22,7 @@ FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
 	| items |
 	items := IdentitySet new.
 
-	ringObjectResource environmentWithClassesABC allClassesAndTraitsDo: [ :each | items add: each ].
+	resources environmentWithClassesABC allClassesAndTraitsDo: [ :each | items add: each ].
 
 	self deny: items isEmpty
 ]
@@ -33,7 +33,7 @@ FiRGEnvironmentTest >> testAllClassesDo [
 	| items |
 	items := IdentitySet new.
 
-	ringObjectResource environmentWithClassesABC allClassesDo: [ :each | items add: each ].
+	resources environmentWithClassesABC allClassesDo: [ :each | items add: each ].
 
 	self deny: items isEmpty
 ]
@@ -42,22 +42,22 @@ FiRGEnvironmentTest >> testAllClassesDo [
 FiRGEnvironmentTest >> testBindingOf [
 
 	self 
-		assert: (ringObjectResource environmentWithClassesABC bindingOf: #A) 
-		equals: (#A -> (ringObjectResource environmentWithClassesABC classNamed: #A)).
+		assert: (resources environmentWithClassesABC bindingOf: #A) 
+		equals: (#A -> (resources environmentWithClassesABC classNamed: #A)).
 
-	self assert: (ringObjectResource environmentWithClassesABC bindingOf: #UnexistentClass) isNil
+	self assert: (resources environmentWithClassesABC bindingOf: #UnexistentClass) isNil
 
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testClassNamed [
 
-	self assert: (ringObjectResource environmentWithClassesABC classNamed: #A) name equals: #A 
+	self assert: (resources environmentWithClassesABC classNamed: #A) name equals: #A 
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testHasBindingThatBeginsWith [
 
-	self assert: (ringObjectResource environmentWithClassesABC hasBindingThatBeginsWith: #A).
-	self deny: (ringObjectResource environmentWithClassesABC hasBindingThatBeginsWith: #UnexistentClass).
+	self assert: (resources environmentWithClassesABC hasBindingThatBeginsWith: #A).
+	self deny: (resources environmentWithClassesABC hasBindingThatBeginsWith: #UnexistentClass).
 ]

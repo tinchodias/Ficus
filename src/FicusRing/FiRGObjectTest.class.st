@@ -2,7 +2,7 @@ Class {
 	#name : #FiRGObjectTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'ringObjectResource'
+		'resources'
 	],
 	#category : #'FicusRing-Tests'
 }
@@ -12,5 +12,5 @@ FiRGObjectTest >> setUp [
 
 	super setUp.
 	
-	ringObjectResource := FiRGObjectResource new
+	resources := FiRGObjectResources new
 ]

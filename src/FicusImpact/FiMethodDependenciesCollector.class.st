@@ -12,7 +12,7 @@ FiMethodDependenciesCollector >> dependenciesFor: aRBMethodNode [
 
 	dependencies := OrderedCollection new.
 
-	aRBMethodNode parseTree doSemanticAnalysis acceptVisitor: self.
+	aRBMethodNode parseTree acceptVisitor: self.
 	
 	^ dependencies asArray
 ]
@@ -43,10 +43,9 @@ FiMethodDependenciesCollector >> visitMessageNode: aMessageNode [
 { #category : #visitor }
 FiMethodDependenciesCollector >> visitVariableNode: aVariableNode [
 
-	| binding |
-	binding := aVariableNode binding.
-
-	((binding isUndeclared or: [ binding isInstance ]) or: [ binding isGlobal ]) ifTrue: [
+	(aVariableNode isArgument or: [ 
+		aVariableNode isSelf or: [ 
+			aVariableNode isSuper ] ]) ifFalse: [
 		dependencies add: 
 			(FiVariableAccess builder
 				variableName: aVariableNode name;

@@ -9,3 +9,9 @@ FiAnyMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
 
 	^  anEnvironment implementorsOf: aSelector
 ]
+
+{ #category : #printing }
+FiAnyMessageReceiver >> shortPrintString [
+
+	^ 'any'
+]

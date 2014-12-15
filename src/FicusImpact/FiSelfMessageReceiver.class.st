@@ -20,3 +20,9 @@ FiSelfMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
 		implementorsOf: aSelector 
 		inHierarchyOf: (anEnvironment classNamed: behaviorName)
 ]
+
+{ #category : #printing }
+FiSelfMessageReceiver >> shortPrintString [
+
+	^ 'self'
+]

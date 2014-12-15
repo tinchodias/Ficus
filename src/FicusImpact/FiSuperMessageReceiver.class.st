@@ -20,3 +20,9 @@ FiSuperMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
 		implementorsOf: aSelector 
 		inSuperclassesOf: (anEnvironment classNamed: behaviorName)
 ]
+
+{ #category : #printing }
+FiSuperMessageReceiver >> shortPrintString [
+
+	^ 'super'
+]

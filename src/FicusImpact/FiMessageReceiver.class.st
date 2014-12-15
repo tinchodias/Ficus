@@ -9,3 +9,9 @@ FiMessageReceiver >> implementorsOf: aSelector in: anEnvironment [
 
 	^ self subclassResponsibility 
 ]
+
+{ #category : #printing }
+FiMessageReceiver >> shortPrintString [
+
+	^ self subclassResponsibility 
+]

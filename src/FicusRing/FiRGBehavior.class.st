@@ -37,6 +37,26 @@ FiRGBehavior >> isObsolete [
 	^ false
 ]
 
+{ #category : #'testing class hierarchy' }
+FiRGBehavior >> kindOfSubclass [
+	"Answer a String that is the keyword that describes the receiver's kind 
+	of subclass, either a regular subclass, a variableSubclass, a  
+	variableByteSubclass, a variableWordSubclass, or a weakSubclass."
+
+	self flag: #todo. "FIX"
+	^ ' subclass: '
+	
+"	self isWeak
+		ifTrue: [^ ' weakSubclass: '].
+	^ self isVariable
+		ifTrue: [self isBits
+				ifTrue: [self isBytes
+						ifTrue: [ ' variableByteSubclass: ']
+						ifFalse: [ ' variableWordSubclass: ']]
+				ifFalse: [ ' variableSubclass: ']]
+		ifFalse: [ ' subclass: ']"
+]
+
 { #category : #printing }
 FiRGBehavior >> printOn: arg1 [ 
 	super printOn: arg1 
@@ -63,6 +83,14 @@ FiRGBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 
 	^ self methods do: [ :each | 
 		selectorAndMethodBlock value: each selector value: each ]
+]
+
+{ #category : #traits }
+FiRGBehavior >> traitComposition [
+
+	self flag: #todo. 
+
+	^ TraitComposition new
 ]
 
 { #category : #organization }

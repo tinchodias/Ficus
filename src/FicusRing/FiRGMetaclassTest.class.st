@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #tests }
+FiRGMetaclassTest >> testDefinition [
+
+	self 
+		assert: resources classA theMetaClass definition 
+		equals: 'A class
+	instanceVariableNames: '''''
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testEnvironment [
 		
 	| environment |
@@ -14,10 +23,23 @@ FiRGMetaclassTest >> testEnvironment [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testInstanceVariables [
+
+	self assert: resources classA theMetaClass instanceVariables isEmpty
+
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testMethods [
 
 	self assert: resources classA theMetaClass methods isEmpty.
 
+]
+
+{ #category : #tests }
+FiRGMetaclassTest >> testName [
+
+	self assert: resources classA theMetaClass name equals: 'A class'
 ]
 
 { #category : #tests }

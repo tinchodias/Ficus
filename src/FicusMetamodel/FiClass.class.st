@@ -58,7 +58,7 @@ FiClass >> defaultStep [
 { #category : #testing }
 FiClass >> hasNullSuperclass [
 
-	^ superclassName == self class nullSuperclassName
+	^ superclassName asSymbol == self class nullSuperclassName
 ]
 
 { #category : #initialize }

@@ -6,3 +6,11 @@ Class {
 	#superclass : #FiPointerLayout,
 	#category : #FicusMetamodel
 }
+
+{ #category : #'instance creation' }
+FiFixedLayout class >> withInstanceVariables: names [
+
+	^ FiFixedLayout builder
+		instanceVariables: names asFiSet;
+		new
+]

@@ -19,6 +19,14 @@ FiMethod class >> excludedInstanceVariableNamesForSteps [
 ]
 
 { #category : #'instance creation' }
+FiMethod class >> sourceCode: aSourceCode [
+	
+	^ self
+		sourceCode: aSourceCode
+		protocol: #'as yet unclassified'
+]
+
+{ #category : #'instance creation' }
 FiMethod class >> sourceCode: aSourceCode protocol: aProtocol [
 	
 	^ self builder

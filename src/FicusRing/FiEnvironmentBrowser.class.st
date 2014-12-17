@@ -4,6 +4,12 @@ Class {
 	#category : #'FicusRing-UI'
 }
 
+{ #category : #examples }
+FiEnvironmentBrowser class >> example1 [
+
+	^ self openOn: (FiFragileBaseProblemResources new environmentInitial asFiRGEnvironment)
+]
+
 { #category : #'instance creation' }
 FiEnvironmentBrowser class >> newBrowser [ 
 

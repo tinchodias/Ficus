@@ -21,6 +21,13 @@ FiRGMethod >> = other [
 		and: [ methodShot = other methodShot ]
 ]
 
+{ #category : #printing }
+FiRGMethod >> asString [
+	"Same as a CompiledMethod"
+
+	^ self sourceCode
+]
+
 { #category : #polymorphism }
 FiRGMethod >> ast [
 	

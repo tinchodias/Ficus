@@ -1,0 +1,57 @@
+Class {
+	#name : #FiLintRulesBrowser,
+	#superclass : #Object,
+	#category : #'FicusRing-UI'
+}
+
+{ #category : #examples }
+FiLintRulesBrowser class >> example1 [
+
+	| rbEnvironment compositeRule |
+	rbEnvironment := FiRBBrowserEnvironment new environment: FiFragileBaseProblemResources new environmentInitial asFiRGEnvironment.
+	compositeRule := FiLintRulesTest new newRule.
+
+	RBSmalllintChecker 
+		runRule: compositeRule
+		onEnvironment: rbEnvironment.
+		
+	^ self 
+		openOn: rbEnvironment
+		rules: compositeRule rules
+]
+
+{ #category : #'instance creation' }
+FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
+
+	| browser |
+	browser := GLMTabulator new
+		row: [ :row |
+			row 
+			 	column: #rules;
+				column: #critics ];
+		yourself.
+		
+	browser transmit 
+		to: #rules;
+		andShow: [ :a | 
+			a list 
+				display: [ :rulez | rulez sorted: [ :x :y | x name < y name ]];
+				format: [ :rule | rule name, ' (', rule problemCount asString, ')' ] ].
+
+	browser transmit 
+		from: #rules;
+		to: #critics;
+		andShow: [ :a | 
+			a list
+				display: [ :rule  | (rule result onEnvironment: rbEnvironment; yourself) smallLintCritics ];
+				format: [ :critic | critic asString ].
+		 ].
+			
+	^ browser
+]
+
+{ #category : #convenience }
+FiLintRulesBrowser class >> openOn: rbEnvironment rules: rules [
+
+	^ (self newBrowserOn: rbEnvironment) openOn: rules
+]

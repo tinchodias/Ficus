@@ -1,7 +1,7 @@
 Class {
 	#name : #FiLintRulesTest,
 	#superclass : #TestCase,
-	#category : #'FicusRing-AST'
+	#category : #'FicusRing-Tests'
 }
 
 { #category : #resources }

@@ -17,6 +17,17 @@ FiRGBehavior >> basicLocalSelectors [
 	^ self selectors
 ]
 
+{ #category : #polymorphism }
+FiRGBehavior >> includesSelector: aSymbol [ 
+	"Answer whether the message whose selector is the argument is in the 
+	method dictionary of the receiver's class."
+
+	^ self
+		compiledMethodAt: aSymbol
+		ifPresent: [ :method | true ]
+		ifAbsent: [ false ].
+]
+
 { #category : #initialization }
 FiRGBehavior >> initialize [
 	super initialize.
@@ -57,9 +68,27 @@ FiRGBehavior >> kindOfSubclass [
 		ifFalse: [ ' subclass: ']"
 ]
 
+{ #category : #'accessing method dictionary' }
+FiRGBehavior >> methodDict [
+	
+	^ self methods 
+		inject: Dictionary new
+		into: [ :dictionary :method | 
+			dictionary 
+				at: method selector 
+				put: method;
+				yourself ]
+]
+
 { #category : #printing }
-FiRGBehavior >> printOn: arg1 [ 
-	super printOn: arg1 
+FiRGBehavior >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self name;
+		nextPut: $)
 ]
 
 { #category : #private }

@@ -234,17 +234,6 @@ FiRGClass >> hash [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> includesSelector: aSymbol [ 
-	"Answer whether the message whose selector is the argument is in the 
-	method dictionary of the receiver's class."
-
-	^ self
-		compiledMethodAt: aSymbol
-		ifPresent: [ :method | true ]
-		ifAbsent: [ false ].
-]
-
-{ #category : #polymorphism }
 FiRGClass >> innerBindingOf: aSymbol [
 	"Answer the binding of some variable resolved in the scope of the receiver, or one of its superclass
 	but do not look up binding in receiver's environment.
@@ -331,18 +320,6 @@ FiRGClass >> parseTreeFor: aSymbol [
 		compiledMethodAt: aSymbol 
 		ifPresent: [ :method | method parseTree ]
 		ifAbsent: [ nil ]
-]
-
-{ #category : #printing }
-FiRGClass >> printOn: aStream [
-
-	super printOn: aStream.
-
-	aStream 
-		nextPut: $(;
-		nextPutAll: self name;
-		nextPut: $).
-	
 ]
 
 { #category : #polymorphism }

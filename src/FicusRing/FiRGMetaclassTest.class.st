@@ -30,6 +30,15 @@ FiRGMetaclassTest >> testInstanceVariables [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testMethodDict [
+
+	self assert: resources classA theMetaClass methodDict isDictionary.
+	self assert: resources classA theMetaClass methodDict isEmpty.
+
+
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testMethods [
 
 	self assert: resources classA theMetaClass methods isEmpty.
@@ -52,6 +61,14 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 		results add: selector -> method ].
 
 	self assert: results isEmpty.
+]
+
+{ #category : #tests }
+FiRGMetaclassTest >> testSoleInstance [
+
+	| classA |
+	classA := resources classA.
+	self assert: classA theMetaClass soleInstance == classA
 ]
 
 { #category : #tests }

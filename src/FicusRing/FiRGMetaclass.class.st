@@ -77,6 +77,12 @@ FiRGMetaclass >> name [
 ]
 
 { #category : #polymorphism }
+FiRGMetaclass >> soleInstance [
+	
+	^ theNonMetaClass
+]
+
+{ #category : #polymorphism }
 FiRGMetaclass >> subclasses [
 	
 	^ self theNonMetaClass subclasses collect: #theMetaClass

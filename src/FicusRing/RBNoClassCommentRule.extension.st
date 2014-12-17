@@ -1,11 +1,11 @@
 Extension { #name : #RBNoClassCommentRule }
 
 { #category : #'*FicusRing-override' }
-RBNoClassCommentRule >> checkClass: aContext [
-	(aContext selectedClass isMeta or: [ aContext includesBehaviorNamed: #TestCase ])
+RBNoClassCommentRule >> checkClass: aClass [
+	(aClass isMeta or: [ aClass isTestCase ])
 		ifTrue: [ ^ self ].
-	aContext selectedClass hasComment ifTrue: [ 
+	aClass hasComment ifFalse: [ 
 		result 
-			addClass: aContext selectedClass; 
-			addClass: aContext selectedClass class ]
+			addClass: aClass; 
+			addClass: aClass theMetaClass ]
 ]

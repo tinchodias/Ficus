@@ -209,6 +209,18 @@ FiRGClassTest >> testLookupSelector [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testMethodDict [
+
+	| methodsWithoutExtensions methodsWithExtensions |
+	methodsWithoutExtensions := resources classA methodDict.
+	methodsWithExtensions := (resources environmentWithClassesABCAndExtensionMethod classNamed: #A) methodDict.
+
+	self assert: methodsWithoutExtensions keys asSet equals: #(#sum #sum42) asSet.
+	self assert: methodsWithExtensions keys asSet equals: #(#sum #sum42 #sum43) asSet.
+
+]
+
+{ #category : #tests }
 FiRGClassTest >> testMethods [
 
 	| methodsWithoutExtensions methodsWithExtensions |

@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #tests }
+FiRGMethodTest >> testAst [
+
+	self deny: ((resources classA methods collect: #ast) anySatisfy: #isNil).
+
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testEnvironment [
 		
 	| environment |
@@ -46,4 +53,16 @@ FiRGMethodTest >> testRefersToLiteral [
 		
 	self flag:#todo. "Test better (it should fail easily)"
 	self assert: ((resources classA >> #sum42) refersToLiteral: #sum).
+]
+
+{ #category : #tests }
+FiRGMethodTest >> testSelfMessages [
+		
+	self assert: (resources classA >> #sum42) selfMessages equals: #(sum) asSet
+]
+
+{ #category : #tests }
+FiRGMethodTest >> testSuperMessages [
+		
+	self assert: (resources classB >> #sum) superMessages equals: #(sum) asSet
 ]

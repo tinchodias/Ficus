@@ -78,10 +78,10 @@ FiRGEnvironment >> at: aName ifAbsent: aBlockClosure [
 { #category : #polymorphism }
 FiRGEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
 
-	self allClasses 
-		detect: [ :aPClass | aPClass name = aName ]
-		ifFound: [ :aPClass | ^ presentBlock cull: aPClass ]
-		ifNone: [ ^ absentBlock value ]
+	^ self allClasses 
+		detect: [ :aFiRGClass | aFiRGClass name = aName ]
+		ifFound: presentBlock
+		ifNone: absentBlock
 
 ]
 

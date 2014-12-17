@@ -83,6 +83,14 @@ FiRGMetaclass >> subclasses [
 ]
 
 { #category : #polymorphism }
+FiRGMetaclass >> superclass [
+	
+	^ theNonMetaClass superclass 
+		ifNil: [ self environment classNamed: #Class ]
+		ifNotNil: [ :superclass | superclass theMetaClass ]
+]
+
+{ #category : #polymorphism }
 FiRGMetaclass >> theNonMetaClass [
 
 	^ theNonMetaClass

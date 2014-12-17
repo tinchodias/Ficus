@@ -65,6 +65,12 @@ FiRGMetaclassTest >> testSubclasses [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testSuperclass [
+
+	self assert: resources classB theMetaClass superclass name equals: 'A class'.
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testTheNonMetaClass [
 
 	| classA |

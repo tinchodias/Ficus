@@ -27,6 +27,20 @@ FiDependencyInterpreterTest >> setUp [
 ]
 
 { #category : #tests }
+FiDependencyInterpreterTest >> testClassA [
+
+	self flag: #todo "#notFound?".
+
+	self 
+		assertInterpretationOf: (
+			FiInheritanceDeclaration builder
+				theClassName: #A;
+				new)
+		in: resources classB
+		equals: (FiInheritance builder target: resources classA; new)
+]
+
+{ #category : #tests }
 FiDependencyInterpreterTest >> testClassASum [
 
 	self 

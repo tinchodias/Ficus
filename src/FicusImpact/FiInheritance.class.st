@@ -1,5 +1,5 @@
 Class {
-	#name : #FiVariableBinding,
+	#name : #FiInheritance,
 	#superclass : #FiDependencyInterpretation,
 	#instVars : [
 		'target'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiVariableBinding class >> undeclared [
+FiInheritance class >> notFound [
 
 	self flag: #todo. "fix"
 	
@@ -16,7 +16,7 @@ FiVariableBinding class >> undeclared [
 ]
 
 { #category : #accessing }
-FiVariableBinding >> target [
+FiInheritance >> target [
 	
 	^ target
 ]

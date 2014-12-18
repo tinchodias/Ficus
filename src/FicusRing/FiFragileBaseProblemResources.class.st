@@ -39,25 +39,6 @@ FiFragileBaseProblemResources >> classCollection [
 ]
 
 { #category : #resources }
-FiFragileBaseProblemResources >> classLRULog [
-
-	^ FiClass builder 
-		theName: #LRULog;
-		superclassName: #Log;
-		layout: (FiFixedLayout withInstanceVariables: #(tally));
-		methods: {
-			FiMethod sourceCode: 'log: aMessage  
-	tally > 100 ifTrue: [ collection removeFirst ].
-	super log: aMessage.
-	tally := tally + 1.'. 
-			FiMethod sourceCode: 'initialize  
-	super initialize.
-	tally := 0.'. 
-			} asFiSet;
-		new
-]
-
-{ #category : #resources }
 FiFragileBaseProblemResources >> classLinkedList [
 
 	^ FiClass builder 
@@ -82,7 +63,12 @@ FiFragileBaseProblemResources >> classLinkedList [
 		ifFalse: [firstLink := oldLink nextLink].
 	oldLink nextLink: nil.
 	^oldLink value'.
-
+'do: aBlock
+	| aLink |
+	aLink := firstLink.
+	[aLink == nil] whileFalse:
+		[aBlock value: aLink value.
+		 aLink := aLink nextLink]'.
 		});
 		new.
 ]
@@ -98,7 +84,7 @@ FiFragileBaseProblemResources >> classLog [
 			FiMethod sourceCode: 'log: aMessage  
 	collection add: aMessage'. 
 			FiMethod sourceCode: 'logAll: messages  
-	collection addAll: messages'. 
+	messages do: [:each | self log: each ]'. 
 			FiMethod sourceCode: 'initialize  
 	super initialize.
 	collection := LinkedList new.'.
@@ -151,9 +137,9 @@ FiFragileBaseProblemResources >> classValueLink [
 ]
 
 { #category : #resources }
-FiFragileBaseProblemResources >> environmentInitial [
+FiFragileBaseProblemResources >> environmentWithAll [
 
-	^ { self packageKernel. self packageCollections. self packageLogInitial. } asFiSet
+	^ { self packageKernel. self packageCollections. self packageLog. } asFiSet
 ]
 
 { #category : #private }
@@ -181,10 +167,10 @@ FiFragileBaseProblemResources >> packageKernel [
 ]
 
 { #category : #resources }
-FiFragileBaseProblemResources >> packageLogInitial [
+FiFragileBaseProblemResources >> packageLog [
 
 	^ FiPackage builder
 		theName: #Log;
-		contents: { self classLog. self classLRULog. } asFiSet;
+		contents: { self classLog } asFiSet;
 		new
 ]

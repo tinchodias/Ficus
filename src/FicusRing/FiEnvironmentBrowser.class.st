@@ -7,7 +7,7 @@ Class {
 { #category : #examples }
 FiEnvironmentBrowser class >> example1 [
 
-	^ self openOn: (FiFragileBaseProblemResources new environmentInitial asFiRGEnvironment)
+	^ self openOn: (FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment)
 ]
 
 { #category : #'instance creation' }
@@ -35,13 +35,20 @@ FiEnvironmentBrowser class >> newBrowser [
 		andShow: [ :a | 
 			a list
 				title: [ :class  | 'Instance (', class methods size asString, ')' ];
-				display: [ :class  | class methods ];
+				display: [ :class  | class methods sorted: [ :x :y | x selector < y selector ] ];
 				format: [ :method | method selector ].
 			a list 
 				title: [ :class  | 'Meta (', class classSide methods size asString, ')' ];
-				display: [ :class  | class classSide methods ];
+				display: [ :class  | class classSide methods sorted: [ :x :y | x selector < y selector ] ];
 				format: [ :method | method selector ].
 		 ].
+
+	browser transmit 
+		from: #classes;
+		to: #sourceCode;
+		andShow: [ :a | 
+			a smalltalkCode
+				display: [ :class  | class definition ] ].
 			
 	browser transmit 
 		from: #methods;

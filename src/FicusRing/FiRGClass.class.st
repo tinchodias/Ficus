@@ -360,6 +360,16 @@ FiRGClass >> sharedPools [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> sharedPoolsString [
+	"Answer a string of my shared pool names separated by spaces."
+
+	^ String streamContents: [ :stream |
+		classShot sharedPools values
+			do: [ :each | stream nextPutAll: each ]
+			separatedBy: [ stream space ] ]
+]
+
+{ #category : #polymorphism }
 FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
 
 	^ self 

@@ -270,12 +270,14 @@ FiRGClassTest >> testSelectorsAndMethodsDo [
 { #category : #tests }
 FiRGClassTest >> testSharedPoolNames [
 
+	self flag: #todo. "Test not empty case"
 	self assert: resources classA sharedPoolNames isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSharedPools [
 
+	self flag: #todo. "Test not empty case"
 	self assert: resources classA sharedPools isEmpty.
 ]
 

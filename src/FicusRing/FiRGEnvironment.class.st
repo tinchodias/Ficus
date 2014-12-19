@@ -41,7 +41,7 @@ FiRGEnvironment >> allClasses [
 { #category : #polymorphism }
 FiRGEnvironment >> allClassesAndTraits [
 
-	"FIX"
+	self flag: #todo. "FIX"
 	^ self allClasses
 ]
 
@@ -78,11 +78,13 @@ FiRGEnvironment >> at: aName ifAbsent: aBlockClosure [
 { #category : #polymorphism }
 FiRGEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
 
-	^ self allClasses 
-		detect: [ :aFiRGClass | aFiRGClass name = aName ]
+	^ self allClassesAndTraits
+		detect: [ :aClassOrTrait | aClassOrTrait name = aName ]
 		ifFound: presentBlock
-		ifNone: absentBlock
-
+		ifNone: [ self knownGlobalNames 
+			detect: [ :each | each = aName ] 
+			ifFound: [ presentBlock cull: self knownGlobalDummyValue ]
+			ifNone: absentBlock ]
 ]
 
 { #category : #polymorphism }
@@ -97,6 +99,7 @@ FiRGEnvironment >> bindingOf: aName [
 { #category : #polymorphism }
 FiRGEnvironment >> classNamed: aName [
 	
+	self flag: #todo. "What if it's not a class?"
 	^ self at: aName ifAbsent: [ NotFound signal ]
 ]
 
@@ -130,7 +133,10 @@ FiRGEnvironment >> extensionMethodsFor: aBehavior [
 { #category : #polymorphism }
 FiRGEnvironment >> hasBindingThatBeginsWith: aString [ 
 
-	^ self allClassesAndTraits anySatisfy: [ :each | each name beginsWith: aString ]
+	^ (self allClassesAndTraits 
+		anySatisfy: [ :each | each name beginsWith: aString ])
+		or: [ self knownGlobalNames 
+			anySatisfy: [ :each | each beginsWith: aString ]]
 ]
 
 { #category : #comparing }
@@ -171,6 +177,18 @@ FiRGEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [
 				compiledMethodAt: aSelector 
 				ifPresent: [ :method | stream nextPut: method ] 
 				ifAbsent: [ ] ] ]
+]
+
+{ #category : #accessing }
+FiRGEnvironment >> knownGlobalDummyValue [
+
+	^ #dummyValue
+]
+
+{ #category : #accessing }
+FiRGEnvironment >> knownGlobalNames [
+	
+	^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
 { #category : #lookup }

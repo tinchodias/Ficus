@@ -45,7 +45,9 @@ FiRGEnvironmentTest >> testBindingOf [
 		assert: (resources environmentWithAll bindingOf: #A) 
 		equals: (#A -> (resources environmentWithAll classNamed: #A)).
 
-	self assert: (resources environmentWithAll bindingOf: #UnexistentClass) isNil
+	self assert: (resources environmentWithAll bindingOf: #UnexistentClass) isNil.
+	self deny: (resources environmentWithAll bindingOf: #Smalltalk) isNil.
+
 
 ]
 
@@ -60,4 +62,14 @@ FiRGEnvironmentTest >> testHasBindingThatBeginsWith [
 
 	self assert: (resources environmentWithAll hasBindingThatBeginsWith: #A).
 	self deny: (resources environmentWithAll hasBindingThatBeginsWith: #UnexistentClass).
+	self assert: (resources environmentWithAll hasBindingThatBeginsWith: #Smalltal).
+]
+
+{ #category : #'tests-not polymorphic' }
+FiRGEnvironmentTest >> testKnownGlobalNames [
+	"Define well-known globals by default."
+
+	self 
+		assert: resources environmentWithAll knownGlobalNames
+		equals: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]

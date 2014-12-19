@@ -28,9 +28,11 @@ FiRGEnvironmentBrowser class >> newBrowser [
 	browser transmit 
 		to: #classes;
 		andShow: [ :a | 
-			a list 
+			a list
 				display: [ :classes | classes sorted: [ :x :y | x name < y name ]];
-				format: [ :class | class name ] ].
+				format: [ :class | class name ];
+				filterOn: [ :text :each | each name beginsWith: text ];
+				tags: [ :each | { each category } ] ].
 
 	browser transmit 
 		from: #classes;

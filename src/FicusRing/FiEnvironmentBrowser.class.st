@@ -6,7 +6,10 @@ Class {
 
 { #category : #examples }
 FiEnvironmentBrowser class >> example1 [
-
+	"
+	self example1
+	"
+	
 	^ self openOn: (FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment)
 ]
 

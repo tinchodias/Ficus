@@ -44,7 +44,8 @@ FiShotResources >> classC [
 		methods: { 
 			FiMethod sourceCode: 'sum  ^ 0'.
 			FiMethod sourceCode: 'undeclared  ^ undeclaredVar'.
-			FiMethod sourceCode: 'sumAt: argument  ^ argument sum' 
+			FiMethod sourceCode: 'sumAt: argument  ^ argument sum'.
+			FiMethod sourceCode: 'sumTmp  |tmp| tmp := self sum. ^tmp+tmp'.
 			} asFiSet;
 		new.
 ]

@@ -23,7 +23,7 @@ FiDependencyInterpreterTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRGObjectResources new
+	resources := FiRGObjectRingTestResources new
 ]
 
 { #category : #tests }
@@ -38,6 +38,22 @@ FiDependencyInterpreterTest >> testClassA [
 				new)
 		in: resources classB
 		equals: (FiInheritance builder target: resources classA; new)
+]
+
+{ #category : #tests }
+FiDependencyInterpreterTest >> testClassAInitialize [
+
+	self 
+		assertInterpretationOf: (
+			FiVariableAccess builder
+				variableName: #SomeClassVariable;
+				new)
+		in: (resources classA classSide >> #initialize)
+		equals: 
+			(FiVariableBinding builder
+				target: resources classA;
+				new)
+
 ]
 
 { #category : #tests }
@@ -101,6 +117,22 @@ FiDependencyInterpreterTest >> testClassBDefaultClass [
 			(FiVariableBinding builder
 				target: resources classC;
 				new)
+]
+
+{ #category : #tests }
+FiDependencyInterpreterTest >> testClassBReadSomeClassVariable [
+
+	self 
+		assertInterpretationOf: (
+			FiVariableAccess builder
+				variableName: #SomeClassVariable;
+				new)
+		in: (resources classB >> #readSomeClassVariable)
+		equals: 
+			(FiVariableBinding builder
+				target: resources classA;
+				new)
+
 ]
 
 { #category : #tests }

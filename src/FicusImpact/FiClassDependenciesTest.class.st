@@ -20,7 +20,7 @@ FiClassDependenciesTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRGObjectResources new
+	resources := FiRGObjectRingTestResources new
 ]
 
 { #category : #tests }

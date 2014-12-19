@@ -20,7 +20,19 @@ FiMethodDependenciesTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRGObjectResources new
+	resources := FiRGObjectRingTestResources new
+]
+
+{ #category : #tests }
+FiMethodDependenciesTest >> testClassAClassInitialize [
+
+	self 
+		assertDependenciesOf: resources classA classSide >> #initialize
+		equals: {
+			FiVariableAccess builder
+				variableName: #SomeClassVariable;
+				new
+			}
 ]
 
 { #category : #tests }
@@ -67,6 +79,18 @@ FiMethodDependenciesTest >> testClassBDefaultClass [
 		equals: {
 			FiVariableAccess builder
 				variableName: #C;
+				new
+			}
+]
+
+{ #category : #tests }
+FiMethodDependenciesTest >> testClassBReadSomeClassVariable [
+
+	self 
+		assertDependenciesOf: resources classB >> #readSomeClassVariable
+		equals: {
+			FiVariableAccess builder
+				variableName: #SomeClassVariable;
 				new
 			}
 ]

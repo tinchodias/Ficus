@@ -20,6 +20,24 @@ FiLintRulesBrowser class >> example1 [
 		rules: compositeRule rules
 ]
 
+{ #category : #examples }
+FiLintRulesBrowser class >> example2 [
+
+	| rbEnvironment compositeRule |
+	self flag: #fix. "Shouldn't depend on Yrupe"
+	
+	rbEnvironment := FiRBBrowserEnvironment new environment: YrPharoMigrator example1readTag asFiRGEnvironment.
+	compositeRule := FiLintRulesTest new newRule.
+
+	RBSmalllintChecker 
+		runRule: compositeRule
+		onEnvironment: (rbEnvironment forCategories: #('Fuel-Core' 'Fuel-Clusters')).
+		
+	^ self 
+		openOn: rbEnvironment
+		rules: compositeRule rules
+]
+
 { #category : #'instance creation' }
 FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 

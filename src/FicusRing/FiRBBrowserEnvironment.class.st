@@ -54,6 +54,12 @@ FiRBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
+{ #category : #private }
+FiRBBrowserEnvironment >> defaultLabel [
+
+	^ 'Ficus RB Environment'
+]
+
 { #category : #accessing }
 FiRBBrowserEnvironment >> environment: anObject [
 

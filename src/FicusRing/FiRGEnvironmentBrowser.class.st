@@ -1,11 +1,11 @@
 Class {
-	#name : #FiEnvironmentBrowser,
+	#name : #FiRGEnvironmentBrowser,
 	#superclass : #Object,
 	#category : #'FicusRing-UI'
 }
 
 { #category : #examples }
-FiEnvironmentBrowser class >> example1 [
+FiRGEnvironmentBrowser class >> example1 [
 	"
 	self example1
 	"
@@ -14,7 +14,7 @@ FiEnvironmentBrowser class >> example1 [
 ]
 
 { #category : #'instance creation' }
-FiEnvironmentBrowser class >> newBrowser [ 
+FiRGEnvironmentBrowser class >> newBrowser [ 
 
 	| browser |
 	browser := GLMTabulator new
@@ -65,7 +65,7 @@ FiEnvironmentBrowser class >> newBrowser [
 ]
 
 { #category : #convenience }
-FiEnvironmentBrowser class >> openOn: aFiRGEnvironment [
+FiRGEnvironmentBrowser class >> openOn: aFiRGEnvironment [
 
 	^ self newBrowser openOn: aFiRGEnvironment allClassesAndTraits
 ]

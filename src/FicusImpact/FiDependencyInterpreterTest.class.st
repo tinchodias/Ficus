@@ -73,6 +73,22 @@ FiDependencyInterpreterTest >> testClassASum42 [
 ]
 
 { #category : #tests }
+FiDependencyInterpreterTest >> testClassASumVariableInSelf [
+
+	self 
+		assertInterpretationOf: (
+			FiVariableAccess builder
+				variableName: #a1;
+				new)
+		in: (resources classA >> #sum)
+		equals: 
+			(FiVariableBinding builder
+				target: resources classA;
+				new)
+
+]
+
+{ #category : #tests }
 FiDependencyInterpreterTest >> testClassBDefaultClass [
 
 	self 

@@ -126,6 +126,24 @@ FiMethodDependenciesTest >> testClassCSumAt [
 ]
 
 { #category : #tests }
+FiMethodDependenciesTest >> testClassCSumTmp [
+
+	self 
+		assertDependenciesOf: resources classC >> #sumTmp
+		equals: {
+			FiMessageSend builder 
+				receiver: FiSelfMessageReceiver new;
+				selector: #sum;
+				new.
+			FiMessageSend builder 
+				receiver: FiAnyMessageReceiver new;
+				selector: #+;
+				new.
+		}
+
+]
+
+{ #category : #tests }
 FiMethodDependenciesTest >> testClassCUndeclared [
 
 	self 

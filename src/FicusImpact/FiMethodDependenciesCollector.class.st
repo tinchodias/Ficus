@@ -47,9 +47,8 @@ FiMethodDependenciesCollector >> visitMessageNode: aMessageNode [
 { #category : #visitor }
 FiMethodDependenciesCollector >> visitVariableNode: aVariableNode [
 
-	(aVariableNode isArgument or: [ 
-		aVariableNode isSelf or: [ 
-			aVariableNode isSuper ] ]) ifFalse: [
+	"This means that it is not any an argument, nor temporaty, nor self, nor super, etc."
+	aVariableNode class == RBVariableNode ifTrue: [
 		dependencies add: 
 			(FiVariableAccess builder
 				variableName: aVariableNode name;

@@ -15,7 +15,7 @@ FiRGMethodTest >> testAst [
 FiRGMethodTest >> testEnvironment [
 		
 	| environment |
-	environment := resources environmentWithClassesABC.
+	environment := resources environmentWithAll.
 	
 	self assert: ((environment classNamed: #A) >> #sum) environment == environment
 ]

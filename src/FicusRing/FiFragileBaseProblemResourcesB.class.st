@@ -1,3 +1,6 @@
+"
+I answer a variant of my superclass which modifies Log>>logAll:.
+"
 Class {
 	#name : #FiFragileBaseProblemResourcesB,
 	#superclass : #FiFragileBaseProblemResources,

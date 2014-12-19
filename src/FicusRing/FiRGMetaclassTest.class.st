@@ -17,7 +17,7 @@ FiRGMetaclassTest >> testDefinition [
 FiRGMetaclassTest >> testEnvironment [
 		
 	| environment |
-	environment := resources environmentWithClassesABC.
+	environment := resources environmentWithAll.
 	
 	self assert: (environment classNamed: #A) theMetaClass environment == environment
 ]
@@ -33,15 +33,17 @@ FiRGMetaclassTest >> testInstanceVariables [
 FiRGMetaclassTest >> testMethodDict [
 
 	self assert: resources classA theMetaClass methodDict isDictionary.
-	self assert: resources classA theMetaClass methodDict isEmpty.
+	self deny: resources classA theMetaClass methodDict isEmpty.
 
+	self assert: resources classB theMetaClass methodDict isEmpty.
 
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testMethods [
 
-	self assert: resources classA theMetaClass methods isEmpty.
+	self deny: resources classA theMetaClass methods isEmpty.
+	self assert: resources classB theMetaClass methods isEmpty.
 
 ]
 
@@ -60,7 +62,10 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 	resources classA theMetaClass selectorsAndMethodsDo: [ :selector :method |
 		results add: selector -> method ].
 
-	self assert: results isEmpty.
+	self 
+		assert: results asArray 
+		equals: { #initialize -> (resources classA classSide >> #initialize) }.
+
 ]
 
 { #category : #tests }

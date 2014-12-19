@@ -1,3 +1,6 @@
+"
+I answer a variant of my superclass which adds the LRULog.
+"
 Class {
 	#name : #FiFragileBaseProblemResourcesA,
 	#superclass : #FiFragileBaseProblemResources,

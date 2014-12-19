@@ -55,18 +55,15 @@ FiRGClassTest >> testAllSuperclassesDo [
 { #category : #tests }
 FiRGClassTest >> testBindingOf [
 
-	| classB |
-	classB := resources environmentWithClassesABC classNamed: #B.
-
 	"for an undeclared"
-	self assert: (classB bindingOf: #UnexistentClass) isNil.
+	self assert: (resources classB bindingOf: #UnexistentClass) isNil.
 
 	"for a global"	
-	self deny: (classB bindingOf: #A) isNil.
-	self assert: (classB bindingOf: #A) equals: (resources environmentWithClassesABC bindingOf: #A).
+	self deny: (resources classB bindingOf: #A) isNil.
+	self assert: (resources classB bindingOf: #A) equals: (resources environmentWithAll bindingOf: #A).
 
 	"for a class variable"
-	self deny: (classB bindingOf: #BConstants) isNil.
+	self deny: (resources classA bindingOf: #SomeClassVariable) isNil.
 "	self assert: (classB bindingOf: #BConstants) equals: (ringShotResource environmentWithClassesABC bindingOf: #A)."
 
 	self flag: #todo. "Functionality missing: SHAREDPOOLS"
@@ -88,15 +85,17 @@ FiRGClassTest >> testCanUnderstand [
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testClassPool [
 
-	self assert: resources classA classPool isEmpty.
-	self deny: resources classB classPool isEmpty.
+	self assert: resources classA classPool isDictionary.
+	self assert: resources classA classPool keys asSet equals: #(SomeClassVariable) asSet.
+
+	self assert: resources classB classPool isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testClassVarNames [
 
-	self assert: resources classA classVarNames isEmpty.
-	self assert: resources classB classVarNames asArray equals: #('BConstants')
+	self assert: resources classA classVarNames equals: #('SomeClassVariable').
+	self assert: resources classB classVarNames isEmpty
 ]
 
 { #category : #tests }
@@ -138,7 +137,7 @@ FiRGClassTest >> testDefinition [
 		assert: resources classA definition 
 		equals: 'ProtoObject subclass: #A
 	instanceVariableNames: ''a1 a2''
-	classVariableNames: ''''
+	classVariableNames: ''SomeClassVariable''
 	poolDictionaries: ''''
 	category: ''NoCategory''.
 A superclass: nil'
@@ -148,7 +147,7 @@ A superclass: nil'
 FiRGClassTest >> testEnvironment [
 		
 	| environment |
-	environment := resources environmentWithClassesABC.
+	environment := resources environmentWithAll.
 	
 	self assert: (environment classNamed: #A) environment == environment
 ]
@@ -213,7 +212,7 @@ FiRGClassTest >> testMethodDict [
 
 	| methodsWithoutExtensions methodsWithExtensions |
 	methodsWithoutExtensions := resources classA methodDict.
-	methodsWithExtensions := (resources environmentWithClassesABCAndExtensionMethod classNamed: #A) methodDict.
+	methodsWithExtensions := (FiRingTestWithExtensionsResources new environmentWithAll asFiRGEnvironment classNamed: #A) methodDict.
 
 	self assert: methodsWithoutExtensions keys asSet equals: #(#sum #sum42) asSet.
 	self assert: methodsWithExtensions keys asSet equals: #(#sum #sum42 #sum43) asSet.
@@ -225,7 +224,7 @@ FiRGClassTest >> testMethods [
 
 	| methodsWithoutExtensions methodsWithExtensions |
 	methodsWithoutExtensions := resources classA methods.
-	methodsWithExtensions := (resources environmentWithClassesABCAndExtensionMethod classNamed: #A) methods.
+	methodsWithExtensions := (FiRingTestWithExtensionsResources new environmentWithAll asFiRGEnvironment classNamed: #A) methods.
 
 	self assert: (methodsWithoutExtensions collect: #selector) asSet equals: #(#sum #sum42) asSet.
 	self assert: (methodsWithExtensions collect: #selector) asSet equals: #(#sum #sum42 #sum43) asSet.
@@ -272,6 +271,12 @@ FiRGClassTest >> testSelectorsAndMethodsDo [
 FiRGClassTest >> testSharedPoolNames [
 
 	self assert: resources classA sharedPoolNames isEmpty.
+]
+
+{ #category : #tests }
+FiRGClassTest >> testSharedPools [
+
+	self assert: resources classA sharedPools isEmpty.
 ]
 
 { #category : #tests }

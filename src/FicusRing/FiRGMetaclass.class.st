@@ -49,6 +49,21 @@ FiRGMetaclass >> hash [
 	^ self class hash bitXor: self theNonMetaClass hash
 ]
 
+{ #category : #lookup }
+FiRGMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+
+	(self instVarNames includes: aName)
+		ifTrue: [ ^ presentBlockClosure value: self ].
+		
+	^ self superclass 
+		ifNil: absentBlockClosure
+		ifNotNil: [ :theSuperclass |
+			theSuperclass
+				innerLookupVariableNamed: aName 
+				ifFound: presentBlockClosure 
+				ifNotFound: absentBlockClosure ]
+]
+
 { #category : #polymorphism }
 FiRGMetaclass >> instanceVariables [
 
@@ -60,6 +75,20 @@ FiRGMetaclass >> instanceVariables [
 FiRGMetaclass >> isMeta [
 
 	^ true
+]
+
+{ #category : #lookup }
+FiRGMetaclass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+	"Answer the entity that declares a variable. Note this imitates the behavior of #bindingOf:"
+
+	^ self 
+		innerLookupVariableNamed: aName 
+		ifFound: presentBlockClosure 
+		ifNotFound: [
+			self theNonMetaClass
+				lookupVariableNamed: aName 
+				ifFound: presentBlockClosure 
+				ifNotFound: absentBlockClosure ]
 ]
 
 { #category : #polymorphism }

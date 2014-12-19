@@ -121,7 +121,12 @@ FiRGClass >> category [
 { #category : #polymorphism }
 FiRGClass >> classPool [
 
-	^ classShot classPool asDictionary
+	^ classShot classPool 
+		inject: Dictionary new
+		into: [ :dictionary :each |
+			dictionary 
+				at: each put: nil;
+				yourself ]
 ]
 
 { #category : #accessing }
@@ -247,6 +252,24 @@ FiRGClass >> innerBindingOf: aSymbol [
 	^ nil
 ]
 
+{ #category : #lookup }
+FiRGClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+
+	(self instVarNames includes: aName)
+		ifTrue: [ ^ presentBlockClosure value: self ].
+
+	(self classVarNames includes: aName)
+		ifTrue: [ ^ presentBlockClosure value: self ].
+		
+	^ self superclass 
+		ifNil: absentBlockClosure
+		ifNotNil: [ :theSuperclass |
+			theSuperclass
+				innerLookupVariableNamed: aName 
+				ifFound: presentBlockClosure 
+				ifNotFound: absentBlockClosure ]
+]
+
 { #category : #polymorphism }
 FiRGClass >> instVarNames [
 
@@ -289,14 +312,16 @@ FiRGClass >> lookupSelector: selector [
 
 { #category : #lookup }
 FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+	"Answer the entity that declares a variable. Note this imitates the behavior of #bindingOf:"
 
-	(self instVarNames includes: aName)
-		ifTrue: [ ^ presentBlockClosure value: self ].
-		
-	^ (self superclass ifNil: [ self environment ])
-		lookupVariableNamed: aName 
+	^ self 
+		innerLookupVariableNamed: aName 
 		ifFound: presentBlockClosure 
-		ifNotFound: absentBlockClosure
+		ifNotFound: [
+			self environment  
+				lookupVariableNamed: aName 
+				ifFound: presentBlockClosure 
+				ifNotFound: absentBlockClosure ]
 ]
 
 { #category : #polymorphism }

@@ -42,6 +42,12 @@ FiRGBehavior >> instSize [
 	^ self allInstVarNames size
 ]
 
+{ #category : #polymorphism }
+FiRGBehavior >> isBehavior [
+
+	^ true
+]
+
 { #category : #'as yet unclassified' }
 FiRGBehavior >> isObsolete [
 

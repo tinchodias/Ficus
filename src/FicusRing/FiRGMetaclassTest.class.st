@@ -30,6 +30,14 @@ FiRGMetaclassTest >> testInstanceVariables [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testIsBehavior [
+		
+	self assert: resources classA classSide isBehavior.
+	self assert: resources classB classSide isBehavior.
+
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testMethodDict [
 
 	self assert: resources classA theMetaClass methodDict isDictionary.

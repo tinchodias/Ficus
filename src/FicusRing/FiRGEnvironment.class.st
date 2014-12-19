@@ -45,13 +45,13 @@ FiRGEnvironment >> allClassesAndTraits [
 	^ self allClasses
 ]
 
-{ #category : #private }
+{ #category : #polymorphism }
 FiRGEnvironment >> allClassesAndTraitsDo: aBlockClosure [ 
 
 	^ self allClassesAndTraits do: aBlockClosure 
 ]
 
-{ #category : #private }
+{ #category : #polymorphism }
 FiRGEnvironment >> allClassesDo: aBlockClosure [ 
 
 	^ self allClasses do: aBlockClosure 

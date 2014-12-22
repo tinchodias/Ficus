@@ -91,7 +91,7 @@ FiRGEnvironment >> bindingOf: aName [
 FiRGEnvironment >> classNamed: aName [
 	
 	self flag: #todo. "What if it's not a class?"
-	^ self at: aName ifAbsent: [ NotFound signal ]
+	^ self at: aName ifAbsent: [ NotFound signalFor: aName in: self ]
 ]
 
 { #category : #accessing }

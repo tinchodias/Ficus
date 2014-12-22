@@ -238,6 +238,12 @@ FiRGClassTest >> testName [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testPackage [
+		
+	self assert: resources classA package name equals: #X.
+]
+
+{ #category : #tests }
 FiRGClassTest >> testParseTreeFor [
 		
 	self deny: (resources classA parseTreeFor: #sum) isNil.

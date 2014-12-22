@@ -32,7 +32,7 @@ FiRGEnvironmentBrowser class >> newBrowser [
 				display: [ :classes | classes sorted: [ :x :y | x name < y name ]];
 				format: [ :class | class name ];
 				filterOn: [ :text :each | each name beginsWith: text ];
-				tags: [ :each | { each category } ] ].
+				tags: [ :each | { each package name. each category } ] ].
 
 	browser transmit 
 		from: #classes;

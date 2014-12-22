@@ -6,7 +6,8 @@ Class {
 	#superclass : #FiRGObject,
 	#instVars : [
 		'packagesShot',
-		'allClasses'
+		'allClasses',
+		'packageByClassName'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -23,19 +24,9 @@ FiRGEnvironment >> = other [
 { #category : #polymorphism }
 FiRGEnvironment >> allClasses [
 
-	allClasses ifNotNil: [ ^ allClasses ].
-
-	^ allClasses := 
-		Array streamContents: [ :stream |
-			packagesShot valuesDo: [ :packageShot |
-				stream nextPutAll: 
-					(packageShot contents values 
-						select: #isFicusClass 
-						thenCollect: [ :classShot |
-							FiRGClass new 
-								environment: self; 
-								classShot: classShot;
-								yourself ]) ] ]
+	^ allClasses ifNil: [ 
+		allClasses := self packages 
+			flatCollect: [ :package | package definedClasses ] ]
 ]
 
 { #category : #polymorphism }
@@ -179,6 +170,14 @@ FiRGEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [
 				ifAbsent: [ ] ] ]
 ]
 
+{ #category : #initialization }
+FiRGEnvironment >> initialize [
+
+	super initialize.
+	
+	packageByClassName := Dictionary new.
+]
+
 { #category : #accessing }
 FiRGEnvironment >> knownGlobalDummyValue [
 
@@ -198,4 +197,43 @@ FiRGEnvironment >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNot
 		at: aName 
 		ifPresent: presentBlockClosure 
 		ifAbsent: absentBlockClosure
+]
+
+{ #category : #accessing }
+FiRGEnvironment >> packageOfClass: aFiRGClass [ 
+
+	^ self packageOfClassNamed: aFiRGClass name
+]
+
+{ #category : #accessing }
+FiRGEnvironment >> packageOfClassNamed: aName [ 
+	
+	^ packageByClassName at: aName ifAbsentPut: [
+		self packages 
+			detect: [ :each | each definedClasses 
+				anySatisfy: [ :aClass | aClass name = aName ]]]
+]
+
+{ #category : #accessing }
+FiRGEnvironment >> packages [
+	
+	^ packagesShot collect: [ :each | self ringPackageFor: each ]
+]
+
+{ #category : #private }
+FiRGEnvironment >> ringClassFor: classShot [
+
+	^ FiRGClass new 
+		environment: self; 
+		classShot: classShot;
+		yourself
+]
+
+{ #category : #private }
+FiRGEnvironment >> ringPackageFor: aFiPackage [ 
+	
+	^ FiRGPackage new 
+		environment: self;
+		packageShot: aFiPackage;
+		yourself
 ]

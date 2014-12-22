@@ -73,3 +73,10 @@ FiRGEnvironmentTest >> testKnownGlobalNames [
 		assert: resources environmentWithAll knownGlobalNames
 		equals: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
+
+{ #category : #'as yet unclassified' }
+FiRGEnvironmentTest >> testPackages [
+
+	self assert: resources environmentWithAll packages size equals: 2.
+
+]

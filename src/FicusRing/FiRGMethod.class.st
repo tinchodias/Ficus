@@ -86,6 +86,19 @@ FiRGMethod >> methodShot: anObject [
 ]
 
 { #category : #polymorphism }
+FiRGMethod >> origin [
+	
+	self flag: #todo. "Support methods from traits!"
+	^ self methodClass
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> package [
+	
+	^ self origin package
+]
+
+{ #category : #polymorphism }
 FiRGMethod >> parseTree [
 
 	^(RBExplicitVariableParser 

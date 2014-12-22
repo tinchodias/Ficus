@@ -27,6 +27,14 @@ FiRGMethodTest >> testMessages [
 ]
 
 { #category : #tests }
+FiRGMethodTest >> testPackage [
+	
+	self flag: #todo. "Support methods from traits!"
+	
+	self assert: (resources classA >> #sum) package name equals: #X.
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testParseTree [
 
 	self deny: ((resources classA methods collect: #parseTree) anySatisfy: #isNil).

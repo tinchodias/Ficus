@@ -62,6 +62,12 @@ FiRGMetaclassTest >> testName [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testPackage [
+		
+	self assert: resources classA classSide package name equals: #X.
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 
 	| results |

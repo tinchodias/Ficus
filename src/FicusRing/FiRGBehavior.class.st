@@ -9,6 +9,12 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #ambiguous }
+FiRGBehavior >> allSlots [
+	
+	^ self allInstVarNames collect: #asSlot
+]
+
 { #category : #hacks }
 FiRGBehavior >> basicLocalSelectors [
 	
@@ -137,4 +143,25 @@ FiRGBehavior >> whichCategoryIncludesSelector: aSelector [
 		compiledMethodAt: aSelector
 		ifPresent: [ :method | method protocol ]
 		ifAbsent: [ nil ]
+]
+
+{ #category : #queries }
+FiRGBehavior >> whichSelectorsRead: aString [
+	
+	^ self methods 
+		select: [:method | 
+			(method selectAllVariables: [:node | 
+				node isInstance and: [ node isRead and: [ node name = aString ]]]) 
+				isEmpty not ]
+		thenCollect: [:method | method selector ]
+]
+
+{ #category : #'testing method dictionary' }
+FiRGBehavior >> whichSelectorsReferTo: literal [ 
+	"Answer a Set of selectors whose methods access the argument as a
+literal."
+
+	^ self methods 
+		select: [ :each | each refersToLiteral: literal ]
+		thenCollect: [ :each | each selector ]
 ]

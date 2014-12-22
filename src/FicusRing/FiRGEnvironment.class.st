@@ -49,6 +49,14 @@ FiRGEnvironment >> allClassesDo: aBlockClosure [
 ]
 
 { #category : #polymorphism }
+FiRGEnvironment >> associationAt: key [
+
+	^ self 
+		associationAt: key 
+		ifAbsent: [ NotFound signalFor: key in: self ]
+]
+
+{ #category : #polymorphism }
 FiRGEnvironment >> associationAt: key ifAbsent: aBlock [ 
 
 	^ (self 

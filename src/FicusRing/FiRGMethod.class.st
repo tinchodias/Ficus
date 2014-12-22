@@ -48,6 +48,19 @@ FiRGMethod >> hash [
 		bitXor: methodShot hash
 ]
 
+{ #category : #polymorphism }
+FiRGMethod >> isFromTrait [
+	"Return true for methods that have been included from Traits"
+
+	^ self origin isTrait and: [ self origin ~= self methodClass ]
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> literals [
+
+	^ self selectAllVariables: [ :each | each isLiteralNode ]
+]
+
 { #category : #lookup }
 FiRGMethod >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
@@ -83,6 +96,12 @@ FiRGMethod >> methodShot [
 FiRGMethod >> methodShot: anObject [
 	
 	methodShot := anObject
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> numArgs [
+	
+	^ self ast numArgs 
 ]
 
 { #category : #polymorphism }
@@ -136,13 +155,7 @@ FiRGMethod >> protocol [
 { #category : #polymorphism }
 FiRGMethod >> referredInstVars [
 
-	| tree allChildren |
-	self flag: #todo. "fix:this is not precise"
-	
-	tree := self parseTree.
-	allChildren := tree allChildren.
-	
-	^ (allChildren select: #isVariable) collect: [ :each | each name ]
+	^  self selectAllVariables: [ :each | each isInstance ]
 ]
 
 { #category : #polymorphism }
@@ -160,6 +173,19 @@ FiRGMethod >> refersToLiteral: literal [
 		ifTrue: [
 			tree sentMessages includes: literal.
 			"(allChildren select: #isLiteralNode) anySatisfy: [ :each | each value = literal ]" ]
+]
+
+{ #category : #private }
+FiRGMethod >> selectAllVariables: aBlock [
+
+	| tree allChildren |
+	tree := self parseTree.
+	tree doSemanticAnalysisIn: self methodClass.
+	allChildren := tree allChildren.
+	
+	^ allChildren
+		select: [:each | each isVariable and: [ aBlock value: each ]]
+		thenCollect: [ :each | each name ]
 ]
 
 { #category : #polymorphism }
@@ -181,6 +207,12 @@ FiRGMethod >> selfMessages [
 	searcher executeTree: self parseTree initialAnswer: nil.
 	
 	^ selfMessages
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> sendsSelector: aSymbol [
+
+	^ self messages includes: aSymbol
 ]
 
 { #category : #polymorphism }

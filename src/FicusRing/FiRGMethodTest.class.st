@@ -21,9 +21,26 @@ FiRGMethodTest >> testEnvironment [
 ]
 
 { #category : #tests }
+FiRGMethodTest >> testIsFromTrait [ 
+
+	self flag: #todo. "Support traits"
+			
+	self deny: (resources classA >> #sum42) isFromTrait.
+
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testMessages [
 		
 	self deny: ((resources classA methods collect: #messages) anySatisfy: #isNil)
+]
+
+{ #category : #tests }
+FiRGMethodTest >> testNumArgs [
+		
+	self assert: (resources classC >> #sum) numArgs equals: 0.
+	self assert: (resources classC >> #sumAt:) numArgs equals: 1.
+	
 ]
 
 { #category : #tests }
@@ -51,9 +68,10 @@ FiRGMethodTest >> testProtocol [
 
 { #category : #tests }
 FiRGMethodTest >> testReferredInstVars [
-		
+
 	self flag:#todo. "Test better (it should fail easily)"
-	self assert: (resources classA >> #sum) referredInstVars asSet equals: #(a1 a2) asSet
+	self assert: (resources classA >> #sum) referredInstVars asSet equals: #(a1 a2) asSet.
+	self assert: (resources classB >> #defaultClass) referredInstVars isEmpty.
 ]
 
 { #category : #tests }
@@ -67,6 +85,13 @@ FiRGMethodTest >> testRefersToLiteral [
 FiRGMethodTest >> testSelfMessages [
 		
 	self assert: (resources classA >> #sum42) selfMessages equals: #(sum) asSet
+]
+
+{ #category : #tests }
+FiRGMethodTest >> testSendsSelector [
+		
+	self assert: ((resources classA >> #sum) sendsSelector: #+).
+	self deny: ((resources classA >> #sum) sendsSelector: #/).	
 ]
 
 { #category : #tests }

@@ -21,6 +21,22 @@ FiLintRulesBrowser class >> example1 [
 ]
 
 { #category : #examples }
+FiLintRulesBrowser class >> example1b [
+
+	| rbEnvironment compositeRule |
+	rbEnvironment := FiRBBrowserEnvironment new environment: FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment.
+	compositeRule := self goodRules.
+
+	RBSmalllintChecker 
+		runRule: compositeRule
+		onEnvironment: rbEnvironment.
+		
+	^ self 
+		openOn: rbEnvironment
+		rules: compositeRule rules
+]
+
+{ #category : #examples }
 FiLintRulesBrowser class >> example2 [
 
 	| rbEnvironment compositeRule |
@@ -36,6 +52,19 @@ FiLintRulesBrowser class >> example2 [
 	^ self 
 		openOn: rbEnvironment
 		rules: compositeRule rules
+]
+
+{ #category : #examples }
+FiLintRulesBrowser class >> goodRules [ 
+
+	self flag: #todo.
+
+	^ RBCompositeLintRule allGoodRules
+		removeRule: RBVariableNotDefinedRule new; 
+		removeRule: RBLiteralArrayContainsSuspiciousTrueFalseOrNilRule new; "it checks compilation"
+		removeRule: RBUnpackagedCodeRule new; "it access managers directly; anyway, we don't have unpackaged for the moment."
+		removeRule: RBLiteralArrayContainsCommaRule new; "TODO: needs #allLiterals"
+		yourself
 ]
 
 { #category : #'instance creation' }

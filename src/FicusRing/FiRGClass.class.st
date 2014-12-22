@@ -365,7 +365,9 @@ FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
 { #category : #polymorphism }
 FiRGClass >> subclasses [
 	
-	^ environment allClasses select: [ :aClass | aClass classShot superclassName = self name ]
+	^ (environment allClasses
+		select: [ :aClass | aClass classShot superclassName = self name ])
+		asArray
 ]
 
 { #category : #polymorphism }

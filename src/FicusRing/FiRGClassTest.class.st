@@ -21,6 +21,18 @@ FiRGClassTest >> testAllSelectors [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testAllSlots [
+
+	self 
+		assert: (resources classA allSlots collect: #name) asSet 
+		equals: #(a1 a2) asSet.
+		
+	self 
+		assert: (resources classB allSlots collect: #name) asSet 
+		equals: #(a1 a2 b1) asSet.
+]
+
+{ #category : #tests }
 FiRGClassTest >> testAllSubclasses [
 
 	self assert: resources classA allSubclasses asArray equals: { resources classB }.
@@ -356,6 +368,25 @@ FiRGClassTest >> testWhichClassIncludesSelector [
 FiRGClassTest >> testWhichSelectorAccess [
 		
 	self assert: (resources classA whichSelectorsAccess: #a1) asSet equals: { #sum } asSet
+]
+
+{ #category : #tests }
+FiRGClassTest >> testWhichSelectorsRead [
+
+	self 
+		assert: (resources classB whichSelectorsRead: #b1) asSet 
+		equals: #(sum) asSet.
+		
+	self 
+		assert: (resources classB whichSelectorsRead: #a1) asSet 
+		equals: #(variableInSuper) asSet.
+
+]
+
+{ #category : #'tests-polymorphism' }
+FiRGClassTest >> testWhichSelectorsReferTo [
+
+	self assert: (resources classC whichSelectorsReferTo: #+) asArray equals: #(sumTmp)
 ]
 
 { #category : #tests }

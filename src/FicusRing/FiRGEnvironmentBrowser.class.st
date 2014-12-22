@@ -10,7 +10,7 @@ FiRGEnvironmentBrowser class >> example1 [
 	self example1
 	"
 	
-	^ self openOn: (FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment)
+	^ self openOn: FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment
 ]
 
 { #category : #'instance creation' }
@@ -20,19 +20,29 @@ FiRGEnvironmentBrowser class >> newBrowser [
 	browser := GLMTabulator new
 		row: [ :row |
 			row 
+			 	column: #packages;
 			 	column: #classes;
 				column: #methods ];
 		row: #sourceCode;
 		yourself.
+
+	browser transmit 
+		to: #packages; 
+		andShow: [ :a | 
+			a list 
+				display: [ :list | list sorted: [ :x :y | x name < y name ] ];
+				filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
+				format: [ :package | package name ] ].
 		
 	browser transmit 
+		from: #packages;
 		to: #classes;
 		andShow: [ :a | 
 			a list
-				display: [ :classes | classes sorted: [ :x :y | x name < y name ]];
+				display: [ :package | package definedClasses sorted: [:x :y | x name < y name ]];
 				format: [ :class | class name ];
-				filterOn: [ :text :each | each name beginsWith: text ];
-				tags: [ :each | { each package name. each category } ] ].
+				filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
+				tags: [ :each | {each category} ] ].
 
 	browser transmit 
 		from: #classes;
@@ -41,10 +51,14 @@ FiRGEnvironmentBrowser class >> newBrowser [
 			a list
 				title: [ :class  | 'Instance (', class methods size asString, ')' ];
 				display: [ :class  | class methods sorted: [ :x :y | x selector < y selector ] ];
+				filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
+				tags: [ :each | {each protocol} ];
 				format: [ :method | method selector ].
 			a list 
 				title: [ :class  | 'Meta (', class classSide methods size asString, ')' ];
 				display: [ :class  | class classSide methods sorted: [ :x :y | x selector < y selector ] ];
+				filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
+				tags: [ :each | {each protocol} ];
 				format: [ :method | method selector ].
 		 ].
 
@@ -69,5 +83,5 @@ FiRGEnvironmentBrowser class >> newBrowser [
 { #category : #convenience }
 FiRGEnvironmentBrowser class >> openOn: aFiRGEnvironment [
 
-	^ self newBrowser openOn: aFiRGEnvironment allClassesAndTraits
+	^ self newBrowser openOn: aFiRGEnvironment packages
 ]

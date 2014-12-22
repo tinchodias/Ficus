@@ -279,7 +279,7 @@ FiShot >> valueAt: step [
 	^ self 
 		valueAt: step 
 		ifPresent: [ :shot | shot ]
-		ifAbsent: [ NotFound signal ]
+		ifAbsent: [ NotFound signalFor: step in: self ]
 ]
 
 { #category : #accessing }

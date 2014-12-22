@@ -1,9 +1,6 @@
 Class {
 	#name : #FiRGEnvironmentBrowser,
 	#superclass : #GLMCompositePresentation,
-	#instVars : [
-		'environment'
-	],
 	#category : #'FicusRing-UI'
 }
 

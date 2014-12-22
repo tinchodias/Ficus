@@ -1,6 +1,9 @@
 Class {
 	#name : #FiRGEnvironmentBrowser,
-	#superclass : #Object,
+	#superclass : #GLMCompositePresentation,
+	#instVars : [
+		'environment'
+	],
 	#category : #'FicusRing-UI'
 }
 
@@ -14,81 +17,111 @@ FiRGEnvironmentBrowser class >> example1 [
 ]
 
 { #category : #'instance creation' }
-FiRGEnvironmentBrowser class >> newBrowser [ 
+FiRGEnvironmentBrowser class >> newOnEnvironment: aFiRGEnvironment [
 
-	| browser |
-	browser := GLMTabulator new
-		row: [ :row |
-			row 
-			 	column: #packages;
-			 	column: #classes;
-				column: #methods ];
-		row: #sourceCode;
-		yourself.
-
-	browser transmit 
-		to: #packages; 
-		andShow: [ :a | 
-			a list 
-				display: [ :list | list sorted: [ :x :y | x name < y name ] ];
-				filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
-				format: [ :package | package name ] ].
-		
-	browser transmit 
-		from: #packages;
-		to: #classes;
-		andShow: [ :a | 
-			a list
-				display: [ :package | package definedClasses sorted: [:x :y | x name < y name ]];
-				format: [ :class | class name ];
-				filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
-				tags: [ :each | {each category} ] ].
-
-	browser transmit 
-		from: #classes;
-		to: #methods;
-		andShow: [ :a | 
-			a list
-				title: [ :class  | 'Instance (', class methods size asString, ')' ];
-				display: [ :class  | class methods sorted: [ :x :y | x selector < y selector ] ];
-				filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
-				tags: [ :each | {each protocol} ];
-				format: [ :method | method selector ].
-			a list 
-				title: [ :class  | 'Meta (', class classSide methods size asString, ')' ];
-				display: [ :class  | class classSide methods sorted: [ :x :y | x selector < y selector ] ];
-				filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
-				tags: [ :each | {each protocol} ];
-				format: [ :method | method selector ].
-		 ].
-
-	browser transmit 
-		from: #classes;
-		to: #sourceCode;
-		andShow: [ :a | 
-			a smalltalkCode
-				display: [ :class  | 
-					String streamContents: [ :stream |
-						stream 
-							nextPutAll: class definition;
-							nextPut: $.;
-							cr; cr;
-							nextPutAll: class classSide definition;
-							nextPut: $. ] ] ].
-			
-	browser transmit 
-		from: #methods;
-		to: #sourceCode;
-		andShow: [ :a | 
-			a smalltalkCode
-				smalltalkClass: [ :method | method methodClass ];
-				display: [ :method  | method sourceCode ] ].
-			
-	^ browser
+	^ self basicNew
+		initializeWithEnvironment: aFiRGEnvironment;
+		yourself
 ]
 
 { #category : #convenience }
 FiRGEnvironmentBrowser class >> openOn: aFiRGEnvironment [
 
-	^ self newBrowser openOn: aFiRGEnvironment packages
+	^ (self newOnEnvironment: aFiRGEnvironment) open; yourself
+]
+
+{ #category : #building }
+FiRGEnvironmentBrowser >> compose [
+
+	self 
+		act: [:b | environment inspect ] 
+		icon: Smalltalk ui icons openIcon
+		entitled: 'Inspect'.
+
+	self tabulator with: [ :browser | 
+		browser
+			row: [ :row |
+				row 
+				 	column: #packages;
+				 	column: #classes;
+					column: #methods ];
+			row: #sourceCode;
+			yourself.
+
+		browser transmit 
+			to: #packages; 
+			andShow: [ :a | 
+				a list 
+					display: [ :list | list sorted: [ :x :y | x name < y name ] ];
+					filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
+					format: [ :package | package name ] ].
+			
+		browser transmit 
+			from: #packages;
+			to: #classes;
+			andShow: [ :a | 
+				a list
+					display: [ :package | package definedClasses sorted: [:x :y | x name < y name ]];
+					format: [ :class | class name ];
+					filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
+					tags: [ :each | {each category} ] ].
+
+		browser transmit 
+			from: #classes;
+			to: #methods;
+			andShow: [ :a | 
+				a list
+					title: [ :class  | 'Instance (', class methods size asString, ')' ];
+					display: [ :class  | class methods sorted: [ :x :y | x selector < y selector ] ];
+					filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
+					tags: [ :each | {each protocol} ];
+					format: [ :method | method selector ].
+				a list 
+					title: [ :class  | 'Meta (', class classSide methods size asString, ')' ];
+					display: [ :class  | class classSide methods sorted: [ :x :y | x selector < y selector ] ];
+					filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
+					tags: [ :each | {each protocol} ];
+					format: [ :method | method selector ].
+			 ].
+
+		browser transmit 
+			from: #classes;
+			to: #sourceCode;
+			andShow: [ :a | 
+				a smalltalkCode
+					variableBindings: [ :class | 
+						{ class name -> class. class superclass name -> class superclass } 
+						"Just for highlighting" ];
+					display: [ :class  | 
+						String streamContents: [ :stream |
+							stream 
+								nextPutAll: class definition;
+								nextPut: $.;
+								cr; cr;
+								nextPutAll: class classSide definition;
+								nextPut: $. ] ] ].
+				
+		browser transmit 
+			from: #methods;
+			to: #sourceCode;
+			andShow: [ :a | 
+				a smalltalkCode
+					smalltalkClass: [ :method | method methodClass ];
+					display: [ :method  | method sourceCode ] ].
+				
+	]
+]
+
+{ #category : #initialization }
+FiRGEnvironmentBrowser >> initializeWithEnvironment: anEnvironment [
+
+	self initialize.
+
+	environment := anEnvironment.
+]
+
+{ #category : #'scripting opening' }
+FiRGEnvironmentBrowser >> open [
+
+	^ self openOn: environment packages
 ]

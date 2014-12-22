@@ -67,7 +67,14 @@ FiRGEnvironmentBrowser class >> newBrowser [
 		to: #sourceCode;
 		andShow: [ :a | 
 			a smalltalkCode
-				display: [ :class  | class definition ] ].
+				display: [ :class  | 
+					String streamContents: [ :stream |
+						stream 
+							nextPutAll: class definition;
+							nextPut: $.;
+							cr; cr;
+							nextPutAll: class classSide definition;
+							nextPut: $. ] ] ].
 			
 	browser transmit 
 		from: #methods;

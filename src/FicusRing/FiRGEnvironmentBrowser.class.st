@@ -31,6 +31,15 @@ FiRGEnvironmentBrowser class >> example3 [
 	^ self openOn: FiRingTestWithExtensionsResources new environmentWithAll asFiRGEnvironment
 ]
 
+{ #category : #examples }
+FiRGEnvironmentBrowser class >> example4yrupe [
+	"
+	self example4yrupe
+	"
+	
+	^ self openOn: YrPharoMigrator example1readTag asFiRGEnvironment
+]
+
 { #category : #private }
 FiRGEnvironmentBrowser >> classDefinitionIn: a [ 
 

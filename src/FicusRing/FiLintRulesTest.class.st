@@ -6,8 +6,14 @@ Class {
 
 { #category : #resources }
 FiLintRulesTest >> newRule [
-			
-	^ RBCompositeLintRule rules: (self ruleClasses collect: #new)
+
+	self flag: #todo.
+
+	^ RBCompositeLintRule allGoodRules
+		removeRule: RBVariableNotDefinedRule new; 
+		removeRule: RBLiteralArrayContainsSuspiciousTrueFalseOrNilRule new; "it checks compilation"
+		removeRule: RBUnpackagedCodeRule new; "it access managers directly; anyway, we don't have unpackaged for the moment."
+		yourself
 ]
 
 { #category : #resources }
@@ -41,5 +47,5 @@ FiLintRulesTest >> testRunRule [
 		onEnvironment: (FiRBBrowserEnvironment new environment: FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment).
 		
 	self flag: #fix.
-	self assert: rule problemCount equals: 6.
+	self assert: rule problemCount equals: 23.
 ]

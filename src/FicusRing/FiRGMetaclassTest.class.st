@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #tests }
+FiRGMetaclassTest >> testBinding [
+
+	self 
+		assert: resources classA classSide binding 
+		equals: nil -> resources classA classSide
+
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testDefinition [
 
 	self 

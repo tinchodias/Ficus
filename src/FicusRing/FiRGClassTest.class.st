@@ -65,6 +65,15 @@ FiRGClassTest >> testAllSuperclassesDo [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testBinding [
+
+	self 
+		assert: resources classA binding 
+		equals: #A -> resources classA
+
+]
+
+{ #category : #tests }
 FiRGClassTest >> testBindingOf [
 
 	"for an undeclared"
@@ -387,6 +396,19 @@ FiRGClassTest >> testWhichSelectorsRead [
 FiRGClassTest >> testWhichSelectorsReferTo [
 
 	self assert: (resources classC whichSelectorsReferTo: #+) asArray equals: #(sumTmp)
+]
+
+{ #category : #tests }
+FiRGClassTest >> testWhichSelectorsStoreInto [
+
+	self 
+		assert: (resources classB whichSelectorsStoreInto: #b1) asSet 
+		equals: #(initialize resetAll) asSet.
+		
+	self 
+		assert: (resources classB whichSelectorsStoreInto: #a1) asSet 
+		equals: #(resetAll) asSet.
+
 ]
 
 { #category : #tests }

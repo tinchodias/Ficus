@@ -21,6 +21,32 @@ FiRGMethod >> = other [
 		and: [ methodShot = other methodShot ]
 ]
 
+{ #category : #polymorphism }
+FiRGMethod >> allLiterals [
+
+	| allChildren result |
+	allChildren := self ast allChildren.
+	result := OrderedCollection new.
+
+	result add: self selector.
+
+	(allChildren 
+		select: [:node | node isVariable and: [ node isGlobal ]])
+		do: [:node | result addIfNotPresent: (self environment bindingOf: node name) ].
+
+	(allChildren 
+		select: [:node | node isLiteralNode and: [ node parent isLiteralNode not ]])
+		do: [:node | result addIfNotPresent: node value ].
+		
+	(allChildren 
+		select: [:node | node isMessage ])
+		do: [:node | result addIfNotPresent: node selector ].
+
+	result add: (self environment bindingOf: self methodClass name).
+	
+	^ result asArray
+]
+
 { #category : #printing }
 FiRGMethod >> asString [
 	"Same as a CompiledMethod"
@@ -30,8 +56,10 @@ FiRGMethod >> asString [
 
 { #category : #polymorphism }
 FiRGMethod >> ast [
-	
-	^ self parseTree
+	"Answer my AST with semantic analysis. See #parseTree."
+
+	self flag: #todo. "cache in environment?"	
+	^ self parseTree doSemanticAnalysisIn: self methodClass
 ]
 
 { #category : #polymorphism }
@@ -119,6 +147,7 @@ FiRGMethod >> package [
 
 { #category : #polymorphism }
 FiRGMethod >> parseTree [
+	"Answer my AST (without semantic analysis). See #ast."
 
 	^(RBExplicitVariableParser 
 		parseMethod: self sourceCode 
@@ -161,29 +190,30 @@ FiRGMethod >> referredInstVars [
 { #category : #polymorphism }
 FiRGMethod >> refersToLiteral: literal [ 
 
-	| tree allChildren |
-	self flag: #todo. "fix:this is not precise"
-	
-	tree := self parseTree.
-	allChildren := tree allChildren.
-	
-	^ literal isSymbol 
-		ifFalse: [ "Then, an association" 
-			(allChildren select: #isVariable) anySatisfy: [ :each | each name = literal key ] ]
-		ifTrue: [
-			tree sentMessages includes: literal.
-			"(allChildren select: #isLiteralNode) anySatisfy: [ :each | each value = literal ]" ]
+	| allChildren |
+	allChildren := self ast allChildren.
+
+	literal isVariableBinding ifTrue: [ 
+		(allChildren anySatisfy: [:node | 
+			node isVariable and: [ 
+				node isGlobal and: [ 
+					node name = literal key ]]]) 
+		ifTrue: [ ^ true ] ].
+
+	(allChildren anySatisfy: [:node | 
+		node isLiteralNode and: [ 
+			node value = literal ]])
+		ifTrue: [ ^ true ].
+		
+	^ allChildren anySatisfy: [:node | 
+		node isMessage and: [ 
+			node selector = literal ]]
 ]
 
 { #category : #private }
 FiRGMethod >> selectAllVariables: aBlock [
-
-	| tree allChildren |
-	tree := self parseTree.
-	tree doSemanticAnalysisIn: self methodClass.
-	allChildren := tree allChildren.
 	
-	^ allChildren
+	^ self ast allChildren
 		select: [:each | each isVariable and: [ aBlock value: each ]]
 		thenCollect: [ :each | each name ]
 ]

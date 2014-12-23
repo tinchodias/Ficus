@@ -76,6 +76,20 @@ FiRGClass >> allSuperclassesDo: aBlock [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> binding [
+	"Answer a binding for the receiver, sharing if possible"
+
+	| binding |
+	binding := self environment 
+		associationAt: self name 
+		ifAbsent: [nil -> self].
+
+	^ binding value == self 
+		ifTrue: [binding] 
+		ifFalse: [nil -> self]
+]
+
+{ #category : #polymorphism }
 FiRGClass >> bindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver, or nil
 	if variable with such name is not defined"

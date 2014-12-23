@@ -34,6 +34,8 @@ FiRingTestResources >> classB [
 		superclassName: #A;
 		layout: (FiFixedLayout withInstanceVariables: #(b1));
 		methods: { 
+			FiMethod sourceCode: 'initialize  b1 := 0'.
+			FiMethod sourceCode: 'resetAll  b1 := a1 := a2 := 0'.
 			FiMethod sourceCode: 'sum  ^ super sum + b1'.
 			FiMethod sourceCode: 'variableInSuper  ^ a1'.
 			FiMethod sourceCode: 'readSomeClassVariable  ^ SomeClassVariable'.
@@ -49,7 +51,10 @@ FiRingTestResources >> classC [
 		theName: #C;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: { 
-			FiMethod sourceCode: 'sum  ^ 0'.
+			FiMethod sourceCode: 'sum  ^ 0.0'.
+			FiMethod sourceCode: 'string  ^ ''a string'''.
+			FiMethod sourceCode: 'array1  ^ #(1 2)'.
+			FiMethod sourceCode: 'array2  ^ {1. 2}'.
 			FiMethod sourceCode: 'undeclared  ^ undeclaredVar'.
 			FiMethod sourceCode: 'sumAt: argument  ^ argument sum'.
 			FiMethod sourceCode: 'sumTmp  |tmp| tmp := self sum. ^tmp+tmp'.

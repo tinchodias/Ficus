@@ -5,6 +5,27 @@ Class {
 }
 
 { #category : #tests }
+FiRGMethodTest >> testAllLiterals [
+		
+	self 
+		assert: (resources classC >> #string) allLiterals
+		equals: { 
+			#string.
+			'a string'.
+			#C -> resources classC.
+			}.
+
+	self 
+		assert: (resources classC >> #array1) allLiterals
+		equals: {
+			#array1.
+			#(1 2).
+			#C -> resources classC.
+			}.
+
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testAst [
 
 	self deny: ((resources classA methods collect: #ast) anySatisfy: #isNil).
@@ -77,8 +98,18 @@ FiRGMethodTest >> testReferredInstVars [
 { #category : #tests }
 FiRGMethodTest >> testRefersToLiteral [
 		
-	self flag:#todo. "Test better (it should fail easily)"
 	self assert: ((resources classA >> #sum42) refersToLiteral: #sum).
+	self assert: ((resources classB >> #defaultClass) refersToLiteral: 
+		(resources environmentWithAll associationAt: #C)).
+	self assert: ((resources classC >> #sum) refersToLiteral: 0.0).
+	self assert: ((resources classC >> #string) refersToLiteral: 'a string').
+	self assert: ((resources classC >> #array1) refersToLiteral: #(1 2)).
+
+	"These may look weird, but it works like this in reality."	
+	self assert: ((resources classC >> #array1) refersToLiteral: 1).	
+	self deny: ((resources classC >> #array1) refersToLiteral: 
+		(resources environmentWithAll bindingOf: #B)).
+
 ]
 
 { #category : #tests }

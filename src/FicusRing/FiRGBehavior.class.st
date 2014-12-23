@@ -165,3 +165,16 @@ literal."
 		select: [ :each | each refersToLiteral: literal ]
 		thenCollect: [ :each | each selector ]
 ]
+
+{ #category : #'testing method dictionary' }
+FiRGBehavior >> whichSelectorsStoreInto: instVarName [ 
+	"Answer a Set of selectors whose methods access the argument, 
+	instVarName, as a named instance variable."
+
+	^ self methods 
+		select: [:method | 
+			(method selectAllVariables: [:node | 
+				node isInstance and: [ node isWrite and: [ node name = instVarName ]]]) 
+				isEmpty not ]
+		thenCollect: [:method | method selector ]
+]

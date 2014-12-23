@@ -99,6 +99,17 @@ FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 		ifFalse: [ anAcceptSlot effectUpdate: oldValue ]
 ]
 
+{ #category : #printing }
+FiFixedObject >> gtInspectorItemsIn: composite [
+	<gtInspectorPresentationOrder: 30>  
+	^ (composite table)
+		title: [ :anObject | anObject stepCount asString, ' steps' ];
+		display: [ :each | each stepsAndValues ];
+		column: 'Step' evaluated: #key width: 120;
+		column: 'Value' evaluated: #value;
+		send: #value.
+]
+
 { #category : #initialization }
 FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 

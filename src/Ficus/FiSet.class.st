@@ -161,6 +161,15 @@ FiSet >> effectOfInclude: anInclude [
 		ifAbsent: [ anInclude effectAdd ].
 ]
 
+{ #category : #printing }
+FiSet >> gtInspectorItemsIn: composite [
+	<gtInspectorPresentationOrder: 30>
+	^ (composite list)
+		title: [ :anObject | anObject size asString, ' values' ];
+		display: [ :aFiSet | self asArray asSet ];
+		showOnly: 50.
+]
+
 { #category : #private }
 FiSet >> indexOf: step ifPresent: presentBlock ifAbsent: absentBlock [
 

@@ -53,7 +53,8 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 
 	a list 
 		title: [ :class  | 'Meta (', class classSide methods size asString, ')' ];
-		display: [ :class  | class classSide methods sorted: [ :x :y | x selector < y selector ] ];
+		display: [ :class  | class classSide methods ];
+		sorted: [ :x :y | x selector < y selector ];
 		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each protocol} ];
 		format: [ :method | method selector ].
@@ -63,7 +64,8 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 FiRGEnvironmentBrowser >> classesIn: a [ 
 
 	a list
-		display: [ :package | package definedClasses sorted: [:x :y | x name < y name ]];
+		display: [ :package | package definedClasses ];
+		sorted: [:x :y | x name < y name ];
 		format: [ :class | class name ];
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each category} ]
@@ -122,7 +124,8 @@ FiRGEnvironmentBrowser >> instanceSideMethodsIn: a [
 
 	a list
 		title: [ :class  | 'Instance (', class methods size asString, ')' ];
-		display: [ :class  | class methods sorted: [ :x :y | x selector < y selector ] ];
+		display: [ :class  | class methods ];
+		sorted: [ :x :y | x selector < y selector ];
 		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each protocol} ];
 		format: [ :method | method selector ].
@@ -140,7 +143,8 @@ FiRGEnvironmentBrowser >> methodDefinitionIn: a [
 FiRGEnvironmentBrowser >> packagesIn: a [ 
 
 	a list 
-		display: [ :e | e packages sorted: [ :x :y | x name < y name ] ];
+		display: [ :e | e packages ];
+		sorted: [ :x :y | x name < y name ];
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
 		format: [ :package | package name ]
 ]

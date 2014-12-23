@@ -75,6 +75,12 @@ FiRGClass >> allSuperclassesDo: aBlock [
 		self superclass allSuperclassesDo: aBlock ]
 ]
 
+{ #category : #converting }
+FiRGClass >> asString [
+
+	^ self name
+]
+
 { #category : #polymorphism }
 FiRGClass >> binding [
 	"Answer a binding for the receiver, sharing if possible"

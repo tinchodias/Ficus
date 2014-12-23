@@ -19,6 +19,12 @@ FiRGMetaclass >> = other [
 	^ self theNonMetaClass = other theNonMetaClass
 ]
 
+{ #category : #converting }
+FiRGMetaclass >> asString [
+
+	^ self name
+]
+
 { #category : #polymorphism }
 FiRGMetaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."

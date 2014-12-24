@@ -19,7 +19,7 @@ FiRGMetaclassTest >> testDefinition [
 	self 
 		assert: resources classA theMetaClass definition 
 		equals: 'A class
-	instanceVariableNames: '''''
+	instanceVariableNames: ''a3'''
 ]
 
 { #category : #tests }
@@ -34,7 +34,9 @@ FiRGMetaclassTest >> testEnvironment [
 { #category : #tests }
 FiRGMetaclassTest >> testInstanceVariables [
 
-	self assert: resources classA theMetaClass instanceVariables isEmpty
+	self 
+		assert: resources classA theMetaClass instanceVariables 
+		equals: #(a3)
 
 ]
 
@@ -121,4 +123,12 @@ FiRGMetaclassTest >> testTheNonMetaClass [
 	| classA |
 	classA := resources classA.
 	self assert: classA theMetaClass theNonMetaClass == classA
+]
+
+{ #category : #tests }
+FiRGMetaclassTest >> testWhichSelectorAccess [
+		
+	self 
+		assert: (resources classA classSide whichSelectorsAccess: #a3) asSet 
+		equals: { #initialize } asSet
 ]

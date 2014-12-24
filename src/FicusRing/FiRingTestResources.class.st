@@ -19,8 +19,9 @@ FiRingTestResources >> classA [
 			FiMethod sourceCode: 'sum42  ^ self sum + 42'. } asFiSet;
 		metaclass: 
 			(FiMetaclass builder
+				layout: (FiFixedLayout withInstanceVariables: #(#a3));
 				methods: {
-					FiMethod sourceCode: 'initialize  SomeClassVariable := 42'.  
+					FiMethod sourceCode: 'initialize  SomeClassVariable := a3 := 42'.  
 				} asFiSet;
 				new);
 		new.
@@ -52,6 +53,7 @@ FiRingTestResources >> classC [
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: { 
 			FiMethod sourceCode: 'sum  ^ 0.0'.
+			FiMethod sourceCode: 'returnSelf  ^ self'.
 			FiMethod sourceCode: 'string  ^ ''a string'''.
 			FiMethod sourceCode: 'array1  ^ #(1 2)'.
 			FiMethod sourceCode: 'array2  ^ {1. 2}'.

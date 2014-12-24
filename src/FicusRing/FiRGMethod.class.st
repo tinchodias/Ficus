@@ -84,6 +84,17 @@ FiRGMethod >> isFromTrait [
 ]
 
 { #category : #polymorphism }
+FiRGMethod >> isReturnSelf [
+
+	| statements |
+	statements := self parseTree statements.
+	
+	^ statements size = 1 and: [ 
+		statements first isReturn and: [ 
+			statements first value isSelf ] ]
+]
+
+{ #category : #polymorphism }
 FiRGMethod >> literals [
 
 	^ self selectAllVariables: [ :each | each isLiteralNode ]

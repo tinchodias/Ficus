@@ -51,6 +51,14 @@ FiRGMethodTest >> testIsFromTrait [
 ]
 
 { #category : #tests }
+FiRGMethodTest >> testIsReturnSelf [
+
+	self assert: (resources classC >> #returnSelf) isReturnSelf.
+	self deny: (resources classC >> #sum) isReturnSelf.
+
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testMessages [
 		
 	self deny: ((resources classA methods collect: #messages) anySatisfy: #isNil)

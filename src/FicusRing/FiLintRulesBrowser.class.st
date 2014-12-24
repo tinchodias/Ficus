@@ -26,7 +26,7 @@ FiLintRulesBrowser class >> example2 [
 	| rbEnvironment compositeRule |
 	self flag: #fix. "Shouldn't depend on Yrupe"
 	
-	rbEnvironment := FiRBBrowserEnvironment new environment: YrPharoMigrator example1readTag asFiRGEnvironment.
+	rbEnvironment := FiRBBrowserEnvironment new environment: YrPharoMigrator example1readHead asFiRGEnvironment.
 	compositeRule := FiLintRulesTest new newRule.
 
 	RBSmalllintChecker 

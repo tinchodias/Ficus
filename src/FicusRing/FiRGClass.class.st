@@ -428,14 +428,6 @@ FiRGClass >> whichClassIncludesSelector: aSymbol [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> whichSelectorsAccess: aSymbol [
-
-	^ self methods 
-		select: [ :aMethod | aMethod referredInstVars includes: aSymbol ]
-		thenCollect: [ :aMethod | aMethod selector ]
-]
-
-{ #category : #polymorphism }
 FiRGClass >> withAllSubclasses [
 	"Answer a Set of the receiver, the receiver's descendent's, and the  
 	receiver's descendent's subclasses."

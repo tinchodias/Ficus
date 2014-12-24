@@ -146,6 +146,17 @@ FiRGBehavior >> whichCategoryIncludesSelector: aSelector [
 ]
 
 { #category : #queries }
+FiRGBehavior >> whichSelectorsAccess: aString [
+	
+	^ self methods 
+		select: [:method | 
+			(method selectAllVariables: [:node | 
+				node isInstance and: [ (node isRead or: [node isWrite]) and: [ node name = aString ]]]) 
+				isEmpty not ]
+		thenCollect: [:method | method selector ]
+]
+
+{ #category : #queries }
 FiRGBehavior >> whichSelectorsRead: aString [
 	
 	^ self methods 

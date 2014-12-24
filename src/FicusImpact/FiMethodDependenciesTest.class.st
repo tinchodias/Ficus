@@ -31,6 +31,9 @@ FiMethodDependenciesTest >> testClassAClassInitialize [
 		equals: {
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
+				new.
+			FiVariableAccess builder
+				variableName: #a3;
 				new
 			}
 ]

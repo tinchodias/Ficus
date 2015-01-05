@@ -205,3 +205,41 @@ FiRequisiteInterpreterTest >> testClassCUndeclared [
 		in: (resources classC >> #undeclared)
 		equals: FiVariableBinding undeclared
 ]
+
+{ #category : #tests }
+FiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
+
+	| anEnvironment |
+	anEnvironment := FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment.
+	self 
+		assertDependencyOf: (
+			FiMessageSend builder 
+				receiver: FiSelfMessageReceiver new;
+				selector: #isEmpty;
+				new)
+		in: ((anEnvironment classNamed: #LinkedList) >> #removeFirst)
+		equals: 
+			(FiPossibleMethodInvocation builder
+				methods: {
+					(anEnvironment classNamed: #Collection) >> #isEmpty.
+					} asFiSet;
+				new)
+]
+
+{ #category : #tests }
+FiRequisiteInterpreterTest >> testObjectNew [
+
+	self 
+		assertDependencyOf: (
+			FiMessageSend builder 
+				receiver: FiSelfMessageReceiver new;
+				selector: #basicNew;
+				new)
+		in: ((resources environmentWithAll classNamed: #Object) classSide >> #new)
+		equals: 
+			(FiPossibleMethodInvocation builder
+				methods: {
+					(resources environmentWithAll classNamed: #Object) classSide >> #basicNew.
+					} asFiSet;
+				new)
+]

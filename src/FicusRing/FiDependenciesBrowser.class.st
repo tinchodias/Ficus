@@ -7,12 +7,15 @@ Class {
 { #category : #building }
 FiDependenciesBrowser >> compose [
 
+	self flag: #todo. "This class should be in FicusImpact"
+
 	self table
 		display: [ :e | e ficusRequisites asSet ];
-		column: 'Requisite' evaluated: [ :r | r ];
-		column: 'Dependency' evaluated: [ :r |
+		sorted: [ :x :y | x asString < y asString ];
+		column: 'Requisite' evaluated: [ :requisite | requisite ];
+		column: 'Dependency' evaluated: [ :requisite |
 			FiRequisiteInterpreter new 
-				dependencyOf: r 
-				in: self entity ];
-		sorted: [ :x :y | x asString < y asString ]
+				dependencyOf: requisite 
+				in: self entity ].
+
 ]

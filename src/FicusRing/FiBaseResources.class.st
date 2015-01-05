@@ -16,6 +16,10 @@ FiBaseResources >> classBlockClosure [
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
 			FiMethod sourceCode: 'value  <primitive>'. 
+			FiMethod sourceCode: 'whileFalse: aBlock  
+	self value ifFalse: [ aBlock value. self whileFalse: aBlock ]'.
+			FiMethod sourceCode: 'whileTrue: aBlock  
+	self value ifTrue: [ aBlock value. self whileTrue: aBlock ]'.
 			} asFiSet;
 		new
 ]
@@ -29,7 +33,9 @@ FiBaseResources >> classBoolean [
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
 			FiMethod sourceCode: 'ifTrue: aBlock  self subclassResponsibility'. 
-			FiMethod sourceCode: 'ifFalse: aBlock  self subclassResponsibility'. 
+			FiMethod sourceCode: 'ifFalse: aBlock  self subclassResponsibility'.
+			FiMethod sourceCode: 'ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock 
+	self subclassResponsibility'. 
 			} asFiSet;
 		new
 ]
@@ -75,6 +81,8 @@ FiBaseResources >> classFalse [
 		methods: {
 			FiMethod sourceCode: 'ifTrue: aBlock  ^ nil'. 
 			FiMethod sourceCode: 'ifFalse: aBlock  ^ aBlock value'. 
+			FiMethod sourceCode: 'ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock 
+	^ falseAlternativeBlock value'. 
 			} asFiSet;
 		new
 ]
@@ -123,7 +131,8 @@ FiBaseResources >> classObject [
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
 			FiMethod sourceCode: 'initialize '. 
-			FiMethod sourceCode: '= other  <primitive>'. 
+			FiMethod sourceCode: '= other  ^ self = other'. 
+			FiMethod sourceCode: '== other  <primitive>'. 
 			FiMethod sourceCode: 'hash   <primitive>'. 
 			FiMethod sourceCode: 'yourself  ^ self'. 
 			FiMethod sourceCode: 'subclassResponsibility  self error'. 
@@ -166,6 +175,8 @@ FiBaseResources >> classTrue [
 		methods: {
 			FiMethod sourceCode: 'ifTrue: aBlock  ^ aBlock value'. 
 			FiMethod sourceCode: 'ifFalse: aBlock  ^ nil'. 
+			FiMethod sourceCode: 'ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock 
+	^ trueAlternativeBlock value'. 
 			} asFiSet;
 		new
 ]

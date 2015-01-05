@@ -153,6 +153,10 @@ FiRGEnvironment >> implementorsOf: aSelector [
 			aClassOrTrait 
 				compiledMethodAt: aSelector 
 				ifPresent: [ :method | stream nextPut: method ] 
+				ifAbsent: [ ].
+			aClassOrTrait classSide
+				compiledMethodAt: aSelector 
+				ifPresent: [ :method | stream nextPut: method ] 
 				ifAbsent: [ ] ] ]
 ]
 

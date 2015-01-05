@@ -68,7 +68,7 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 		tags: [ :each | {each protocol} ];
 		format: [ :method | method selector ];
 		selectionAct: [:each :e | 
-			(FiDependenciesBrowser openOn: each selection) extent: 500@600 ] 
+			(FiDependenciesBrowser openOn: each selection) extent: 700@600 ] 
 			on: $d 
 			entitled: 'Dependencies'.
 ]
@@ -83,7 +83,7 @@ FiRGEnvironmentBrowser >> classesIn: a [
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each category} ];
 		selectionAct: [:each :e | 
-			(FiDependenciesBrowser openOn: each selection) extent: 500@600 ] 
+			(FiDependenciesBrowser openOn: each selection) extent: 700@600 ] 
 			on: $d 
 			entitled: 'Dependencies'.
 ]
@@ -147,7 +147,7 @@ FiRGEnvironmentBrowser >> instanceSideMethodsIn: a [
 		tags: [ :each | {each protocol} ];
 		format: [ :method | method selector ];
 		selectionAct: [:each :e | 
-			(FiDependenciesBrowser openOn: each selection) extent: 500@600 ] 
+			(FiDependenciesBrowser openOn: each selection) extent: 700@600 ] 
 			on: $d 
 			entitled: 'Dependencies'.
 ]

@@ -7,8 +7,12 @@ Class {
 { #category : #building }
 FiDependenciesBrowser >> compose [
 
-	self list 
-		display: [ :e | e ficusDependencies ];
-		sorted: [ :x :y | x asString < y asString ];
-		format: [ :e | e asString ].
+	self table
+		display: [ :e | e ficusRequisites asSet ];
+		column: 'Requisite' evaluated: [ :r | r ];
+		column: 'Dependency' evaluated: [ :r |
+			FiRequisiteInterpreter new 
+				dependencyOf: r 
+				in: self entity ];
+		sorted: [ :x :y | x asString < y asString ]
 ]

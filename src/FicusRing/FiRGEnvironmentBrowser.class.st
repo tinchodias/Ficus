@@ -67,7 +67,10 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each protocol} ];
 		format: [ :method | method selector ];
-		selectionAct: [:each :e | FiDependenciesBrowser openOn: each selection ] on: $d entitled: 'Dependencies'.
+		selectionAct: [:each :e | 
+			(FiDependenciesBrowser openOn: each selection) extent: 500@600 ] 
+			on: $d 
+			entitled: 'Dependencies'.
 ]
 
 { #category : #private }
@@ -79,7 +82,10 @@ FiRGEnvironmentBrowser >> classesIn: a [
 		format: [ :class | class name ];
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each category} ];
-		selectionAct: [:each :e | FiDependenciesBrowser openOn: each selection ] on: $d entitled: 'Dependencies'.
+		selectionAct: [:each :e | 
+			(FiDependenciesBrowser openOn: each selection) extent: 500@600 ] 
+			on: $d 
+			entitled: 'Dependencies'.
 ]
 
 { #category : #building }
@@ -140,7 +146,10 @@ FiRGEnvironmentBrowser >> instanceSideMethodsIn: a [
 		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each protocol} ];
 		format: [ :method | method selector ];
-		selectionAct: [:each :e | FiDependenciesBrowser openOn: each selection ] on: $d entitled: 'Dependencies'.
+		selectionAct: [:each :e | 
+			(FiDependenciesBrowser openOn: each selection) extent: 500@600 ] 
+			on: $d 
+			entitled: 'Dependencies'.
 ]
 
 { #category : #private }

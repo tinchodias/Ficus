@@ -8,7 +8,7 @@ Class {
 FiDependenciesBrowser >> compose [
 
 	self list 
-		display: [ :e | e ficusDependencyInterpretations ];
+		display: [ :e | e ficusDependencies ];
 		sorted: [ :x :y | x asString < y asString ];
 		format: [ :e | e asString ].
 ]

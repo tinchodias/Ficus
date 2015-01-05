@@ -160,7 +160,17 @@ FiRGEnvironment >> implementorsOf: aSelector [
 FiRGEnvironment >> implementorsOf: aSelector inHierarchyOf: aRingClass [
 
 	^ Array streamContents: [ :stream |
-		aRingClass withAllSuperAndSubclassesDo: [ :aClassOrTrait |
+		aRingClass
+			compiledMethodAt: aSelector 
+			ifPresent: [ :method | stream nextPut: method ]
+			ifAbsent: [
+				self 
+					lookupImplementorOf: aSelector 
+					inSuperclassesOf: aRingClass 
+					ifPresent: [ :method | stream nextPut: method ]
+					ifAbsent: [] ].
+				
+		aRingClass allSubclassesDo: [ :aClassOrTrait |
 			aClassOrTrait 
 				compiledMethodAt: aSelector 
 				ifPresent: [ :method | stream nextPut: method ] 
@@ -196,6 +206,30 @@ FiRGEnvironment >> knownGlobalDummyValue [
 FiRGEnvironment >> knownGlobalNames [
 	
 	^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
+]
+
+{ #category : #lookup }
+FiRGEnvironment >> lookupImplementorOf: aSelector inHierarchyOf: aRingClass ifPresent: presentBlock ifAbsent: absentBlock [
+
+	aRingClass withAllSuperAndSubclassesDo: [ :aClassOrTrait |
+		aClassOrTrait 
+			compiledMethodAt: aSelector 
+			ifPresent: [ :method | ^ presentBlock cull: method ] 
+			ifAbsent: [ ] ].
+		
+	^ absentBlock value
+]
+
+{ #category : #lookup }
+FiRGEnvironment >> lookupImplementorOf: aSelector inSuperclassesOf: aRingClass ifPresent: presentBlock ifAbsent: absentBlock [
+
+	aRingClass allSuperclassesDo: [ :aClass |
+		aClass
+			compiledMethodAt: aSelector 
+			ifPresent: [ :method | ^ presentBlock cull: method ] 
+			ifAbsent: [ ] ].
+
+	^ absentBlock value
 ]
 
 { #category : #lookup }

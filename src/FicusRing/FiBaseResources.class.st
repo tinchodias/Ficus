@@ -8,6 +8,33 @@ Class {
 }
 
 { #category : #resources }
+FiBaseResources >> classBlockClosure [
+
+	^ FiClass builder 
+		theName: #BlockClosure;
+		superclassName: #Object;
+		layout: (FiFixedLayout withInstanceVariables: #());
+		methods: {
+			FiMethod sourceCode: 'value  <primitive>'. 
+			} asFiSet;
+		new
+]
+
+{ #category : #resources }
+FiBaseResources >> classBoolean [
+
+	^ FiClass builder 
+		theName: #Boolean;
+		superclassName: #Object;
+		layout: (FiFixedLayout withInstanceVariables: #());
+		methods: {
+			FiMethod sourceCode: 'ifTrue: aBlock  self subclassResponsibility'. 
+			FiMethod sourceCode: 'ifFalse: aBlock  self subclassResponsibility'. 
+			} asFiSet;
+		new
+]
+
+{ #category : #resources }
 FiBaseResources >> classClass [
 
 	^ FiClass builder 
@@ -36,6 +63,20 @@ FiBaseResources >> classCollection [
 	^ tally'
 			} asFiSet;
 		new.
+]
+
+{ #category : #resources }
+FiBaseResources >> classFalse [
+
+	^ FiClass builder 
+		theName: #False;
+		superclassName: #Boolean;
+		layout: (FiFixedLayout withInstanceVariables: #());
+		methods: {
+			FiMethod sourceCode: 'ifTrue: aBlock  ^ nil'. 
+			FiMethod sourceCode: 'ifFalse: aBlock  ^ aBlock value'. 
+			} asFiSet;
+		new
 ]
 
 { #category : #resources }
@@ -82,6 +123,8 @@ FiBaseResources >> classObject [
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
 			FiMethod sourceCode: 'initialize '. 
+			FiMethod sourceCode: '= other  <primitive>'. 
+			FiMethod sourceCode: 'hash   <primitive>'. 
 			FiMethod sourceCode: 'yourself  ^ self'. 
 			FiMethod sourceCode: 'subclassResponsibility  self error'. 
 			FiMethod sourceCode: 'notYetImplemented  self error'. 
@@ -94,6 +137,36 @@ FiBaseResources >> classObject [
 					FiMethod sourceCode: 'basicNew  <primitive: 70>'. 
 				} asFiSet;
 				new);
+		new
+]
+
+{ #category : #resources }
+FiBaseResources >> classSmallInteger [
+
+	^ FiClass builder 
+		theName: #SmallInteger;
+		superclassName: #Object;
+		layout: (FiFixedLayout withInstanceVariables: #());
+		methods: {
+			FiMethod sourceCode: '+ other  <primitive>'. 
+			FiMethod sourceCode: '/ other  <primitive>'. 
+			FiMethod sourceCode: '> other  <primitive>'. 
+			FiMethod sourceCode: '= other  <primitive>'. 
+			} asFiSet;
+		new
+]
+
+{ #category : #resources }
+FiBaseResources >> classTrue [
+
+	^ FiClass builder 
+		theName: #True;
+		superclassName: #Boolean;
+		layout: (FiFixedLayout withInstanceVariables: #());
+		methods: {
+			FiMethod sourceCode: 'ifTrue: aBlock  ^ aBlock value'. 
+			FiMethod sourceCode: 'ifFalse: aBlock  ^ nil'. 
+			} asFiSet;
 		new
 ]
 
@@ -143,6 +216,6 @@ FiBaseResources >> packageKernel [
 
 	^ FiPackage builder
 		theName: #Kernel;
-		contents: { self classObject. self classClass } asFiSet;
+		contents: { self classObject. self classClass. self classBoolean. self classTrue. self classFalse. self classSmallInteger. self classBlockClosure } asFiSet;
 		new	
 ]

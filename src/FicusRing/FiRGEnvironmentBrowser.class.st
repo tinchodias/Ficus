@@ -66,7 +66,8 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 		sorted: [ :x :y | x selector < y selector ];
 		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each protocol} ];
-		format: [ :method | method selector ].
+		format: [ :method | method selector ];
+		selectionAct: [:each :e | FiDependenciesBrowser openOn: each selection ] on: $d entitled: 'Dependencies'.
 ]
 
 { #category : #private }
@@ -77,7 +78,8 @@ FiRGEnvironmentBrowser >> classesIn: a [
 		sorted: [:x :y | x name < y name ];
 		format: [ :class | class name ];
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
-		tags: [ :each | {each category} ]
+		tags: [ :each | {each category} ];
+		selectionAct: [:each :e | FiDependenciesBrowser openOn: each selection ] on: $d entitled: 'Dependencies'.
 ]
 
 { #category : #building }
@@ -137,7 +139,8 @@ FiRGEnvironmentBrowser >> instanceSideMethodsIn: a [
 		sorted: [ :x :y | x selector < y selector ];
 		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each protocol} ];
-		format: [ :method | method selector ].
+		format: [ :method | method selector ];
+		selectionAct: [:each :e | FiDependenciesBrowser openOn: each selection ] on: $d entitled: 'Dependencies'.
 ]
 
 { #category : #private }
@@ -145,7 +148,7 @@ FiRGEnvironmentBrowser >> methodDefinitionIn: a [
 
 	a smalltalkCode
 		smalltalkClass: [ :method | method methodClass ];
-		display: [ :method  | method sourceCode ]
+		display: [ :method  | method sourceCode ].
 ]
 
 { #category : #private }

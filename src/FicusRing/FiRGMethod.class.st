@@ -256,6 +256,22 @@ FiRGMethod >> sendsSelector: aSymbol [
 	^ self messages includes: aSymbol
 ]
 
+{ #category : #printing }
+FiRGMethod >> shortPrintOn: aStream [
+
+	aStream 
+		nextPutAll: self methodClass name;
+		nextPutAll: '>>';
+		nextPutAll: self selector.	
+]
+
+{ #category : #printing }
+FiRGMethod >> shortPrintString [
+
+	^ String streamContents: [ :stream |
+		self shortPrintOn: stream ]
+]
+
 { #category : #polymorphism }
 FiRGMethod >> sourceCode [
 

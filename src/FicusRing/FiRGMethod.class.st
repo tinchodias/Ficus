@@ -77,10 +77,53 @@ FiRGMethod >> hash [
 ]
 
 { #category : #polymorphism }
+FiRGMethod >> isDisabled: marker [
+
+	^ marker == CompiledMethod disabledMarker
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> isExplicitlyRequired: marker [
+
+	^ marker == CompiledMethod explicitRequirementMarker
+]
+
+{ #category : #polymorphism }
 FiRGMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
 
 	^ self origin isTrait and: [ self origin ~= self methodClass ]
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> isImplicitlyRequired: marker [
+
+	^ marker == CompiledMethod implicitRequirementMarker
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> isProvided [
+	^ self isProvided: self markerOrNil
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> isProvided: marker [
+	marker ifNil: [^ true].
+	^ (self isRequired: marker) not and: [(self isDisabled: marker) not]
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> isRequired [
+	^ self isRequired: self markerOrNil
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> isRequired: marker [
+	marker ifNil: [^ false].
+	(self isImplicitlyRequired: marker) ifTrue: [^ true].
+	(self isExplicitlyRequired: marker) ifTrue: [^ true]. 
+	(self isSubclassResponsibility: marker) ifTrue: [^ true]. 
+	^ false
 ]
 
 { #category : #polymorphism }
@@ -95,6 +138,12 @@ FiRGMethod >> isReturnSelf [
 ]
 
 { #category : #polymorphism }
+FiRGMethod >> isSubclassResponsibility: marker [
+
+	^ marker == CompiledMethod subclassResponsibilityMarker
+]
+
+{ #category : #polymorphism }
 FiRGMethod >> literals [
 
 	^ self selectAllVariables: [ :each | each isLiteralNode ]
@@ -105,6 +154,19 @@ FiRGMethod >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound
 
 	^ self methodClass 
 		lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure 
+]
+
+{ #category : #polymorphism }
+FiRGMethod >> markerOrNil [
+	
+	| statements node |
+	statements := self parseTree statements.
+
+	statements size = 1 ifFalse: [ ^ nil ].
+	node := statements first value.	
+	(node isMessage and: [ node isSelfSend ]) ifFalse: [ ^ nil ].
+
+	^ node selector
 ]
 
 { #category : #polymorphism }

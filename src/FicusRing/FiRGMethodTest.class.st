@@ -51,11 +51,41 @@ FiRGMethodTest >> testIsFromTrait [
 ]
 
 { #category : #tests }
+FiRGMethodTest >> testIsProvided [
+
+	self flag: #todo. "Test with #explicitRequirement, #requirement, etc."
+
+	self assert: ((resources environmentWithAll classNamed: #True) >> #ifTrue:) isProvided.
+	self deny: ((resources environmentWithAll classNamed: #Boolean) >> #ifTrue:) isProvided.
+
+]
+
+{ #category : #tests }
+FiRGMethodTest >> testIsRequired [
+
+	self deny: ((resources environmentWithAll classNamed: #True) >> #ifTrue:) isRequired.
+	self assert: ((resources environmentWithAll classNamed: #Boolean) >> #ifTrue:) isRequired.
+
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testIsReturnSelf [
 
 	self assert: (resources classC >> #returnSelf) isReturnSelf.
 	self deny: (resources classC >> #sum) isReturnSelf.
 
+]
+
+{ #category : #tests }
+FiRGMethodTest >> testMarkerOrNil [
+
+	self 
+		assert: ((resources environmentWithAll classNamed: #Boolean) >> #ifTrue:) markerOrNil
+		equals: CompiledMethod subclassResponsibilityMarker. 
+		
+	self 
+		assert: ((resources environmentWithAll classNamed: #True) >> #ifTrue:) markerOrNil
+		equals: nil
 ]
 
 { #category : #tests }

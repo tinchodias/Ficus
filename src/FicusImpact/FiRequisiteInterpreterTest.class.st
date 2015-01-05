@@ -207,6 +207,28 @@ FiRequisiteInterpreterTest >> testClassCUndeclared [
 ]
 
 { #category : #tests }
+FiRequisiteInterpreterTest >> testLinkedListAdd [
+
+	| anEnvironment |
+	anEnvironment := FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment.
+	self 
+		assertDependencyOf: (
+			FiMessageSend builder 
+				receiver: FiAnyMessageReceiver new;
+				selector: #ifTrue:ifFalse:;
+				new)
+		in: ((anEnvironment classNamed: #LinkedList) >> #add:)
+		equals: 
+			(FiPossibleMethodInvocation builder
+				methods: {
+					(anEnvironment classNamed: #True) >> #ifTrue:ifFalse:.
+					(anEnvironment classNamed: #False) >> #ifTrue:ifFalse:.
+					"But NOT the one in Boolean, since #isProvided is false in such case."
+					} asFiSet;
+				new)
+]
+
+{ #category : #tests }
 FiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
 
 	| anEnvironment |

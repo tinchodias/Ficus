@@ -7,12 +7,12 @@ Class {
 { #category : #lookup }
 FiSuperMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 
-	^ aFiRGMethod environment
+	^ (aFiRGMethod environment
 		lookupImplementorOf: aSelector 
 		inSuperclassesOf: aFiRGMethod methodClass
 		ifPresent: [ :method | { method } ]
-		ifAbsent: [ #() ]
-
+		ifAbsent: [ #() ])
+		select: [ :each | each isProvided ]
 ]
 
 { #category : #printing }

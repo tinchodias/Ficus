@@ -7,9 +7,10 @@ Class {
 { #category : #lookup }
 FiSelfMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 
-	^ aFiRGMethod environment
+	^ (aFiRGMethod environment
 		implementorsOf: aSelector 
-		inHierarchyOf: aFiRGMethod methodClass
+		inHierarchyOf: aFiRGMethod methodClass)
+		select: [ :each | each isProvided ]
 ]
 
 { #category : #printing }

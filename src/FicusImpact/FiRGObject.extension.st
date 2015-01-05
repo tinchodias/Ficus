@@ -1,10 +1,10 @@
 Extension { #name : #FiRGObject }
 
 { #category : #'*FicusImpact' }
-FiRGObject >> ficusDependencyInterpretations [
+FiRGObject >> ficusDependencies [
 	
 	^ self ficusRequisites collect: [ :each |
-		FiDependencyInterpreter new 
-			interpretationOf: each 
+		FiRequisiteInterpreter new 
+			dependencyOf: each 
 			in: self ]
 ]

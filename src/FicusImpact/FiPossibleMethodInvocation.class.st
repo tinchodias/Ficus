@@ -1,10 +1,10 @@
 Class {
 	#name : #FiPossibleMethodInvocation,
-	#superclass : #FiDependencyInterpretation,
+	#superclass : #FiDependency,
 	#instVars : [
 		'methods'
 	],
-	#category : #'FicusImpact-Interpretations'
+	#category : #'FicusImpact-Dependencies'
 }
 
 { #category : #'instance creation' }

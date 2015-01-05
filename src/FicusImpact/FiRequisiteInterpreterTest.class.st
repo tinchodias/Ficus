@@ -1,5 +1,5 @@
 Class {
-	#name : #FiDependencyInterpreterTest,
+	#name : #FiRequisiteInterpreterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,18 +8,18 @@ Class {
 }
 
 { #category : #private }
-FiDependencyInterpreterTest >> assertInterpretationOf: aDependency in: aFiRGMethod equals: anInterpretation [
+FiRequisiteInterpreterTest >> assertDependencyOf: aRequisite in: host equals: aDependency [
 
 	self 
 		assert: 
-			(FiDependencyInterpreter new 
-				interpretationOf: aDependency 
-				in: aFiRGMethod)
-		equals: anInterpretation
+			(FiRequisiteInterpreter new 
+				dependencyOf: aRequisite 
+				in: host)
+		equals: aDependency
 ]
 
 { #category : #running }
-FiDependencyInterpreterTest >> setUp [
+FiRequisiteInterpreterTest >> setUp [
 
 	super setUp.
 	
@@ -27,12 +27,12 @@ FiDependencyInterpreterTest >> setUp [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassA [
+FiRequisiteInterpreterTest >> testClassA [
 
 	self flag: #todo "#notFound?".
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiInheritanceDeclaration builder
 				theClassName: #A;
 				new)
@@ -41,10 +41,10 @@ FiDependencyInterpreterTest >> testClassA [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassAInitialize [
+FiRequisiteInterpreterTest >> testClassAInitialize [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
 				new)
@@ -57,10 +57,10 @@ FiDependencyInterpreterTest >> testClassAInitialize [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassASum [
+FiRequisiteInterpreterTest >> testClassASum [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
 				selector: #+;
@@ -75,10 +75,10 @@ FiDependencyInterpreterTest >> testClassASum [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassASum42 [
+FiRequisiteInterpreterTest >> testClassASum42 [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiMessageSend builder 
 				receiver: FiSelfMessageReceiver new;
 				selector: #sum;
@@ -94,10 +94,10 @@ FiDependencyInterpreterTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassASumVariableInSelf [
+FiRequisiteInterpreterTest >> testClassASumVariableInSelf [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiVariableAccess builder
 				variableName: #a1;
 				new)
@@ -110,10 +110,10 @@ FiDependencyInterpreterTest >> testClassASumVariableInSelf [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassBDefaultClass [
+FiRequisiteInterpreterTest >> testClassBDefaultClass [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiVariableAccess builder
 				variableName: #C;
 				new)
@@ -125,10 +125,10 @@ FiDependencyInterpreterTest >> testClassBDefaultClass [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassBReadSomeClassVariable [
+FiRequisiteInterpreterTest >> testClassBReadSomeClassVariable [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
 				new)
@@ -141,10 +141,10 @@ FiDependencyInterpreterTest >> testClassBReadSomeClassVariable [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassBSum [
+FiRequisiteInterpreterTest >> testClassBSum [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiMessageSend builder 
 				receiver: FiSuperMessageReceiver new;
 				selector: #sum;
@@ -159,10 +159,10 @@ FiDependencyInterpreterTest >> testClassBSum [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassBVariableInSuper [
+FiRequisiteInterpreterTest >> testClassBVariableInSuper [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiVariableAccess builder
 				variableName: #a1;
 				new)
@@ -175,10 +175,10 @@ FiDependencyInterpreterTest >> testClassBVariableInSuper [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassCSumAt [
+FiRequisiteInterpreterTest >> testClassCSumAt [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
 				selector: #sum;
@@ -195,10 +195,10 @@ FiDependencyInterpreterTest >> testClassCSumAt [
 ]
 
 { #category : #tests }
-FiDependencyInterpreterTest >> testClassCUndeclared [
+FiRequisiteInterpreterTest >> testClassCUndeclared [
 
 	self 
-		assertInterpretationOf: (
+		assertDependencyOf: (
 			FiVariableAccess builder
 				variableName: #undeclaredVar;
 				new)

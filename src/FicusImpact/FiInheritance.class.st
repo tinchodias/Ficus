@@ -1,10 +1,10 @@
 Class {
 	#name : #FiInheritance,
-	#superclass : #FiDependencyInterpretation,
+	#superclass : #FiDependency,
 	#instVars : [
 		'target'
 	],
-	#category : #'FicusImpact-Interpretations'
+	#category : #'FicusImpact-Dependencies'
 }
 
 { #category : #'instance creation' }

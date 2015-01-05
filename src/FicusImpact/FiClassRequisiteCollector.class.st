@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #public }
-FiClassRequisiteCollector >> requisitesFor: aRingClass [ 
+FiClassRequisiteCollector >> requisitesFor: aFiRGClass [ 
 
-	aRingClass classShot hasNullSuperclass ifTrue: [ ^ #() ].
-	
-	^ { 
-		FiInheritanceDeclaration builder
-			theClassName: aRingClass classShot superclassName;
-			new }
+	^ aFiRGClass classShot hasNullSuperclass 
+		ifTrue: [ #() ]
+		ifFalse: [ { 
+			FiInheritanceDeclaration builder
+				theClassName: aFiRGClass classShot superclassName;
+				new } ]
 ]

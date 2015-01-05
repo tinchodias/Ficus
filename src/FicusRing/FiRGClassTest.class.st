@@ -174,6 +174,14 @@ FiRGClassTest >> testEnvironment [
 ]
 
 { #category : #tests }
+FiRGClassTest >> testHasAbstractMethods [
+
+	self deny: (resources environmentWithAll classNamed: #True) hasAbstractMethods.
+	self assert: (resources environmentWithAll classNamed: #Boolean) hasAbstractMethods.
+
+]
+
+{ #category : #tests }
 FiRGClassTest >> testIncludesSelector [
 		
 	self assert: (resources classA includesSelector: #sum).

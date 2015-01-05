@@ -32,6 +32,12 @@ FiRGMetaclassTest >> testEnvironment [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testHasAbstractMethods [
+
+	self deny: resources classA classSide hasAbstractMethods.
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testInstanceVariables [
 
 	self 

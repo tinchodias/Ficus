@@ -15,6 +15,17 @@ FiVariableBinding class >> undeclared [
 	^ self new
 ]
 
+{ #category : #printing }
+FiVariableBinding >> printOn: aStream [
+	
+	super printOn: aStream.
+	
+	aStream 
+		nextPut: $(;
+		nextPutAll: target asString;
+		nextPut: $).
+]
+
 { #category : #accessing }
 FiVariableBinding >> target [
 	

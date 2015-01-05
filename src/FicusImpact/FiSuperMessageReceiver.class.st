@@ -8,8 +8,11 @@ Class {
 FiSuperMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 
 	^ aFiRGMethod environment
-		implementorsOf: aSelector 
+		lookupImplementorOf: aSelector 
 		inSuperclassesOf: aFiRGMethod methodClass
+		ifPresent: [ :method | { method } ]
+		ifAbsent: [ #() ]
+
 ]
 
 { #category : #printing }

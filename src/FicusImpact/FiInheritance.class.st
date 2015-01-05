@@ -15,6 +15,17 @@ FiInheritance class >> notFound [
 	^ self new
 ]
 
+{ #category : #printing }
+FiInheritance >> printOn: aStream [
+	
+	super printOn: aStream.
+	
+	aStream 
+		nextPut: $(;
+		nextPutAll: target asString;
+		nextPut: $).
+]
+
 { #category : #accessing }
 FiInheritance >> target [
 	

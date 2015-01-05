@@ -66,7 +66,12 @@ FiDependencyInterpreterTest >> testClassASum [
 				selector: #+;
 				new)
 		in: (resources classA >> #sum)
-		equals: FiPossibleMethodInvocation empty
+		equals: (
+			FiPossibleMethodInvocation builder
+				methods: {
+					(resources environmentWithAll classNamed: #SmallInteger) >> #+.
+					} asFiSet;
+				new)
 ]
 
 { #category : #tests }

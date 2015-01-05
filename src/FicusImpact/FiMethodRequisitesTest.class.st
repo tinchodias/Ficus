@@ -1,5 +1,5 @@
 Class {
-	#name : #FiMethodDependenciesTest,
+	#name : #FiMethodRequisitesTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #private }
-FiMethodDependenciesTest >> assertDependenciesOf: aRingMethod equals: dependencies [
+FiMethodRequisitesTest >> assertRequisitesOf: aRingMethod equals: dependencies [
 	
 	self 
-		assert: aRingMethod ficusDependencies asSet 
+		assert: aRingMethod ficusRequisites asSet 
 		equals: dependencies asSet
 ]
 
 { #category : #running }
-FiMethodDependenciesTest >> setUp [
+FiMethodRequisitesTest >> setUp [
 
 	super setUp.
 	
@@ -24,10 +24,10 @@ FiMethodDependenciesTest >> setUp [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassAClassInitialize [
+FiMethodRequisitesTest >> testClassAClassInitialize [
 
 	self 
-		assertDependenciesOf: resources classA classSide >> #initialize
+		assertRequisitesOf: resources classA classSide >> #initialize
 		equals: {
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
@@ -39,10 +39,10 @@ FiMethodDependenciesTest >> testClassAClassInitialize [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassASum [
+FiMethodRequisitesTest >> testClassASum [
 
 	self 
-		assertDependenciesOf: resources classA >> #sum
+		assertRequisitesOf: resources classA >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
@@ -58,10 +58,10 @@ FiMethodDependenciesTest >> testClassASum [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassASum42 [
+FiMethodRequisitesTest >> testClassASum42 [
 
 	self 
-		assertDependenciesOf: resources classA >> #sum42
+		assertRequisitesOf: resources classA >> #sum42
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSelfMessageReceiver new;
@@ -75,10 +75,10 @@ FiMethodDependenciesTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassBDefaultClass [
+FiMethodRequisitesTest >> testClassBDefaultClass [
 
 	self 
-		assertDependenciesOf: resources classB >> #defaultClass
+		assertRequisitesOf: resources classB >> #defaultClass
 		equals: {
 			FiVariableAccess builder
 				variableName: #C;
@@ -87,10 +87,10 @@ FiMethodDependenciesTest >> testClassBDefaultClass [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassBReadSomeClassVariable [
+FiMethodRequisitesTest >> testClassBReadSomeClassVariable [
 
 	self 
-		assertDependenciesOf: resources classB >> #readSomeClassVariable
+		assertRequisitesOf: resources classB >> #readSomeClassVariable
 		equals: {
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
@@ -99,10 +99,10 @@ FiMethodDependenciesTest >> testClassBReadSomeClassVariable [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassBSum [
+FiMethodRequisitesTest >> testClassBSum [
 
 	self 
-		assertDependenciesOf: resources classB >> #sum
+		assertRequisitesOf: resources classB >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSuperMessageReceiver new;
@@ -119,10 +119,10 @@ FiMethodDependenciesTest >> testClassBSum [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassBVariableInSuper [
+FiMethodRequisitesTest >> testClassBVariableInSuper [
 
 	self 
-		assertDependenciesOf: resources classB >> #variableInSuper
+		assertRequisitesOf: resources classB >> #variableInSuper
 		equals: {
 			FiVariableAccess builder
 				variableName: #a1;
@@ -131,18 +131,18 @@ FiMethodDependenciesTest >> testClassBVariableInSuper [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassCSum [
+FiMethodRequisitesTest >> testClassCSum [
 
 	self 
-		assertDependenciesOf: resources classC >> #sum
+		assertRequisitesOf: resources classC >> #sum
 		equals: { }
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassCSumAt [
+FiMethodRequisitesTest >> testClassCSumAt [
 
 	self 
-		assertDependenciesOf: resources classC >> #sumAt:
+		assertRequisitesOf: resources classC >> #sumAt:
 		equals: {
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
@@ -153,10 +153,10 @@ FiMethodDependenciesTest >> testClassCSumAt [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassCSumTmp [
+FiMethodRequisitesTest >> testClassCSumTmp [
 
 	self 
-		assertDependenciesOf: resources classC >> #sumTmp
+		assertRequisitesOf: resources classC >> #sumTmp
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSelfMessageReceiver new;
@@ -171,10 +171,10 @@ FiMethodDependenciesTest >> testClassCSumTmp [
 ]
 
 { #category : #tests }
-FiMethodDependenciesTest >> testClassCUndeclared [
+FiMethodRequisitesTest >> testClassCUndeclared [
 
 	self 
-		assertDependenciesOf: resources classC >> #undeclared
+		assertRequisitesOf: resources classC >> #undeclared
 		equals: {
 			FiVariableAccess builder
 				variableName: #undeclaredVar;

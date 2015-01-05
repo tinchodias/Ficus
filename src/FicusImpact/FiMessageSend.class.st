@@ -1,11 +1,11 @@
 Class {
 	#name : #FiMessageSend,
-	#superclass : #FiDependency,
+	#superclass : #FiRequisite,
 	#instVars : [
 		'receiver',
 		'selector'
 	],
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Requisites'
 }
 
 { #category : #printing }

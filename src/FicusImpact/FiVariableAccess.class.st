@@ -1,10 +1,10 @@
 Class {
 	#name : #FiVariableAccess,
-	#superclass : #FiDependency,
+	#superclass : #FiRequisite,
 	#instVars : [
 		'variableName'
 	],
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Requisites'
 }
 
 { #category : #printing }

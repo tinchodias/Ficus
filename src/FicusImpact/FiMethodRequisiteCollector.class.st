@@ -1,24 +1,14 @@
 Class {
-	#name : #FiMethodDependenciesCollector,
+	#name : #FiMethodRequisiteCollector,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'dependencies'
 	],
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Requisites'
 }
 
 { #category : #public }
-FiMethodDependenciesCollector >> dependenciesFor: aFiRGMethod [ 
-
-	dependencies := OrderedCollection new.
-
-	aFiRGMethod parseTree acceptVisitor: self.
-	
-	^ dependencies asArray
-]
-
-{ #category : #public }
-FiMethodDependenciesCollector >> messageReceiverFor: aRBNode [ 
+FiMethodRequisiteCollector >> messageReceiverFor: aRBNode [ 
 
 	aRBNode isSelf ifTrue: [ 
 		^ FiSelfMessageReceiver new ].
@@ -29,8 +19,18 @@ FiMethodDependenciesCollector >> messageReceiverFor: aRBNode [
 	^ FiAnyMessageReceiver new
 ]
 
+{ #category : #public }
+FiMethodRequisiteCollector >> requisitesFor: aFiRGMethod [ 
+
+	dependencies := OrderedCollection new.
+
+	aFiRGMethod parseTree acceptVisitor: self.
+	
+	^ dependencies asArray
+]
+
 { #category : #visitor }
-FiMethodDependenciesCollector >> visitMessageNode: aMessageNode [
+FiMethodRequisiteCollector >> visitMessageNode: aMessageNode [
 
 	| receiver |
 	receiver := self messageReceiverFor: aMessageNode receiver.
@@ -45,7 +45,7 @@ FiMethodDependenciesCollector >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #visitor }
-FiMethodDependenciesCollector >> visitVariableNode: aVariableNode [
+FiMethodRequisiteCollector >> visitVariableNode: aVariableNode [
 
 	"This means that it is not any an argument, nor temporaty, nor self, nor super, etc."
 	aVariableNode class == RBVariableNode ifTrue: [

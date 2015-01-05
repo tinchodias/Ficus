@@ -1,7 +1,7 @@
 Extension { #name : #FiRGClass }
 
 { #category : #'*FicusImpact' }
-FiRGClass >> ficusDependencies [
+FiRGClass >> ficusRequisites [
 	
-	^ FiClassDependenciesCollector new dependenciesFor: self
+	^ FiClassRequisiteCollector new requisitesFor: self
 ]

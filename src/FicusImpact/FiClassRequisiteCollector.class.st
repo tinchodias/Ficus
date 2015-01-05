@@ -1,11 +1,11 @@
 Class {
-	#name : #FiClassDependenciesCollector,
+	#name : #FiClassRequisiteCollector,
 	#superclass : #Object,
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Requisites'
 }
 
 { #category : #public }
-FiClassDependenciesCollector >> dependenciesFor: aRingClass [ 
+FiClassRequisiteCollector >> requisitesFor: aRingClass [ 
 
 	aRingClass classShot hasNullSuperclass ifTrue: [ ^ #() ].
 	

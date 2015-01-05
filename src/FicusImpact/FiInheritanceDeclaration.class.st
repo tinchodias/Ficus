@@ -1,10 +1,10 @@
 Class {
 	#name : #FiInheritanceDeclaration,
-	#superclass : #FiDependency,
+	#superclass : #FiRequisite,
 	#instVars : [
 		'theClassName'
 	],
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Requisites'
 }
 
 { #category : #printing }

@@ -1,7 +1,7 @@
 Extension { #name : #FiRGMethod }
 
 { #category : #'*FicusImpact' }
-FiRGMethod >> ficusDependencies [
+FiRGMethod >> ficusRequisites [
 
-	^ FiMethodDependenciesCollector new dependenciesFor: self
+	^ FiMethodRequisiteCollector new requisitesFor: self
 ]

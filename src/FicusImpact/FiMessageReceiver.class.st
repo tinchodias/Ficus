@@ -1,7 +1,7 @@
 Class {
 	#name : #FiMessageReceiver,
 	#superclass : #FiFixedObject,
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Requisites'
 }
 
 { #category : #lookup }

@@ -1,5 +1,5 @@
 Class {
-	#name : #FiClassDependenciesTest,
+	#name : #FiClassRequisitesTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #private }
-FiClassDependenciesTest >> assertDependenciesOf: aFiRGClass equals: dependencies [
+FiClassRequisitesTest >> assertRequisitesOf: aFiRGClass equals: dependencies [
 	
 	self 
-		assert: aFiRGClass ficusDependencies asSet 
+		assert: aFiRGClass ficusRequisites asSet 
 		equals: dependencies asSet
 ]
 
 { #category : #running }
-FiClassDependenciesTest >> setUp [
+FiClassRequisitesTest >> setUp [
 
 	super setUp.
 	
@@ -24,19 +24,19 @@ FiClassDependenciesTest >> setUp [
 ]
 
 { #category : #tests }
-FiClassDependenciesTest >> testClassA [
+FiClassRequisitesTest >> testClassA [
 
 	self 
-		assertDependenciesOf: resources classA
+		assertRequisitesOf: resources classA
 		equals: {
 			}
 ]
 
 { #category : #tests }
-FiClassDependenciesTest >> testClassB [
+FiClassRequisitesTest >> testClassB [
 
 	self 
-		assertDependenciesOf: resources classB
+		assertRequisitesOf: resources classB
 		equals: {
 			FiInheritanceDeclaration builder
 				theClassName: #A;

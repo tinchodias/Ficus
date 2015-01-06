@@ -77,6 +77,12 @@ FiRGMethod >> hash [
 ]
 
 { #category : #polymorphism }
+FiRGMethod >> isCompiledMethod [
+
+	^ true
+]
+
+{ #category : #polymorphism }
 FiRGMethod >> isDisabled: marker [
 
 	^ marker == CompiledMethod disabledMarker

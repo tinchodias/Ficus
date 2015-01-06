@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : #accessing }
+FiPackage >> classes [
+
+	^ contents select: [ :each | each isFicusClass ]
+]
+
+{ #category : #accessing }
 FiPackage >> contents [
 	
 	^ contents
@@ -21,6 +27,12 @@ FiPackage >> contents [
 FiPackage >> defaultStep [
 
 	^ theName asSymbol
+]
+
+{ #category : #accessing }
+FiPackage >> extensionMethods [
+
+	^ contents select: [ :each | each isFicusExtensionMethods ]
 ]
 
 { #category : #printing }
@@ -38,4 +50,10 @@ FiPackage >> printOn: aStream [
 FiPackage >> theName [
 	
 	^ theName
+]
+
+{ #category : #accessing }
+FiPackage >> traits [
+
+	^ contents select: [ :each | each isFicusTrait ]
 ]

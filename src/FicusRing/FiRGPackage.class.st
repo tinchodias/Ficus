@@ -16,10 +16,8 @@ Class {
 FiRGPackage >> definedClasses [
 
 	^ definedClasses ifNil: [ 
-		definedClasses := 
-			packageShot contents values 
-				select: #isFicusClass 
-				thenCollect: [ :classShot | environment ringClassFor: classShot ] ]
+		definedClasses := packageShot classes 
+			collect: [ :classShot | environment ringClassFor: classShot ] ]
 ]
 
 { #category : #accessing }

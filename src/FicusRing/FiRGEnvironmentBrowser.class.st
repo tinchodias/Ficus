@@ -91,6 +91,8 @@ FiRGEnvironmentBrowser >> classesIn: a [
 { #category : #building }
 FiRGEnvironmentBrowser >> compose [
 
+	self title: 'Ficus Environment Browser'.
+
 	self 
 		act: [ :browser | browser entity inspect ] 
 		icon: Smalltalk ui icons openIcon

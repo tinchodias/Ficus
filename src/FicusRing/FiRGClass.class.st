@@ -17,8 +17,9 @@ FiRGClass >> = other [
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
 
-	^ environment = other environment 
-		and: [ classShot = other classShot ]
+	self flag: #todo. "The == may be a wrong assumption"
+	^ environment == other environment 
+		and: [ classShot == other classShot ]
 ]
 
 { #category : #polymorphism }
@@ -250,9 +251,11 @@ FiRGClass >> hasComment [
 { #category : #comparing }
 FiRGClass >> hash [
 
+	self flag: #todo. "The ==/identityHash may be a wrong assumption"
+
 	^ (self class hash 
-		bitXor: environment hash)
-		bitXor: classShot hash
+		bitXor: environment identityHash)
+		bitXor: classShot identityHash
 ]
 
 { #category : #polymorphism }

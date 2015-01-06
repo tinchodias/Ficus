@@ -47,6 +47,7 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 			row 
 			 	column: #rules;
 				column: #critics ];
+		title: 'Ficus Lint Rules Runner';
 		yourself.
 		
 	browser transmit 

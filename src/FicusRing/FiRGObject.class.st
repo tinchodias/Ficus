@@ -6,3 +6,9 @@ Class {
 	#superclass : #Object,
 	#category : #'FicusRing-Core'
 }
+
+{ #category : #printing }
+FiRGObject >> shortPrintString [
+
+	^ self name
+]

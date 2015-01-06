@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'packagesShot',
 		'allClasses',
-		'packageByClassName'
+		'packageByClassName',
+		'extensionMethodsByBehaviorName'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -115,18 +116,35 @@ FiRGEnvironment >> environmentShot: anObject [
 ]
 
 { #category : #lookup }
+FiRGEnvironment >> extensionMethodsByBehaviorName [
+	
+	"lazy and ugly initialization"
+	extensionMethodsByBehaviorName ifNil: [
+		extensionMethodsByBehaviorName := Dictionary new.
+
+		packagesShot do: [ :aPackageShot |
+			aPackageShot extensionMethods do: [ :anExtensionMethodsShot |
+				anExtensionMethodsShot methods collect: [ :aMethodShot | 
+					self 
+						at: anExtensionMethodsShot hostName
+						ifPresent: [ :aBehavior |
+							(extensionMethodsByBehaviorName 
+								at: anExtensionMethodsShot hostName 
+								ifAbsentPut: [ Set new ])
+								add: (aBehavior ringMethodFor: aMethodShot) ]
+						ifAbsent: []
+				]]]].
+
+	^ extensionMethodsByBehaviorName
+]
+
+{ #category : #lookup }
 FiRGEnvironment >> extensionMethodsFor: aBehavior [
 	
-	^ packagesShot values 
-		flatCollect: [ :aPackageShot |
-			(aPackageShot contents values
-				select: [ :each |
-					each isFicusExtensionMethods and: [ 
-					each hostName = aBehavior name and: [ 
-					each isMetaSide = aBehavior isMeta ] ] ])
-				flatCollect: [ :each |
-					each methods collect: [ :eachMethod | 
-						aBehavior ringMethodFor: eachMethod ] ] ]
+	^ (self extensionMethodsByBehaviorName
+		at: aBehavior name 
+		ifAbsent: [ ^ #() ]) 
+		select: [:aMethod | aMethod methodClass = aBehavior ]
 ]
 
 { #category : #polymorphism }

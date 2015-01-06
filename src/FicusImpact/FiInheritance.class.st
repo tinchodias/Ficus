@@ -31,3 +31,9 @@ FiInheritance >> target [
 	
 	^ target
 ]
+
+{ #category : #accessing }
+FiInheritance >> targets [
+	
+	^ { target }
+]

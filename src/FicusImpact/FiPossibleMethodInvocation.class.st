@@ -21,12 +21,32 @@ FiPossibleMethodInvocation >> methods [
 
 { #category : #printing }
 FiPossibleMethodInvocation >> printOn: aStream [
-	
+
+	| limit |
 	super printOn: aStream.
 	
 	aStream nextPut: $(.
-	methods values 
-		do: [:element | element shortPrintOn: aStream ] 
-		separatedBy: [ aStream space ].
+
+	limit := 3.
+	methods size > limit 
+		ifTrue: [ 
+			(methods asArray first: limit)
+				do: [:element | element shortPrintOn: aStream ] 
+				separatedBy: [ aStream space ].
+			aStream 
+				nextPutAll: ' + ';
+				print: (methods size - limit);
+				nextPutAll: ' more' ]
+		ifFalse: [
+			methods asArray
+				do: [:element | element shortPrintOn: aStream ] 
+				separatedBy: [ aStream space ] ].
+			
 	aStream nextPut: $).
+]
+
+{ #category : #accessing }
+FiPossibleMethodInvocation >> targets [
+	
+	^ methods asArray
 ]

@@ -31,3 +31,9 @@ FiVariableBinding >> target [
 	
 	^ target
 ]
+
+{ #category : #accessing }
+FiVariableBinding >> targets [
+	
+	^ { target }
+]

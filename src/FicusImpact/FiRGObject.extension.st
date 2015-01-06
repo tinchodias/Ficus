@@ -1,6 +1,12 @@
 Extension { #name : #FiRGObject }
 
 { #category : #'*FicusImpact' }
+FiRGObject >> ficusAllDependencies [
+	
+	^ self ficusDependencies
+]
+
+{ #category : #'*FicusImpact' }
 FiRGObject >> ficusDependencies [
 	
 	^ self ficusRequisites collect: [ :each |

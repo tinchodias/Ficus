@@ -3,3 +3,9 @@ Class {
 	#superclass : #FiFixedObject,
 	#category : #'FicusImpact-Dependencies'
 }
+
+{ #category : #accessing }
+FiDependency >> targets [
+
+	^ self subclassResponsibility 
+]

@@ -249,6 +249,20 @@ FiSet >> resultOfSimpleEffects: simpleEffects [
 ]
 
 { #category : #enumerating }
+FiSet >> select: aBlockClosure [ 
+	
+	| newSet |
+	newSet := Set new: self size.
+	
+	self valuesDo: [ :each | 
+		(aBlockClosure value: each) 
+			ifTrue: [ newSet add: each ] ].
+
+	^ newSet
+
+]
+
+{ #category : #enumerating }
 FiSet >> stepCount [
 	
 	^ self size

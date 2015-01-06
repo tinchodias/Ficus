@@ -68,7 +68,8 @@ FiNode >> gtInspectorInnerEdgesIn: composite [
 		title: [ :anObject | anObject innerEdges size asString, ' inner edges' ];
 		display: [ self innerEdges ];
 		column: 'Source' evaluated: [ :edge | edge source ];
-		column: 'Contents' evaluated: [ :edge | edge contents ]
+		column: 'Contents' evaluated: [ :edge | edge contents ];
+		sorted: [ :x :y | x source asString < y source asString ].
 ]
 
 { #category : #printing }
@@ -79,7 +80,8 @@ FiNode >> gtInspectorOuterEdgesIn: composite [
 		title: [ :anObject | anObject outerEdges size asString, ' outer edges' ];
 		display: [ self outerEdges ];
 		column: 'Target' evaluated: [ :edge | edge target ];
-		column: 'Contents' evaluated: [ :edge | edge contents]
+		column: 'Contents' evaluated: [ :edge | edge contents];
+		sorted: [ :x :y | x target asString < y target asString ].
 ]
 
 { #category : #comparing }

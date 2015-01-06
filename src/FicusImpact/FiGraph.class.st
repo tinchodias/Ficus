@@ -26,7 +26,8 @@ FiGraph >> gtInspectorNodesIn: composite [
 
 	composite list
 		title: [ :anObject | anObject nodes size asString, ' nodes' ];
-		display: [ self nodes ]
+		display: [ self nodes ];
+		sorted: [ :x :y | x asString < y asString ].
 ]
 
 { #category : #initialization }

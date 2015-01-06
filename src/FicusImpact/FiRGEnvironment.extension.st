@@ -3,11 +3,5 @@ Extension { #name : #FiRGEnvironment }
 { #category : #'*FicusImpact' }
 FiRGEnvironment >> ficusAllDependencies [
 	
-	^ super ficusAllDependencies, (self allClassesAndTraits flatCollect: #ficusAllDependencies as: OrderedCollection)
-]
-
-{ #category : #'*FicusImpact' }
-FiRGEnvironment >> ficusDependencies [
-	
-	^ #()
+	^ super ficusAllDependencies, (self packages flatCollect: #ficusAllDependencies as: OrderedCollection)
 ]

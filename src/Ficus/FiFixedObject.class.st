@@ -102,7 +102,7 @@ FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 { #category : #printing }
 FiFixedObject >> gtInspectorItemsIn: composite [
 	<gtInspectorPresentationOrder: 30>  
-	^ (composite table)
+	^ composite table
 		title: [ :anObject | anObject stepCount asString, ' steps' ];
 		display: [ :each | each stepsAndValues ];
 		column: 'Step' evaluated: #key width: 120;

@@ -1,16 +1,16 @@
 Class {
 	#name : #FiPackageGranularity,
-	#superclass : #Object,
+	#superclass : #FiGranularity,
 	#category : #'FicusImpact-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiPackageGranularity >> allEntitiesFor: aFiRGEnvironment [ 
 	
 	^ aFiRGEnvironment packages
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiPackageGranularity >> entityFor: aFiRGObject [ 
 
 	^ aFiRGObject package

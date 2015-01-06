@@ -100,13 +100,13 @@ FiNode >> initialize [
 { #category : #accessing }
 FiNode >> innerEdges [
 	
-	^ innerEdges copy
+	^ innerEdges asArray
 ]
 
 { #category : #accessing }
 FiNode >> outerEdges [
 	
-	^ outerEdges copy
+	^ outerEdges asArray
 ]
 
 { #category : #printing }

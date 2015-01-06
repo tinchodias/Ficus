@@ -17,6 +17,24 @@ FiDependencyGraphBuilder class >> example1 [
 		newGraph) inspect
 ]
 
+{ #category : #examples }
+FiDependencyGraphBuilder class >> example2 [
+
+	^ (self new
+		environment: FiFragileBaseProblemResourcesA new environmentWithAll asFiRGEnvironment;
+		granularity: FiClassGranularity new;
+		newGraph) inspect
+]
+
+{ #category : #examples }
+FiDependencyGraphBuilder class >> example3 [
+
+	^ (self new
+		environment: FiFragileBaseProblemResourcesA new environmentWithAll asFiRGEnvironment;
+		granularity: FiArbitraryGranularity new;
+		newGraph) inspect
+]
+
 { #category : #private }
 FiDependencyGraphBuilder >> dependenciesByTargetNodeOf: entity graph: graph [
 	

@@ -42,7 +42,7 @@ FiGraph >> nodeFor: anObject [
 	
 	^ nodeByContents 
 		at: anObject 
-		ifAbsentPut: [ 
+		ifAbsentPut: [
 			FiNode new
 				graph: self;
 				contents: anObject;

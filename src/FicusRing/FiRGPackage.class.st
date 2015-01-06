@@ -3,7 +3,7 @@ I am polymorphic with RPackage, fetching everything needed from a Ficus environm
 "
 Class {
 	#name : #FiRGPackage,
-	#superclass : #Object,
+	#superclass : #FiRGObject,
 	#instVars : [
 		'environment',
 		'packageShot',
@@ -36,4 +36,16 @@ FiRGPackage >> name [
 FiRGPackage >> packageShot: aFiPackage [ 
 
 	packageShot := aFiPackage
+]
+
+{ #category : #printing }
+FiRGPackage >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self name;
+		nextPut: $).
+	
 ]

@@ -8,7 +8,8 @@ Class {
 		'packagesShot',
 		'allClasses',
 		'packageByClassName',
-		'extensionMethodsByBehaviorName'
+		'extensionMethodsByBehaviorName',
+		'packages'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -281,7 +282,8 @@ FiRGEnvironment >> packageOfClassNamed: aName [
 { #category : #accessing }
 FiRGEnvironment >> packages [
 	
-	^ packagesShot collect: [ :each | self ringPackageFor: each ]
+	^ packages ifNil: [
+		packages := packagesShot collect: [ :each | self ringPackageFor: each ] ]
 ]
 
 { #category : #private }

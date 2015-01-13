@@ -33,6 +33,7 @@ FiStoreBrowser class >> example [
 
 	^ self new
 		store: (FiMonticelloStore forPackageNamed: #Tetris);
+		plugin: FiNullStoreBrowserPlugin new;
 		refresh;
 		openWithSpec;
 		yourself

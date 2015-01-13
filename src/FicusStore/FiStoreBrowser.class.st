@@ -26,13 +26,13 @@ FiStoreBrowser class >> defaultSpec [
 ]
 
 { #category : #example }
-FiStoreBrowser class >> example [
+FiStoreBrowser class >> exampleMemory [
 	"
-	self example
+	self exampleMemory.
 	"
 
 	^ self new
-		store: (FiMonticelloStore forPackageNamed: #Tetris);
+		store: FiMemoryStore example;
 		plugin: FiNullStoreBrowserPlugin new;
 		refresh;
 		openWithSpec;

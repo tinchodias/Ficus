@@ -7,6 +7,30 @@ Class {
 	#category : #'FicusStore-Stores'
 }
 
+{ #category : #example }
+FiMemoryStore class >> example [
+	"
+	self example inspect
+	"
+
+	^ self exampleWithAll: ((1 to: 10) collect: [ :index | 'Item ', index asString ])
+]
+
+{ #category : #example }
+FiMemoryStore class >> exampleWithAll: items [
+
+	| store |
+	store := FiMemoryStore new.
+	store commitSnapshot: FiSet new priors: FiSet new.
+
+	1 to: items size do: [ :index |
+		store 
+			commitSnapshot: (items first: index) asFiSet 
+			priors: { store headHistoryNode } asFiSet ].
+
+	^ store
+]
+
 { #category : #accessing }
 FiMemoryStore >> allPriorsOf: aValue [ 
 	

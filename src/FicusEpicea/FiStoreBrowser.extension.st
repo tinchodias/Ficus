@@ -1,10 +1,10 @@
 Extension { #name : #FiStoreBrowser }
 
 { #category : #'*FicusEpicea' }
-FiStoreBrowser classSide >> example2 [
+FiStoreBrowser classSide >> exampleEpicea [
 	"
 	Gofer it package: #Tetris; load.
-	self example2.
+	self exampleEpicea.
 	"
 
 	^ self new

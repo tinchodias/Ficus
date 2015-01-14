@@ -1,6 +1,9 @@
 Class {
 	#name : #FiMonticelloStore,
 	#superclass : #FiAbstractStore,
+	#instVars : [
+		'packageName'
+	],
 	#category : #'FicusMonticello-Marshaling-HistoryNodes'
 }
 
@@ -71,6 +74,14 @@ FiMonticelloStore class >> downloadToCachePharo20andPharo30 [
 			self downloadToCacheAllFrom: aRepository ]
 ]
 
+{ #category : #'instance creation' }
+FiMonticelloStore class >> forPackageNamed: aString [ 
+
+	^ self new
+		packageName: aString;
+		yourself
+]
+
 { #category : #private }
 FiMonticelloStore class >> fuelRepository [
 
@@ -132,6 +143,12 @@ FiMonticelloStore class >> pharo40Repository [
 		location: 'http://smalltalkhub.com/mc/Pharo/Pharo40/main'
 		user: ''
 		password: ''
+]
+
+{ #category : #accessing }
+FiMonticelloStore >> packageName: anObject [
+
+	packageName := anObject 
 ]
 
 { #category : #refreshing }

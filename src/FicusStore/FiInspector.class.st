@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'treeModel',
 		'contentsModel',
-		'iconByClassName',
-		'currentSelection'
+		'iconByClassName'
 	],
 	#category : #'FicusStore-UI'
 }
@@ -163,10 +162,6 @@ FiInspector >> rootShot: aShot [
 
 { #category : #initialization }
 FiInspector >> showContentsFor: assocOrNil [
-
-	self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
-	currentSelection = assocOrNil ifTrue: [ ^ self ].
-	currentSelection := assocOrNil.
 
 	assocOrNil ifNil: [ ^ contentsModel roots: #() ].
 	

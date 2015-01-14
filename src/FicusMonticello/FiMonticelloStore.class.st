@@ -2,7 +2,9 @@ Class {
 	#name : #FiMonticelloStore,
 	#superclass : #FiAbstractStore,
 	#instVars : [
-		'packageName'
+		'packageName',
+		'historyNodes',
+		'headHistoryNode'
 	],
 	#category : #'FicusMonticello-Marshaling-HistoryNodes'
 }
@@ -146,6 +148,18 @@ FiMonticelloStore class >> pharo40Repository [
 ]
 
 { #category : #accessing }
+FiMonticelloStore >> headHistoryNode [
+	
+	^ headHistoryNode
+]
+
+{ #category : #accessing }
+FiMonticelloStore >> historyNodes [
+
+	^ historyNodes
+]
+
+{ #category : #accessing }
 FiMonticelloStore >> packageName: anObject [
 
 	packageName := anObject 
@@ -154,16 +168,16 @@ FiMonticelloStore >> packageName: anObject [
 { #category : #refreshing }
 FiMonticelloStore >> refresh [
 
-	cachedHistoryNodes := (FiMonticelloHistoryBuilder forTipsOfCachedPackageNamed: packageName) historyNodes.
+	historyNodes := (FiMonticelloHistoryBuilder forTipsOfCachedPackageNamed: packageName) historyNodes.
 	
-	cachedHeadHistoryNodes := 
+	headHistoryNode := 
 		(MCWorkingCopy allManagers 
 			detect: [ :each | each packageName = packageName ]
 			ifFound: [ :aManager | 
 				| headVersionInfo |
 				headVersionInfo := aManager ancestry ancestors first.
 				self flag: #fix. "Do not assume that origin si FiSingleCommit"
-				cachedHistoryNodes 
+				historyNodes 
 					detect: [ :node | node origin reference = headVersionInfo ]
 					ifNone: [ self notYetImplemented ] ]
 			ifNone: [ self notYetImplemented ]).

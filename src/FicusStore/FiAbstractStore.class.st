@@ -4,19 +4,10 @@ Class {
 	#instVars : [
 		'announcer',
 		'cachedHistoryNodes',
-		'cachedHeadHistoryNodes',
-		'packageName'
+		'cachedHeadHistoryNodes'
 	],
 	#category : #'FicusStore-Stores'
 }
-
-{ #category : #'instance creation' }
-FiAbstractStore class >> forPackageNamed: aString [ 
-
-	^ self new
-		packageName: aString;
-		yourself
-]
 
 { #category : #accessing }
 FiAbstractStore >> announcer [
@@ -47,16 +38,6 @@ FiAbstractStore >> invalidateCaches [
 	cachedHistoryNodes := nil.
 	
 	self flag: #fix.
-]
-
-{ #category : #accessing }
-FiAbstractStore >> packageName [
-	^ packageName
-]
-
-{ #category : #accessing }
-FiAbstractStore >> packageName: anObject [
-	packageName := anObject
 ]
 
 { #category : #refreshing }

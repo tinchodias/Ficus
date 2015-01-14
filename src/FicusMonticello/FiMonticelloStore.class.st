@@ -147,14 +147,24 @@ FiMonticelloStore class >> pharo40Repository [
 		password: ''
 ]
 
+{ #category : #private }
+FiMonticelloStore >> ensureReady [
+
+	historyNodes ifNil: [ self refresh ].
+]
+
 { #category : #accessing }
 FiMonticelloStore >> headHistoryNode [
 	
+	self ensureReady.
+
 	^ headHistoryNode
 ]
 
 { #category : #accessing }
 FiMonticelloStore >> historyNodes [
+
+	self ensureReady.
 
 	^ historyNodes
 ]

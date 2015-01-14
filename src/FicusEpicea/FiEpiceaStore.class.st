@@ -2,10 +2,25 @@ Class {
 	#name : #FiEpiceaStore,
 	#superclass : #FiAbstractStore,
 	#instVars : [
-		'theLog'
+		'theLog',
+		'packageName'
 	],
 	#category : #FicusEpicea
 }
+
+{ #category : #'instance creation' }
+FiEpiceaStore class >> forPackageNamed: aString [ 
+
+	^ self new
+		packageName: aString;
+		yourself
+]
+
+{ #category : #accessing }
+FiEpiceaStore >> packageName: anObject [
+
+	packageName := anObject 
+]
 
 { #category : #refreshing }
 FiEpiceaStore >> refresh [

@@ -3,7 +3,9 @@ Class {
 	#superclass : #FiAbstractStore,
 	#instVars : [
 		'theLog',
-		'packageName'
+		'packageName',
+		'historyNodes',
+		'headHistoryNode'
 	],
 	#category : #FicusEpicea
 }
@@ -14,6 +16,18 @@ FiEpiceaStore class >> forPackageNamed: aString [
 	^ self new
 		packageName: aString;
 		yourself
+]
+
+{ #category : #accessing }
+FiEpiceaStore >> headHistoryNode [
+
+	^ headHistoryNode
+]
+
+{ #category : #accessing }
+FiEpiceaStore >> historyNodes [
+
+	^ historyNodes
 ]
 
 { #category : #accessing }
@@ -33,13 +47,13 @@ FiEpiceaStore >> refresh [
 			run;
 			yourself. 
 
-	cachedHistoryNodes := historyBuilder historyNodes.
+	historyNodes := historyBuilder historyNodes.
 	
-	cachedHeadHistoryNodes := historyBuilder headHistoryNode.
+	headHistoryNode := historyBuilder headHistoryNode.
 ]
 
 { #category : #accessing }
 FiEpiceaStore >> theLog: anEpLog [
 
-	^ theLog := anEpLog
+	theLog := anEpLog
 ]

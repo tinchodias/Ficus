@@ -15,6 +15,7 @@ FiEpiceaStore class >> forPackageNamed: aString [
 
 	^ self new
 		packageName: aString;
+		theLog: EpMonitor current log;
 		yourself
 ]
 

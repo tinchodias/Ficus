@@ -35,6 +35,21 @@ FiInspector class >> inspect: aRootShot [
 		yourself
 ]
 
+{ #category : #private }
+FiInspector >> contentsFor: inspectorItemOrNil [
+
+	| morphBuilder |	
+	inspectorItemOrNil ifNil: [ ^ #() ].
+	
+	self flag: #fix. "Just use a text model?"
+
+	morphBuilder := FiMorphBuilder default.
+	^ { morphBuilder columnMorphWithAll: { 
+			morphBuilder pathMorphWith: inspectorItemOrNil path.
+			morphBuilder stringMorphWith: inspectorItemOrNil content storeString asText }}
+
+]
+
 { #category : #accessing }
 FiInspector >> contentsModel [
 
@@ -160,11 +175,7 @@ FiInspector >> rootShot: aShot [
 { #category : #private }
 FiInspector >> showContentsFor: inspectorItemOrNil [
 
-	inspectorItemOrNil ifNil: [ ^ contentsModel roots: #() ].
-	
-	contentsModel roots: { 
-		FiMorphBuilder default stringMorphWith: inspectorItemOrNil content storeString asText }
-
+	contentsModel roots: (self contentsFor: inspectorItemOrNil)
 ]
 
 { #category : #accessing }

@@ -151,7 +151,7 @@ FiHistoryNodesBrowser >> refreshButton [
 { #category : #private }
 FiHistoryNodesBrowser >> rowSize [
 
-	^ 23
+	^ 28
 ]
 
 { #category : #accessing }

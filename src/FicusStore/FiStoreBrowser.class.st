@@ -167,9 +167,10 @@ FiStoreBrowser >> refreshSnapshotTab [
 	selection := self selectedHistoryNodes. 
 	
 	selection 
-		ifEmpty: [ snapshotModel emptyRoots ]
+		ifEmpty: [ 
+			snapshotModel emptyRoots ]
 		ifNotEmpty: [ 
-			snapshotModel rootAssociations: (selection anyOne snapshot stepsAndValues sorted: [ :a :b | a key <= b key ]) ]
+			snapshotModel rootShot: selection anyOne snapshot ]
 ]
 
 { #category : #accessing }

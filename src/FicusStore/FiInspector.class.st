@@ -25,17 +25,13 @@ FiInspector class >> defaultSpec [
 
 { #category : #inspecting }
 FiInspector class >> inspect: aRootShot [
+	"
+	self inspect: #(1 2 3 4 5) asFiSet 
+	"
 
-	^ (self newWith: { #root -> aRootShot })
+	^ self new 
+		rootShot: aRootShot;
 		open;
-		yourself
-]
-
-{ #category : #inspecting }
-FiInspector class >> newWith: someAssociations [
-
-	^ self new
-		rootAssociations: someAssociations;
 		yourself
 ]
 
@@ -48,7 +44,7 @@ FiInspector >> contentsModel [
 { #category : #accessing }
 FiInspector >> emptyRoots [
 
-	self rootAssociations: #()
+	self rootInspectorItems: #()
 ]
 
 { #category : #private }
@@ -107,19 +103,16 @@ FiInspector >> initializePresenter [
 		
 	treeModel
 		evenRowColor: treeModel oddRowColor;
-		displayBlock: [ :assoc | assoc key asMorph ];
-		childrenBlock: [ :assoc | 
-			assoc value isShot 
-				ifTrue: [ assoc value stepsAndValues sorted: [ :a :b | a key < b key ] ]
-				ifFalse: [ #() ] ];
-		iconBlock: [ :assoc | self iconFor: assoc value ];
-		autoDeselection:true;
+		displayBlock: [ :inspectorItem | inspectorItem step asMorph ];
+		childrenBlock: [ :inspectorItem | inspectorItem children ];
+		iconBlock: [ :inspectorItem | self iconFor: inspectorItem content ];
+		autoDeselection: true;
 		whenRootsChanged: [ 
 			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 
 				when it changed due to roots update."
 			self showContentsFor: nil ];
-		whenSelectedItemChanged: [ :assocOrNil | 
-			self showContentsFor: assocOrNil ].
+		whenSelectedItemChanged: [ :inspectorItem | 
+			self showContentsFor: inspectorItem ].
 
 
 ]
@@ -147,9 +140,9 @@ FiInspector >> open [
 ]
 
 { #category : #accessing }
-FiInspector >> rootAssociations: someAssociations [
+FiInspector >> rootInspectorItems: inspectorItems [
 
-	treeModel roots: someAssociations.
+	treeModel roots: inspectorItems.
 	
 	treeModel expandRoots
 ]
@@ -157,15 +150,20 @@ FiInspector >> rootAssociations: someAssociations [
 { #category : #accessing }
 FiInspector >> rootShot: aShot [
 
-	self rootAssociations: { #root -> aShot }
+	self rootInspectorItems: 
+		(FiInspectorItem new 
+			content: aShot;
+			path: FiPath root;
+			yourself) children
 ]
 
-{ #category : #initialization }
-FiInspector >> showContentsFor: assocOrNil [
+{ #category : #private }
+FiInspector >> showContentsFor: inspectorItemOrNil [
 
-	assocOrNil ifNil: [ ^ contentsModel roots: #() ].
+	inspectorItemOrNil ifNil: [ ^ contentsModel roots: #() ].
 	
-	contentsModel roots: { FiMorphBuilder default stringMorphWith: assocOrNil value storeString asText }
+	contentsModel roots: { 
+		FiMorphBuilder default stringMorphWith: inspectorItemOrNil content storeString asText }
 
 ]
 

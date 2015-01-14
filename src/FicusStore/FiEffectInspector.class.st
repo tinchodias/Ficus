@@ -59,9 +59,12 @@ FiEffectInspector class >> newWith: aRootEffect [
 { #category : #private }
 FiEffectInspector >> diffChunkMorphFor: aSimpleEffect [
 
-	^ FiMorphBuilder default columnMorphWithAll: { 
-		self pathMorphWith: aSimpleEffect path.
-		self diffMorphFrom: aSimpleEffect oldValueString to: aSimpleEffect newValueString }
+	| morphBuilder |
+	morphBuilder := FiMorphBuilder default.
+
+	^ morphBuilder columnMorphWithAll: { 
+		morphBuilder pathMorphWith: aSimpleEffect path.
+		morphBuilder diffMorphFrom: aSimpleEffect oldValueString to: aSimpleEffect newValueString }
 ]
 
 { #category : #private }
@@ -79,23 +82,6 @@ FiEffectInspector >> diffChunkMorphsFor: anEffectOrNil [
 FiEffectInspector >> diffModel [
 
 	^ diffModel
-]
-
-{ #category : #private }
-FiEffectInspector >> diffMorphFrom: aString to: otherString [
-
-"	^ (DiffMorph from: aString to: otherString)
-			showOptions: false;
-			width: 400;
-			height: 200;
-			yourself
-"
-	^ (TextDiffBuilder 
-		buildDisplayPatchFrom: aString
-		to: otherString) asMorph
-		lock: true;
-		yourself
-
 ]
 
 { #category : #private }
@@ -188,26 +174,6 @@ FiEffectInspector >> open [
 	"It has no effect if applied before opening:"		
 	treeModel expandAll
 
-]
-
-{ #category : #private }
-FiEffectInspector >> pathMorphWith: aPath [
-
-	| separator |
-	separator := 
-		'  /  ' asText 
-			addAttribute: (TextColor color: Color lightGray); 
-			addAttribute: (TextFontChange fontNumber: 1); 
-			yourself. 
-	
-	^ (separator join: (aPath steps collect: [ :each | 
-			each asString asText 
-				addAttribute: (TextColor color: Color darkGray); 
-				addAttribute: (TextFontChange fontNumber: 2); 
-				yourself ])) 
-		asMorph
-		lock: true;
-		yourself
 ]
 
 { #category : #accessing }

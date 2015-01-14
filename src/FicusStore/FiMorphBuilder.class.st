@@ -28,6 +28,43 @@ FiMorphBuilder >> columnMorphWithAll: someMophs [
 ]
 
 { #category : #building }
+FiMorphBuilder >> diffMorphFrom: aString to: otherString [
+
+"	^ (DiffMorph from: aString to: otherString)
+			showOptions: false;
+			width: 400;
+			height: 200;
+			yourself
+"
+	^ (TextDiffBuilder 
+		buildDisplayPatchFrom: aString
+		to: otherString) asMorph
+		lock: true;
+		yourself
+
+]
+
+{ #category : #building }
+FiMorphBuilder >> pathMorphWith: aPath [
+
+	| separator |
+	separator := 
+		'  /  ' asText 
+			addAttribute: (TextColor color: Color lightGray); 
+			addAttribute: (TextFontChange fontNumber: 1); 
+			yourself. 
+	
+	^ (separator join: (aPath steps collect: [ :each | 
+			each asString asText 
+				addAttribute: (TextColor color: Color darkGray); 
+				addAttribute: (TextFontChange fontNumber: 2); 
+				yourself ])) 
+		asMorph
+		lock: true;
+		yourself
+]
+
+{ #category : #building }
 FiMorphBuilder >> rowMorphWithAll: someMophs [
 
 	^ PanelMorph new

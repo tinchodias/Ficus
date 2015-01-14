@@ -18,14 +18,24 @@ FiEpiceaStore class >> forPackageNamed: aString [
 		yourself
 ]
 
+{ #category : #private }
+FiEpiceaStore >> ensureReady [
+
+	historyNodes ifNil: [ self refresh ].
+]
+
 { #category : #accessing }
 FiEpiceaStore >> headHistoryNode [
+
+	self ensureReady.
 
 	^ headHistoryNode
 ]
 
 { #category : #accessing }
 FiEpiceaStore >> historyNodes [
+
+	self ensureReady.
 
 	^ historyNodes
 ]

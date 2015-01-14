@@ -69,14 +69,24 @@ FiMemoryStore >> closestCommonHistoryNodeFor: aCollection [
 { #category : #accessing }
 FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 	
-	self invalidateCaches.
-	
 	historyNodes add: 
 		(FiSnapshotHistoryNode builder
 			origin: (FiSingleOrigin builder reference: ('Mem:', self hash asString, ':', historyNodes size asString); new);
 			snapshot: aSnapshot;
 			priors: priors;
 			new)
+]
+
+{ #category : #accessing }
+FiMemoryStore >> headHistoryNode [
+
+	^ historyNodes last
+]
+
+{ #category : #accessing }
+FiMemoryStore >> historyNodes [
+
+	^ historyNodes
 ]
 
 { #category : #initialization }
@@ -101,6 +111,5 @@ FiMemoryStore >> printOn: aStream [
 { #category : #refreshing }
 FiMemoryStore >> refresh [
 
-	cachedHistoryNodes := historyNodes.
-	cachedHeadHistoryNodes := historyNodes last.
+	"nothing to do"
 ]

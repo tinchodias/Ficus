@@ -2,9 +2,7 @@ Class {
 	#name : #FiAbstractStore,
 	#superclass : #Object,
 	#instVars : [
-		'announcer',
-		'cachedHistoryNodes',
-		'cachedHeadHistoryNodes'
+		'announcer'
 	],
 	#category : #'FicusStore-Stores'
 }
@@ -18,26 +16,13 @@ FiAbstractStore >> announcer [
 { #category : #accessing }
 FiAbstractStore >> headHistoryNode [
 
-	^ cachedHeadHistoryNodes ifNil: [ 
-		self refresh. 
-		cachedHeadHistoryNodes ]
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
 FiAbstractStore >> historyNodes [
 
-	^ cachedHistoryNodes ifNil: [ 
-		self refresh. 
-		cachedHistoryNodes ]
-]
-
-{ #category : #refreshing }
-FiAbstractStore >> invalidateCaches [
-	
-	cachedHeadHistoryNodes := nil.
-	cachedHistoryNodes := nil.
-	
-	self flag: #fix.
+	^ self subclassResponsibility 
 ]
 
 { #category : #refreshing }

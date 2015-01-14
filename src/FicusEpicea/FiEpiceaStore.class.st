@@ -29,19 +29,13 @@ FiEpiceaStore >> refresh [
 	historyBuilder := 
 		FiEpiceaHistoryBuilder new 
 			packageName: packageName;
-			theLog: self theLog;
+			theLog: theLog;
 			run;
 			yourself. 
 
 	cachedHistoryNodes := historyBuilder historyNodes.
 	
 	cachedHeadHistoryNodes := historyBuilder headHistoryNode.
-]
-
-{ #category : #accessing }
-FiEpiceaStore >> theLog [
-
-	^ theLog ifNil: [ theLog := EpMonitor current log ]
 ]
 
 { #category : #accessing }

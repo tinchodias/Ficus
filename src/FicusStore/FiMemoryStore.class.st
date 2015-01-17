@@ -17,6 +17,30 @@ FiMemoryStore class >> example [
 ]
 
 { #category : #example }
+FiMemoryStore class >> exampleFragileBaseProblem [
+	"
+	self exampleFragileBaseProblem inspect
+	"
+
+	| store initialCommit |
+	store := FiMemoryStore new.
+
+	initialCommit := store 
+		commitSnapshot: FiFragileBaseProblemResources new environmentWithAll 
+		priors: FiSet new.
+
+	store 
+		commitSnapshot: FiFragileBaseProblemResourcesA new environmentWithAll 
+		priors: { initialCommit } asFiSet.
+	
+	store 
+		commitSnapshot: FiFragileBaseProblemResourcesB new environmentWithAll 
+		priors: { initialCommit } asFiSet.
+
+	^ store
+]
+
+{ #category : #example }
 FiMemoryStore class >> exampleWithAll: items [
 
 	| store |
@@ -69,7 +93,7 @@ FiMemoryStore >> closestCommonHistoryNodeFor: aCollection [
 { #category : #accessing }
 FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 	
-	historyNodes add: 
+	^ historyNodes add: 
 		(FiSnapshotHistoryNode builder
 			origin: (FiSingleOrigin builder reference: ('Mem:', self hash asString, ':', historyNodes size asString); new);
 			snapshot: aSnapshot;

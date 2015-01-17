@@ -26,6 +26,22 @@ FiStoreBrowser class >> defaultSpec [
 ]
 
 { #category : #example }
+FiStoreBrowser class >> exampleFragileBaseProblem [
+	"
+	self exampleFragileBaseProblem.
+	"
+
+	^ self new
+		store: FiMemoryStore exampleFragileBaseProblem;
+		plugin: FiNullStoreBrowserPlugin new;
+		refresh;
+		openWithSpec;
+		yourself
+
+
+]
+
+{ #category : #example }
 FiStoreBrowser class >> exampleMemory [
 	"
 	self exampleMemory.

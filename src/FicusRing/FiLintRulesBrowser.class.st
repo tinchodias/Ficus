@@ -54,10 +54,12 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 		to: #rules;
 		andShow: [ :a | 
 			a list 
-				display: [ :rulez | 
-					((rulez flatCollect: [:each | each leaves ]) 
-						select: [:each | each problemCount > 0]) ];
-				sorted: [ :x :y | x name < y name ];
+				display: [ :rulez | rulez flatCollect: [:each | each leaves ] ];
+				sorted: [ :x :y | 
+					x problemCount compareWith: y problemCount
+						ifLesser: [ false ] 
+						ifEqual: [ x name < y name ] 
+						ifGreater: [ true ] ];
 				format: [ :rule | rule name, ' (', rule problemCount asString, ')' ];
 				tags: [ :rule | {rule group. rule category. rule severity} ] ].
 

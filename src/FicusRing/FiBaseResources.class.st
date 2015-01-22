@@ -60,6 +60,9 @@ FiBaseResources >> classCollection [
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: { 
 			FiMethod sourceCode: 'add: anObject  self subclassResponsibility'.
+			FiMethod sourceCode: 'addAll: aCollection 
+	aCollection do: [:each | self add: each].
+	^ aCollection'.
 			FiMethod sourceCode: 'do: aBlock  self subclassResponsibility'. 
 			FiMethod sourceCode: 'isEmpty  ^ self size = 0'. 
 			FiMethod sourceCode: 'size

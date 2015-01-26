@@ -43,7 +43,6 @@ FiEffectInspector class >> defaultSpecAsRow [
 FiEffectInspector class >> inspect: rootEffect [
 
 	^ (self newWith: rootEffect) 
-		plugin: FiNullStoreBrowserPlugin new;
 		open; 
 		yourself
 ]
@@ -52,6 +51,7 @@ FiEffectInspector class >> inspect: rootEffect [
 FiEffectInspector class >> newWith: aRootEffect [
 
 	^ self new
+		plugin: FiNullStoreBrowserPlugin new;
 		rootEffect: aRootEffect;
 		yourself
 ]

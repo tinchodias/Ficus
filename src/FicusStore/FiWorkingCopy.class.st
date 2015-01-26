@@ -1,0 +1,104 @@
+"
+I represent a working copy of a store. 
+
+I know a snapshot, which is a FiShot, and a store, which is a FiStore. I'm dirty when my snapshot is different from the store's head.
+"
+Class {
+	#name : #FiWorkingCopy,
+	#superclass : #Object,
+	#instVars : [
+		'name',
+		'snapshot',
+		'store'
+	],
+	#category : #'FicusStore-WorkingCopies'
+}
+
+{ #category : #'as yet unclassified' }
+FiWorkingCopy >> commit: aString [ 
+	
+	self flag: #todo. "what if it's a merge?"
+	
+	store 
+		commitSnapshot: snapshot 
+		priors: {store headHistoryNode}. 
+]
+
+{ #category : #printing }
+FiWorkingCopy >> description [
+	
+	^ String streamContents: [ :stream | self printDescriptionOn: stream ]
+]
+
+{ #category : #'as yet unclassified' }
+FiWorkingCopy >> difference [
+
+	^ snapshot differenceFrom: store headHistoryNode snapshot
+]
+
+{ #category : #testing }
+FiWorkingCopy >> isDirty [
+
+	^ snapshot ~= store headHistoryNode snapshot
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> name [
+	
+	^ name
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> name: anObject [
+	
+	name := anObject
+]
+
+{ #category : #printing }
+FiWorkingCopy >> printDescriptionOn: aStream [
+
+	aStream 
+		nextPutAll: name.
+	
+	self isDirty ifTrue: [
+		aStream nextPut: $* ].
+]
+
+{ #category : #printing }
+FiWorkingCopy >> printOn: aStream [
+
+	super printOn: aStream.
+	
+	aStream 
+		nextPut: $(.
+
+	self printDescriptionOn: aStream.
+		
+	aStream 
+		nextPut: $).
+
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> snapshot [
+	
+	^ snapshot
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> snapshot: anObject [
+	
+	snapshot := anObject
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> store [
+	
+	^ store
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> store: anObject [
+	
+	store := anObject
+]

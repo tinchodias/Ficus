@@ -3,7 +3,10 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'commentsTreeModel',
-		'plugin'
+		'plugin',
+		'addButtonModel',
+		'removeButtonModel',
+		'targetHistoryNode'
 	],
 	#category : #'FicusStore-Comments-UI'
 }
@@ -13,23 +16,27 @@ FiCommentBrowser class >> defaultSpec [
 	<spec>
 	
 	^ SpecLayout composed
-		add: #commentsTreeModel;
+		newColumn: [ :column |
+			column 
+				add: #commentsTreeModel;
+				newRow: [ :toolBar |
+					toolBar 
+						add: #addButtonModel;
+						add: #removeButtonModel ] 
+				height: self toolbarHeight ];
 		yourself
+]
+
+{ #category : #accessing }
+FiCommentBrowser >> addButtonModel [
+
+	^ addButtonModel
 ]
 
 { #category : #accessing }
 FiCommentBrowser >> commentsTreeModel [
 
 	^ commentsTreeModel
-]
-
-{ #category : #accessing }
-FiCommentBrowser >> historyNodes: aCollectionOfHistoryNodes [
-
-	| comments |
-	comments := aCollectionOfHistoryNodes flatCollect: [ :node | plugin commentsFor: node ].
-
-	commentsTreeModel roots: comments.
 ]
 
 { #category : #initialization }
@@ -40,16 +47,38 @@ FiCommentBrowser >> initializePresenter [
 	self title: 'Ficus Comments Browser'.
 
 	commentsTreeModel 
-		displayBlock: [ :aComment | self morphFor: aComment ]	";
-		menu: [ :aMenu | self setUpMenu: aMenu ]"
-
+		displayBlock: [ :aComment | self morphFor: aComment ].
+		
+	addButtonModel 
+		label: 'Add';
+		action: [ 
+			| editor |
+			editor := FiCommentEditor new 
+				targetHistoryNode: targetHistoryNode;
+				yourself.
+				
+			editor openDialogWithSpec 
+				okAction: [ 
+					plugin addComment: editor resultModel.
+					self refresh ];
+				modalRelativeTo: self window ].
+		
+	removeButtonModel 
+		label: 'Remove';
+		action: [ 
+			commentsTreeModel selectedItems do: [ :each | 
+				plugin removeComment: each content ].
+			self refresh ].
+	
 ]
 
 { #category : #initialization }
 FiCommentBrowser >> initializeWidgets [
 
 	self instantiateModels: #(
-		commentsTreeModel TreeModel).
+		commentsTreeModel 	TreeModel
+		addButtonModel		ButtonModel
+		removeButtonModel	ButtonModel).
 
 ]
 
@@ -78,18 +107,21 @@ FiCommentBrowser >> plugin: aPlugin [
 	plugin := aPlugin
 ]
 
-{ #category : #initialization }
-FiCommentBrowser >> setUpMenu: aMenu [
+{ #category : #refreshing }
+FiCommentBrowser >> refresh [
+	
+	commentsTreeModel roots: (plugin commentsFor: targetHistoryNode).
+]
 
-	aMenu addGroup: [ :aGroup |
-		
-		aGroup addItem: [ :anItem |
-			anItem 
-				name: 'New ';
-				description: 'Create a new comment';
-				icon: Smalltalk ui icons addIcon;
-				shortcut: $n command;
-				action: [ self halt ] ].
-		].
+{ #category : #accessing }
+FiCommentBrowser >> removeButtonModel [
 
+	^ removeButtonModel
+]
+
+{ #category : #accessing }
+FiCommentBrowser >> targetHistoryNode: aNode [
+
+	targetHistoryNode := aNode.
+	self refresh.
 ]

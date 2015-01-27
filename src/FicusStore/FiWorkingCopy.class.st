@@ -14,9 +14,10 @@ Class {
 	#category : #'FicusStore-WorkingCopies'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 FiWorkingCopy >> commit: aString [ 
-	
+
+	self flag: #todo. "message is ignored"
 	self flag: #todo. "what if it's a merge?"
 	
 	store 
@@ -30,7 +31,7 @@ FiWorkingCopy >> description [
 	^ String streamContents: [ :stream | self printDescriptionOn: stream ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 FiWorkingCopy >> difference [
 
 	^ snapshot differenceFrom: store headHistoryNode snapshot

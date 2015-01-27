@@ -41,17 +41,25 @@ FiWorkingCopyRegistryBrowser class >> example [
 	self example
 	"
 
-	| bundle aWorkingCopy |
+	| bundle aWorkingCopy anotherWorkingCopy |
 	aWorkingCopy := 
 		FiWorkingCopy new
 			name: 'FragileBaseClassProblem';
 			snapshot: FiFragileBaseProblemResourcesA new environmentWithAll;
 			store: FiMemoryStore exampleFragileBaseProblem;
 			yourself.
+
+	anotherWorkingCopy := 
+		FiWorkingCopy new
+			name: 'Numbers';
+			snapshot: FiSet new;
+			store: FiMemoryStore example;
+			yourself.
 		
 	bundle := 
 		FiWorkingCopyRegistry new 
 			addWorkingCopy: aWorkingCopy; 
+			addWorkingCopy: anotherWorkingCopy;
 			yourself.
 
 	^ self new

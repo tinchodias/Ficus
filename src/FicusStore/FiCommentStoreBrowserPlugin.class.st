@@ -39,14 +39,27 @@ FiCommentStoreBrowserPlugin class >> forStore: aFiStore [
 		yourself
 ]
 
+{ #category : #operations }
+FiCommentStoreBrowserPlugin >> addComment: aFiComment [ 
+
+	| newSnapshot |	
+	self flag: #todo. "Replace store by a working copy"
+
+	newSnapshot := store headHistoryNode snapshot resultOf: (FiInclude value: aFiComment).
+
+	store 
+		commitSnapshot: newSnapshot
+		priors: {store headHistoryNode}.
+]
+
 { #category : #private }
 FiCommentStoreBrowserPlugin >> browseComments: aHistoryNode [
 
 	(FiCommentBrowser new
 		plugin: self;
-		historyNodes: { aHistoryNode };
+		targetHistoryNode: aHistoryNode;
 		yourself)
-		openDialogWithSpec modalRelativeTo: World.
+		openDialogWithSpec modalRelativeTo: self currentWorld.
 ]
 
 { #category : #accessing }
@@ -84,6 +97,19 @@ FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNod
 
 		morphs add: button ]
 
+]
+
+{ #category : #operations }
+FiCommentStoreBrowserPlugin >> removeComment: aFiComment [ 
+
+	| newSnapshot |	
+	self flag: #todo. "Replace store by a working copy"
+
+	newSnapshot := store headHistoryNode snapshot resultOf: (FiExclude value: aFiComment).
+
+	store 
+		commitSnapshot: newSnapshot
+		priors: {store headHistoryNode}.
 ]
 
 { #category : #accessing }

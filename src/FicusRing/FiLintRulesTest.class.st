@@ -44,8 +44,8 @@ FiLintRulesTest >> testRunRule [
 
 	RBSmalllintChecker 
 		runRule: rule
-		onEnvironment: (FiRBBrowserEnvironment new environment: FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment).
+		onEnvironment: (FiRBBrowserEnvironment new environment: FiFragileBaseProblemResources new ficusRGEnvironment).
 		
 	self flag: #fix.
-	self assert: rule problemCount equals: 52.
+	self assert: rule problemCount equals: 54.
 ]

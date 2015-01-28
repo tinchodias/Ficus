@@ -8,7 +8,7 @@ Class {
 FiRGPackageTest >> testDefinedClasses [
 
 	self 
-		assert: (resources classA package definedClasses collect: #name) asSet
+		assert: (resources ringClassA package definedClasses collect: #name) asSet
 		equals: #(A B C) asSet.
 ]
 
@@ -16,6 +16,6 @@ FiRGPackageTest >> testDefinedClasses [
 FiRGPackageTest >> testName [
 
 	self 
-		assert: (resources environmentWithAll packages collect: #name) asSet 
+		assert: (resources ficusRGEnvironment packages collect: #name) asSet 
 		equals: #(Kernel X) asSet.
 ]

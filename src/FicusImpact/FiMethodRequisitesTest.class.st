@@ -20,14 +20,14 @@ FiMethodRequisitesTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRGObjectRingTestResources new
+	resources := FiRingTestResources new
 ]
 
 { #category : #tests }
 FiMethodRequisitesTest >> testClassAClassInitialize [
 
 	self 
-		assertRequisitesOf: resources classA classSide >> #initialize
+		assertRequisitesOf: resources ringClassA classSide >> #initialize
 		equals: {
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
@@ -42,7 +42,7 @@ FiMethodRequisitesTest >> testClassAClassInitialize [
 FiMethodRequisitesTest >> testClassASum [
 
 	self 
-		assertRequisitesOf: resources classA >> #sum
+		assertRequisitesOf: resources ringClassA >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
@@ -61,7 +61,7 @@ FiMethodRequisitesTest >> testClassASum [
 FiMethodRequisitesTest >> testClassASum42 [
 
 	self 
-		assertRequisitesOf: resources classA >> #sum42
+		assertRequisitesOf: resources ringClassA >> #sum42
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSelfMessageReceiver new;
@@ -78,7 +78,7 @@ FiMethodRequisitesTest >> testClassASum42 [
 FiMethodRequisitesTest >> testClassBDefaultClass [
 
 	self 
-		assertRequisitesOf: resources classB >> #defaultClass
+		assertRequisitesOf: resources ringClassB >> #defaultClass
 		equals: {
 			FiVariableAccess builder
 				variableName: #C;
@@ -90,7 +90,7 @@ FiMethodRequisitesTest >> testClassBDefaultClass [
 FiMethodRequisitesTest >> testClassBReadSomeClassVariable [
 
 	self 
-		assertRequisitesOf: resources classB >> #readSomeClassVariable
+		assertRequisitesOf: resources ringClassB >> #readSomeClassVariable
 		equals: {
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
@@ -102,7 +102,7 @@ FiMethodRequisitesTest >> testClassBReadSomeClassVariable [
 FiMethodRequisitesTest >> testClassBSum [
 
 	self 
-		assertRequisitesOf: resources classB >> #sum
+		assertRequisitesOf: resources ringClassB >> #sum
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSuperMessageReceiver new;
@@ -122,7 +122,7 @@ FiMethodRequisitesTest >> testClassBSum [
 FiMethodRequisitesTest >> testClassBVariableInSuper [
 
 	self 
-		assertRequisitesOf: resources classB >> #variableInSuper
+		assertRequisitesOf: resources ringClassB >> #variableInSuper
 		equals: {
 			FiVariableAccess builder
 				variableName: #a1;
@@ -134,7 +134,7 @@ FiMethodRequisitesTest >> testClassBVariableInSuper [
 FiMethodRequisitesTest >> testClassCSum [
 
 	self 
-		assertRequisitesOf: resources classC >> #sum
+		assertRequisitesOf: resources ringClassC >> #sum
 		equals: { }
 ]
 
@@ -142,7 +142,7 @@ FiMethodRequisitesTest >> testClassCSum [
 FiMethodRequisitesTest >> testClassCSumAt [
 
 	self 
-		assertRequisitesOf: resources classC >> #sumAt:
+		assertRequisitesOf: resources ringClassC >> #sumAt:
 		equals: {
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
@@ -156,7 +156,7 @@ FiMethodRequisitesTest >> testClassCSumAt [
 FiMethodRequisitesTest >> testClassCSumTmp [
 
 	self 
-		assertRequisitesOf: resources classC >> #sumTmp
+		assertRequisitesOf: resources ringClassC >> #sumTmp
 		equals: {
 			FiMessageSend builder 
 				receiver: FiSelfMessageReceiver new;
@@ -174,7 +174,7 @@ FiMethodRequisitesTest >> testClassCSumTmp [
 FiMethodRequisitesTest >> testClassCUndeclared [
 
 	self 
-		assertRequisitesOf: resources classC >> #undeclared
+		assertRequisitesOf: resources ringClassC >> #undeclared
 		equals: {
 			FiVariableAccess builder
 				variableName: #undeclaredVar;

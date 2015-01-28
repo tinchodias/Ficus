@@ -20,14 +20,14 @@ FiClassRequisitesTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRGObjectRingTestResources new
+	resources := FiRingTestResources new
 ]
 
 { #category : #tests }
 FiClassRequisitesTest >> testClassA [
 
 	self 
-		assertRequisitesOf: resources classA
+		assertRequisitesOf: resources ringClassA
 		equals: {
 			}
 ]
@@ -36,7 +36,7 @@ FiClassRequisitesTest >> testClassA [
 FiClassRequisitesTest >> testClassB [
 
 	self 
-		assertRequisitesOf: resources classB
+		assertRequisitesOf: resources ringClassB
 		equals: {
 			FiInheritanceDeclaration builder
 				theClassName: #A;

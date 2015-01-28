@@ -29,6 +29,7 @@ FiCommentStoreBrowserPlugin class >> example [
 
 	FiWorkingCopyRegistryBrowser openWith: 
 		(FiWorkingCopyRegistry new 
+			addWorkingCopy: store newWorkingCopy; 
 			addWorkingCopy: pluginWorkingCopy; 
 			yourself)
 ]

@@ -2,7 +2,8 @@ Class {
 	#name : #FiMemoryStore,
 	#superclass : #FiAbstractStore,
 	#instVars : [
-		'historyNodes'
+		'historyNodes',
+		'name'
 	],
 	#category : #'FicusStore-Stores'
 }
@@ -24,7 +25,8 @@ FiMemoryStore class >> exampleFragileBaseProblem [
 
 	| store initialCommit |
 	store := FiMemoryStore new.
-
+	store name: 'FragileBaseClassProblem'.
+	
 	initialCommit := store 
 		commitSnapshot: FiFragileBaseProblemResources new ficusEnvironment
 		priors: FiSet new.
@@ -95,7 +97,7 @@ FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 	
 	^ historyNodes add: 
 		(FiSnapshotHistoryNode builder
-			origin: (FiSingleOrigin builder reference: ('Mem:', self hash asString, ':', historyNodes size asString); new);
+			origin: (FiSingleOrigin builder reference: (self name, '.', historyNodes size asString); new);
 			snapshot: aSnapshot;
 			priors: priors;
 			new)
@@ -119,6 +121,18 @@ FiMemoryStore >> initialize [
 	super initialize.
 	
 	historyNodes := OrderedCollection new.
+]
+
+{ #category : #accessing }
+FiMemoryStore >> name [
+
+	^ name ifNil: [ name := self hash printStringHex ]
+]
+
+{ #category : #accessing }
+FiMemoryStore >> name: aString [
+
+	name := aString
 ]
 
 { #category : #printing }

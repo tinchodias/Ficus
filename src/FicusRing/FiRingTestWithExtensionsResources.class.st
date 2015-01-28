@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #resources }
+FiRingTestWithExtensionsResources >> environmentWithAll [
+
+	^ { self packageKernel. self packageX. self packageY. } asFiSet
+]
+
+{ #category : #resources }
 FiRingTestWithExtensionsResources >> extensionMethodsToX [
 
 	^ FiExtensionMethods builder
@@ -17,12 +23,6 @@ FiRingTestWithExtensionsResources >> extensionMethodsToX [
 			} asFiSet;
 		isMetaSide: false;
 		new
-]
-
-{ #category : #private }
-FiRingTestWithExtensionsResources >> newFicusEnvironment [
-
-	^ { self packageKernel. self packageX. self packageY. } asFiSet
 ]
 
 { #category : #resources }

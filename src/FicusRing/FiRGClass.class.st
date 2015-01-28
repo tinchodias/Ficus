@@ -309,6 +309,13 @@ FiRGClass >> isMeta [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> localMethods [
+
+	^ classShot methods 
+		collect: [ :aMethodShot | self ringMethodFor: aMethodShot ]
+]
+
+{ #category : #polymorphism }
 FiRGClass >> lookupSelector: selector [
 
 	| currentClass |
@@ -341,9 +348,7 @@ FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound:
 { #category : #polymorphism }
 FiRGClass >> methods [
 	
-	^ (environment extensionMethodsFor: self) union:
-		(classShot methods collect: [ :aMethodShot | 
-			self ringMethodFor: aMethodShot ])
+	^ (environment extensionMethodsFor: self) union: self localMethods
 ]
 
 { #category : #polymorphism }

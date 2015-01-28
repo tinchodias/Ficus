@@ -4,10 +4,6 @@ Resource with diverse Ficus metalevel objects. I answer basic elements like Obje
 Class {
 	#name : #FiBaseResources,
 	#superclass : #Object,
-	#instVars : [
-		'cachedFicusEnvironment',
-		'cachedFicusRGEnvironment'
-	],
 	#category : #'FicusRing-Examples'
 }
 
@@ -209,29 +205,15 @@ FiBaseResources >> classValueLink [
 ]
 
 { #category : #resources }
-FiBaseResources >> ficusEnvironment [
+FiBaseResources >> environmentWithAll [
 
-	^ cachedFicusEnvironment ifNil: [
-		cachedFicusEnvironment := self newFicusEnvironment ]
-]
-
-{ #category : #'resources - ring level' }
-FiBaseResources >> ficusRGEnvironment [
-
-	^ cachedFicusRGEnvironment ifNil: [
-		cachedFicusRGEnvironment := self ficusEnvironment asFiRGEnvironment ]
+	^ { self packageKernel. self packageCollections. } asFiSet
 ]
 
 { #category : #private }
 FiBaseResources >> methodsFor: sourceCodes [ 
 			
 	^ (sourceCodes collect: [ :each | FiMethod sourceCode: each ]) asFiSet
-]
-
-{ #category : #private }
-FiBaseResources >> newFicusEnvironment [
-
-	^ { self packageKernel. self packageCollections. } asFiSet
 ]
 
 { #category : #resources }

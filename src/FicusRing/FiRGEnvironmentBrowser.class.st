@@ -10,7 +10,7 @@ FiRGEnvironmentBrowser class >> example1 [
 	self example1
 	"
 	
-	^ self openOn: FiFragileBaseProblemResources new ficusRGEnvironment
+	^ self openOn: FiFragileBaseProblemResources new environmentWithAll asFiRGEnvironment
 ]
 
 { #category : #examples }
@@ -19,7 +19,7 @@ FiRGEnvironmentBrowser class >> example2 [
 	self example2
 	"
 	
-	^ self openOn: FiFragileBaseProblemResourcesA new ficusRGEnvironment
+	^ self openOn: FiFragileBaseProblemResourcesA new environmentWithAll asFiRGEnvironment
 ]
 
 { #category : #examples }
@@ -28,7 +28,7 @@ FiRGEnvironmentBrowser class >> example3 [
 	self example3
 	"
 	
-	^ self openOn: FiRingTestWithExtensionsResources new ficusRGEnvironment
+	^ self openOn: FiRingTestWithExtensionsResources new environmentWithAll asFiRGEnvironment
 ]
 
 { #category : #examples }

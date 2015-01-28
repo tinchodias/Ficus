@@ -83,6 +83,14 @@ FiRGMetaclass >> isMeta [
 	^ true
 ]
 
+{ #category : #polymorphism }
+FiRGMetaclass >> localMethods [
+
+	self flag: #fix.
+	^ theNonMetaClass classShot metaclass methods values collect: [ :aMethodShot |
+		self ringMethodFor: aMethodShot ]
+]
+
 { #category : #lookup }
 FiRGMetaclass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 	"Answer the entity that declares a variable. Note this imitates the behavior of #bindingOf:"
@@ -100,9 +108,8 @@ FiRGMetaclass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFo
 { #category : #polymorphism }
 FiRGMetaclass >> methods [
 
-	self flag: #fix.
-	^ theNonMetaClass classShot metaclass methods values collect: [ :aMethodShot |
-		self ringMethodFor: aMethodShot ]
+	self flag: #fix. "Add class-side extension methods"
+	^ self localMethods
 ]
 
 { #category : #polymorphism }

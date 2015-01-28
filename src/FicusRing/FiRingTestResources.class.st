@@ -64,8 +64,8 @@ FiRingTestResources >> classC [
 		new.
 ]
 
-{ #category : #private }
-FiRingTestResources >> newFicusEnvironment [
+{ #category : #resources }
+FiRingTestResources >> environmentWithAll [
 
 	^ { self packageKernel. self packageX. } asFiSet
 ]
@@ -77,22 +77,4 @@ FiRingTestResources >> packageX [
 		theName: #X;
 		contents: { self classA. self classB. self classC } asFiSet;
 		new
-]
-
-{ #category : #'resources - ring level' }
-FiRingTestResources >> ringClassA [
-
-	^ self ficusRGEnvironment classNamed: #A
-]
-
-{ #category : #'resources - ring level' }
-FiRingTestResources >> ringClassB [
-
-	^ self ficusRGEnvironment classNamed: #B
-]
-
-{ #category : #'resources - ring level' }
-FiRingTestResources >> ringClassC [
-
-	^ self ficusRGEnvironment classNamed: #C
 ]

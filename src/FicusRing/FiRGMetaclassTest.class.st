@@ -8,8 +8,8 @@ Class {
 FiRGMetaclassTest >> testBinding [
 
 	self 
-		assert: resources ringClassA classSide binding 
-		equals: nil -> resources ringClassA classSide
+		assert: resources classA classSide binding 
+		equals: nil -> resources classA classSide
 
 ]
 
@@ -17,7 +17,7 @@ FiRGMetaclassTest >> testBinding [
 FiRGMetaclassTest >> testDefinition [
 
 	self 
-		assert: resources ringClassA theMetaClass definition 
+		assert: resources classA theMetaClass definition 
 		equals: 'A class
 	instanceVariableNames: ''a3'''
 ]
@@ -26,7 +26,7 @@ FiRGMetaclassTest >> testDefinition [
 FiRGMetaclassTest >> testEnvironment [
 		
 	| environment |
-	environment := resources ficusRGEnvironment.
+	environment := resources environmentWithAll.
 	
 	self assert: (environment classNamed: #A) theMetaClass environment == environment
 ]
@@ -34,14 +34,14 @@ FiRGMetaclassTest >> testEnvironment [
 { #category : #tests }
 FiRGMetaclassTest >> testHasAbstractMethods [
 
-	self deny: resources ringClassA classSide hasAbstractMethods.
+	self deny: resources classA classSide hasAbstractMethods.
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testInstanceVariables [
 
 	self 
-		assert: resources ringClassA theMetaClass instanceVariables 
+		assert: resources classA theMetaClass instanceVariables 
 		equals: #(a3)
 
 ]
@@ -49,39 +49,39 @@ FiRGMetaclassTest >> testInstanceVariables [
 { #category : #tests }
 FiRGMetaclassTest >> testIsBehavior [
 		
-	self assert: resources ringClassA classSide isBehavior.
-	self assert: resources ringClassB classSide isBehavior.
+	self assert: resources classA classSide isBehavior.
+	self assert: resources classB classSide isBehavior.
 
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testMethodDict [
 
-	self assert: resources ringClassA theMetaClass methodDict isDictionary.
-	self deny: resources ringClassA theMetaClass methodDict isEmpty.
+	self assert: resources classA theMetaClass methodDict isDictionary.
+	self deny: resources classA theMetaClass methodDict isEmpty.
 
-	self assert: resources ringClassB theMetaClass methodDict isEmpty.
+	self assert: resources classB theMetaClass methodDict isEmpty.
 
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testMethods [
 
-	self deny: resources ringClassA theMetaClass methods isEmpty.
-	self assert: resources ringClassB theMetaClass methods isEmpty.
+	self deny: resources classA theMetaClass methods isEmpty.
+	self assert: resources classB theMetaClass methods isEmpty.
 
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testName [
 
-	self assert: resources ringClassA theMetaClass name equals: 'A class'
+	self assert: resources classA theMetaClass name equals: 'A class'
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testPackage [
 		
-	self assert: resources ringClassA classSide package name equals: #X.
+	self assert: resources classA classSide package name equals: #X.
 ]
 
 { #category : #tests }
@@ -90,12 +90,12 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 	| results |
 	results := OrderedCollection new.
 	
-	resources ringClassA theMetaClass selectorsAndMethodsDo: [ :selector :method |
+	resources classA theMetaClass selectorsAndMethodsDo: [ :selector :method |
 		results add: selector -> method ].
 
 	self 
 		assert: results asArray 
-		equals: { #initialize -> (resources ringClassA classSide >> #initialize) }.
+		equals: { #initialize -> (resources classA classSide >> #initialize) }.
 
 ]
 
@@ -103,7 +103,7 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 FiRGMetaclassTest >> testSoleInstance [
 
 	| classA |
-	classA := resources ringClassA.
+	classA := resources classA.
 	self assert: classA theMetaClass soleInstance == classA
 ]
 
@@ -111,23 +111,23 @@ FiRGMetaclassTest >> testSoleInstance [
 FiRGMetaclassTest >> testSubclasses [
 
 	self 
-		assert: resources ringClassA theMetaClass subclasses 
-		equals: { resources ringClassB theMetaClass }.
+		assert: resources classA theMetaClass subclasses 
+		equals: { resources classB theMetaClass }.
 
-	self assert: resources ringClassB theMetaClass subclasses isEmpty.
+	self assert: resources classB theMetaClass subclasses isEmpty.
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testSuperclass [
 
-	self assert: resources ringClassB theMetaClass superclass name equals: 'A class'.
+	self assert: resources classB theMetaClass superclass name equals: 'A class'.
 ]
 
 { #category : #tests }
 FiRGMetaclassTest >> testTheNonMetaClass [
 
 	| classA |
-	classA := resources ringClassA.
+	classA := resources classA.
 	self assert: classA theMetaClass theNonMetaClass == classA
 ]
 
@@ -135,6 +135,6 @@ FiRGMetaclassTest >> testTheNonMetaClass [
 FiRGMetaclassTest >> testWhichSelectorAccess [
 		
 	self 
-		assert: (resources ringClassA classSide whichSelectorsAccess: #a3) asSet 
+		assert: (resources classA classSide whichSelectorsAccess: #a3) asSet 
 		equals: { #initialize } asSet
 ]

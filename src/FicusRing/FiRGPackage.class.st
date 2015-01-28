@@ -20,7 +20,7 @@ FiRGPackage >> definedClasses [
 			collect: [ :classShot | environment ringClassFor: classShot ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiRGPackage >> definedMethods [
 	
 	^ (self definedClasses flatCollect: [ :each | 
@@ -34,7 +34,7 @@ FiRGPackage >> environment: aFiRGEnvironment [
 	environment := aFiRGEnvironment
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiRGPackage >> extensionMethods [
 
 	^ packageShot extensionMethods flatCollect: [ :ficusExtensionMethods |

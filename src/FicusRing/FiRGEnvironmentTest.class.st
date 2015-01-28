@@ -7,13 +7,13 @@ Class {
 { #category : #tests }
 FiRGEnvironmentTest >> testAllClasses [
 
-	self deny: resources environmentWithAll allClasses isEmpty
+	self deny: resources ficusRGEnvironment allClasses isEmpty
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testAllClassesAndTraits [
 
-	self deny: resources environmentWithAll allClassesAndTraits isEmpty
+	self deny: resources ficusRGEnvironment allClassesAndTraits isEmpty
 ]
 
 { #category : #tests }
@@ -22,7 +22,7 @@ FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
 	| items |
 	items := IdentitySet new.
 
-	resources environmentWithAll allClassesAndTraitsDo: [ :each | items add: each ].
+	resources ficusRGEnvironment allClassesAndTraitsDo: [ :each | items add: each ].
 
 	self deny: items isEmpty
 ]
@@ -33,7 +33,7 @@ FiRGEnvironmentTest >> testAllClassesDo [
 	| items |
 	items := IdentitySet new.
 
-	resources environmentWithAll allClassesDo: [ :each | items add: each ].
+	resources ficusRGEnvironment allClassesDo: [ :each | items add: each ].
 
 	self deny: items isEmpty
 ]
@@ -42,11 +42,11 @@ FiRGEnvironmentTest >> testAllClassesDo [
 FiRGEnvironmentTest >> testBindingOf [
 
 	self 
-		assert: (resources environmentWithAll bindingOf: #A) 
-		equals: (#A -> (resources environmentWithAll classNamed: #A)).
+		assert: (resources ficusRGEnvironment bindingOf: #A) 
+		equals: (#A -> (resources ficusRGEnvironment classNamed: #A)).
 
-	self assert: (resources environmentWithAll bindingOf: #UnexistentClass) isNil.
-	self deny: (resources environmentWithAll bindingOf: #Smalltalk) isNil.
+	self assert: (resources ficusRGEnvironment bindingOf: #UnexistentClass) isNil.
+	self deny: (resources ficusRGEnvironment bindingOf: #Smalltalk) isNil.
 
 
 ]
@@ -54,15 +54,15 @@ FiRGEnvironmentTest >> testBindingOf [
 { #category : #tests }
 FiRGEnvironmentTest >> testClassNamed [
 
-	self assert: (resources environmentWithAll classNamed: #A) name equals: #A 
+	self assert: (resources ficusRGEnvironment classNamed: #A) name equals: #A 
 ]
 
 { #category : #tests }
 FiRGEnvironmentTest >> testHasBindingThatBeginsWith [
 
-	self assert: (resources environmentWithAll hasBindingThatBeginsWith: #A).
-	self deny: (resources environmentWithAll hasBindingThatBeginsWith: #UnexistentClass).
-	self assert: (resources environmentWithAll hasBindingThatBeginsWith: #Smalltal).
+	self assert: (resources ficusRGEnvironment hasBindingThatBeginsWith: #A).
+	self deny: (resources ficusRGEnvironment hasBindingThatBeginsWith: #UnexistentClass).
+	self assert: (resources ficusRGEnvironment hasBindingThatBeginsWith: #Smalltal).
 ]
 
 { #category : #'tests-not polymorphic' }
@@ -70,13 +70,13 @@ FiRGEnvironmentTest >> testKnownGlobalNames [
 	"Define well-known globals by default."
 
 	self 
-		assert: resources environmentWithAll knownGlobalNames
+		assert: resources ficusRGEnvironment knownGlobalNames
 		equals: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
 { #category : #'as yet unclassified' }
 FiRGEnvironmentTest >> testPackages [
 
-	self assert: resources environmentWithAll packages size equals: 2.
+	self assert: resources ficusRGEnvironment packages size equals: 2.
 
 ]

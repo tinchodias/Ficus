@@ -26,8 +26,8 @@ FiFragileBaseProblemResources >> classLog [
 		new
 ]
 
-{ #category : #resources }
-FiFragileBaseProblemResources >> environmentWithAll [
+{ #category : #private }
+FiFragileBaseProblemResources >> newFicusEnvironment [
 
 	^ { self packageKernel. self packageCollections. self packageLog. } asFiSet
 ]

@@ -12,5 +12,5 @@ FiRGObjectTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRGObjectRingTestResources new
+	resources := FiRingTestResources new
 ]

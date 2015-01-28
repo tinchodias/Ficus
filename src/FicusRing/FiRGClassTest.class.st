@@ -7,16 +7,16 @@ Class {
 { #category : #tests }
 FiRGClassTest >> testAllInstVarNames [
 
-	self assert: resources classA allInstVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: resources classB allInstVarNames asSet equals: #('a1' 'a2' 'b1') asSet
+	self assert: resources ringClassA allInstVarNames asSet equals: #('a1' 'a2') asSet.
+	self assert: resources ringClassB allInstVarNames asSet equals: #('a1' 'a2' 'b1') asSet
 ]
 
 { #category : #tests }
 FiRGClassTest >> testAllSelectors [
 
 	self 
-		assert: resources classB allSelectors
-		equals: (resources classA selectors, resources classB selectors) asSet
+		assert: resources ringClassB allSelectors
+		equals: (resources ringClassA selectors, resources ringClassB selectors) asSet
 
 ]
 
@@ -24,18 +24,18 @@ FiRGClassTest >> testAllSelectors [
 FiRGClassTest >> testAllSlots [
 
 	self 
-		assert: (resources classA allSlots collect: #name) asSet 
+		assert: (resources ringClassA allSlots collect: #name) asSet 
 		equals: #(a1 a2) asSet.
 		
 	self 
-		assert: (resources classB allSlots collect: #name) asSet 
+		assert: (resources ringClassB allSlots collect: #name) asSet 
 		equals: #(a1 a2 b1) asSet.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testAllSubclasses [
 
-	self assert: resources classA allSubclasses asArray equals: { resources classB }.
+	self assert: resources ringClassA allSubclasses asArray equals: { resources ringClassB }.
 ]
 
 { #category : #tests }
@@ -43,15 +43,15 @@ FiRGClassTest >> testAllSubclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	resources classA allSubclassesDo: [ :aSubclass | result add: aSubclass ].
+	resources ringClassA allSubclassesDo: [ :aSubclass | result add: aSubclass ].
 	
-	self assert: result asArray equals: { resources classB }.
+	self assert: result asArray equals: { resources ringClassB }.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testAllSuperclasses [
 
-	self assert: resources classB allSuperclasses asArray equals: { resources classA }.
+	self assert: resources ringClassB allSuperclasses asArray equals: { resources ringClassA }.
 ]
 
 { #category : #tests }
@@ -59,17 +59,17 @@ FiRGClassTest >> testAllSuperclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	resources classB allSuperclassesDo: [ :aSuperclass | result add: aSuperclass ].
+	resources ringClassB allSuperclassesDo: [ :aSuperclass | result add: aSuperclass ].
 	
-	self assert: result asArray equals: { resources classA }.
+	self assert: result asArray equals: { resources ringClassA }.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testBinding [
 
 	self 
-		assert: resources classA binding 
-		equals: #A -> resources classA
+		assert: resources ringClassA binding 
+		equals: #A -> resources ringClassA
 
 ]
 
@@ -77,14 +77,14 @@ FiRGClassTest >> testBinding [
 FiRGClassTest >> testBindingOf [
 
 	"for an undeclared"
-	self assert: (resources classB bindingOf: #UnexistentClass) isNil.
+	self assert: (resources ringClassB bindingOf: #UnexistentClass) isNil.
 
 	"for a global"	
-	self deny: (resources classB bindingOf: #A) isNil.
-	self assert: (resources classB bindingOf: #A) equals: (resources environmentWithAll bindingOf: #A).
+	self deny: (resources ringClassB bindingOf: #A) isNil.
+	self assert: (resources ringClassB bindingOf: #A) equals: (resources ficusRGEnvironment bindingOf: #A).
 
 	"for a class variable"
-	self deny: (resources classA bindingOf: #SomeClassVariable) isNil.
+	self deny: (resources ringClassA bindingOf: #SomeClassVariable) isNil.
 "	self assert: (classB bindingOf: #BConstants) equals: (ringShotResource environmentWithClassesABC bindingOf: #A)."
 
 	self flag: #todo. "Functionality missing: SHAREDPOOLS"
@@ -95,35 +95,35 @@ FiRGClassTest >> testBindingOf [
 { #category : #tests }
 FiRGClassTest >> testCanUnderstand [
 
-	self assert: (resources classA canUnderstand: #sum42).
-	self assert: (resources classB canUnderstand: #sum42).
+	self assert: (resources ringClassA canUnderstand: #sum42).
+	self assert: (resources ringClassB canUnderstand: #sum42).
 
-	self deny: (resources classA canUnderstand: #defaultClass).
-	self assert: (resources classB canUnderstand: #defaultClass).
+	self deny: (resources ringClassA canUnderstand: #defaultClass).
+	self assert: (resources ringClassB canUnderstand: #defaultClass).
 
 ]
 
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testClassPool [
 
-	self assert: resources classA classPool isDictionary.
-	self assert: resources classA classPool keys asSet equals: #(SomeClassVariable) asSet.
+	self assert: resources ringClassA classPool isDictionary.
+	self assert: resources ringClassA classPool keys asSet equals: #(SomeClassVariable) asSet.
 
-	self assert: resources classB classPool isEmpty.
+	self assert: resources ringClassB classPool isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testClassVarNames [
 
-	self assert: resources classA classVarNames equals: #('SomeClassVariable').
-	self assert: resources classB classVarNames isEmpty
+	self assert: resources ringClassA classVarNames equals: #('SomeClassVariable').
+	self assert: resources ringClassB classVarNames isEmpty
 ]
 
 { #category : #tests }
 FiRGClassTest >> testCompiledMethodAt [
 		
-	self assert: (resources classA compiledMethodAt: #sum) isNotNil.
-	self assert: (resources classA >> #sum) isNotNil.
+	self assert: (resources ringClassA compiledMethodAt: #sum) isNotNil.
+	self assert: (resources ringClassA >> #sum) isNotNil.
 
 ]
 
@@ -133,7 +133,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 	| presentOrNil |
 	presentOrNil := nil.
 		
-	resources classA 
+	resources ringClassA 
 		compiledMethodAt: #sum
 		ifPresent: [ :method | presentOrNil := true ]
 		ifAbsent: [ presentOrNil := false ].
@@ -143,7 +143,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 	
 	presentOrNil := nil.
 		
-	resources classA 
+	resources ringClassA 
 		compiledMethodAt: #unexistentMethod
 		ifPresent: [ :method | presentOrNil := true ]
 		ifAbsent: [ presentOrNil := false ].
@@ -155,7 +155,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 FiRGClassTest >> testDefinition [
 
 	self 
-		assert: resources classA definition 
+		assert: resources ringClassA definition 
 		equals: 'ProtoObject subclass: #A
 	instanceVariableNames: ''a1 a2''
 	classVariableNames: ''SomeClassVariable''
@@ -168,7 +168,7 @@ A superclass: nil'
 FiRGClassTest >> testEnvironment [
 		
 	| environment |
-	environment := resources environmentWithAll.
+	environment := resources ficusRGEnvironment.
 	
 	self assert: (environment classNamed: #A) environment == environment
 ]
@@ -176,63 +176,63 @@ FiRGClassTest >> testEnvironment [
 { #category : #tests }
 FiRGClassTest >> testHasAbstractMethods [
 
-	self deny: (resources environmentWithAll classNamed: #True) hasAbstractMethods.
-	self assert: (resources environmentWithAll classNamed: #Boolean) hasAbstractMethods.
+	self deny: (resources ficusRGEnvironment classNamed: #True) hasAbstractMethods.
+	self assert: (resources ficusRGEnvironment classNamed: #Boolean) hasAbstractMethods.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testIncludesSelector [
 		
-	self assert: (resources classA includesSelector: #sum).
-	self deny: (resources classA includesSelector: #unexistentMethod).
+	self assert: (resources ringClassA includesSelector: #sum).
+	self deny: (resources ringClassA includesSelector: #unexistentMethod).
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testInstSize [
 		
-	self assert: resources classA instSize equals: 2.
-	self assert: resources classB instSize equals: 3.
+	self assert: resources ringClassA instSize equals: 2.
+	self assert: resources ringClassB instSize equals: 3.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testInstVarNames [
 		
-	self assert: resources classA instVarNames asSet equals: #('a1' 'a2') asSet.
-	self assert: resources classB instVarNames asSet equals: #('b1') asSet.
+	self assert: resources ringClassA instVarNames asSet equals: #('a1' 'a2') asSet.
+	self assert: resources ringClassB instVarNames asSet equals: #('b1') asSet.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testInstanceVariables [
 		
-	self assert: resources classA instanceVariables asSet equals: #('a1' 'a2') asSet.
-	self assert: resources classB instanceVariables asSet equals: #('b1') asSet.
+	self assert: resources ringClassA instanceVariables asSet equals: #('a1' 'a2') asSet.
+	self assert: resources ringClassB instanceVariables asSet equals: #('b1') asSet.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testIsBehavior [
 		
-	self assert: resources classA isBehavior.
-	self assert: resources classB isBehavior.
+	self assert: resources ringClassA isBehavior.
+	self assert: resources ringClassB isBehavior.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testIsObsolete [
 
-	self deny: resources classA isObsolete.
+	self deny: resources ringClassA isObsolete.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testLookupSelector [
 		
-	self deny: (resources classA lookupSelector: #sum) isNil.
-	self assert: (resources classA lookupSelector: #unexistentMethod) isNil.
+	self deny: (resources ringClassA lookupSelector: #sum) isNil.
+	self assert: (resources ringClassA lookupSelector: #unexistentMethod) isNil.
 
 ]
 
@@ -240,8 +240,8 @@ FiRGClassTest >> testLookupSelector [
 FiRGClassTest >> testMethodDict [
 
 	| methodsWithoutExtensions methodsWithExtensions |
-	methodsWithoutExtensions := resources classA methodDict.
-	methodsWithExtensions := (FiRingTestWithExtensionsResources new environmentWithAll asFiRGEnvironment classNamed: #A) methodDict.
+	methodsWithoutExtensions := resources ringClassA methodDict.
+	methodsWithExtensions := (FiRingTestWithExtensionsResources new ficusRGEnvironment classNamed: #A) methodDict.
 
 	self assert: methodsWithoutExtensions keys asSet equals: #(#sum #sum42) asSet.
 	self assert: methodsWithExtensions keys asSet equals: #(#sum #sum42 #sum43) asSet.
@@ -252,8 +252,8 @@ FiRGClassTest >> testMethodDict [
 FiRGClassTest >> testMethods [
 
 	| methodsWithoutExtensions methodsWithExtensions |
-	methodsWithoutExtensions := resources classA methods.
-	methodsWithExtensions := (FiRingTestWithExtensionsResources new environmentWithAll asFiRGEnvironment classNamed: #A) methods.
+	methodsWithoutExtensions := resources ringClassA methods.
+	methodsWithExtensions := (FiRingTestWithExtensionsResources new ficusRGEnvironment classNamed: #A) methods.
 
 	self assert: (methodsWithoutExtensions collect: #selector) asSet equals: #(#sum #sum42) asSet.
 	self assert: (methodsWithExtensions collect: #selector) asSet equals: #(#sum #sum42 #sum43) asSet.
@@ -263,28 +263,28 @@ FiRGClassTest >> testMethods [
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testName [
 
-	self assert: resources classA name equals: 'A'
+	self assert: resources ringClassA name equals: 'A'
 ]
 
 { #category : #tests }
 FiRGClassTest >> testPackage [
 		
-	self assert: resources classA package name equals: #X.
+	self assert: resources ringClassA package name equals: #X.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testParseTreeFor [
 		
-	self deny: (resources classA parseTreeFor: #sum) isNil.
-	self assert: (resources classA parseTreeFor: #unexistentMethod) isNil.
+	self deny: (resources ringClassA parseTreeFor: #sum) isNil.
+	self assert: (resources ringClassA parseTreeFor: #unexistentMethod) isNil.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSelectors [
 
-	self deny: resources classA selectors isEmpty.
-	self assert: (resources classA selectors allSatisfy: #isSymbol).
+	self deny: resources ringClassA selectors isEmpty.
+	self assert: (resources ringClassA selectors allSatisfy: #isSymbol).
 
 ]
 
@@ -294,7 +294,7 @@ FiRGClassTest >> testSelectorsAndMethodsDo [
 	| results |
 	results := OrderedCollection new.
 	
-	resources classA selectorsAndMethodsDo: [ :selector :method |
+	resources ringClassA selectorsAndMethodsDo: [ :selector :method |
 		results add: selector -> method ].
 
 	self assert: results isNotEmpty.
@@ -306,31 +306,31 @@ FiRGClassTest >> testSelectorsAndMethodsDo [
 FiRGClassTest >> testSharedPoolNames [
 
 	self flag: #todo. "Test not empty case"
-	self assert: resources classA sharedPoolNames isEmpty.
+	self assert: resources ringClassA sharedPoolNames isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSharedPools [
 
 	self flag: #todo. "Test not empty case"
-	self assert: resources classA sharedPools isEmpty.
+	self assert: resources ringClassA sharedPools isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSourceCodeAtIfAbsent [
 		
-	self assert: (resources classA sourceCodeAt: #unexistentMethod ifAbsent: [ '' ]) equals: ''.
+	self assert: (resources ringClassA sourceCodeAt: #unexistentMethod ifAbsent: [ '' ]) equals: ''.
 	self 
-		assert: (resources classA sourceCodeAt: #sum ifAbsent: [ '' ]) 
-		equals: (resources classA >> #sum) sourceCode.
+		assert: (resources ringClassA sourceCodeAt: #sum ifAbsent: [ '' ]) 
+		equals: (resources ringClassA >> #sum) sourceCode.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSubclasses [
 
-	self assert: resources classA subclasses equals: { resources classB }.
-	self assert: resources classB subclasses isEmpty.
+	self assert: resources ringClassA subclasses equals: { resources ringClassB }.
+	self assert: resources ringClassB subclasses isEmpty.
 ]
 
 { #category : #tests }
@@ -338,22 +338,22 @@ FiRGClassTest >> testSubclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	resources classA subclassesDo: [ :aSubclass | result add: aSubclass ].
+	resources ringClassA subclassesDo: [ :aSubclass | result add: aSubclass ].
 	
-	self assert: result asArray equals: { resources classB }.
+	self assert: result asArray equals: { resources ringClassB }.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSuperclass [
 
-	self assert: resources classA superclass isNil.
-	self assert: resources classB superclass name equals: #A.
+	self assert: resources ringClassA superclass isNil.
+	self assert: resources ringClassB superclass name equals: #A.
 ]
 
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testTheMetaClass [
 
-	self assert: resources classA theMetaClass isMeta.
+	self assert: resources ringClassA theMetaClass isMeta.
 
 ]
 
@@ -361,7 +361,7 @@ FiRGClassTest >> testTheMetaClass [
 FiRGClassTest >> testTheNonMetaClass [
 		
 	| aClass |
-	aClass := resources classA.
+	aClass := resources ringClassA.
 
 	self assert: aClass theNonMetaClass == aClass.
 
@@ -370,32 +370,32 @@ FiRGClassTest >> testTheNonMetaClass [
 { #category : #tests }
 FiRGClassTest >> testWhichCategoryIncludesSelector [
 		
-	self assert: (resources classA whichCategoryIncludesSelector: #sum) equals: #'as yet unclassified'.
+	self assert: (resources ringClassA whichCategoryIncludesSelector: #sum) equals: #'as yet unclassified'.
 
 ]
 
 { #category : #tests }
 FiRGClassTest >> testWhichClassIncludesSelector [
 
-	self deny: (resources classA whichClassIncludesSelector: #sum) isNil.
-	self assert: (resources classA whichClassIncludesSelector: #unexistentMethod) isNil.
+	self deny: (resources ringClassA whichClassIncludesSelector: #sum) isNil.
+	self assert: (resources ringClassA whichClassIncludesSelector: #unexistentMethod) isNil.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testWhichSelectorAccess [
 		
-	self assert: (resources classA whichSelectorsAccess: #a1) asSet equals: { #sum } asSet
+	self assert: (resources ringClassA whichSelectorsAccess: #a1) asSet equals: { #sum } asSet
 ]
 
 { #category : #tests }
 FiRGClassTest >> testWhichSelectorsRead [
 
 	self 
-		assert: (resources classB whichSelectorsRead: #b1) asSet 
+		assert: (resources ringClassB whichSelectorsRead: #b1) asSet 
 		equals: #(sum) asSet.
 		
 	self 
-		assert: (resources classB whichSelectorsRead: #a1) asSet 
+		assert: (resources ringClassB whichSelectorsRead: #a1) asSet 
 		equals: #(variableInSuper) asSet.
 
 ]
@@ -403,18 +403,18 @@ FiRGClassTest >> testWhichSelectorsRead [
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testWhichSelectorsReferTo [
 
-	self assert: (resources classC whichSelectorsReferTo: #+) asArray equals: #(sumTmp)
+	self assert: (resources ringClassC whichSelectorsReferTo: #+) asArray equals: #(sumTmp)
 ]
 
 { #category : #tests }
 FiRGClassTest >> testWhichSelectorsStoreInto [
 
 	self 
-		assert: (resources classB whichSelectorsStoreInto: #b1) asSet 
+		assert: (resources ringClassB whichSelectorsStoreInto: #b1) asSet 
 		equals: #(initialize resetAll) asSet.
 		
 	self 
-		assert: (resources classB whichSelectorsStoreInto: #a1) asSet 
+		assert: (resources ringClassB whichSelectorsStoreInto: #a1) asSet 
 		equals: #(resetAll) asSet.
 
 ]
@@ -422,7 +422,7 @@ FiRGClassTest >> testWhichSelectorsStoreInto [
 { #category : #tests }
 FiRGClassTest >> testWithAllSubclasses [
 
-	self assert: resources classA withAllSubclasses asArray equals: { resources classB. resources classA }.
+	self assert: resources ringClassA withAllSubclasses asArray equals: { resources ringClassB. resources ringClassA }.
 ]
 
 { #category : #tests }
@@ -430,15 +430,15 @@ FiRGClassTest >> testWithAllSuperAndSubclassesDo [
 
 	| result |
 	result := OrderedCollection new.
-	resources classA withAllSuperAndSubclassesDo: [ :aSubclass | result add: aSubclass ].
+	resources ringClassA withAllSuperAndSubclassesDo: [ :aSubclass | result add: aSubclass ].
 	
-	self assert: result asArray equals: { resources classA. resources classB }.
+	self assert: result asArray equals: { resources ringClassA. resources ringClassB }.
 ]
 
 { #category : #'tests-polymorphism' }
 FiRGClassTest >> testWithAllSuperclasses [
 
 	self 
-		assert: resources classB withAllSuperclasses asArray 
-		equals: { resources classB. resources classA }.
+		assert: resources ringClassB withAllSuperclasses asArray 
+		equals: { resources ringClassB. resources ringClassA }.
 ]

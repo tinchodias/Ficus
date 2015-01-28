@@ -193,8 +193,19 @@ FiWorkingCopyRegistryBrowser >> model: aModel [
 { #category : #refreshing }
 FiWorkingCopyRegistryBrowser >> refresh [
 	
+	"unsubscribe before refreshing model"
+	model workingCopies do: [ :workingCopy |
+		workingCopy announcer unsubscribe: self ].
+	
 	model refresh.
-	workingCopiesModel roots: model workingCopies
+	workingCopiesModel roots: model workingCopies.
+	
+	"subscribe after refreshing model"
+	model workingCopies do: [ :workingCopy |
+		workingCopy announcer weak
+			when: FiWorkingCopyRefreshed 
+			send: #refresh
+			to: self ]
 ]
 
 { #category : #accessing }

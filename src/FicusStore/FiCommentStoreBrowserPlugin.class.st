@@ -36,8 +36,8 @@ FiCommentStoreBrowserPlugin class >> example [
 { #category : #'instance creation' }
 FiCommentStoreBrowserPlugin class >> forWorkingCopy: aWorkingCopy [ 
 	
-	^ self new
-		workingCopy: aWorkingCopy;
+	^ self basicNew
+		initializeWithWorkingCopy: aWorkingCopy;
 		yourself
 ]
 
@@ -57,7 +57,7 @@ FiCommentStoreBrowserPlugin >> browseComments: aHistoryNode [
 		plugin: self;
 		targetHistoryNode: aHistoryNode;
 		yourself)
-		openDialogWithSpec modalRelativeTo: self currentWorld.
+		openWithSpec
 ]
 
 { #category : #accessing }
@@ -70,6 +70,19 @@ FiCommentStoreBrowserPlugin >> comments [
 FiCommentStoreBrowserPlugin >> commentsFor: aHistoryNode [ 
 
 	^ self comments asArray select: [ :each | each appliesTo: aHistoryNode origin ]
+]
+
+{ #category : #initialization }
+FiCommentStoreBrowserPlugin >> initializeWithWorkingCopy: aWorkingCopy [
+
+	self initialize.
+	
+	workingCopy := aWorkingCopy.
+	
+	workingCopy announcer weak
+		when: FiWorkingCopyRefreshed
+		send: #announceRefreshed
+		to: self.
 ]
 
 { #category : #accessing }
@@ -104,10 +117,4 @@ FiCommentStoreBrowserPlugin >> removeComment: aFiComment [
 	newSnapshot := workingCopy snapshot resultOf: (FiExclude value: aFiComment).
 
 	workingCopy snapshot: newSnapshot
-]
-
-{ #category : #accessing }
-FiCommentStoreBrowserPlugin >> workingCopy: anObject [
-
-	workingCopy := anObject
 ]

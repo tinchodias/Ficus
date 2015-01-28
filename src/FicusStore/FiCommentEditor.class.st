@@ -1,5 +1,5 @@
 "
-I am an editor for instances of FiComment.
+I am an editor for an instance of FiComment.
 
 
 self new openWithSpec.
@@ -61,9 +61,8 @@ FiCommentEditor >> resultModel [
 	
 	^ FiComment builder 
 		target: targetHistoryNode origin;
-		path: #(contents) asFiPath; 
 		score: scoreDropListModel selectedItem;
-		contents: contentsTextModel text;
+		message: contentsTextModel text;
 		new
 ]
 

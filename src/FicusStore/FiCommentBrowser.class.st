@@ -1,3 +1,6 @@
+"
+I am a browser for instances of FiComment.
+"
 Class {
 	#name : #FiCommentBrowser,
 	#superclass : #ComposableModel,
@@ -90,7 +93,7 @@ FiCommentBrowser >> morphFor: aComment [
 "			addAttribute: (TextColor color: Color gray);"
 			yourself), 
 			String cr, 
-			aComment contents) asText asMorph 
+			aComment message) asText asMorph 
 				lock: true; 
 				yourself
 ]

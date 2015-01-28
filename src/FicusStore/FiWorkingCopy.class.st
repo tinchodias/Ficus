@@ -9,10 +9,23 @@ Class {
 	#instVars : [
 		'name',
 		'snapshot',
-		'store'
+		'store',
+		'announcer'
 	],
 	#category : #'FicusStore-WorkingCopies'
 }
+
+{ #category : #accessing }
+FiWorkingCopy >> announceRefreshed [
+
+	self announcer announce: (FiWorkingCopyRefreshed target: self)
+]
+
+{ #category : #refreshing }
+FiWorkingCopy >> announcer [
+
+	^ announcer ifNil: [ announcer := Announcer new ]
+]
 
 { #category : #operations }
 FiWorkingCopy >> commit: aString [ 
@@ -23,6 +36,8 @@ FiWorkingCopy >> commit: aString [
 	store 
 		commitSnapshot: snapshot 
 		priors: {store headHistoryNode}. 
+		
+	self announceRefreshed.
 ]
 
 { #category : #printing }
@@ -89,7 +104,9 @@ FiWorkingCopy >> snapshot [
 { #category : #accessing }
 FiWorkingCopy >> snapshot: anObject [
 	
-	snapshot := anObject
+	snapshot := anObject.
+	
+	self announceRefreshed.
 ]
 
 { #category : #accessing }

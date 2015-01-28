@@ -3,9 +3,8 @@ Class {
 	#superclass : #FiFixedObject,
 	#instVars : [
 		'target',
-		'contents',
-		'path',
-		'score'
+		'score',
+		'message'
 	],
 	#category : #'FicusStore-Comments-Model'
 }
@@ -17,15 +16,13 @@ FiComment class >> exampleStoreFor: store [
 	comments := { 
 		FiComment builder 
 			target: store historyNodes first origin;
-			path: #(contents) asFiPath; 
 			score: FiCommentAgree new;
-			contents: 'Good start!';
+			message: 'Good start!';
 			new.
 		FiComment builder 
 			target: store historyNodes first origin;
-			path: #(contents) asFiPath; 
 			score: FiCommentDisagree new;
-			contents: 'Should be splitted';
+			message: 'Should be splitted';
 			new.
 		FiComment builder 
 			target: store historyNodes third origin;
@@ -33,9 +30,8 @@ FiComment class >> exampleStoreFor: store [
 					store historyNodes third origin.
 					store historyNodes fourth origin.
 					 });
-"			path: #(contents) asFiPath; 
-			score: FiCommentAgree new;
-			contents: 'Rock&roll :)';
+"			score: FiCommentAgree new;
+			message: 'Rock&roll :)';
 			new.
 	 }.
 
@@ -57,21 +53,15 @@ FiComment >> appliesTo: anOrigin [
 ]
 
 { #category : #accessing }
-FiComment >> contents [
-	
-	^ contents
-]
-
-{ #category : #accessing }
 FiComment >> defaultStep [
 
 	^ ('comment:', target shortDescription, ':', self hash asString) asSymbol
 ]
 
 { #category : #accessing }
-FiComment >> path [
+FiComment >> message [
 	
-	^ path
+	^ message
 ]
 
 { #category : #printing }

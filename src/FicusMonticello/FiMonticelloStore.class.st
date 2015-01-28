@@ -190,5 +190,5 @@ FiMonticelloStore >> refresh [
 				historyNodes 
 					detect: [ :node | node origin reference = headVersionInfo ]
 					ifNone: [ self notYetImplemented ] ]
-			ifNone: [ self notYetImplemented ]).
+			ifNone: [ nil ]).
 ]

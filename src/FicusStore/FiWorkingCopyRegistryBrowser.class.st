@@ -13,7 +13,8 @@ Class {
 		'inspectModel',
 		'differenceModel',
 		'historyModel',
-		'browseModel'
+		'browseModel',
+		'refreshModel'
 	],
 	#category : #'FicusStore-WorkingCopies'
 }
@@ -28,6 +29,7 @@ FiWorkingCopyRegistryBrowser class >> defaultSpec [
 				add: #workingCopiesModel;
 				newRow: [ :toolBar |
 					toolBar 
+						add: #refreshModel;
 						add: #historyModel;
 						add: #commitModel;
 						add: #browseModel;
@@ -43,7 +45,7 @@ FiWorkingCopyRegistryBrowser class >> example [
 	self example
 	"
 
-	| bundle aWorkingCopy anotherWorkingCopy |
+	| registry aWorkingCopy anotherWorkingCopy |
 	aWorkingCopy := 
 		FiWorkingCopy new
 			name: 'FragileBaseClassProblem';
@@ -58,14 +60,20 @@ FiWorkingCopyRegistryBrowser class >> example [
 			store: FiMemoryStore example;
 			yourself.
 		
-	bundle := 
+	registry := 
 		FiWorkingCopyRegistry new 
 			addWorkingCopy: aWorkingCopy; 
 			addWorkingCopy: anotherWorkingCopy;
 			yourself.
 
+	^ self openWith: registry
+]
+
+{ #category : #example }
+FiWorkingCopyRegistryBrowser class >> openWith: registry [ 
+
 	^ self new
-		model: bundle;
+		model: registry;
 		refresh;
 		openWithSpec;
 		yourself
@@ -113,6 +121,10 @@ FiWorkingCopyRegistryBrowser >> initializePresenter [
 		displayBlock: [ :item |
 			item description ].
 
+	refreshModel
+		label: 'Refresh';
+		action: [ self refresh ].
+
 	historyModel
 		label: 'Open';
 		action: [ 
@@ -156,6 +168,7 @@ FiWorkingCopyRegistryBrowser >> initializeWidgets [
 
 	self instantiateModels: {
 		#workingCopiesModel -> #TreeModel.
+		#refreshModel -> #ButtonModel.
 		#historyModel -> #ButtonModel.
 		#browseModel -> #ButtonModel.
 		#commitModel -> #ButtonModel.
@@ -182,6 +195,12 @@ FiWorkingCopyRegistryBrowser >> refresh [
 	
 	model refresh.
 	workingCopiesModel roots: model workingCopies
+]
+
+{ #category : #accessing }
+FiWorkingCopyRegistryBrowser >> refreshModel [
+
+	^ refreshModel
 ]
 
 { #category : #accessing }

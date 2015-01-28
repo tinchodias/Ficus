@@ -2,7 +2,7 @@ Class {
 	#name : #FiCommentStoreBrowserPlugin,
 	#superclass : #FiStoreBrowserPlugin,
 	#instVars : [
-		'store'
+		'workingCopy'
 	],
 	#category : #'FicusStore-Comments-Plugin'
 }
@@ -14,28 +14,30 @@ FiCommentStoreBrowserPlugin class >> example [
 	self example.
 	"
 
-	| store pluginStore |
-	store := FiMonticelloStore forPackageNamed: #ErgoPlayground.
-	pluginStore := FiComment exampleStoreFor: store.
+	| store pluginWorkingCopy |
+	store := FiMemoryStore exampleFragileBaseProblem.
+	pluginWorkingCopy := 
+		(FiComment exampleStoreFor: store) newWorkingCopy
+			name: 'Comments to ', store name;
+			yourself.
 
 	FiStoreBrowser new
 		store: store;
-		plugin: (FiCommentStoreBrowserPlugin forStore: pluginStore);
+		plugin: (FiCommentStoreBrowserPlugin forWorkingCopy: pluginWorkingCopy);
 		refresh;
 		openWithSpec.
-		
-	FiStoreBrowser new
-		store: pluginStore;
-		plugin: FiNullStoreBrowserPlugin new;
-		refresh;
-		openWithSpec.
+
+	FiWorkingCopyRegistryBrowser openWith: 
+		(FiWorkingCopyRegistry new 
+			addWorkingCopy: pluginWorkingCopy; 
+			yourself)
 ]
 
 { #category : #'instance creation' }
-FiCommentStoreBrowserPlugin class >> forStore: aFiStore [ 
+FiCommentStoreBrowserPlugin class >> forWorkingCopy: aWorkingCopy [ 
 	
 	^ self new
-		store: aFiStore;
+		workingCopy: aWorkingCopy;
 		yourself
 ]
 
@@ -43,13 +45,9 @@ FiCommentStoreBrowserPlugin class >> forStore: aFiStore [
 FiCommentStoreBrowserPlugin >> addComment: aFiComment [ 
 
 	| newSnapshot |	
-	self flag: #todo. "Replace store by a working copy"
+	newSnapshot := workingCopy snapshot resultOf: (FiInclude value: aFiComment).
 
-	newSnapshot := store headHistoryNode snapshot resultOf: (FiInclude value: aFiComment).
-
-	store 
-		commitSnapshot: newSnapshot
-		priors: {store headHistoryNode}.
+	workingCopy snapshot: newSnapshot.
 ]
 
 { #category : #private }
@@ -65,7 +63,7 @@ FiCommentStoreBrowserPlugin >> browseComments: aHistoryNode [
 { #category : #accessing }
 FiCommentStoreBrowserPlugin >> comments [
 	
-	^ store headHistoryNode snapshot
+	^ workingCopy snapshot
 ]
 
 { #category : #private }
@@ -103,17 +101,13 @@ FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNod
 FiCommentStoreBrowserPlugin >> removeComment: aFiComment [ 
 
 	| newSnapshot |	
-	self flag: #todo. "Replace store by a working copy"
+	newSnapshot := workingCopy snapshot resultOf: (FiExclude value: aFiComment).
 
-	newSnapshot := store headHistoryNode snapshot resultOf: (FiExclude value: aFiComment).
-
-	store 
-		commitSnapshot: newSnapshot
-		priors: {store headHistoryNode}.
+	workingCopy snapshot: newSnapshot
 ]
 
 { #category : #accessing }
-FiCommentStoreBrowserPlugin >> store: aFiStore [ 
+FiCommentStoreBrowserPlugin >> workingCopy: anObject [
 
-	store := aFiStore
+	workingCopy := anObject
 ]

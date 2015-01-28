@@ -25,6 +25,17 @@ FiAbstractStore >> historyNodes [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #'working copies' }
+FiAbstractStore >> newWorkingCopy [
+
+	^ FiWorkingCopy new
+		name: self name;
+		snapshot: self headHistoryNode snapshot;
+		store: self;
+		yourself.
+
+]
+
 { #category : #refreshing }
 FiAbstractStore >> refresh [
 	"Refresh the history nodes and the head."

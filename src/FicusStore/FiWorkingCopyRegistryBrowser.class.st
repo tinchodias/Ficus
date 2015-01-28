@@ -12,7 +12,8 @@ Class {
 		'model',
 		'inspectModel',
 		'differenceModel',
-		'historyModel'
+		'historyModel',
+		'browseModel'
 	],
 	#category : #'FicusStore-WorkingCopies'
 }
@@ -29,6 +30,7 @@ FiWorkingCopyRegistryBrowser class >> defaultSpec [
 					toolBar 
 						add: #historyModel;
 						add: #commitModel;
+						add: #browseModel;
 						add: #differenceModel;
 						add: #inspectModel ]
 				height: self toolbarHeight ];
@@ -69,6 +71,12 @@ FiWorkingCopyRegistryBrowser class >> example [
 		yourself
 
 
+]
+
+{ #category : #accessing }
+FiWorkingCopyRegistryBrowser >> browseModel [
+
+	^ browseModel
 ]
 
 { #category : #accessing }
@@ -128,6 +136,12 @@ FiWorkingCopyRegistryBrowser >> initializePresenter [
 		action: [ 
 			workingCopiesModel selectedItems do: [ :each |
 				FiEffectInspector inspect: each content difference ] ].
+
+	browseModel
+		label: 'Browse';
+		action: [ 
+			workingCopiesModel selectedItems do: [ :each |
+				FiInspector inspect: each content snapshot ] ].
 	
 	inspectModel
 		label: 'Inspect';
@@ -143,6 +157,7 @@ FiWorkingCopyRegistryBrowser >> initializeWidgets [
 	self instantiateModels: {
 		#workingCopiesModel -> #TreeModel.
 		#historyModel -> #ButtonModel.
+		#browseModel -> #ButtonModel.
 		#commitModel -> #ButtonModel.
 		#differenceModel -> #ButtonModel.
 		#inspectModel -> #ButtonModel.

@@ -45,7 +45,7 @@ FiWorkingCopyRegistryBrowser class >> example [
 	aWorkingCopy := 
 		FiWorkingCopy new
 			name: 'FragileBaseClassProblem';
-			snapshot: FiFragileBaseProblemResourcesA new environmentWithAll;
+			snapshot: FiFragileBaseProblemResourcesA new ficusEnvironment;
 			store: FiMemoryStore exampleFragileBaseProblem;
 			yourself.
 

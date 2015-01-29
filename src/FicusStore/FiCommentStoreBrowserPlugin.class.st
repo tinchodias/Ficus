@@ -61,16 +61,10 @@ FiCommentStoreBrowserPlugin >> browseComments: aHistoryNode [
 		openWithSpec
 ]
 
-{ #category : #accessing }
-FiCommentStoreBrowserPlugin >> comments [
-	
-	^ workingCopy snapshot
-]
-
 { #category : #private }
 FiCommentStoreBrowserPlugin >> commentsFor: aHistoryNode [ 
 
-	^ self comments asArray select: [ :each | each appliesTo: aHistoryNode origin ]
+	^ workingCopy snapshot asArray select: [ :each | each appliesTo: aHistoryNode origin ]
 ]
 
 { #category : #initialization }
@@ -86,29 +80,59 @@ FiCommentStoreBrowserPlugin >> initializeWithWorkingCopy: aWorkingCopy [
 		to: self.
 ]
 
+{ #category : #private }
+FiCommentStoreBrowserPlugin >> prepareComments: nodeComments morphs: morphs for: aHistoryNode [
+
+	| button scores |
+	scores := 
+		FiMorphBuilder default rowMorphWithAll: 
+			(nodeComments collect: [ :each |  
+				(FiMorphBuilder default 
+					tagWith: each score prettyPrintString, ' '
+					backgroundColor: Color lightBrown muchLighter) ]).
+	
+	button := IconicButton new 
+		target: self;
+		actionSelector: #browseComments:;
+		arguments: { aHistoryNode };
+		labelGraphic: scores imageForm;
+		color: Color transparent;
+		helpText: 'Browse the comments';
+		borderWidth: 0.
+
+	morphs add: button
+]
+
 { #category : #accessing }
 FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 
-	(self commentsFor: aHistoryNode) ifNotEmpty: [ :nodeComments | 
-		| button scores |
-		scores := 
-			FiMorphBuilder default rowMorphWithAll: 
-				(nodeComments collect: [ :each |  
-					(FiMorphBuilder default 
-						tagWith: each score prettyPrintString, ' '
-						color: Color lightBrown muchLighter) ]).
-		
-		button := IconicButton new 
-			target: self;
-			actionSelector: #browseComments:;
-			arguments: { aHistoryNode };
-			labelGraphic: scores imageForm;
-			color: Color transparent;
-			helpText: 'Browse the comments';
-			borderWidth: 0.
+	(self commentsFor: aHistoryNode) 
+		ifNotEmpty: [ :nodeComments | 
+			self prepareComments: nodeComments morphs: morphs for: aHistoryNode ]
+		ifEmpty: [ 
+			self prepareNoCommentsMorphs: morphs for: aHistoryNode ]
+]
 
-		morphs add: button ]
+{ #category : #private }
+FiCommentStoreBrowserPlugin >> prepareNoCommentsMorphs: morphs for: aHistoryNode [
 
+	| button icon |
+	icon := 
+		FiMorphBuilder default 
+			tagWith: '+1/-1'
+			backgroundColor: Color lightBrown muchLighter muchLighter
+			fontColor: Color gray muchLighter.
+	
+	button := IconicButton new 
+		target: self;
+		actionSelector: #browseComments:;
+		arguments: { aHistoryNode };
+		labelGraphic: icon imageForm;
+		color: Color transparent;
+		helpText: 'Add a comment';
+		borderWidth: 0.
+
+	morphs add: button
 ]
 
 { #category : #operations }

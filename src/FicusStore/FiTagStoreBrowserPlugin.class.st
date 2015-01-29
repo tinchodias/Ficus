@@ -52,7 +52,7 @@ FiTagStoreBrowserPlugin >> prepareEffectInspectorTreeMorphs: morphs for: aSimple
 			tags do: [ :each | morphs add: 
 				(FiMorphBuilder default 
 					tagWith: each contents
-					color: Color yellow) ] ]
+					backgroundColor: Color yellow) ] ]
 
 ]
 

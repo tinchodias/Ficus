@@ -95,18 +95,28 @@ FiMorphBuilder >> stringMorphWith: aString color: aColor [
 ]
 
 { #category : #building }
-FiMorphBuilder >> tagWith: aString color: aColor [
+FiMorphBuilder >> tagWith: aString backgroundColor: backgroundColor [
+
+	^ self 
+		tagWith: aString 
+		backgroundColor: backgroundColor 
+		fontColor: Color black
+]
+
+{ #category : #building }
+FiMorphBuilder >> tagWith: aString backgroundColor: backgroundColor fontColor: aColor [
 
 	| aText |
 	aText := 
 		aString asText
 			addAttribute: (TextFontChange fontNumber: 1); 
+			addAttribute: (TextColor color: aColor);
 			yourself.
 
 	^ PanelMorph new
 		changeTableLayout;
 		addMorphBack: (aText asMorph lock: true; yourself);
-		color: aColor;
+		color: backgroundColor;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
 		layoutInset: 3@0;

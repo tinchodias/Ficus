@@ -20,9 +20,19 @@ FiEpiceaTranslator class >> newWithBasePath: aPath [
 
 { #category : #private }
 FiEpiceaTranslator >> editForMethodEqual: aRingMethod [
+
+	| path |
+	self flag: #todo. 
+	"Consider it can be an extension method (check method package = class package)"
+	
+	path := FiPath root / #contents / aRingMethod theNonMetaClassName. 
+	path := 
+		aRingMethod isMetaSide
+			ifTrue: [ path / #metaclass / #methods ]
+			ifFalse: [ path / #methods ].
 	
 	^ FiSubEdit
-		path: FiPath root / #contents / aRingMethod className / #methods
+		path: path
 		edit: 
 			(FiInclude value: 
 				(FiMethod builder

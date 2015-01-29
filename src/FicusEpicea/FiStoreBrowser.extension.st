@@ -1,10 +1,26 @@
 Extension { #name : #FiStoreBrowser }
 
 { #category : #'*FicusEpicea' }
-FiStoreBrowser classSide >> exampleEpicea [
+FiStoreBrowser classSide >> exampleEpiceaFicusStore [
+	"
+	self exampleEpiceaFicusStore.
+	"
+
+	^ self new
+		store: (FiEpiceaStore forPackageNamed: #FicusStore);
+		plugin: FiNullStoreBrowserPlugin new;
+		refresh;
+		openWithSpec;
+		yourself
+
+
+]
+
+{ #category : #'*FicusEpicea' }
+FiStoreBrowser classSide >> exampleEpiceaTetris [
 	"
 	Gofer it package: #Tetris; load.
-	self exampleEpicea.
+	self exampleEpiceaTetris.
 	"
 
 	^ self new

@@ -48,7 +48,7 @@ FiRGMethod >> allLiterals [
 	^ result asArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #converting }
 FiRGMethod >> asActiveRingDefinition [
 
 	^ RGMethodDefinition new 
@@ -150,9 +150,10 @@ FiRGMethod >> isReturnSelf [
 	| statements |
 	statements := self parseTree statements.
 	
-	^ statements size = 1 and: [ 
+	^ statements isEmpty or: [
+		statements size = 1 and: [ 
 		statements first isReturn and: [ 
-			statements first value isSelf ] ]
+		statements first value isSelf ]]]
 ]
 
 { #category : #polymorphism }

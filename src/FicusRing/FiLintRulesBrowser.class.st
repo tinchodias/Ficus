@@ -43,10 +43,13 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 
 	| browser |
 	browser := GLMTabulator new
-		row: [ :row |
-			row 
-			 	column: #rules;
-				column: #critics ];
+		column: [ :column |
+			column row: [ :row |
+				row 
+				 	column: #rules;
+					column: #critics ].
+			column row: #criticDetail
+				];
 		title: 'Ficus Lint Rules Runner';
 		yourself.
 		
@@ -54,24 +57,45 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 		to: #rules;
 		andShow: [ :a | 
 			a list 
-				display: [ :rulez | rulez flatCollect: [:each | each leaves ] ];
+				display: [ :rulez | 
+					"generate pairs (rule, critics)"
+					(rulez flatCollect: [ :rule | rule leaves ])
+						collect: [ :rule | { 
+							rule.
+							(rule result onEnvironment: rbEnvironment; yourself) smallLintCritics.
+							} ] ];					
 				sorted: [ :x :y | 
-					x problemCount compareWith: y problemCount
+					x second size compareWith: y second size
 						ifLesser: [ false ] 
 						ifEqual: [ x name < y name ] 
 						ifGreater: [ true ] ];
-				format: [ :rule | rule name, ' (', rule problemCount asString, ')' ];
-				tags: [ :rule | {rule group. rule category. rule severity} ] ].
+				format: [ :ruleCritics | 
+					ruleCritics first name, ' (', ruleCritics second size asString, ')' ];
+				tags: [ :ruleCritics | {
+					ruleCritics first group. 
+					ruleCritics first category. 
+					ruleCritics first severity } ];
+				selectionAct: [ :list | list selection inspect ] on: $i entitled: 'Inspect' ].
 
 	browser transmit 
 		from: #rules;
 		to: #critics;
 		andShow: [ :a | 
 			a list
-				display: [ :rule  | (rule result onEnvironment: rbEnvironment; yourself) smallLintCritics ];
+				display: [ :ruleCritics | ruleCritics second ];
+				sorted: [ :x :y | x shortPrintString < y shortPrintString ];
+				format: [ :critic | critic shortPrintString ];
+				selectionAct: [ :list | list selection inspect ] on: $i entitled: 'Inspect'.
+		 ].
+
+	browser transmit 
+		from: #critics;
+		to: #criticDetail;
+		andShow: [ :a | 
+			a text
 				format: [ :critic | critic asString ].
 		 ].
-			
+	
 	^ browser
 ]
 

@@ -6,7 +6,8 @@ Class {
 	#superclass : #FiRGBehavior,
 	#instVars : [
 		'classShot',
-		'environment'
+		'environment',
+		'cachedLocalMethods'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -311,8 +312,9 @@ FiRGClass >> isMeta [
 { #category : #polymorphism }
 FiRGClass >> localMethods [
 
-	^ classShot methods 
-		collect: [ :aMethodShot | self ringMethodFor: aMethodShot ]
+	^ cachedLocalMethods ifNil: [
+		cachedLocalMethods := classShot methods 
+			collect: [ :aMethodShot | self ringMethodFor: aMethodShot ] ]
 ]
 
 { #category : #polymorphism }

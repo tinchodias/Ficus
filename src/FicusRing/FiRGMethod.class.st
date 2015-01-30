@@ -6,7 +6,8 @@ Class {
 	#superclass : #FiRGObject,
 	#instVars : [
 		'methodShot',
-		'methodClass'
+		'methodClass',
+		'cachedAst'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -47,6 +48,17 @@ FiRGMethod >> allLiterals [
 	^ result asArray
 ]
 
+{ #category : #'as yet unclassified' }
+FiRGMethod >> asActiveRingDefinition [
+
+	^ RGMethodDefinition new 
+			name: self selector;
+			parentName: self methodClass name;
+			isMetaSide: self methodClass isMeta;
+			asActive.
+
+]
+
 { #category : #printing }
 FiRGMethod >> asString [
 	"Same as a CompiledMethod"
@@ -58,8 +70,8 @@ FiRGMethod >> asString [
 FiRGMethod >> ast [
 	"Answer my AST with semantic analysis. See #parseTree."
 
-	self flag: #todo. "cache in environment?"	
-	^ self parseTree doSemanticAnalysisIn: self methodClass
+	^ cachedAst ifNil: [
+		cachedAst := self parseTree doSemanticAnalysisIn: self methodClass ]
 ]
 
 { #category : #polymorphism }

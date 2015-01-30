@@ -50,6 +50,13 @@ FiRGEnvironment >> allClassesDo: aBlockClosure [
 	^ self allClasses do: aBlockClosure 
 ]
 
+{ #category : #'as yet unclassified' }
+FiRGEnvironment >> allTraitsDo: aBlockClosure [ 
+	
+	self flag: #todo.
+	^ self
+]
+
 { #category : #polymorphism }
 FiRGEnvironment >> associationAt: key [
 

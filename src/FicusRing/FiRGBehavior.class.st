@@ -54,7 +54,7 @@ FiRGBehavior >> isBehavior [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 FiRGBehavior >> isObsolete [
 
 	^ false
@@ -175,6 +175,13 @@ literal."
 	^ self methods 
 		select: [ :each | each refersToLiteral: literal ]
 		thenCollect: [ :each | each selector ]
+]
+
+{ #category : #'testing method dictionary' }
+FiRGBehavior >> whichSelectorsReferTo: literal special: specialFlag byte: specialByte [
+	"Just ignore some arguments"
+	
+	^ self whichSelectorsReferTo: literal
 ]
 
 { #category : #'testing method dictionary' }

@@ -104,6 +104,12 @@ FiRGEnvironment >> bindingOf: aName [
 		ifAbsent: [ nil ]
 ]
 
+{ #category : #ui }
+FiRGEnvironment >> browse [
+
+	^ FiRGEnvironmentBrowser openOn: self 
+]
+
 { #category : #polymorphism }
 FiRGEnvironment >> classNamed: aName [
 	

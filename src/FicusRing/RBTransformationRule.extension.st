@@ -10,7 +10,7 @@ RBTransformationRule >> resetResultOnEnvironment: rbEnvironment [
 { #category : #'*FicusRing' }
 RBTransformationRule >> resultOnEnvironment: rbEnvironment [
 	| environment |
-	environment := RBParseTreeEnvironment new.
+	environment := RBParseTreeEnvironment onEnvironment: rbEnvironment.
 	environment matcher: self rewriteRule.
 	environment label: self name.
 

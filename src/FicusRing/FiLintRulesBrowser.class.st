@@ -62,7 +62,7 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 					(rulez flatCollect: [ :rule | rule leaves ])
 						collect: [ :rule | { 
 							rule.
-							(rule resultOnEnvironment: rbEnvironment) smallLintCritics.
+							rule criticsOnEnvironment: rbEnvironment.
 							} ] ];					
 				sorted: [ :x :y | 
 					x second size compareWith: y second size

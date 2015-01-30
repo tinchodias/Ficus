@@ -99,6 +99,12 @@ FiRGBehavior >> methodDict [
 				yourself ]
 ]
 
+{ #category : #polymorphism }
+FiRGBehavior >> package [
+
+	^ self environment packageOfClass: self theNonMetaClass
+]
+
 { #category : #printing }
 FiRGBehavior >> printOn: aStream [
 

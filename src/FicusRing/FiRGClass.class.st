@@ -8,7 +8,8 @@ Class {
 		'classShot',
 		'environment',
 		'cachedLocalMethods',
-		'cachedSuperclass'
+		'cachedSuperclass',
+		'cachedMetaClass'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -427,9 +428,10 @@ FiRGClass >> superclass [
 { #category : #polymorphism }
 FiRGClass >> theMetaClass [
 
-	^ FiRGMetaclass new
-		theNonMetaClass: self;
-		yourself
+	^ cachedMetaClass ifNil: [ 
+		cachedMetaClass := FiRGMetaclass new
+			theNonMetaClass: self;
+			yourself ]
 ]
 
 { #category : #polymorphism }

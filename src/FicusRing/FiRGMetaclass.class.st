@@ -87,11 +87,9 @@ FiRGMetaclass >> isMeta [
 { #category : #polymorphism }
 FiRGMetaclass >> localMethods [
 
-	self flag: #fix.
 	^ cachedLocalMethods ifNil: [
-		cachedLocalMethods := theNonMetaClass classShot metaclass methods values 
-			collect: [ :aMethodShot |
-				self ringMethodFor: aMethodShot ] ]
+		cachedLocalMethods := self theNonMetaClass classShot metaclass methods values 
+			collect: [ :aMethodShot | self ringMethodFor: aMethodShot ] ]
 ]
 
 { #category : #lookup }
@@ -149,6 +147,9 @@ FiRGMetaclass >> theNonMetaClass [
 
 { #category : #accessing }
 FiRGMetaclass >> theNonMetaClass: aFiRGClass [ 
+
+	self flag: #todo. "remove debugging code"
+	self assert: (aFiRGClass isKindOf: FiRGClass).
 
 	theNonMetaClass := aFiRGClass
 ]

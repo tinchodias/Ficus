@@ -138,3 +138,11 @@ FiRGMetaclassTest >> testWhichSelectorAccess [
 		assert: (resources ringClassA classSide whichSelectorsAccess: #a3) asSet 
 		equals: { #initialize } asSet
 ]
+
+{ #category : #tests }
+FiRGMetaclassTest >> testWhichSelectorsReferTo [
+	"This was feature has been extracted from a real case in Pharo 4."
+
+	self assert: (resources ringClassA classSide whichSelectorsReferTo: resources ringClassA binding) isNotEmpty.
+
+]

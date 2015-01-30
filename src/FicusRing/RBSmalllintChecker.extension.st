@@ -2,7 +2,7 @@ Extension { #name : #RBSmalllintChecker }
 
 { #category : #'*FicusRing-override' }
 RBSmalllintChecker >> run [
-	rule resetResult.
+	rule resetResultOnEnvironment: environment.
 	environment classesAndTraits
 		do: [ :class |
 			self checkClass: class.

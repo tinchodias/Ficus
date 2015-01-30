@@ -1,6 +1,13 @@
 Extension { #name : #RBTransformationRule }
 
 { #category : #'*FicusRing' }
+RBTransformationRule >> resetResultOnEnvironment: rbEnvironment [
+
+	self flag: #todo. "do something with the env."
+	builder := RBCompositeRefactoryChange named: self name
+]
+
+{ #category : #'*FicusRing' }
 RBTransformationRule >> resultOnEnvironment: rbEnvironment [
 	| environment |
 	environment := RBParseTreeEnvironment new.

@@ -80,6 +80,14 @@ FiRGMethodTest >> testIsReturnSelf [
 ]
 
 { #category : #tests }
+FiRGMethodTest >> testLiterals [
+		
+	self 
+		assert: (resources ringClassC >> #string) literals
+		equals: (resources ringClassC >> #string) allLiterals
+]
+
+{ #category : #tests }
 FiRGMethodTest >> testMarkerOrNil [
 
 	self 

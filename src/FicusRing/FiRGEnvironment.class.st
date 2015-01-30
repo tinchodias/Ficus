@@ -9,7 +9,8 @@ Class {
 		'allClasses',
 		'packageByClassName',
 		'extensionMethodsByBehaviorName',
-		'packages'
+		'packages',
+		'globalByName'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -86,13 +87,10 @@ FiRGEnvironment >> at: aName ifAbsent: aBlockClosure [
 { #category : #polymorphism }
 FiRGEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
 
-	^ self allClassesAndTraits
-		detect: [ :aClassOrTrait | aClassOrTrait name = aName ]
-		ifFound: presentBlock
-		ifNone: [ self knownGlobalNames 
-			detect: [ :each | each = aName ] 
-			ifFound: [ presentBlock cull: self knownGlobalDummyValue ]
-			ifNone: absentBlock ]
+	^ self globalByName
+		at: aName 
+		ifPresent: presentBlock 
+		ifAbsent: absentBlock
 ]
 
 { #category : #polymorphism }
@@ -159,6 +157,25 @@ FiRGEnvironment >> extensionMethodsFor: aBehavior [
 		at: aBehavior name 
 		ifAbsent: [ ^ #() ]) 
 		select: [:aMethod | aMethod methodClass = aBehavior ]
+]
+
+{ #category : #accessing }
+FiRGEnvironment >> globalByName [
+
+	^ globalByName ifNil: [
+		globalByName := Dictionary new.
+
+		self allClassesAndTraits do: [ :aClassOrTrait |
+			globalByName 
+				at: aClassOrTrait name
+				put: aClassOrTrait ].
+
+		self knownGlobalNames do: [ :aGlobalName |
+			globalByName 
+				at: aGlobalName
+				put: self knownGlobalDummyValue ].
+			
+		globalByName ]
 ]
 
 { #category : #polymorphism }

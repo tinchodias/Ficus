@@ -165,7 +165,7 @@ FiRGMethod >> isSubclassResponsibility: marker [
 { #category : #polymorphism }
 FiRGMethod >> literals [
 
-	^ self selectAllVariables: [ :each | each isLiteralNode ]
+	^ self allLiterals
 ]
 
 { #category : #lookup }

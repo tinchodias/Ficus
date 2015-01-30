@@ -50,7 +50,7 @@ FiRGEnvironment >> allClassesDo: aBlockClosure [
 	^ self allClasses do: aBlockClosure 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #iterating }
 FiRGEnvironment >> allTraitsDo: aBlockClosure [ 
 	
 	self flag: #todo.
@@ -218,14 +218,6 @@ FiRGEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [
 				ifAbsent: [ ] ] ]
 ]
 
-{ #category : #initialization }
-FiRGEnvironment >> initialize [
-
-	super initialize.
-	
-	packageByClassName := Dictionary new.
-]
-
 { #category : #accessing }
 FiRGEnvironment >> knownGlobalDummyValue [
 
@@ -272,6 +264,21 @@ FiRGEnvironment >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNot
 ]
 
 { #category : #accessing }
+FiRGEnvironment >> packageByClassName [
+	
+	^ packageByClassName ifNil: [
+		packageByClassName := Dictionary new.
+
+		self packages do: [ :package | 
+			package definedClasses do: [ :aClass |
+				packageByClassName
+					at: aClass name 
+					put: package ]].
+			
+		packageByClassName ]
+]
+
+{ #category : #accessing }
 FiRGEnvironment >> packageOfClass: aFiRGClass [ 
 
 	^ self packageOfClassNamed: aFiRGClass name
@@ -280,10 +287,9 @@ FiRGEnvironment >> packageOfClass: aFiRGClass [
 { #category : #accessing }
 FiRGEnvironment >> packageOfClassNamed: aName [ 
 	
-	^ packageByClassName at: aName ifAbsentPut: [
-		self packages 
-			detect: [ :each | each definedClasses 
-				anySatisfy: [ :aClass | aClass name = aName ]]]
+	^ self packageByClassName 
+		at: aName 
+		ifAbsent: [ self notYetImplemented ]
 ]
 
 { #category : #accessing }

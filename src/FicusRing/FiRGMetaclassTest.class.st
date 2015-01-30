@@ -14,6 +14,15 @@ FiRGMetaclassTest >> testBinding [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testBindingOf [
+
+	self 
+		assert: (resources ringClassA classSide bindingOf: #A) 
+		equals: resources ringClassA binding
+
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testDefinition [
 
 	self 

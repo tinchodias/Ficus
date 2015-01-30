@@ -30,6 +30,9 @@ FiRGMethodTest >> testAst [
 
 	self deny: ((resources ringClassA methods collect: #ast) anySatisfy: #isNil).
 
+	self assert: ((resources ringClassA classSide >> #initialize) ast allChildren 
+		detect: [ :node | node isVariable and: [ node name = 'A' ] ]) isGlobal
+	
 ]
 
 { #category : #tests }

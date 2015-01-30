@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : #polymorphism }
+FiRGPackage >> asRingDefinition [
+
+	^ RGPackage named: self name asSymbol
+]
+
+{ #category : #polymorphism }
 FiRGPackage >> definedClasses [
 
 	^ definedClasses ifNil: [ 

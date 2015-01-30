@@ -27,6 +27,12 @@ FiRGMetaclass >> asString [
 ]
 
 { #category : #polymorphism }
+FiRGMetaclass >> bindingOf: varName [
+
+	^ self theNonMetaClass classBindingOf: varName
+]
+
+{ #category : #polymorphism }
 FiRGMetaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 

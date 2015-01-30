@@ -9,7 +9,8 @@ FiRGClassTest >> testAllCallsOn [
 
 	self 
 		assert: (resources ringClassA allCallsOn 
-		includes: (resources ringClassA classSide >> #initialize)).
+		includes: (resources ringClassA classSide >> #initialize) asActiveRingDefinition).
+	"Brrrrrrrrrrr"
 ]
 
 { #category : #tests }

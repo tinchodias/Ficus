@@ -34,8 +34,15 @@ FiMethodRequisitesTest >> testClassAClassInitialize [
 				new.
 			FiVariableAccess builder
 				variableName: #a3;
+				new.
+			FiVariableAccess builder
+				variableName: #A;
+				new.
+			FiMessageSend builder
+				receiver: FiAnyMessageReceiver new;
+				selector: #new;
 				new
-			}
+				}
 ]
 
 { #category : #tests }

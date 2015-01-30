@@ -15,6 +15,13 @@ FiRGBehavior >> allSlots [
 	^ self allInstVarNames collect: #asSlot
 ]
 
+{ #category : #'*FicusRing' }
+FiRGBehavior >> allUnsentMessages [
+	"Answer an array of all the messages defined by the receiver that are not sent anywhere in the system."
+
+	^ self systemNavigation allUnsentMessagesIn: self selectors
+]
+
 { #category : #hacks }
 FiRGBehavior >> basicLocalSelectors [
 	
@@ -124,6 +131,14 @@ FiRGBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 
 	^ self methods do: [ :each | 
 		selectorAndMethodBlock value: each selector value: each ]
+]
+
+{ #category : #'*FicusRing' }
+FiRGBehavior >> systemNavigation [
+
+	^ SystemNavigation new 
+		environment: self environment;
+		yourself
 ]
 
 { #category : #'testing method dictionary' }

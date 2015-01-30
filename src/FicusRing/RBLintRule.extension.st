@@ -8,7 +8,10 @@ RBLintRule >> criticsOnEnvironment: rbEnvironment [
 
 { #category : #'*FicusRing' }
 RBLintRule >> resetResultOnEnvironment: rbEnvironment [
+	"Reset the results using the specified environment. 
+	Ignore it by default."
 
+	^ self resetResult
 ]
 
 { #category : #'*FicusRing' }

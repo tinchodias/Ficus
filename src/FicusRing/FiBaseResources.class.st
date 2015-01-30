@@ -11,6 +11,12 @@ Class {
 	#category : #'FicusRing-Examples'
 }
 
+{ #category : #ui }
+FiBaseResources >> browse [
+
+	^ FiRGEnvironmentBrowser openOn: self ficusRGEnvironment
+]
+
 { #category : #resources }
 FiBaseResources >> classBlockClosure [
 

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'classShot',
 		'environment',
-		'cachedLocalMethods'
+		'cachedLocalMethods',
+		'cachedSuperclass'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -419,7 +420,8 @@ FiRGClass >> superclass [
 	
 	classShot hasNullSuperclass ifTrue: [ ^ nil ].
 	
-	^ environment classNamed: classShot superclassName
+	^ cachedSuperclass ifNil: [
+		cachedSuperclass := environment classNamed: classShot superclassName ]
 ]
 
 { #category : #polymorphism }

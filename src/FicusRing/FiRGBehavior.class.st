@@ -126,6 +126,20 @@ FiRGBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 		selectorAndMethodBlock value: each selector value: each ]
 ]
 
+{ #category : #'testing method dictionary' }
+FiRGBehavior >> thoroughHasSelectorReferringTo: literal special: specialFlag byte: specialByte [
+	"Just ignore some arguments. Standard implementation is already thorough :)"
+
+	self notYetImplemented 
+]
+
+{ #category : #'testing method dictionary' }
+FiRGBehavior >> thoroughWhichSelectorsReferTo: literal special: specialFlag byte: specialByte [
+	"Just ignore some arguments. Standard implementation is already thorough :)"
+	
+	^ self whichSelectorsReferTo: literal
+]
+
 { #category : #traits }
 FiRGBehavior >> traitComposition [
 

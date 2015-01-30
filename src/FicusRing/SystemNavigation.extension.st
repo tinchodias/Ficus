@@ -1,6 +1,22 @@
 Extension { #name : #SystemNavigation }
 
 { #category : #'*FicusRing' }
+SystemNavigation >> allBehaviorsDo: aBlock [ 
+	"Execute a block on each class, metaclass, trait and trait class"
+	
+	self environment allClassesDo: [ :aClass | 
+		aBlock value: aClass ; 
+			value: aClass classSide
+	].
+	
+	self environment allTraitsDo: [ :aTrait |
+		aBlock value:  aTrait ;
+			value: aTrait classTrait
+	]
+
+]
+
+{ #category : #'*FicusRing' }
 SystemNavigation >> allClassesAndTraits [
 	"Answer all the classes and traits present in the image"
 	"Note that metaclasses are not part of the answer"

@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #tests }
+FiRGClassTest >> testAllCallsOn [
+
+	self 
+		assert: (resources ringClassA allCallsOn 
+		includes: (resources ringClassA classSide >> #initialize)).
+]
+
+{ #category : #tests }
 FiRGClassTest >> testAllInstVarNames [
 
 	self assert: resources ringClassA allInstVarNames asSet equals: #('a1' 'a2') asSet.

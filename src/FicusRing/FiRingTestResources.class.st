@@ -21,7 +21,7 @@ FiRingTestResources >> classA [
 			(FiMetaclass builder
 				layout: (FiFixedLayout withInstanceVariables: #(#a3));
 				methods: {
-					FiMethod sourceCode: 'initialize  SomeClassVariable := a3 := 42'.  
+					FiMethod sourceCode: 'initialize  SomeClassVariable := a3 := A new'.  
 				} asFiSet;
 				new);
 		new.

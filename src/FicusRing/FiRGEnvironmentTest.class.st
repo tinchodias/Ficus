@@ -74,9 +74,9 @@ FiRGEnvironmentTest >> testKnownGlobalNames [
 		equals: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 FiRGEnvironmentTest >> testPackages [
 
-	self assert: resources ficusRGEnvironment packages size equals: 2.
+	self assert: resources ficusRGEnvironment packages size equals: 3.
 
 ]

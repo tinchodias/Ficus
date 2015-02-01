@@ -1,5 +1,5 @@
 "
-Resource with diverse Ficus metalevel objects, intended for tests.
+Resource with diverse Ficus metalevel objects, intended for tests. 
 "
 Class {
 	#name : #FiRingTestResources,
@@ -64,10 +64,22 @@ FiRingTestResources >> classC [
 		new.
 ]
 
+{ #category : #resources }
+FiRingTestResources >> extensionMethodsToX [
+
+	^ FiExtensionMethods builder
+		hostName: #A;
+		methods: { 
+			FiMethod sourceCode: 'sum43  ^ self sum42 + 1'. 
+			} asFiSet;
+		isMetaSide: false;
+		new
+]
+
 { #category : #private }
 FiRingTestResources >> newFicusEnvironment [
 
-	^ { self packageKernel. self packageX. } asFiSet
+	^ { self packageKernel. self packageX. self packageY. } asFiSet
 ]
 
 { #category : #resources }
@@ -76,6 +88,15 @@ FiRingTestResources >> packageX [
 	^ FiPackage builder
 		theName: #X;
 		contents: { self classA. self classB. self classC } asFiSet;
+		new
+]
+
+{ #category : #resources }
+FiRingTestResources >> packageY [
+	
+	^ FiPackage builder
+		theName: #Y;
+		contents: { self extensionMethodsToX } asFiSet;
 		new
 ]
 

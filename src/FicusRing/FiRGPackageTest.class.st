@@ -16,7 +16,7 @@ FiRGPackageTest >> testDefinedClasses [
 FiRGPackageTest >> testDefinedMethods [
 
 	| resources2 package |
-	resources2 := FiRingTestWithExtensionsResources new ficusRGEnvironment.
+	resources2 := FiRingTestResources new ficusRGEnvironment.
 
 	package := resources2 packages detect: [ :each | each name = #X ].
 	self assert: (package definedMethods asSet 
@@ -35,5 +35,5 @@ FiRGPackageTest >> testName [
 
 	self 
 		assert: (resources ficusRGEnvironment packages collect: #name) asSet 
-		equals: #(Kernel X) asSet.
+		equals: #(Kernel X Y) asSet.
 ]

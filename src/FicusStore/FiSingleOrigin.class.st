@@ -7,6 +7,14 @@ Class {
 	#category : #'FicusStore-Models'
 }
 
+{ #category : #'instance creation' }
+FiSingleOrigin class >> withReference: aReference [
+
+	^ self builder
+		reference: aReference;
+		new
+]
+
 { #category : #comparing }
 FiSingleOrigin >> contains: anOrigin [ 
 	

@@ -20,6 +20,12 @@ FiAbstractStore >> headHistoryNode [
 ]
 
 { #category : #accessing }
+FiAbstractStore >> headSnapshot [
+
+	^ self headHistoryNode snapshot 
+]
+
+{ #category : #accessing }
 FiAbstractStore >> historyNodes [
 
 	^ self subclassResponsibility 
@@ -30,7 +36,7 @@ FiAbstractStore >> newWorkingCopy [
 
 	^ FiWorkingCopy new
 		name: self name;
-		snapshot: self headHistoryNode snapshot;
+		snapshot: self headSnapshot;
 		store: self;
 		yourself.
 

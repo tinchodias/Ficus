@@ -16,6 +16,12 @@ FiWorkingCopyRegistry >> addWorkingCopy: aFiStore [
 	workingCopies add: aFiStore 
 ]
 
+{ #category : #ui }
+FiWorkingCopyRegistry >> browse [
+
+	^ FiWorkingCopyRegistryBrowser openWith: self
+]
+
 { #category : #initialization }
 FiWorkingCopyRegistry >> initialize [
 

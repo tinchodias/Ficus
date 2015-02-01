@@ -14,7 +14,7 @@ Class {
 FiEpiceaHistoryBuilder >> compositeHistoryNodeFor: anEntry priors: priors and: aMonticelloHistoryNode [ 
 	
 	| epiceaOrigin monticelloOrigin |
-	epiceaOrigin := FiSingleOrigin builder reference: (log referenceTo: anEntry); new.
+	epiceaOrigin := FiSingleOrigin withReference: (log referenceTo: anEntry).
 	monticelloOrigin := aMonticelloHistoryNode origin.
 
 	^ FiSnapshotHistoryNode builder
@@ -40,7 +40,7 @@ FiEpiceaHistoryBuilder >> headHistoryNode [
 FiEpiceaHistoryBuilder >> historyNodeFor: anEntry prior: priorHistoryNode [
 	
 	| origin |
-	origin := FiSingleOrigin builder reference: (log referenceTo: anEntry); new.
+	origin := FiSingleOrigin withReference: (log referenceTo: anEntry).
 
 	^ FiDeltaHistoryNode builder
 		origin: origin;

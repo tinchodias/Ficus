@@ -126,7 +126,7 @@ FiMonticelloHistoryBuilder >> historyNodeFor: aVersionInfo [
 			| priorNodeToMerge |
 			priorNodeToMerge := priors anyOne.
 			node := FiSnapshotHistoryNode builder
-				origin: ((FiSingleOrigin builder reference: versionInfo; new) followedBy: priorNodeToMerge origin);
+				origin: ((FiSingleOrigin withReference: versionInfo) followedBy: priorNodeToMerge origin);
 				snapshot: ficusPackage;
 				priors: priorNodeToMerge priors;
 				new.

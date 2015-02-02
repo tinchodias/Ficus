@@ -41,3 +41,9 @@ FiWorkingCopyRegistry >> workingCopies [
 
 	^ workingCopies
 ]
+
+{ #category : #accessing }
+FiWorkingCopyRegistry >> workingCopiesForStore: aStore [ 
+
+	^ workingCopies select: [ :each | each store = aStore ]
+]

@@ -226,3 +226,9 @@ FiStoreBrowser >> tabManagerModel [
 	
 	^ tabManagerModel
 ]
+
+{ #category : #accessing }
+FiStoreBrowser >> workingCopyRegistry: aFiWorkingCopyRegistry [ 
+
+	historyBrowserModel workingCopyRegistry: aFiWorkingCopyRegistry
+]

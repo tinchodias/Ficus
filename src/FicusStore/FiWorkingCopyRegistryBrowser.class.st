@@ -86,6 +86,7 @@ FiWorkingCopyRegistryBrowser >> actionOpen [
 	workingCopiesModel selectedItems do: [ :each | 
 		FiStoreBrowser new
 			store: each content store;
+			workingCopyRegistry: model;
 			plugin: (self newStoreBrowserPluginFor: each content store);
 			refresh;
 			openWithSpec;

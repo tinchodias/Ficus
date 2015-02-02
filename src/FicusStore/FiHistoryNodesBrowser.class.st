@@ -6,7 +6,8 @@ Class {
 		'hiedraRulerController',
 		'store',
 		'refreshButton',
-		'plugin'
+		'plugin',
+		'workingCopyRegistry'
 	],
 	#category : #'FicusStore-UI-Widgets'
 }
@@ -44,10 +45,9 @@ FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [
 	| morphs |
 	morphs := OrderedCollection new.
 
-	store headHistoryNode = aHistoryNode
-		ifTrue: [ morphs add: ('[head]' asText allBold asMorph lock: true; yourself) ].
-		
-	morphs add: aHistoryNode origin shortDescription asMorph.
+	morphs add: ((self isWorkingCopy: aHistoryNode)
+		ifTrue: [ '[working copy]' asText allBold asMorph lock: true; yourself ]
+		ifFalse: [ aHistoryNode origin shortDescription asMorph ]).
 	
 	self plugin 
 		prepareDescriptionMorphs: morphs 
@@ -83,7 +83,22 @@ FiHistoryNodesBrowser >> initializeHiedraController [
 		linkBuilder 
 			width: 2.3;
 			color: Color red;
-			destinationsBlock: [ :node | node priors asArray ] ]
+			destinationsBlock: [ :node | 
+				(self isWorkingCopy: node)
+					ifTrue: [ #() ]
+					ifFalse: [ node priors asArray ]
+				] ].
+
+	hiedraRulerController rulerBuilder addLinkBuilder: [ :linkBuilder |
+		linkBuilder 
+			width: 2.3;
+			color: Color red;
+			dashes: #(3 3);
+			destinationsBlock: [ :node | 
+				(self isWorkingCopy: node)
+					ifFalse: [ #() ]
+					ifTrue: [ node priors asArray ]
+				] ].
 
 ]
 
@@ -122,6 +137,14 @@ FiHistoryNodesBrowser >> initializeWidgets [
 
 ]
 
+{ #category : #private }
+FiHistoryNodesBrowser >> isWorkingCopy: aHistoryNode [
+
+	self flag: #todo. "fix"
+	^ aHistoryNode origin isNil
+
+]
+
 { #category : #accessing }
 FiHistoryNodesBrowser >> plugin [
 
@@ -137,9 +160,14 @@ FiHistoryNodesBrowser >> plugin: aPlugin [
 { #category : #refreshing }
 FiHistoryNodesBrowser >> refresh [
 	
+	| nodes |
 	store refresh.
+
+	nodes := store historyNodes copy.
+	nodes addAll: ((self workingCopyRegistry workingCopiesForStore: store)
+		collect: #asHistoryNode).
 	
-	historyTreeModel roots: store historyNodes reversed
+	historyTreeModel roots: nodes reversed.
 ]
 
 { #category : #accessing }
@@ -158,4 +186,17 @@ FiHistoryNodesBrowser >> rowSize [
 FiHistoryNodesBrowser >> store: aFiStore [
 	
 	store := aFiStore
+]
+
+{ #category : #accessing }
+FiHistoryNodesBrowser >> workingCopyRegistry [
+
+	^ workingCopyRegistry ifNil: [
+		workingCopyRegistry := FiWorkingCopyRegistry new ]
+]
+
+{ #category : #accessing }
+FiHistoryNodesBrowser >> workingCopyRegistry: aWorkingCopyRegistry [
+
+	workingCopyRegistry := aWorkingCopyRegistry
 ]

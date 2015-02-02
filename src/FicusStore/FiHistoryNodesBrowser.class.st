@@ -49,9 +49,11 @@ FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [
 		ifTrue: [ '[working copy]' asText allBold asMorph lock: true; yourself ]
 		ifFalse: [ aHistoryNode origin shortDescription asMorph ]).
 	
-	self plugin 
-		prepareDescriptionMorphs: morphs 
-		for: aHistoryNode.
+	self flag: #todo. "maybe not necessary, but..."
+	(self isWorkingCopy: aHistoryNode) ifFalse: [
+		self plugin 
+			prepareDescriptionMorphs: morphs 
+			for: aHistoryNode ].
 	
 	^ FiMorphBuilder default rowMorphWithAll: morphs
 ]

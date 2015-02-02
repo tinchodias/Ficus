@@ -13,12 +13,21 @@ FiCommentStoreBrowserPlugin class >> example [
 	self example.
 	"
 
-	| store pluginWorkingCopy |
+	| store pluginStore pluginWorkingCopy |
 	store := FiMemoryStore exampleFragileBaseProblem.
+	pluginStore := FiCommentSet exampleStoreFor: store.
 	pluginWorkingCopy := 
-		(FiCommentSet exampleStoreFor: store) newWorkingCopy
+		pluginStore newWorkingCopy
 			name: 'Comments to ', store name;
 			yourself.
+
+	"add fun to the example: do another commit"
+	pluginStore 
+		commitSnapshot: 
+			(FiCommentSet 
+				targetStoreName: store name 
+				comments: FiSet new)
+		priors: {pluginStore headHistoryNode} asFiSet.
 
 	FiWorkingCopyRegistryBrowser openWith: 
 		(FiWorkingCopyRegistry new 

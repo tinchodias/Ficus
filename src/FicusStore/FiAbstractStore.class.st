@@ -37,6 +37,7 @@ FiAbstractStore >> newWorkingCopy [
 	^ FiWorkingCopy new
 		name: self name;
 		snapshot: self headSnapshot;
+		priors: {self headHistoryNode} asFiSet;
 		store: self;
 		yourself.
 

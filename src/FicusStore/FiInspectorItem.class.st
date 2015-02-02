@@ -1,3 +1,6 @@
+"
+I am an item for the FiInspector.
+"
 Class {
 	#name : #FiInspectorItem,
 	#superclass : #Object,
@@ -5,7 +8,7 @@ Class {
 		'path',
 		'content'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Others'
 }
 
 { #category : #accessing }

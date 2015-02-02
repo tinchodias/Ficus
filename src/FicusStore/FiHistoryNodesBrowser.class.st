@@ -8,7 +8,7 @@ Class {
 		'refreshButton',
 		'plugin'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Widgets'
 }
 
 { #category : #specs }

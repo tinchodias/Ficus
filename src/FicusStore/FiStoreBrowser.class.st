@@ -1,3 +1,6 @@
+"
+I am a browser for instances of FiStore.
+"
 Class {
 	#name : #FiStoreBrowser,
 	#superclass : #ComposableModel,
@@ -9,7 +12,7 @@ Class {
 		'deltasModel',
 		'deltasTabModel'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Widgets'
 }
 
 { #category : #specs }

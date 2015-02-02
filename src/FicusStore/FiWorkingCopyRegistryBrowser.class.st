@@ -39,37 +39,7 @@ FiWorkingCopyRegistryBrowser class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
-FiWorkingCopyRegistryBrowser class >> example [
-	"
-	self example
-	"
-
-	| registry aWorkingCopy anotherWorkingCopy |
-	aWorkingCopy := 
-		FiWorkingCopy new
-			name: 'FragileBaseClassProblem';
-			snapshot: FiFragileBaseProblemResourcesA new ficusEnvironment;
-			store: FiMemoryStore exampleFragileBaseProblem;
-			yourself.
-
-	anotherWorkingCopy := 
-		FiWorkingCopy new
-			name: 'Numbers';
-			snapshot: FiSet new;
-			store: FiMemoryStore example;
-			yourself.
-		
-	registry := 
-		FiWorkingCopyRegistry new 
-			addWorkingCopy: aWorkingCopy; 
-			addWorkingCopy: anotherWorkingCopy;
-			yourself.
-
-	^ self openWith: registry
-]
-
-{ #category : #example }
+{ #category : #'instance creation' }
 FiWorkingCopyRegistryBrowser class >> openWith: registry [ 
 
 	^ self new

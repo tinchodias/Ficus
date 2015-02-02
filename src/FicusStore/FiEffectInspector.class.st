@@ -1,3 +1,6 @@
+"
+I am an inspector for instances of FiEffect.
+"
 Class {
 	#name : #FiEffectInspector,
 	#superclass : #ComposableModel,
@@ -8,7 +11,7 @@ Class {
 		'currentSelection',
 		'plugin'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Widgets'
 }
 
 { #category : #specs }

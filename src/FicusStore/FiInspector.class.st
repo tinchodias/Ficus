@@ -1,3 +1,6 @@
+"
+I am an inspector for instances of FiShot.
+"
 Class {
 	#name : #FiInspector,
 	#superclass : #ComposableModel,
@@ -6,7 +9,7 @@ Class {
 		'contentsModel',
 		'iconByClassName'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Widgets'
 }
 
 { #category : #specs }

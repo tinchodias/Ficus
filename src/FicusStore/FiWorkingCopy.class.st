@@ -7,10 +7,11 @@ Class {
 	#name : #FiWorkingCopy,
 	#superclass : #Object,
 	#instVars : [
+		'announcer',
 		'name',
+		'priors',
 		'snapshot',
-		'store',
-		'announcer'
+		'store'
 	],
 	#category : #'FicusStore-WorkingCopies'
 }
@@ -35,7 +36,7 @@ FiWorkingCopy >> commit: aString [
 	
 	store 
 		commitSnapshot: snapshot 
-		priors: {store headHistoryNode}. 
+		priors: priors. 
 		
 	self announceRefreshed.
 ]
@@ -93,6 +94,16 @@ FiWorkingCopy >> printOn: aStream [
 	aStream 
 		nextPut: $).
 
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> priors [
+	^ priors
+]
+
+{ #category : #accessing }
+FiWorkingCopy >> priors: anObject [
+	priors := anObject
 ]
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'deltasDropListModel',
 		'effectInspector'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Widgets'
 }
 
 { #category : #specs }

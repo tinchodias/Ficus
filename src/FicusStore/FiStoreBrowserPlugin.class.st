@@ -1,10 +1,13 @@
+"
+I am an abstract plugin for a FiStoreBrowser.
+"
 Class {
 	#name : #FiStoreBrowserPlugin,
 	#superclass : #Object,
 	#instVars : [
 		'announcer'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Others'
 }
 
 { #category : #private }

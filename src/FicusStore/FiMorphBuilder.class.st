@@ -1,10 +1,13 @@
+"
+I hold useful methods for building Morphs.
+"
 Class {
 	#name : #FiMorphBuilder,
 	#superclass : #Object,
 	#classInstVars : [
 		'defaultInstance'
 	],
-	#category : #'FicusStore-UI'
+	#category : #'FicusStore-UI-Others'
 }
 
 { #category : #accessing }

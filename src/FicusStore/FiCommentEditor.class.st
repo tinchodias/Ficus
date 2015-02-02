@@ -39,7 +39,7 @@ FiCommentEditor >> initializePresenter [
 	self title: 'Ficus Comments Editor'.
 
 	scoreDropListModel 
-		items: {FiCommentAgree new. FiCommentDisagree new};
+		items: (FiCommentScore allSubclasses collect: #new);
 		displayBlock: [ :item | item prettyPrintString ].
 		
 	contentsTextModel 

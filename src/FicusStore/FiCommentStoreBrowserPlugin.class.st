@@ -10,22 +10,15 @@ Class {
 { #category : #example }
 FiCommentStoreBrowserPlugin class >> example [
 	"
-	Gofer new package: #ErgoPlayground; load.
 	self example.
 	"
 
 	| store pluginWorkingCopy |
 	store := FiMemoryStore exampleFragileBaseProblem.
 	pluginWorkingCopy := 
-		(FiComment exampleStoreFor: store) newWorkingCopy
+		(FiCommentSet exampleStoreFor: store) newWorkingCopy
 			name: 'Comments to ', store name;
 			yourself.
-
-	FiStoreBrowser new
-		store: store;
-		plugin: (FiCommentStoreBrowserPlugin forWorkingCopy: pluginWorkingCopy);
-		refresh;
-		openWithSpec.
 
 	FiWorkingCopyRegistryBrowser openWith: 
 		(FiWorkingCopyRegistry new 
@@ -45,8 +38,14 @@ FiCommentStoreBrowserPlugin class >> forWorkingCopy: aWorkingCopy [
 { #category : #operations }
 FiCommentStoreBrowserPlugin >> addComment: aFiComment [ 
 
-	| newSnapshot |	
-	newSnapshot := workingCopy snapshot resultOf: (FiInclude value: aFiComment).
+	| oldSnapshot newSnapshot edit |	
+	oldSnapshot := workingCopy snapshot.
+	
+	edit := oldSnapshot 
+		editAt: #comments
+		do: [ :set | set editInclude: aFiComment ].
+
+	newSnapshot := oldSnapshot resultOf: edit.
 
 	workingCopy snapshot: newSnapshot.
 ]
@@ -64,7 +63,8 @@ FiCommentStoreBrowserPlugin >> browseComments: aHistoryNode [
 { #category : #private }
 FiCommentStoreBrowserPlugin >> commentsFor: aHistoryNode [ 
 
-	^ workingCopy snapshot asArray select: [ :each | each appliesTo: aHistoryNode origin ]
+	^ workingCopy snapshot comments asArray 
+		select: [ :each | each appliesTo: aHistoryNode origin ]
 ]
 
 { #category : #initialization }
@@ -138,8 +138,14 @@ FiCommentStoreBrowserPlugin >> prepareNoCommentsMorphs: morphs for: aHistoryNode
 { #category : #operations }
 FiCommentStoreBrowserPlugin >> removeComment: aFiComment [ 
 
-	| newSnapshot |	
-	newSnapshot := workingCopy snapshot resultOf: (FiExclude value: aFiComment).
+	| oldSnapshot newSnapshot edit |	
+	oldSnapshot := workingCopy snapshot.
+	
+	edit := oldSnapshot 
+		editAt: #comments
+		do: [ :set | set editExclude: aFiComment ].
+
+	newSnapshot := oldSnapshot resultOf: edit.
 
 	workingCopy snapshot: newSnapshot
 ]

@@ -11,10 +11,10 @@ Class {
 		'commitModel',
 		'model',
 		'inspectModel',
-		'differenceModel',
 		'historyModel',
 		'browseModel',
-		'refreshModel'
+		'refreshModel',
+		'deltaModel'
 	],
 	#category : #'FicusStore-WorkingCopies'
 }
@@ -33,7 +33,7 @@ FiWorkingCopyRegistryBrowser class >> defaultSpec [
 						add: #historyModel;
 						add: #commitModel;
 						add: #browseModel;
-						add: #differenceModel;
+						add: #deltaModel;
 						add: #inspectModel ]
 				height: self toolbarHeight ];
 		yourself
@@ -81,6 +81,47 @@ FiWorkingCopyRegistryBrowser class >> openWith: registry [
 
 ]
 
+{ #category : #private }
+FiWorkingCopyRegistryBrowser >> actionBrowse [
+
+	workingCopiesModel selectedItems do: [ :each |
+		FiInspector inspect: each content snapshot ]
+]
+
+{ #category : #private }
+FiWorkingCopyRegistryBrowser >> actionCommit [
+
+	workingCopiesModel selectedItems do: [ :each | 
+		each content commit: 'a message'.
+		self refresh. ]
+]
+
+{ #category : #private }
+FiWorkingCopyRegistryBrowser >> actionDelta [
+
+	workingCopiesModel selectedItems do: [ :each |
+		FiEffectInspector inspect: each content difference ]
+]
+
+{ #category : #private }
+FiWorkingCopyRegistryBrowser >> actionInspect [
+
+	workingCopiesModel selectedItems do: [ :each | 
+		each content inspect ]
+]
+
+{ #category : #private }
+FiWorkingCopyRegistryBrowser >> actionOpen [
+
+	workingCopiesModel selectedItems do: [ :each | 
+		FiStoreBrowser new
+			store: each content store;
+			plugin: (self newStoreBrowserPluginFor: each content store);
+			refresh;
+			openWithSpec;
+			yourself ]
+]
+
 { #category : #accessing }
 FiWorkingCopyRegistryBrowser >> browseModel [
 
@@ -94,9 +135,8 @@ FiWorkingCopyRegistryBrowser >> commitModel [
 ]
 
 { #category : #accessing }
-FiWorkingCopyRegistryBrowser >> differenceModel [
-
-	^ differenceModel
+FiWorkingCopyRegistryBrowser >> deltaModel [
+	^ deltaModel
 ]
 
 { #category : #accessing }
@@ -118,8 +158,8 @@ FiWorkingCopyRegistryBrowser >> initializePresenter [
 	self title: 'Ficus Working Copy Registry Browser'.
 
 	workingCopiesModel
-		displayBlock: [ :item |
-			item description ].
+		displayBlock: [ :item | item description ];
+		doubleClick: [ self actionOpen ].
 
 	refreshModel
 		label: 'Refresh';
@@ -127,39 +167,23 @@ FiWorkingCopyRegistryBrowser >> initializePresenter [
 
 	historyModel
 		label: 'Open';
-		action: [ 
-			workingCopiesModel selectedItems do: [ :each | 
-				FiStoreBrowser new
-					store: each content store;
-					plugin: FiNullStoreBrowserPlugin new;
-					refresh;
-					openWithSpec;
-					yourself ] ].
+		action: [ self actionOpen ].
  	
 	commitModel
 		label: 'Commit';
-		action: [ 
-			workingCopiesModel selectedItems do: [ :each | 
-				each content commit: 'a message'.
-				self refresh. ] ].
+		action: [ self actionCommit ].
 	
-	differenceModel
-		label: 'Difference';
-		action: [ 
-			workingCopiesModel selectedItems do: [ :each |
-				FiEffectInspector inspect: each content difference ] ].
+	deltaModel
+		label: 'Delta';
+		action: [ self actionDelta ].
 
 	browseModel
 		label: 'Browse';
-		action: [ 
-			workingCopiesModel selectedItems do: [ :each |
-				FiInspector inspect: each content snapshot ] ].
+		action: [ self actionBrowse ].
 	
 	inspectModel
 		label: 'Inspect';
-		action: [ 
-			workingCopiesModel selectedItems do: [ :each | 
-				each content inspect ] ].
+		action: [ self actionInspect ].
 	
 ]
 
@@ -172,7 +196,7 @@ FiWorkingCopyRegistryBrowser >> initializeWidgets [
 		#historyModel -> #ButtonModel.
 		#browseModel -> #ButtonModel.
 		#commitModel -> #ButtonModel.
-		#differenceModel -> #ButtonModel.
+		#deltaModel -> #ButtonModel.
 		#inspectModel -> #ButtonModel.
 		}.
 
@@ -188,6 +212,20 @@ FiWorkingCopyRegistryBrowser >> inspectModel [
 FiWorkingCopyRegistryBrowser >> model: aModel [
 	
 	model := aModel
+]
+
+{ #category : #private }
+FiWorkingCopyRegistryBrowser >> newStoreBrowserPluginFor: aFiStore [ 
+	
+	^ model workingCopies
+		detect: [ :workingCopy | 
+			(workingCopy snapshot isKindOf: FiCommentSet) and: [ 
+			workingCopy snapshot targetStoreName = aFiStore name ]]
+		ifFound: [ :commentsWorkingCopy | 
+			FiCommentStoreBrowserPlugin forWorkingCopy: commentsWorkingCopy ]
+		ifNone: [ FiNullStoreBrowserPlugin new ].
+	
+	
 ]
 
 { #category : #refreshing }

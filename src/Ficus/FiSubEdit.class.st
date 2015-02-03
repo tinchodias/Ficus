@@ -41,6 +41,16 @@ FiSubEdit >> path [
 	^ path
 ]
 
+{ #category : #printing }
+FiSubEdit >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream nextPut: $(.
+	path printOn: aStream.
+	aStream nextPut: $).
+
+]
+
 { #category : #results }
 FiSubEdit >> resultOn: aShot [ 
 	

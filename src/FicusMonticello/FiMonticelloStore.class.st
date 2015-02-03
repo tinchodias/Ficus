@@ -34,7 +34,8 @@ FiMonticelloStore class >> downloadToCacheAllFrom: anMCHttpRepository [
 	"
 
 	| versionNames |
-	versionNames := anMCHttpRepository allFileNamesOrCache.
+	versionNames := anMCHttpRepository allFileNamesOrCache 
+		select: [ :each | each endsWith: '.mcz' ].
 	
 	versionNames 
 		do: [ :aFileName | 
@@ -53,7 +54,7 @@ FiMonticelloStore class >> downloadToCacheAllPharoXX [
 	self downloadToCacheAllPharoXX
 	"
 
-	{ self pharo10Repository. self pharo14Repository. self pharo20Repository. self pharo30Repository. self pharo40Repository } 
+	{ self pharo20GemstoneRepository. self pharo10Repository. self pharo14Repository. self pharo20Repository. self pharo30Repository. self pharo40Repository } 
 		do: [ :aRepository | self downloadToCacheAllFrom: aRepository ]
 ]
 
@@ -66,12 +67,21 @@ FiMonticelloStore class >> downloadToCacheFuelTests [
 ]
 
 { #category : #utility }
+FiMonticelloStore class >> downloadToCachePharo20Gemstone [
+	"
+	self downloadToCachePharo20Gemstone
+	"
+
+	self downloadToCacheAllFrom: self pharo20GemstoneRepository
+]
+
+{ #category : #utility }
 FiMonticelloStore class >> downloadToCachePharo20andPharo30 [
 	"
 	self downloadToCachePharo20andPharo30
 	"
 
-	{ self pharo20Repository. self pharo30Repository } 
+	{ self pharo20GemstoneRepository. self pharo20Repository. self pharo30Repository } 
 		do: [ :aRepository |
 			self downloadToCacheAllFrom: aRepository ]
 ]
@@ -107,6 +117,15 @@ FiMonticelloStore class >> pharo14Repository [
 
 	^ MCHttpRepository
 		location: 'http://smalltalkhub.com/mc/Pharo/Pharo14/main'
+		user: ''
+		password: ''
+]
+
+{ #category : #private }
+FiMonticelloStore class >> pharo20GemstoneRepository [
+
+	^ MCHttpRepository
+		location: 'http://ss3.gemstone.com/ss/Pharo20'
 		user: ''
 		password: ''
 ]

@@ -42,6 +42,23 @@ FiEpiceaTranslator >> editForMethodEqual: aRingMethod [
 ]
 
 { #category : #private }
+FiEpiceaTranslator >> ficusClassFor: aRGClassDefinition [ 
+
+	^ FiClass builder
+		theName: aRGClassDefinition name asSymbol;
+		metaclass: (self ficusMetaclassFor: aRGClassDefinition);
+		superclassName: aRGClassDefinition superclassName;
+		layout: (self ficusLayoutFor: aRGClassDefinition);
+		methods: FiSet new;
+		traitComposition: aRGClassDefinition traitCompositionSource;
+		category: aRGClassDefinition category;
+		classPool: (self ficusClassPoolFor: aRGClassDefinition);
+		sharedPools: (self ficusSharedPoolsFor: aRGClassDefinition);
+		comment: '';
+		new
+]
+
+{ #category : #private }
 FiEpiceaTranslator >> ficusClassPoolFor: aMCClassDefinition [ 
 
 	^ self ficusSymbolSetFor: aMCClassDefinition classVarNames 
@@ -53,6 +70,25 @@ FiEpiceaTranslator >> ficusLayoutFor: aMCClassDefinition [
 	^ FiFixedLayout builder 
 		instanceVariables: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
 		new
+]
+
+{ #category : #private }
+FiEpiceaTranslator >> ficusMetaclassFor: aRGClassDefinition [ 
+
+	^ FiMetaclass builder 
+		methods: FiSet new;
+		layout: (self ficusMetaclassLayoutFor: aRGClassDefinition);
+		traitComposition: aRGClassDefinition theMetaClass traitCompositionSource; 
+		new
+]
+
+{ #category : #private }
+FiEpiceaTranslator >> ficusMetaclassLayoutFor: aRGClassDefinition [ 
+			
+	^ FiFixedLayout builder 
+		instanceVariables: (self ficusSymbolSetFor: aRGClassDefinition theMetaClass instVarNames);
+		new
+		
 ]
 
 { #category : #private }
@@ -110,6 +146,17 @@ FiEpiceaTranslator >> visitBehaviorCommented: aChange [
 	^ FiSubEdit
 		path: basePath / aRingClass name / #comment
 		equal: aChange newComment
+]
+
+{ #category : #visitor }
+FiEpiceaTranslator >> visitClassCreated: aClassAddition [
+
+	| aFiClass |
+	aFiClass := self ficusClassFor: aClassAddition behaviorAffected.
+
+	^ FiSubEdit
+		path: FiPath root / #contents
+		edit: (FiInclude value: aFiClass)
 ]
 
 { #category : #visitor }

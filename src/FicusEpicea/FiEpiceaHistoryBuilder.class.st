@@ -84,7 +84,8 @@ FiEpiceaHistoryBuilder >> interestingEntries [
 { #category : #private }
 FiEpiceaHistoryBuilder >> isCodeChange: entry [
 
-	^ entry content isKindOf: EpCodeChange
+	^ entry content isCodeChange and: [ 
+		(entry content isKindOf: EpCategoryChange) not ]
 ]
 
 { #category : #private }

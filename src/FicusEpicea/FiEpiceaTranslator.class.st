@@ -102,6 +102,17 @@ FiEpiceaTranslator >> visitBehaviorChange: aChange [
 ]
 
 { #category : #visitor }
+FiEpiceaTranslator >> visitBehaviorCommented: aChange [
+
+	| aRingClass |
+	aRingClass := aChange behaviorAffected.	
+
+	^ FiSubEdit
+		path: basePath / aRingClass name / #comment
+		equal: aChange newComment
+]
+
+{ #category : #visitor }
 FiEpiceaTranslator >> visitMethodCreated: aChange [
 
 	^ self editForMethodEqual: aChange methodAdded

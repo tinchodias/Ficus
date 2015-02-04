@@ -165,7 +165,7 @@ FiHistoryNodesBrowser >> refresh [
 	| nodes |
 	store refresh.
 
-	nodes := store historyNodes copy.
+	nodes := OrderedCollection withAll: store historyNodes.
 	nodes addAll: ((self workingCopyRegistry workingCopiesForStore: store)
 		collect: #asHistoryNode).
 	

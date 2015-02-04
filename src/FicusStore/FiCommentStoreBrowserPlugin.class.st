@@ -36,6 +36,27 @@ FiCommentStoreBrowserPlugin class >> example [
 			yourself)
 ]
 
+{ #category : #example }
+FiCommentStoreBrowserPlugin class >> exampleFlatStore [
+	"
+	self exampleFlatStore.
+	"
+
+	| store pluginStore pluginWorkingCopy |
+	store := FiMemoryStore exampleFragileBaseProblem.
+	pluginStore := FiCommentSet exampleFlatStoreFor: store.
+	pluginWorkingCopy := 
+		pluginStore newWorkingCopy
+			name: 'Comments to ', store name;
+			yourself.
+
+	FiWorkingCopyRegistryBrowser openWith: 
+		(FiWorkingCopyRegistry new 
+			addWorkingCopy: store newWorkingCopy; 
+			addWorkingCopy: pluginWorkingCopy; 
+			yourself)
+]
+
 { #category : #'instance creation' }
 FiCommentStoreBrowserPlugin class >> forWorkingCopy: aWorkingCopy [ 
 	

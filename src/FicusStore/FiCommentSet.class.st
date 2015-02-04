@@ -9,6 +9,39 @@ Class {
 }
 
 { #category : #examples }
+FiCommentSet class >> exampleFlatStoreFor: store [
+
+	| comments |
+	comments := { 
+		FiComment builder 
+			target: store historyNodes first origin;
+			score: FiCommentAgree new;
+			message: 'Good start!';
+			new.
+		FiComment builder 
+			target: store historyNodes first origin;
+			score: FiCommentDisagree new;
+			message: 'Should be splitted';
+			new.
+		FiComment builder 
+			target: store historyNodes third origin;
+			score: FiCommentAgree new;
+			message: 'Rock&roll :)';
+			new.
+	 }.
+
+	^ FiFlatStore new
+		fileReference: 'comments_example.txt' asFileReference;
+		commitSnapshot: 
+			(FiCommentSet 
+				targetStoreName: store name 
+				comments: comments asFiSet)
+		priors: FiSet new;
+		yourself.
+
+]
+
+{ #category : #examples }
 FiCommentSet class >> exampleStoreFor: store [
 
 	| comments commentsStore |

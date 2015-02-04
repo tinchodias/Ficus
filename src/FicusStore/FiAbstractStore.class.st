@@ -1,3 +1,6 @@
+"
+I am an abstract store. See my concrete subclasses.
+"
 Class {
 	#name : #FiAbstractStore,
 	#superclass : #Object,

@@ -41,12 +41,14 @@ FiWorkingCopy >> asHistoryNode [
 { #category : #operations }
 FiWorkingCopy >> commit: aString [ 
 
+	| newNode |
 	self flag: #todo. "message is ignored"
-	self flag: #todo. "what if it's a merge?"
 	
-	store 
+	newNode := store 
 		commitSnapshot: snapshot 
 		priors: priors. 
+	
+	priors := { newNode } asFiSet.
 		
 	self announceRefreshed.
 ]

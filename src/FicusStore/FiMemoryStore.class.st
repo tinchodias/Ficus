@@ -1,3 +1,6 @@
+"
+I am a store that lives in memory, i.e. has no explicit external persistence.
+"
 Class {
 	#name : #FiMemoryStore,
 	#superclass : #FiAbstractStore,
@@ -142,7 +145,7 @@ FiMemoryStore >> printOn: aStream [
 	
 	aStream 
 		nextPut: $(;
-		print: self hash;
+		print: self name;
 		nextPut: $).
 ]
 

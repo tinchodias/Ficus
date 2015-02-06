@@ -113,13 +113,6 @@ FiRGMetaclass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFo
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> methods [
-
-	self flag: #fix. "Add class-side extension methods"
-	^ self localMethods
-]
-
-{ #category : #polymorphism }
 FiRGMetaclass >> name [
 
 	^ theNonMetaClass name, ' class'

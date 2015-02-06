@@ -81,7 +81,7 @@ FiRingTestResources >> classP [
 ]
 
 { #category : #resources }
-FiRingTestResources >> extensionMethodsToX [
+FiRingTestResources >> extensionMethodsToA [
 
 	^ FiExtensionMethods builder
 		hostName: #A;
@@ -89,6 +89,18 @@ FiRingTestResources >> extensionMethodsToX [
 			FiMethod sourceCode: 'sum43  ^ self sum42 + 1'. 
 			} asFiSet;
 		isMetaSide: false;
+		new
+]
+
+{ #category : #resources }
+FiRingTestResources >> extensionMethodsToAclass [
+
+	^ FiExtensionMethods builder
+		hostName: #A;
+		methods: { 
+			FiMethod sourceCode: 'metaSum43  ^ self new sum43'. 
+			} asFiSet;
+		isMetaSide: true;
 		new
 ]
 
@@ -112,7 +124,7 @@ FiRingTestResources >> packageY [
 	
 	^ FiPackage builder
 		theName: #Y;
-		contents: { self extensionMethodsToX } asFiSet;
+		contents: { self extensionMethodsToA. self extensionMethodsToAclass } asFiSet;
 		new
 ]
 

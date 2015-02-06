@@ -71,7 +71,7 @@ FiRGEnvironmentTest >> testKnownGlobalNames [
 
 	self 
 		assert: resources ficusRGEnvironment knownGlobalNames
-		equals: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
+		equals: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
 { #category : #tests }

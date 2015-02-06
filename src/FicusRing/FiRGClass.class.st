@@ -168,34 +168,6 @@ FiRGClass >> comment [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> compiledMethodAt: selector [ 
-	"Answer the compiled method associated with the argument, selector (a 
-	Symbol), a message selector in the receiver's method dictionary. If the 
-	selector is not in the dictionary, create an error notification."
-
-	^ self methods detect: [ :aMethod | aMethod selector = selector ]
-]
-
-{ #category : #polymorphism }
-FiRGClass >> compiledMethodAt: selector ifAbsent: aBlock [
-
-	^ self 
-		compiledMethodAt: selector
-		ifPresent: [ :method | method ]
-		ifAbsent: aBlock
-]
-
-{ #category : #polymorphism }
-FiRGClass >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock [
-	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
-
-	^ self methods 
-		detect: [ :aMethod | aMethod selector = selector ]
-		ifFound: [ :aMethod | anotherBlock cull: aMethod ]
-		ifNone: aBlock
-]
-
-{ #category : #polymorphism }
 FiRGClass >> definition [
 	"Answer a String that defines the receiver."
 
@@ -347,12 +319,6 @@ FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound:
 				lookupVariableNamed: aName 
 				ifFound: presentBlockClosure 
 				ifNotFound: absentBlockClosure ]
-]
-
-{ #category : #polymorphism }
-FiRGClass >> methods [
-	
-	^ (environment extensionMethodsFor: self) union: self localMethods
 ]
 
 { #category : #polymorphism }

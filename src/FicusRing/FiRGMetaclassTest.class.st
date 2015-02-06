@@ -100,11 +100,13 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 	results := OrderedCollection new.
 	
 	resources ringClassA theMetaClass selectorsAndMethodsDo: [ :selector :method |
-		results add: selector -> method ].
+		results add: method ].
 
 	self 
-		assert: results asArray 
-		equals: { #initialize -> (resources ringClassA classSide >> #initialize) }.
+		assert: results asSet
+		equals: { 
+			resources ringClassA classSide >> #initialize.
+			resources ringClassA classSide >> #metaSum43 } asSet.
 
 ]
 

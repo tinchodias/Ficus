@@ -31,6 +31,34 @@ FiRGBehavior >> basicLocalSelectors [
 ]
 
 { #category : #polymorphism }
+FiRGBehavior >> compiledMethodAt: selector [ 
+	"Answer the compiled method associated with the argument, selector (a 
+	Symbol), a message selector in the receiver's method dictionary. If the 
+	selector is not in the dictionary, create an error notification."
+
+	^ self methods detect: [ :aMethod | aMethod selector = selector ]
+]
+
+{ #category : #polymorphism }
+FiRGBehavior >> compiledMethodAt: selector ifAbsent: aBlock [
+
+	^ self 
+		compiledMethodAt: selector
+		ifPresent: [ :method | method ]
+		ifAbsent: aBlock
+]
+
+{ #category : #polymorphism }
+FiRGBehavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock [
+	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
+
+	^ self methods 
+		detect: [ :aMethod | aMethod selector = selector ]
+		ifFound: [ :aMethod | anotherBlock cull: aMethod ]
+		ifNone: aBlock
+]
+
+{ #category : #polymorphism }
 FiRGBehavior >> includesSelector: aSymbol [ 
 	"Answer whether the message whose selector is the argument is in the 
 	method dictionary of the receiver's class."
@@ -97,6 +125,18 @@ FiRGBehavior >> methodDict [
 				at: method selector 
 				put: method;
 				yourself ]
+]
+
+{ #category : #'accessing method dictionary' }
+FiRGBehavior >> methodDict: aDictionary [
+
+	^ self shouldNotImplement 
+]
+
+{ #category : #polymorphism }
+FiRGBehavior >> methods [
+	
+	^ (self environment extensionMethodsFor: self) union: self localMethods
 ]
 
 { #category : #polymorphism }

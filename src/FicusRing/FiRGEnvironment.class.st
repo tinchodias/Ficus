@@ -130,7 +130,8 @@ FiRGEnvironment >> environmentShot: anObject [
 { #category : #lookup }
 FiRGEnvironment >> extensionMethodsByBehaviorName [
 	
-	"lazy and ugly initialization"
+	self flag: #todo. "ugly"
+	
 	extensionMethodsByBehaviorName ifNil: [
 		extensionMethodsByBehaviorName := Dictionary new.
 
@@ -140,10 +141,15 @@ FiRGEnvironment >> extensionMethodsByBehaviorName [
 					self 
 						at: anExtensionMethodsShot hostName
 						ifPresent: [ :aBehavior |
+							| finalBehavior |
+							finalBehavior := anExtensionMethodsShot isMetaSide 
+								ifTrue: [ aBehavior classSide ]
+								ifFalse: [ aBehavior ].
+
 							(extensionMethodsByBehaviorName 
 								at: anExtensionMethodsShot hostName 
 								ifAbsentPut: [ Set new ])
-								add: (aBehavior ringMethodFor: aMethodShot) ]
+								add: (finalBehavior ringMethodFor: aMethodShot) ]
 						ifAbsent: []
 				]]]].
 
@@ -154,7 +160,7 @@ FiRGEnvironment >> extensionMethodsByBehaviorName [
 FiRGEnvironment >> extensionMethodsFor: aBehavior [
 	
 	^ (self extensionMethodsByBehaviorName
-		at: aBehavior name 
+		at: aBehavior theNonMetaClass name 
 		ifAbsent: [ ^ #() ]) 
 		select: [:aMethod | aMethod methodClass = aBehavior ]
 ]

@@ -43,6 +43,8 @@ FiRGPackage >> environment: aFiRGEnvironment [
 { #category : #accessing }
 FiRGPackage >> extensionMethods [
 
+	self flag: #todo. "delegate this instantiation to behaviors".
+	
 	^ packageShot extensionMethods flatCollect: [ :ficusExtensionMethods |
 		| ringClass |
 		ringClass := environment classNamed: ficusExtensionMethods hostName.

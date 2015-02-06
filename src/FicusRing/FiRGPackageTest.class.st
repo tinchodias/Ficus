@@ -27,7 +27,9 @@ FiRGPackageTest >> testDefinedMethods [
 	package := resources2 packages detect: [ :each | each name = #Y ].
 	self 
 		assert: package definedMethods asSet
-		equals: { (resources2 classNamed: #A) >> #sum43 } asSet.
+		equals: { 
+			(resources2 classNamed: #A) >> #sum43. 
+			(resources2 classNamed: #A) classSide >> #metaSum43 } asSet.
 ]
 
 { #category : #tests }

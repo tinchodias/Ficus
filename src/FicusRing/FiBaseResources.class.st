@@ -257,3 +257,9 @@ FiBaseResources >> packageKernel [
 		contents: { self classObject. self classClass. self classBoolean. self classTrue. self classFalse. self classSmallInteger. self classBlockClosure } asFiSet;
 		new	
 ]
+
+{ #category : #'resources - ring level' }
+FiBaseResources >> ringClassObject [
+
+	^ self ficusRGEnvironment classNamed: #Object
+]

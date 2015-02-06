@@ -25,7 +25,7 @@ FiRGClassTest >> testAllSelectors [
 
 	self 
 		assert: resources ringClassB allSelectors
-		equals: (resources ringClassA selectors, resources ringClassB selectors) asSet
+		equals: (resources ringClassObject selectors union: (resources ringClassA selectors union: resources ringClassB selectors)) asSet
 
 ]
 
@@ -60,7 +60,7 @@ FiRGClassTest >> testAllSubclassesDo [
 { #category : #tests }
 FiRGClassTest >> testAllSuperclasses [
 
-	self assert: resources ringClassB allSuperclasses asArray equals: { resources ringClassA }.
+	self assert: resources ringClassB allSuperclasses asArray equals: { resources ringClassA. resources ringClassObject }.
 ]
 
 { #category : #tests }
@@ -70,7 +70,7 @@ FiRGClassTest >> testAllSuperclassesDo [
 	result := OrderedCollection new.
 	resources ringClassB allSuperclassesDo: [ :aSuperclass | result add: aSuperclass ].
 	
-	self assert: result asArray equals: { resources ringClassA }.
+	self assert: result asArray equals: { resources ringClassA. resources ringClassObject }.
 ]
 
 { #category : #tests }
@@ -90,14 +90,27 @@ FiRGClassTest >> testBindingOf [
 
 	"for a global"	
 	self deny: (resources ringClassB bindingOf: #A) isNil.
-	self assert: (resources ringClassB bindingOf: #A) equals: (resources ficusRGEnvironment bindingOf: #A).
+	self assert: (resources ringClassB bindingOf: #A) equals: resources ringClassA binding.
 
 	"for a class variable"
-	self deny: (resources ringClassA bindingOf: #SomeClassVariable) isNil.
-"	self assert: (classB bindingOf: #BConstants) equals: (ringShotResource environmentWithClassesABC bindingOf: #A)."
+	"(we assume that class variables have nil as value)"
+	self 
+		assert: (resources ringClassA bindingOf: #SomeClassVariable)
+		equals: (#SomeClassVariable -> nil).
+	self 
+		assert: (resources ringClassB bindingOf: #SomeClassVariable)
+		equals: (#SomeClassVariable -> nil).
+	self assert: (resources ringClassC bindingOf: #SomeClassVariable) isNil.
 
-	self flag: #todo. "Functionality missing: SHAREDPOOLS"
-
+	"for a shared pool variable"
+	"(we assume that shared pools have nil as value)"
+	self 
+		assert: (resources ringClassA bindingOf: #SomeSharedPoolVariable) 
+		equals: (#SomeSharedPoolVariable -> nil).
+	self 
+		assert: (resources ringClassB bindingOf: #SomeSharedPoolVariable) 
+		equals: (#SomeSharedPoolVariable -> nil).
+	self assert: (resources ringClassC bindingOf: #SomeSharedPoolVariable) isNil.
 
 ]
 
@@ -164,13 +177,21 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 FiRGClassTest >> testDefinition [
 
 	self 
-		assert: resources ringClassA definition 
-		equals: 'ProtoObject subclass: #A
-	instanceVariableNames: ''a1 a2''
-	classVariableNames: ''SomeClassVariable''
+		assert: resources ringClassObject definition 
+		equals: 'ProtoObject subclass: #Object
+	instanceVariableNames: ''''
+	classVariableNames: ''''
 	poolDictionaries: ''''
 	category: ''NoCategory''.
-A superclass: nil'
+Object superclass: nil'.
+
+	self 
+		assert: resources ringClassA definition 
+		equals: 'Object subclass: #A
+	instanceVariableNames: ''a1 a2''
+	classVariableNames: ''SomeClassVariable''
+	poolDictionaries: ''P''
+	category: ''NoCategory'''.
 ]
 
 { #category : #tests }
@@ -308,15 +329,15 @@ FiRGClassTest >> testSelectorsAndMethodsDo [
 { #category : #tests }
 FiRGClassTest >> testSharedPoolNames [
 
-	self flag: #todo. "Test not empty case"
-	self assert: resources ringClassA sharedPoolNames isEmpty.
+	self assert: resources ringClassA sharedPoolNames equals: #(P).
+	self assert: resources ringClassB sharedPoolNames isEmpty.
 ]
 
 { #category : #tests }
 FiRGClassTest >> testSharedPools [
 
-	self flag: #todo. "Test not empty case"
-	self assert: resources ringClassA sharedPools isEmpty.
+	self assert: resources ringClassA sharedPools equals: { resources ringClassP }.
+	self assert: resources ringClassB sharedPools isEmpty.
 ]
 
 { #category : #tests }
@@ -349,8 +370,9 @@ FiRGClassTest >> testSubclassesDo [
 { #category : #tests }
 FiRGClassTest >> testSuperclass [
 
-	self assert: resources ringClassA superclass isNil.
-	self assert: resources ringClassB superclass name equals: #A.
+	self assert: resources ringClassObject superclass isNil.
+	self assert: resources ringClassA superclass equals: resources ringClassObject.
+	self assert: resources ringClassB superclass equals: resources ringClassA.
 ]
 
 { #category : #'tests-polymorphism' }
@@ -435,7 +457,7 @@ FiRGClassTest >> testWithAllSuperAndSubclassesDo [
 	result := OrderedCollection new.
 	resources ringClassA withAllSuperAndSubclassesDo: [ :aSubclass | result add: aSubclass ].
 	
-	self assert: result asArray equals: { resources ringClassA. resources ringClassB }.
+	self assert: result asArray equals: { resources ringClassObject. resources ringClassA. resources ringClassB }.
 ]
 
 { #category : #'tests-polymorphism' }
@@ -443,5 +465,5 @@ FiRGClassTest >> testWithAllSuperclasses [
 
 	self 
 		assert: resources ringClassB withAllSuperclasses asArray 
-		equals: { resources ringClassB. resources ringClassA }.
+		equals: { resources ringClassB. resources ringClassA. resources ringClassObject }.
 ]

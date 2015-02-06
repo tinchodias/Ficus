@@ -12,8 +12,10 @@ FiRingTestResources >> classA [
 
 	^ FiClass builder 
 		theName: #A;
+		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #(#a1 #a2));
 		classPool: #(SomeClassVariable) asFiSet;
+		sharedPools: #(P) asFiSet;
 		methods: { 
 			FiMethod sourceCode: 'sum  ^ a1 + a2'.
 			FiMethod sourceCode: 'sum42  ^ self sum + 42'. } asFiSet;
@@ -40,6 +42,7 @@ FiRingTestResources >> classB [
 			FiMethod sourceCode: 'sum  ^ super sum + b1'.
 			FiMethod sourceCode: 'variableInSuper  ^ a1'.
 			FiMethod sourceCode: 'readSomeClassVariable  ^ SomeClassVariable'.
+			FiMethod sourceCode: 'readSomeSharedPoolVariable  ^ SomeSharedPoolVariable'.
 			FiMethod sourceCode: 'defaultClass  ^ C'.
 			} asFiSet;
 		new.
@@ -50,6 +53,7 @@ FiRingTestResources >> classC [
 
 	^ FiClass builder 
 		theName: #C;
+		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: { 
 			FiMethod sourceCode: 'sum  ^ 0.0'.
@@ -61,6 +65,18 @@ FiRingTestResources >> classC [
 			FiMethod sourceCode: 'sumAt: argument  ^ argument sum'.
 			FiMethod sourceCode: 'sumTmp  |tmp| tmp := self sum. ^tmp+tmp'.
 			} asFiSet;
+		new.
+]
+
+{ #category : #resources }
+FiRingTestResources >> classP [
+
+	^ FiClass builder 
+		theName: #P;
+		superclassName: #Object;
+		layout: (FiFixedLayout withInstanceVariables: #());
+		classPool: #(SomeSharedPoolVariable) asFiSet;
+		methods: FiSet new;
 		new.
 ]
 
@@ -87,7 +103,7 @@ FiRingTestResources >> packageX [
 	
 	^ FiPackage builder
 		theName: #X;
-		contents: { self classA. self classB. self classC } asFiSet;
+		contents: { self classA. self classB. self classC. self classP } asFiSet;
 		new
 ]
 
@@ -116,4 +132,10 @@ FiRingTestResources >> ringClassB [
 FiRingTestResources >> ringClassC [
 
 	^ self ficusRGEnvironment classNamed: #C
+]
+
+{ #category : #'resources - ring level' }
+FiRingTestResources >> ringClassP [
+
+	^ self ficusRGEnvironment classNamed: #P
 ]

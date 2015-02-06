@@ -9,7 +9,7 @@ FiRGPackageTest >> testDefinedClasses [
 
 	self 
 		assert: (resources ringClassA package definedClasses collect: #name) asSet
-		equals: #(A B C) asSet.
+		equals: #(A B C P) asSet.
 ]
 
 { #category : #tests }

@@ -379,7 +379,8 @@ FiRGClass >> sharedPoolNames [
 { #category : #polymorphism }
 FiRGClass >> sharedPools [
 
-	^ classShot sharedPools asArray
+	^ classShot sharedPools asArray sorted
+		collect: [ :name | environment classNamed: name ]
 ]
 
 { #category : #polymorphism }

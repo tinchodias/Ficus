@@ -250,7 +250,7 @@ FiRGEnvironment >> knownGlobalDummyValue [
 { #category : #accessing }
 FiRGEnvironment >> knownGlobalNames [
 	
-	^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
+	^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
 { #category : #lookup }

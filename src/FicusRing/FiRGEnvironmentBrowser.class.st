@@ -37,7 +37,7 @@ FiRGEnvironmentBrowser class >> example4yrupe [
 	self example4yrupe
 	"
 	
-	^ self openOn: YrPharoMigrator example1readHead asFiRGEnvironment
+	^ self openOn: (YrPharoMigrator example1readTag: '30005') asFiRGEnvironment
 ]
 
 { #category : #private }

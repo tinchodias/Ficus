@@ -29,6 +29,9 @@ FiClassRequisitesTest >> testClassA [
 	self 
 		assertRequisitesOf: resources ringClassA
 		equals: {
+			FiInheritanceDeclaration builder
+				theClassName: #Object;
+				new
 			}
 ]
 
@@ -42,4 +45,13 @@ FiClassRequisitesTest >> testClassB [
 				theClassName: #A;
 				new
 				}
+]
+
+{ #category : #tests }
+FiClassRequisitesTest >> testClassObject [
+
+	self 
+		assertRequisitesOf: resources ringClassObject
+		equals: {
+			}
 ]

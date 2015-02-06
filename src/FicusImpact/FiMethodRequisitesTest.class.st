@@ -30,6 +30,9 @@ FiMethodRequisitesTest >> testClassAClassInitialize [
 		assertRequisitesOf: resources ringClassA classSide >> #initialize
 		equals: {
 			FiVariableAccess builder
+				variableName: #SomeSharedPoolVariable;
+				new.
+			FiVariableAccess builder
 				variableName: #SomeClassVariable;
 				new.
 			FiVariableAccess builder

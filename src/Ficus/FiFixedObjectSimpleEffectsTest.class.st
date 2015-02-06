@@ -65,7 +65,7 @@ FiFixedObjectSimpleEffectsTest >> testUpdateAndSubAddition [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
+		assert: (source resultOfSimpleEffects: simpleEffects) 
 		equals: (source resultOf: effect edit).
 
 	self assert: simpleEffects equals: 

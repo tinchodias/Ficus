@@ -136,7 +136,7 @@ FiSetSimpleEffectsTest >> testUpdate [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
+		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
 		equals: (intermediate resultOf: effect edit).
 	
 	self assert: simpleEffects equals: 

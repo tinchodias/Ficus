@@ -19,6 +19,12 @@ FiHistoryNode >> deltas [
 	^ self shouldBeImplemented 
 ]
 
+{ #category : #testing }
+FiHistoryNode >> isWorkingCopy [
+
+	^ false
+]
+
 { #category : #accessing }
 FiHistoryNode >> origin [
 

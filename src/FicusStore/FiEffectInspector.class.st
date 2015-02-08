@@ -142,6 +142,15 @@ FiEffectInspector >> initializePresenter [
 		windowIcon: Smalltalk ui icons smallInspectItIcon;
 		title: 'Ficus Effects Inspector'.
  
+	self initializePresenterTreeModel.
+
+	diffModel
+		displayBlock: [ :morph | morph ]
+]
+
+{ #category : #initialization }
+FiEffectInspector >> initializePresenterTreeModel [
+	
 	treeModel
 		evenRowColor: treeModel oddRowColor;
 		displayBlock: [ :aSimpleEffect | self displayMorphFor: aSimpleEffect ];
@@ -154,9 +163,19 @@ FiEffectInspector >> initializePresenter [
 			self showDiffFor: nil ];
 		whenSelectedItemChanged: [ :aSimpleEffectOrNil | 
 			self showDiffFor: aSimpleEffectOrNil value ].
+	
+	treeModel
+		dragEnabled: true;
+		dropEnabled: false;
+		transferBlock: [ :passenger :source | 
+			| draggedItems |
+			draggedItems := treeModel selectedItems.
+			(TransferMorph 
+				withPassenger: ("self draggingPassengerFor: "draggedItems)
+				from: source)
+				setProperty: #ficusSimpleEffects toValue: draggedItems;
+				yourself ].
 
-	diffModel
-		displayBlock: [ :morph | morph ]
 ]
 
 { #category : #initialization }

@@ -45,17 +45,32 @@ FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [
 	| morphs |
 	morphs := OrderedCollection new.
 
-	morphs add: ((self isWorkingCopy: aHistoryNode)
+	morphs add: (aHistoryNode isWorkingCopy
 		ifTrue: [ '[working copy]' asText allBold asMorph lock: true; yourself ]
 		ifFalse: [ aHistoryNode origin shortDescription asMorph ]).
 	
 	self flag: #todo. "maybe not necessary, but..."
-	(self isWorkingCopy: aHistoryNode) ifFalse: [
+	aHistoryNode isWorkingCopy ifFalse: [
 		self plugin 
 			prepareDescriptionMorphs: morphs 
 			for: aHistoryNode ].
 	
 	^ FiMorphBuilder default rowMorphWithAll: morphs
+]
+
+{ #category : #initialization }
+FiHistoryNodesBrowser >> dropSimpleEffects: simpleEffects in: aNode [
+		
+	| edit newSnapshot |
+	aNode isWorkingCopy ifFalse: [
+		self inform: 'Not a working copy'.
+		^ self ].
+	
+	edit := aNode snapshot editFromSimpleEffects: simpleEffects.
+
+	newSnapshot := aNode snapshot resultOf: edit.
+
+	aNode workingCopy snapshot: newSnapshot
 ]
 
 { #category : #accessing }
@@ -86,7 +101,7 @@ FiHistoryNodesBrowser >> initializeHiedraController [
 			width: 2.3;
 			color: Color red;
 			destinationsBlock: [ :node | 
-				(self isWorkingCopy: node)
+				node isWorkingCopy
 					ifTrue: [ #() ]
 					ifFalse: [ node priors asArray ]
 				] ].
@@ -97,7 +112,7 @@ FiHistoryNodesBrowser >> initializeHiedraController [
 			color: Color red;
 			dashes: #(3 3);
 			destinationsBlock: [ :node | 
-				(self isWorkingCopy: node)
+				node isWorkingCopy
 					ifFalse: [ #() ]
 					ifTrue: [ node priors asArray ]
 				] ].
@@ -109,6 +124,17 @@ FiHistoryNodesBrowser >> initializePresenter [
 
 	super initializePresenter.
 
+	self initializePresenterHistoryTreeModel.
+				
+	refreshButton
+		label: 'Refresh';
+		icon: Smalltalk ui icons refreshIcon;
+		action: [ self refresh ]
+]
+
+{ #category : #initialization }
+FiHistoryNodesBrowser >> initializePresenterHistoryTreeModel [
+		
 	self initializeHiedraController. 
 
 	historyTreeModel
@@ -123,11 +149,24 @@ FiHistoryNodesBrowser >> initializePresenter [
 				initialWidth: 800;
 				yourself.				
 			}.
+
+	historyTreeModel
+		dragEnabled: false;
+		dropEnabled: true;
+		wantDropBlock: [ :transfer :event :source |
+			| answer |
+			answer := true.
+			transfer 
+				valueOfProperty: #ficusSimpleEffects 
+				ifAbsent: [ answer := false ].
+			answer ];
+		acceptDropBlock: [ :transfer :event :source :receiver | 
+			| droppedSimpleEffects aNode |
+			droppedSimpleEffects := (transfer valueOfProperty: #ficusSimpleEffects) collect: #content.
+			aNode := receiver complexContents item.
 			
-	refreshButton
-		label: 'Refresh';
-		icon: Smalltalk ui icons refreshIcon;
-		action: [ self refresh ]
+			self dropSimpleEffects: droppedSimpleEffects in: aNode ].
+
 ]
 
 { #category : #initialization }
@@ -136,14 +175,6 @@ FiHistoryNodesBrowser >> initializeWidgets [
 	self instantiateModels: #(
 		historyTreeModel TreeModel
 		refreshButton ButtonModel).
-
-]
-
-{ #category : #private }
-FiHistoryNodesBrowser >> isWorkingCopy: aHistoryNode [
-
-	self flag: #todo. "fix"
-	^ aHistoryNode origin isNil
 
 ]
 
@@ -162,12 +193,20 @@ FiHistoryNodesBrowser >> plugin: aPlugin [
 { #category : #refreshing }
 FiHistoryNodesBrowser >> refresh [
 	
-	| nodes |
+	| nodes workingCopies |
 	store refresh.
 
+	"should unsubscribe"
+	workingCopies := self workingCopyRegistry workingCopiesForStore: store.
+
 	nodes := OrderedCollection withAll: store historyNodes.
-	nodes addAll: ((self workingCopyRegistry workingCopiesForStore: store)
-		collect: #asHistoryNode).
+	nodes addAll: (workingCopies collect: #asHistoryNode).
+
+	workingCopies do: [ :each |
+		each announcer weak
+			when: FiWorkingCopyRefreshed
+			send: #refresh
+			to: self ].
 	
 	historyTreeModel roots: nodes reversed.
 ]

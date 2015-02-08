@@ -31,11 +31,9 @@ FiWorkingCopy >> announcer [
 { #category : #converting }
 FiWorkingCopy >> asHistoryNode [
 	
-	^ FiSnapshotHistoryNode builder
-		origin: nil "(FiSingleOrigin withReference: self)";
-		snapshot: snapshot;
-		priors: priors;
-		new
+	^ FiWorkingCopyHistoryNode new
+		workingCopy: self;
+		yourself
 ]
 
 { #category : #operations }

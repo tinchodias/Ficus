@@ -1,3 +1,6 @@
+"
+I represent a set of FiComment instances.
+"
 Class {
 	#name : #FiCommentSet,
 	#superclass : #FiFixedObject,

@@ -1,3 +1,6 @@
+"
+I'm a browser of history nodes.
+"
 Class {
 	#name : #FiHistoryNodesBrowser,
 	#superclass : #ComposableModel,
@@ -46,14 +49,12 @@ FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [
 	morphs := OrderedCollection new.
 
 	morphs add: (aHistoryNode isWorkingCopy
-		ifTrue: [ '[working copy]' asText allBold asMorph lock: true; yourself ]
+		ifTrue: [ '<working copy>' asText allBold asMorph lock: true; yourself ]
 		ifFalse: [ aHistoryNode origin shortDescription asMorph ]).
 	
-	self flag: #todo. "maybe not necessary, but..."
-	aHistoryNode isWorkingCopy ifFalse: [
-		self plugin 
-			prepareDescriptionMorphs: morphs 
-			for: aHistoryNode ].
+	self plugin 
+		prepareDescriptionMorphs: morphs 
+		for: aHistoryNode.
 	
 	^ FiMorphBuilder default rowMorphWithAll: morphs
 ]

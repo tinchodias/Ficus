@@ -1,3 +1,6 @@
+"
+I'm a history node that knows the delta with the prior node. This means that the answer of #snapshot is computed.
+"
 Class {
 	#name : #FiDeltaHistoryNode,
 	#superclass : #FiHistoryNode,

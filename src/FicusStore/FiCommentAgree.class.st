@@ -1,3 +1,6 @@
+"
+I represent a positive score of a FiComment.
+"
 Class {
 	#name : #FiCommentAgree,
 	#superclass : #FiCommentScore,

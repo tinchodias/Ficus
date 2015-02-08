@@ -1,3 +1,6 @@
+"
+I represent a comment to a commit.
+"
 Class {
 	#name : #FiComment,
 	#superclass : #FiFixedObject,
@@ -18,7 +21,7 @@ FiComment >> appliesTo: anOrigin [
 { #category : #accessing }
 FiComment >> defaultStep [
 
-	^ ('comment:', target shortDescription, ':', self hash asString) asSymbol
+	^ (target shortDescription, '.', self hash printStringHex) asSymbol
 ]
 
 { #category : #accessing }

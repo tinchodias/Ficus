@@ -136,6 +136,8 @@ FiCommentStoreBrowserPlugin >> prepareComments: nodeComments morphs: morphs for:
 { #category : #accessing }
 FiCommentStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
 
+	aHistoryNode isWorkingCopy ifTrue: [ ^ self ].
+
 	(self commentsFor: aHistoryNode) 
 		ifNotEmpty: [ :nodeComments | 
 			self prepareComments: nodeComments morphs: morphs for: aHistoryNode ]

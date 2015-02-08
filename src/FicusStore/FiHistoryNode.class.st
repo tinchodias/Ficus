@@ -1,3 +1,6 @@
+"
+I represent an abstract point in the history.
+"
 Class {
 	#name : #FiHistoryNode,
 	#superclass : #FiFixedObject,

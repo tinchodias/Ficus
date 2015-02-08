@@ -1,3 +1,6 @@
+"
+I represent a negative score of a FiComment.
+"
 Class {
 	#name : #FiCommentDisagree,
 	#superclass : #FiCommentScore,

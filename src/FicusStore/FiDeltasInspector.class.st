@@ -1,3 +1,6 @@
+"
+I'm useful for inspecting FiHistoryNode's deltas.
+"
 Class {
 	#name : #FiDeltasInspector,
 	#superclass : #ComposableModel,

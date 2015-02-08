@@ -1,3 +1,6 @@
+"
+I represent a history node that corresponds to a working copy.
+"
 Class {
 	#name : #FiWorkingCopyHistoryNode,
 	#superclass : #Object,

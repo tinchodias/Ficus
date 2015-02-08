@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fileReference',
 		'name',
-		'soleSnapshot'
+		'soleNode'
 	],
 	#category : #'FicusStore-Stores'
 }
@@ -18,31 +18,33 @@ FiFlatStore >> commitSnapshot: aSnapshot priors: priors [
 	fileReference writeStreamDo: [ :stream |
 		STON put: aSnapshot onStreamPretty: stream ].
 	
-	soleSnapshot := aSnapshot.
+	self refreshSoleNodeWith: aSnapshot.
 	
-	^ self soleNode
+	^ soleNode
 ]
 
 { #category : #accessing }
 FiFlatStore >> fileReference [
+
 	^ fileReference
 ]
 
 { #category : #accessing }
 FiFlatStore >> fileReference: anObject [
+
 	fileReference := anObject
 ]
 
 { #category : #accessing }
 FiFlatStore >> headHistoryNode [
 
-	^ self soleNode
+	^ soleNode
 ]
 
 { #category : #accessing }
 FiFlatStore >> historyNodes [
 
-	^ { self soleNode }
+	^ { soleNode }
 ]
 
 { #category : #accessing }
@@ -71,24 +73,18 @@ FiFlatStore >> printOn: aStream [
 { #category : #refreshing }
 FiFlatStore >> refresh [
 
-	soleSnapshot :=
-		fileReference readStreamDo: [ :stream |
-			STON fromStream: stream ].
+	self refreshSoleNodeWith: 
+		(fileReference readStreamDo: [ :stream |
+			STON fromStream: stream ]).
 
 ]
 
 { #category : #accessing }
-FiFlatStore >> soleNode [
+FiFlatStore >> refreshSoleNodeWith: aSnapshot [
 
-	^ (FiSnapshotHistoryNode builder
-		origin: (FiSingleOrigin withReference: self soleSnapshot hash printStringHex);
-		snapshot: self soleSnapshot;
+	soleNode := (FiSnapshotHistoryNode builder
+		origin: (FiSingleOrigin withReference: fileReference basename);
+		snapshot: aSnapshot;
 		priors: FiSet new;
 		new).
-]
-
-{ #category : #accessing }
-FiFlatStore >> soleSnapshot [
-
-	^ soleSnapshot
 ]

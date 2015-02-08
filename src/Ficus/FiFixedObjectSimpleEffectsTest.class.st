@@ -14,24 +14,27 @@ FiFixedObjectSimpleEffectsTest >> testNoEffect [
 	effect := source effectOf: edit.
 	
 	self 
-		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
-		equals: (source resultOf: effect edit).
+		assert: (source editFromSimpleEffects: effect asSimpleEffects) 
+		equals: effect edit.
+
 ]
 
 { #category : #tests }
 FiFixedObjectSimpleEffectsTest >> testUpdate [
 
-	| edit effect source |
+	| edit effect source simpleEffects |
 	source := FiChef nickname: #A.
 
 	edit :=  source editAt: #shortBio equal: '42'.
 	effect := source effectOf: edit.
-	
+
+	simpleEffects := effect asSimpleEffects.
+
 	self 
-		assert: (source resultOfSimpleEffects: effect asSimpleEffects) 
-		equals: (source resultOf: effect edit).
-		
-	self assert: effect asSimpleEffects equals: 
+		assert: (source editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
+	
+	self assert: simpleEffects equals: 
 		(FiSet withValues: {
 			(FiUpdate builder
 				path: FiPath root / #shortBio;
@@ -65,8 +68,8 @@ FiFixedObjectSimpleEffectsTest >> testUpdateAndSubAddition [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (source resultOfSimpleEffects: simpleEffects) 
-		equals: (source resultOf: effect edit).
+		assert: (source editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 
 	self assert: simpleEffects equals: 
 		(FiSet withValues: {

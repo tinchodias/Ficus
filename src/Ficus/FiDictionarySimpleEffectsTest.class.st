@@ -16,9 +16,11 @@ FiDictionarySimpleEffectsTest >> testAddition [
 
 	simpleEffects := effect asSimpleEffects.
 
+	simpleEffects := effect asSimpleEffects.
+
 	self 
-		assert: (source resultOfSimpleEffects: simpleEffects) 
-		equals: (source resultOf: effect edit).
+		assert: (source editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 			
 	self assert: simpleEffects equals: 
 		((FiSet withValues: {
@@ -67,8 +69,9 @@ FiDictionarySimpleEffectsTest >> testNoEffect [
 	self assert: effect asSimpleEffects isEmpty.
 	
 	self 
-		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
-		equals: (intermediate resultOf: effect edit).
+		assert: (intermediate editFromSimpleEffects: effect asSimpleEffects) 
+		equals: effect edit.
+
 ]
 
 { #category : #tests }
@@ -87,8 +90,8 @@ FiDictionarySimpleEffectsTest >> testRemoval [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
-		equals: (intermediate resultOf: effect edit).
+		assert: (intermediate editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 		
 	self assert: simpleEffects equals: 
 		(FiSet withValues: {
@@ -138,8 +141,8 @@ FiDictionarySimpleEffectsTest >> testUpdate [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
-		equals: (intermediate resultOf: effect edit).
+		assert: (intermediate editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 
 	self assert: simpleEffects equals: 
 		(FiSet withValues: {

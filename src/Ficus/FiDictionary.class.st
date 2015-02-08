@@ -80,6 +80,15 @@ FiDictionary >> editExclude: key [
 	^ FiExcludeKey key: key
 ]
 
+{ #category : #edits }
+FiDictionary >> editFromSimpleEffect: aSimpleEffect [
+	
+	^ aSimpleEffect 
+		ifAdd: [ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ] 
+		ifRemove: [ self editExclude: aSimpleEffect path step ] 
+		ifUpdate: [ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ]
+]
+
 { #category : #effects }
 FiDictionary >> effectOfAcceptKey: anAcceptKey [ 
 
@@ -145,23 +154,6 @@ FiDictionary >> resultOfExcludeKey: anExcludeKey [
 			(valueByKey copy
 				removeKey: anExcludeKey key;
 				yourself)
-]
-
-{ #category : #results }
-FiDictionary >> resultOfSimpleEffects: simpleEffects [
-	
-	| result |
-	result := simpleEffects 
-		inject: self 
-		into: [ :aShot :aSimpleEffect |
-			| edit |
-			edit := aSimpleEffect 
-				ifAdd: [ aShot editAt: aSimpleEffect path step equal: aSimpleEffect newValue ] 
-				ifRemove: [ aShot editExclude: aSimpleEffect path step ] 
-				ifUpdate: [ aShot editAt: aSimpleEffect path step equal: aSimpleEffect newValue ].
-			aShot resultOf: edit ].
-		
-	^ result
 ]
 
 { #category : #enumerating }

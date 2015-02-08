@@ -62,7 +62,33 @@ FiShot >> differenceFrom: other [
 { #category : #edits }
 FiShot >> editAll: aCollectionOfEdits [
 	
-	^ FiCompositeEdit withAll: aCollectionOfEdits
+	^ FiEdit fromAll: aCollectionOfEdits
+]
+
+{ #category : #edits }
+FiShot >> editAtPath: aPath do: aBlockClosure [
+
+	| target edit |
+	target := aPath resolvedOn: self.
+	edit := aBlockClosure value: target.
+
+	^ aPath length isZero
+		ifTrue: [ edit ]
+		ifFalse: [ FiSubEdit path: aPath edit: edit ]
+]
+
+{ #category : #edits }
+FiShot >> editFromSimpleEffect: aSimpleEffect [
+	"Answer the edit that corresponds to apply the FiSimpleEffect."
+
+	^ self subclassResponsibility 
+]
+
+{ #category : #edits }
+FiShot >> editFromSimpleEffects: simpleEffects [
+	"Answer the edit that corresponds to apply the simpleEffects."
+
+	^ self editAll: (simpleEffects collect: [ :each | self editFromSimpleEffect: each ])
 ]
 
 { #category : #convenience }
@@ -164,13 +190,6 @@ FiShot >> resultOfCompositeEdit: aCompositeEdit [
 	^ aCompositeEdit children values
 		inject: self
 		into: [ :copy :edit | copy resultOf: edit ]
-]
-
-{ #category : #results }
-FiShot >> resultOfSimpleEffects: simpleEffects [
-	"Answer the result of applying simpleEffects."
-
-	^ self subclassResponsibility 
 ]
 
 { #category : #results }

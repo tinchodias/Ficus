@@ -12,8 +12,6 @@ Class {
 { #category : #convenience }
 FiEffect class >> fromAll: subEffects [
 
-	self flag: #todo. "Avoid this IFs using double dispatch like #composedWith: ?"
-
 	^ subEffects
 		ifEmpty: [ FiNoEffect new ]
 		ifNotEmpty: [ subEffects size = 1

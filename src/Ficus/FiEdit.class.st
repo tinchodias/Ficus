@@ -9,6 +9,17 @@ Class {
 	#category : #'Ficus-Model-Core-Edits'
 }
 
+{ #category : #convenience }
+FiEdit class >> fromAll: edits [
+
+	^ edits
+		ifEmpty: [ FiNoEdit new ]
+		ifNotEmpty: [ 
+			edits size = 1
+				ifTrue: [ edits anyOne ]
+				ifFalse: [ FiCompositeEdit withAll: edits ] ]
+]
+
 { #category : #testing }
 FiEdit >> affects: aPath [ 
 	

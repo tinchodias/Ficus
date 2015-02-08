@@ -127,6 +127,24 @@ FiSet >> editExclude: aValue [
 ]
 
 { #category : #edits }
+FiSet >> editFromSimpleEffect: aSimpleEffect [
+	
+	| workaroundPath |
+	self flag: #fix. "this is horrible..."
+	workaroundPath := aSimpleEffect path length isZero
+		ifTrue: [ aSimpleEffect path ]
+		ifFalse: [ aSimpleEffect path basePath ].
+	
+	^ self 
+		editAtPath: workaroundPath
+		do: [ :target |
+			aSimpleEffect
+				ifAdd: [ target editInclude: aSimpleEffect newValue ] 
+				ifRemove: [ target editExclude: aSimpleEffect oldValue ] 
+				ifUpdate: [ target editInclude: aSimpleEffect newValue ] ]
+]
+
+{ #category : #edits }
 FiSet >> editInclude: aValue [
 
 	^ FiInclude value: aValue
@@ -229,23 +247,6 @@ FiSet >> resultOfInclude: anInclude [
 		ifAbsent: [ ].
 		
 	^ self species withValues: newValues
-]
-
-{ #category : #results }
-FiSet >> resultOfSimpleEffects: simpleEffects [
-	
-	| result |
-	result := simpleEffects 
-		inject: self 
-		into: [ :aShot :aSimpleEffect |
-			| edit |
-			edit := aSimpleEffect 
-				ifAdd: [ aShot editInclude: aSimpleEffect newValue ] 
-				ifRemove: [ aShot editExclude: aSimpleEffect oldValue ] 
-				ifUpdate: [ aShot editInclude: aSimpleEffect newValue ].
-			aShot resultOf: edit ].
-		
-	^ result
 ]
 
 { #category : #enumerating }

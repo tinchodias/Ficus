@@ -17,8 +17,8 @@ FiSetSimpleEffectsTest >> testAddition [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (source resultOfSimpleEffects: simpleEffects) 
-		equals: (source resultOf: effect edit).
+		assert: (source editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 		
 	self assert: simpleEffects equals: 
 		(FiSet withValues: {
@@ -54,7 +54,7 @@ FiSetSimpleEffectsTest >> testAddition [
 { #category : #tests }
 FiSetSimpleEffectsTest >> testNoEffect [
 
-	| shot edit source intermediate effect |
+	| shot edit source intermediate effect simpleEffects |
 	source := FiSet new.
 	shot := FiChef nickname: #A.
 
@@ -64,9 +64,11 @@ FiSetSimpleEffectsTest >> testNoEffect [
 	edit := intermediate editInclude: shot.
 	effect := intermediate effectOf: edit.
 
+	simpleEffects := effect asSimpleEffects.
+
 	self 
-		assert: (intermediate resultOfSimpleEffects: effect asSimpleEffects) 
-		equals: (intermediate resultOf: effect edit).
+		assert: (intermediate editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 ]
 
 { #category : #tests }
@@ -85,8 +87,8 @@ FiSetSimpleEffectsTest >> testRemoval [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
-		equals: (intermediate resultOf: effect edit).
+		assert: (intermediate editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 	
 	self assert: simpleEffects equals: 
 		(FiSet withValues: {
@@ -136,8 +138,8 @@ FiSetSimpleEffectsTest >> testUpdate [
 	simpleEffects := effect asSimpleEffects.
 
 	self 
-		assert: (intermediate resultOfSimpleEffects: simpleEffects) 
-		equals: (intermediate resultOf: effect edit).
+		assert: (intermediate editFromSimpleEffects: simpleEffects) 
+		equals: effect edit.
 	
 	self assert: simpleEffects equals: 
 		(FiSet withValues: {

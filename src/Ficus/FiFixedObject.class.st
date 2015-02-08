@@ -82,6 +82,17 @@ FiFixedObject >> editAt: step equal: value [
 		edit: (FiEqual value: value)
 ]
 
+{ #category : #edits }
+FiFixedObject >> editFromSimpleEffect: aSimpleEffect [
+	
+	^ self
+		editAt: aSimpleEffect path step 
+		do: [ :shot | 
+			aSimpleEffect children asArray
+				ifEmpty: [ shot editReplaceBy: aSimpleEffect newValue ]
+				ifNotEmpty: [ :children | shot editFromSimpleEffects: children ] ]
+]
+
 { #category : #convenience }
 FiFixedObject >> editor [
 	
@@ -139,23 +150,6 @@ FiFixedObject >> resultOfAcceptSlot: anAcceptSlot [
 		put: ((self instVarNamed: anAcceptSlot slotName) resultOf: anAcceptSlot edit);
 		yourself
 
-]
-
-{ #category : #summary }
-FiFixedObject >> resultOfSimpleEffects: simpleEffects [
-	"Each item in simpleEffects is an update."
-	
-	| result |
-	result := simpleEffects 
-		inject: self 
-		into: [ :aShot :aSimpleEffect |
-			| edit |
-			edit := aShot 
-				editAt: aSimpleEffect path step 
-				equal: aSimpleEffect newValue.
-			aShot resultOf: edit ].
-		
-	^ result
 ]
 
 { #category : #accessing }

@@ -181,15 +181,17 @@ FiMonticelloStore >> commitSnapshot: aSnapshot priors: priors [
 	self assert: (aSnapshot isKindOf: FiPackage).
 	
 	monticelloWorkingCopy := MCWorkingCopy new.
+	monticelloWorkingCopy initializeWithPackage: (MCPackage named: packageName).
 	monticelloSnapshot := FiMonticelloReader new read: aSnapshot.
 
 	priors do: [	 :each |
-		monticelloWorkingCopy adopt: (self monticelloVersionFor: each) ].
+		monticelloWorkingCopy ancestry addAncestor: each origin reference ].
 	
 	newVersion := monticelloWorkingCopy
-		initializeWithPackage: (MCPackage named: packageName);
 		silentlyNewVersionIn: self repository
 		snapshot: monticelloSnapshot.
+
+	newVersion ifNil: [ ^ self ].
 
 	self repository storeVersion: newVersion.
 	

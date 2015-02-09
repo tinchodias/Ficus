@@ -17,6 +17,13 @@ FiAbstractStore >> announcer [
 ]
 
 { #category : #accessing }
+FiAbstractStore >> commitSnapshot: aSnapshot priors: priors [
+	"Perform a commit"
+	
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 FiAbstractStore >> headHistoryNode [
 
 	^ self subclassResponsibility 

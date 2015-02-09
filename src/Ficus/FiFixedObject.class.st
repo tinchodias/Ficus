@@ -83,14 +83,25 @@ FiFixedObject >> editAt: step equal: value [
 ]
 
 { #category : #edits }
-FiFixedObject >> editFromSimpleEffect: aSimpleEffect [
+FiFixedObject >> editFromSimpleEffect: aSimpleEffect basePath: basePath [
 	
-	^ self
-		editAt: aSimpleEffect path step 
-		do: [ :shot | 
+	| forwardPath newBasePath |
+	self assert: 
+		(basePath length isZero or: [ 
+		aSimpleEffect path steps beginsWith: basePath steps ]).
+
+	forwardPath := (aSimpleEffect path steps allButFirst: basePath length) asFiPath. 
+	newBasePath := (aSimpleEffect path steps first: basePath length) asFiPath.
+
+	^ self 
+		editAtPath: forwardPath
+		do: [ :shot |
 			aSimpleEffect children asArray
 				ifEmpty: [ shot editReplaceBy: aSimpleEffect newValue ]
-				ifNotEmpty: [ :children | shot editFromSimpleEffects: children ] ]
+				ifNotEmpty: [ :children | 
+					shot 
+						editFromSimpleEffects: children
+						basePath: newBasePath ] ]
 ]
 
 { #category : #convenience }
@@ -206,7 +217,12 @@ FiFixedObject >> storeOn: aStream indent: level [
 { #category : #accessing }
 FiFixedObject >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 
-	step isSymbol ifFalse: [ ^ absentBlock value ].
+	| stepValue |
+	stepValue := self instVarAt: 
+		(self class
+			instVarIndexFor: step asString
+			ifAbsent: [ ^ absentBlock value ]).
 
-	^ presentBlock value: (self instVarNamed: step)
+	^ presentBlock value: stepValue
+
 ]

@@ -78,17 +78,19 @@ FiShot >> editAtPath: aPath do: aBlockClosure [
 ]
 
 { #category : #edits }
-FiShot >> editFromSimpleEffect: aSimpleEffect [
-	"Answer the edit that corresponds to apply the FiSimpleEffect."
-
-	^ self subclassResponsibility 
-]
-
-{ #category : #edits }
 FiShot >> editFromSimpleEffects: simpleEffects [
 	"Answer the edit that corresponds to apply the simpleEffects."
 
-	^ self editAll: (simpleEffects collect: [ :each | self editFromSimpleEffect: each ])
+	^ self editFromSimpleEffects: simpleEffects basePath: FiPath root
+]
+
+{ #category : #edits }
+FiShot >> editFromSimpleEffects: simpleEffects basePath: basePath [
+	"Answer the edit that corresponds to apply the simpleEffects."
+
+	^ self editAll: 
+		(simpleEffects collect: [ :each | 
+			self editFromSimpleEffect: each basePath: basePath ])
 ]
 
 { #category : #convenience }

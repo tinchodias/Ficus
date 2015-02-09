@@ -127,21 +127,29 @@ FiSet >> editExclude: aValue [
 ]
 
 { #category : #edits }
-FiSet >> editFromSimpleEffect: aSimpleEffect [
+FiSet >> editFromSimpleEffect: aSimpleEffect basePath: basePath [
 	
-	| workaroundPath |
-	self flag: #fix. "this is horrible..."
-	workaroundPath := aSimpleEffect path length isZero
-		ifTrue: [ aSimpleEffect path ]
-		ifFalse: [ aSimpleEffect path basePath ].
+	| forwardPath newBasePath |
+	self assert: 
+		(basePath length isZero or: [ 
+		aSimpleEffect path steps beginsWith: basePath steps ]).
+
+	forwardPath := (aSimpleEffect path steps allButFirst: basePath length) asFiPath. 
+	newBasePath := (aSimpleEffect path steps first: basePath length) asFiPath.
 	
-	^ self 
-		editAtPath: workaroundPath
-		do: [ :target |
+	^ aSimpleEffect children asArray
+		ifEmpty: [
 			aSimpleEffect
-				ifAdd: [ target editInclude: aSimpleEffect newValue ] 
-				ifRemove: [ target editExclude: aSimpleEffect oldValue ] 
-				ifUpdate: [ target editInclude: aSimpleEffect newValue ] ]
+				ifAdd: [ self editInclude: aSimpleEffect newValue ] 
+				ifRemove: [ self editExclude: aSimpleEffect oldValue ] 
+				ifUpdate: [ self editInclude: aSimpleEffect newValue ] ]
+		ifNotEmpty: [ :children | 
+			self 
+				editAtPath: forwardPath
+				do: [ :target |
+					target 
+						editFromSimpleEffects: children
+						basePath: newBasePath ] ]
 ]
 
 { #category : #edits }

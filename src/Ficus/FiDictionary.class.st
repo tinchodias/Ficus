@@ -80,15 +80,6 @@ FiDictionary >> editExclude: key [
 	^ FiExcludeKey key: key
 ]
 
-{ #category : #edits }
-FiDictionary >> editFromSimpleEffect: aSimpleEffect [
-	
-	^ aSimpleEffect 
-		ifAdd: [ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ] 
-		ifRemove: [ self editExclude: aSimpleEffect path step ] 
-		ifUpdate: [ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ]
-]
-
 { #category : #effects }
 FiDictionary >> effectOfAcceptKey: anAcceptKey [ 
 

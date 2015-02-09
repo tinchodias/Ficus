@@ -77,6 +77,13 @@ FiPath >> resolvedOn: anObject [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+FiPath >> steps [
+	"Answer the collection of steps of this path."
+
+	^ self subclassResponsibility
+]
+
 { #category : #ston }
 FiPath >> stonOn: stonWriter [
 	

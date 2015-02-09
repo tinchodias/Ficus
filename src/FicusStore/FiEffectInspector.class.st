@@ -102,6 +102,22 @@ FiEffectInspector >> displayMorphFor: aSimpleEffect [
 	^ FiMorphBuilder default rowMorphWithAll: morphs
 ]
 
+{ #category : #initialization }
+FiEffectInspector >> dragWith: aBlock [
+	"Enable drag of selected items using the block to create the transport morph. 
+	Follow my senders."
+	
+	treeModel
+		dragEnabled: true;
+		dropEnabled: false;
+		transferBlock: [ :passenger :source | 
+			aBlock 
+				value: passenger 
+				value: source 
+				value: (treeModel selectedItems collect: #content) ].
+
+]
+
 { #category : #private }
 FiEffectInspector >> iconFor: aShot [
 
@@ -163,19 +179,6 @@ FiEffectInspector >> initializePresenterTreeModel [
 			self showDiffFor: nil ];
 		whenSelectedItemChanged: [ :aSimpleEffectOrNil | 
 			self showDiffFor: aSimpleEffectOrNil value ].
-	
-	treeModel
-		dragEnabled: true;
-		dropEnabled: false;
-		transferBlock: [ :passenger :source | 
-			| draggedItems |
-			draggedItems := treeModel selectedItems.
-			(TransferMorph 
-				withPassenger: ("self draggingPassengerFor: "draggedItems)
-				from: source)
-				setProperty: #ficusSimpleEffects toValue: draggedItems;
-				yourself ].
-
 ]
 
 { #category : #initialization }

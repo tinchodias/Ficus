@@ -60,18 +60,16 @@ FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [
 ]
 
 { #category : #initialization }
-FiHistoryNodesBrowser >> dropSimpleEffects: simpleEffects in: aNode [
+FiHistoryNodesBrowser >> dropEdit: anEdit in: aNode [
 		
-	| edit newSnapshot |
+	| newSnapshot |
 	aNode isWorkingCopy ifFalse: [
 		self inform: 'Not a working copy'.
 		^ self ].
 	
-	edit := aNode snapshot editFromSimpleEffects: simpleEffects.
+	newSnapshot := aNode snapshot resultOf: anEdit.
 
-	newSnapshot := aNode snapshot resultOf: edit.
-
-	aNode workingCopy snapshot: newSnapshot
+	aNode workingCopy snapshot: newSnapshot.
 ]
 
 { #category : #accessing }
@@ -158,15 +156,15 @@ FiHistoryNodesBrowser >> initializePresenterHistoryTreeModel [
 			| answer |
 			answer := true.
 			transfer 
-				valueOfProperty: #ficusSimpleEffects 
+				valueOfProperty: #ficusEdit 
 				ifAbsent: [ answer := false ].
 			answer ];
 		acceptDropBlock: [ :transfer :event :source :receiver | 
-			| droppedSimpleEffects aNode |
-			droppedSimpleEffects := (transfer valueOfProperty: #ficusSimpleEffects) collect: #content.
+			| droppedEdit aNode |
+			droppedEdit := transfer valueOfProperty: #ficusEdit.
 			aNode := receiver complexContents item.
 			
-			self dropSimpleEffects: droppedSimpleEffects in: aNode ].
+			self dropEdit: droppedEdit in: aNode ].
 
 ]
 

@@ -86,6 +86,23 @@ FiStoreBrowser >> initialExtent [
 ]
 
 { #category : #initialization }
+FiStoreBrowser >> initializeDragAndDropOfSimpleEffects [
+	
+	deltasModel dragWith: [ :passenger :source :simpleEffects | 
+		| draggedEdit priorSnapshot |
+		priorSnapshot := historyBrowserModel historyTreeModel selectedItem content snapshot.
+		draggedEdit := priorSnapshot editFromSimpleEffects: simpleEffects.
+
+		(TransferMorph 
+			withPassenger: passenger
+			from: source)
+			setProperty: #ficusEdit toValue: draggedEdit;
+			yourself
+		].
+
+]
+
+{ #category : #initialization }
 FiStoreBrowser >> initializePresenter [
 
 	super initializePresenter.
@@ -94,18 +111,8 @@ FiStoreBrowser >> initializePresenter [
  	
 	self initializeTabs. 
 	
-	historyBrowserModel historyTreeModel
-		whenSelectedItemsChanged: [ :selectedItems | 
-			| actuallySelectedTab |
-			actuallySelectedTab := 
-				tabManagerModel selectedTab 
-					ifNil: [ 	snapshotTabModel ] "This is a workaround because you can not convince Spec that the tab initially selected is actually selected."
-					ifNotNil: [ :tabModel | tabModel ].
-			
-			selectedItems ifNotEmpty: [
-				self plugin selectedHistoryNode: selectedItems anyOne. self flag: #fix. "Transmit to plugin" ].
-
-			actuallySelectedTab tabSelected ]
+	self initializeTransmitionOfHistoryNodesSelection.
+	self initializeDragAndDropOfSimpleEffects.
 ]
 
 { #category : #initialization }
@@ -129,6 +136,23 @@ FiStoreBrowser >> initializeTabs [
 		addTab: snapshotTabModel;
 		addTab: deltasTabModel;
 		selectTabModel: snapshotTabModel.
+]
+
+{ #category : #initialization }
+FiStoreBrowser >> initializeTransmitionOfHistoryNodesSelection [
+	
+	historyBrowserModel historyTreeModel
+		whenSelectedItemsChanged: [ :selectedItems | 
+			| actuallySelectedTab |
+			actuallySelectedTab := 
+				tabManagerModel selectedTab 
+					ifNil: [ 	snapshotTabModel ] "This is a workaround because you can not convince Spec that the tab initially selected is actually selected."
+					ifNotNil: [ :tabModel | tabModel ].
+			
+			selectedItems ifNotEmpty: [
+				self plugin selectedHistoryNode: selectedItems anyOne. self flag: #fix. "Transmit to plugin" ].
+
+			actuallySelectedTab tabSelected ]
 ]
 
 { #category : #initialization }

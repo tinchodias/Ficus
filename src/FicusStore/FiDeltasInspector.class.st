@@ -40,6 +40,14 @@ FiDeltasInspector >> deltasDropListModel [
 	^ deltasDropListModel
 ]
 
+{ #category : #initialization }
+FiDeltasInspector >> dragWith: aBlock [
+	"Enable drag of selected items using the block to create the transport morph. 
+	Follow my senders."
+	
+	effectInspector dragWith: aBlock
+]
+
 { #category : #accessing }
 FiDeltasInspector >> effectInspector [ 
 

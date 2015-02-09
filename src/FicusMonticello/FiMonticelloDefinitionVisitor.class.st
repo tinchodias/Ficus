@@ -9,7 +9,7 @@ Class {
 		'monticelloMetaclassMethodsByHostName',
 		'monticelloMetaclassExtensionMethodsByHostName'
 	],
-	#category : #'FicusMonticello-Marshaling'
+	#category : #'FicusMonticello-Writing'
 }
 
 { #category : #private }

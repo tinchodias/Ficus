@@ -1,7 +1,7 @@
 Class {
 	#name : #FiMonticelloWriter,
 	#superclass : #Object,
-	#category : #'FicusMonticello-Marshaling'
+	#category : #'FicusMonticello-Writing'
 }
 
 { #category : #writing }

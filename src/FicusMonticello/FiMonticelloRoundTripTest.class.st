@@ -5,7 +5,7 @@ Class {
 		'writer',
 		'reader'
 	],
-	#category : #'FicusMonticello-Marshaling'
+	#category : #'FicusMonticello-Writing'
 }
 
 { #category : #running }

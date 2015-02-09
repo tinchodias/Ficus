@@ -4,9 +4,10 @@ Class {
 	#instVars : [
 		'packageName',
 		'historyNodes',
-		'headHistoryNode'
+		'headHistoryNode',
+		'repository'
 	],
-	#category : #'FicusMonticello-Marshaling-HistoryNodes'
+	#category : #'FicusMonticello-Store'
 }
 
 { #category : #utility }
@@ -84,6 +85,13 @@ FiMonticelloStore class >> downloadToCachePharo20andPharo30 [
 	{ self pharo20GemstoneRepository. self pharo20Repository. self pharo30Repository } 
 		do: [ :aRepository |
 			self downloadToCacheAllFrom: aRepository ]
+]
+
+{ #category : #example }
+FiMonticelloStore class >> example [
+	"Note: this assumes that there are versions of cahce of Tetris package."
+
+	^ FiMonticelloStore forPackageNamed: #Tetris
 ]
 
 { #category : #'instance creation' }
@@ -166,6 +174,30 @@ FiMonticelloStore class >> pharo40Repository [
 		password: ''
 ]
 
+{ #category : #accessing }
+FiMonticelloStore >> commitSnapshot: aSnapshot priors: priors [
+
+	| monticelloWorkingCopy monticelloSnapshot newVersion |
+	self assert: (aSnapshot isKindOf: FiPackage).
+	
+	monticelloWorkingCopy := MCWorkingCopy new.
+	monticelloSnapshot := FiMonticelloReader new read: aSnapshot.
+
+	priors do: [	 :each |
+		monticelloWorkingCopy adopt: (self monticelloVersionFor: each) ].
+	
+	newVersion := monticelloWorkingCopy
+		initializeWithPackage: (MCPackage named: packageName);
+		silentlyNewVersionIn: self repository
+		snapshot: monticelloSnapshot.
+
+	self repository storeVersion: newVersion.
+	
+	self refresh.
+	^ self headHistoryNode.
+
+]
+
 { #category : #private }
 FiMonticelloStore >> ensureReady [
 
@@ -188,6 +220,20 @@ FiMonticelloStore >> historyNodes [
 	^ historyNodes
 ]
 
+{ #category : #private }
+FiMonticelloStore >> monticelloVersionFor: aVersionName [
+		
+	^ (self repository versionFromFileNamed: (aVersionName, '.mcz'))
+		ifNil: [ self error ]
+
+]
+
+{ #category : #accessing }
+FiMonticelloStore >> packageName [
+
+	^ packageName
+]
+
 { #category : #accessing }
 FiMonticelloStore >> packageName: anObject [
 
@@ -197,17 +243,27 @@ FiMonticelloStore >> packageName: anObject [
 { #category : #refreshing }
 FiMonticelloStore >> refresh [
 
-	historyNodes := (FiMonticelloHistoryBuilder forTipsOfCachedPackageNamed: packageName) historyNodes.
+	| builder |
+	builder := FiMonticelloHistoryBuilder 
+		forTipsOfPackageNamed: packageName
+		repository: self repository.
+
+	historyNodes := builder historyNodes.
 	
-	headHistoryNode := 
-		(MCWorkingCopy allManagers 
-			detect: [ :each | each packageName = packageName ]
-			ifFound: [ :aManager | 
-				| headVersionInfo |
-				headVersionInfo := aManager ancestry ancestors first.
-				self flag: #fix. "Do not assume that origin si FiSingleCommit"
-				historyNodes 
-					detect: [ :node | node origin reference = headVersionInfo ]
-					ifNone: [ self notYetImplemented ] ]
-			ifNone: [ nil ]).
+	headHistoryNode := historyNodes 
+		ifEmpty: [ nil ] 
+		ifNotEmpty: [ historyNodes last ].
+]
+
+{ #category : #accessing }
+FiMonticelloStore >> repository [
+			
+	^ repository ifNil: [ 
+		repository := MCCacheRepository uniqueInstance ]
+]
+
+{ #category : #accessing }
+FiMonticelloStore >> repository: aMCRepository [
+	
+	repository := aMCRepository
 ]

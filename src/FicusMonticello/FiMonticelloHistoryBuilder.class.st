@@ -8,21 +8,25 @@ Class {
 		'historyNodes',
 		'repositoryGroup'
 	],
-	#category : #'FicusMonticello-Marshaling-HistoryNodes'
+	#category : #'FicusMonticello-Store'
 }
 
-{ #category : #examples }
+{ #category : #'instance creation' }
 FiMonticelloHistoryBuilder class >> forTipsOfCachedPackageNamed: packageName [
 
-	| repositoryGroup tipVersionInfos cachedRepository |
-	cachedRepository := MCCacheRepository uniqueInstance.
+	^ self 
+		forTipsOfPackageNamed: packageName 
+		repository: MCCacheRepository uniqueInstance
+]
 
-	repositoryGroup := 
-		MCRepositoryGroup withRepositories: {
-			cachedRepository }.
+{ #category : #'instance creation' }
+FiMonticelloHistoryBuilder class >> forTipsOfPackageNamed: packageName repository: aRepository [
+
+	| repositoryGroup tipVersionInfos |
+	repositoryGroup := MCRepositoryGroup withRepositories: { aRepository }.
 	
-	cachedRepository cacheAllFileNamesDuring:	[
-		tipVersionInfos := self tipVersionInfosFor: packageName in: cachedRepository.
+	aRepository cacheAllFileNamesDuring:	[
+		tipVersionInfos := self tipVersionInfosFor: packageName in: aRepository.
 
 		^ self new
 			repositoryGroup: repositoryGroup;
@@ -31,7 +35,7 @@ FiMonticelloHistoryBuilder class >> forTipsOfCachedPackageNamed: packageName [
 			yourself ]
 ]
 
-{ #category : #'examples-private' }
+{ #category : #private }
 FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aRepository [
 
 	| versionNames versionInfos sorter |
@@ -50,7 +54,7 @@ FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aReposi
 	^ sorter layers first
 ]
 
-{ #category : #'examples-private' }
+{ #category : #private }
 FiMonticelloHistoryBuilder class >> tipVersionInfosFor: aPackageName in: aRepository upTo: targetVersionInfo [
 
 	| versionNames versionInfos sorter |

@@ -39,6 +39,12 @@ FiSet class >> withValues: aCollection [
 		yourself
 ]
 
+{ #category : #accessing }
+FiSet >> anyOne [
+	
+	^ self at: 1
+]
+
 { #category : #converting }
 FiSet >> asArray [
 	

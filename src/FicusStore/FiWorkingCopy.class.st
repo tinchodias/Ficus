@@ -51,16 +51,18 @@ FiWorkingCopy >> commit: aString [
 	self announceRefreshed.
 ]
 
+{ #category : #operations }
+FiWorkingCopy >> delta [
+
+	priors size = 1 ifFalse: [ self notYetImplemented ].
+
+	^ snapshot differenceFrom: priors anyOne snapshot
+]
+
 { #category : #printing }
 FiWorkingCopy >> description [
 	
 	^ String streamContents: [ :stream | self printDescriptionOn: stream ]
-]
-
-{ #category : #operations }
-FiWorkingCopy >> difference [
-
-	^ snapshot differenceFrom: store headHistoryNode snapshot
 ]
 
 { #category : #testing }

@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'theLog',
 		'packageName',
-		'historyNodes',
-		'headHistoryNode'
+		'historyNodes'
 	],
 	#category : #FicusEpicea
 }
@@ -19,26 +18,18 @@ FiEpiceaStore class >> forPackageNamed: aString [
 		yourself
 ]
 
-{ #category : #private }
-FiEpiceaStore >> ensureReady [
-
-	historyNodes ifNil: [ self refresh ].
-]
-
-{ #category : #accessing }
-FiEpiceaStore >> headHistoryNode [
-
-	self ensureReady.
-
-	^ headHistoryNode
-]
-
 { #category : #accessing }
 FiEpiceaStore >> historyNodes [
 
 	self ensureReady.
 
 	^ historyNodes
+]
+
+{ #category : #testing }
+FiEpiceaStore >> isReady [
+
+	^ historyNodes isNil
 ]
 
 { #category : #accessing }
@@ -59,8 +50,7 @@ FiEpiceaStore >> refresh [
 			yourself. 
 
 	historyNodes := historyBuilder historyNodes.
-	
-	headHistoryNode := historyBuilder headHistoryNode.
+
 ]
 
 { #category : #accessing }

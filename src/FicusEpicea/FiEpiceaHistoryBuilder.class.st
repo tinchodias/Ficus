@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'log',
 		'packageName',
-		'headHistoryNode',
 		'historyNodes'
 	],
 	#category : #FicusEpicea
@@ -28,12 +27,6 @@ FiEpiceaHistoryBuilder >> compositeHistoryNodeFor: anEntry priors: priors and: a
 FiEpiceaHistoryBuilder >> editFor: anEpCodeChange [
 
 	^ anEpCodeChange accept: (FiEpiceaTranslator newWithBasePath: FiPath root / #contents)
-]
-
-{ #category : #accessing }
-FiEpiceaHistoryBuilder >> headHistoryNode [
-	
-	^ headHistoryNode
 ]
 
 { #category : #private }
@@ -192,8 +185,6 @@ FiEpiceaHistoryBuilder >> run [
 			historyNodes addLast: (self historyNodeFor: anEntry prior: historyNodes last) ].
 		
 		 ].
-	
-	headHistoryNode := historyNodes last.
 ]
 
 { #category : #accessing }

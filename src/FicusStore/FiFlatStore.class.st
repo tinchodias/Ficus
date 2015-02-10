@@ -36,12 +36,6 @@ FiFlatStore >> fileReference: anObject [
 ]
 
 { #category : #accessing }
-FiFlatStore >> headHistoryNode [
-
-	^ soleNode
-]
-
-{ #category : #accessing }
 FiFlatStore >> historyNodes [
 
 	^ { soleNode }

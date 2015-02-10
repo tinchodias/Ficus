@@ -23,10 +23,18 @@ FiAbstractStore >> commitSnapshot: aSnapshot priors: priors [
 	^ self subclassResponsibility
 ]
 
+{ #category : #refreshing }
+FiAbstractStore >> ensureReady [
+
+	self isReady ifFalse: [ self refresh ].
+]
+
 { #category : #accessing }
 FiAbstractStore >> headHistoryNode [
 
-	^ self subclassResponsibility 
+	^ self historyNodes
+		ifEmpty: [ nil ] 
+		ifNotEmpty: [ :nodes | nodes last ].
 ]
 
 { #category : #accessing }
@@ -39,6 +47,12 @@ FiAbstractStore >> headSnapshot [
 FiAbstractStore >> historyNodes [
 
 	^ self subclassResponsibility 
+]
+
+{ #category : #testing }
+FiAbstractStore >> isReady [
+
+	^ true
 ]
 
 { #category : #'working copies' }

@@ -107,12 +107,6 @@ FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 ]
 
 { #category : #accessing }
-FiMemoryStore >> headHistoryNode [
-
-	^ historyNodes last
-]
-
-{ #category : #accessing }
 FiMemoryStore >> historyNodes [
 
 	^ historyNodes

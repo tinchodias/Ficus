@@ -29,7 +29,7 @@ FiEpiceaStore >> historyNodes [
 { #category : #testing }
 FiEpiceaStore >> isReady [
 
-	^ historyNodes isNil
+	^ historyNodes isNotNil
 ]
 
 { #category : #accessing }

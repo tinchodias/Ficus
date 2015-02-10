@@ -210,7 +210,7 @@ FiMonticelloStore >> historyNodes [
 { #category : #testing }
 FiMonticelloStore >> isReady [
 
-	^ historyNodes isNil
+	^ historyNodes isNotNil
 ]
 
 { #category : #private }

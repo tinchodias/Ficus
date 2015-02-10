@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'packageName',
 		'historyNodes',
-		'headHistoryNode',
 		'repository'
 	],
 	#category : #'FicusMonticello-Store'
@@ -200,26 +199,18 @@ FiMonticelloStore >> commitSnapshot: aSnapshot priors: priors [
 
 ]
 
-{ #category : #private }
-FiMonticelloStore >> ensureReady [
-
-	historyNodes ifNil: [ self refresh ].
-]
-
-{ #category : #accessing }
-FiMonticelloStore >> headHistoryNode [
-	
-	self ensureReady.
-
-	^ headHistoryNode
-]
-
 { #category : #accessing }
 FiMonticelloStore >> historyNodes [
 
 	self ensureReady.
 
 	^ historyNodes
+]
+
+{ #category : #testing }
+FiMonticelloStore >> isReady [
+
+	^ historyNodes isNil
 ]
 
 { #category : #private }
@@ -251,10 +242,6 @@ FiMonticelloStore >> refresh [
 		repository: self repository.
 
 	historyNodes := builder historyNodes.
-	
-	headHistoryNode := historyNodes 
-		ifEmpty: [ nil ] 
-		ifNotEmpty: [ historyNodes last ].
 ]
 
 { #category : #accessing }

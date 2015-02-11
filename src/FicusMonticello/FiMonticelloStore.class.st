@@ -222,6 +222,12 @@ FiMonticelloStore >> monticelloVersionFor: aVersionName [
 ]
 
 { #category : #accessing }
+FiMonticelloStore >> name [
+
+	^ self packageName
+]
+
+{ #category : #accessing }
 FiMonticelloStore >> packageName [
 
 	^ packageName

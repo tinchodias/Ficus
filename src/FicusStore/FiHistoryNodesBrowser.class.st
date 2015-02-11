@@ -99,22 +99,16 @@ FiHistoryNodesBrowser >> initializeHiedraController [
 		linkBuilder 
 			width: 2.3;
 			color: Color red;
-			destinationsBlock: [ :node | 
-				node isWorkingCopy
-					ifTrue: [ #() ]
-					ifFalse: [ node priors asArray ]
-				] ].
+			conditionBlock: [ :node | node isWorkingCopy not ];
+			destinationsBlock: [ :node | node priors asArray ] ].
 
 	hiedraRulerController rulerBuilder addLinkBuilder: [ :linkBuilder |
 		linkBuilder 
 			width: 2.3;
 			color: Color red;
 			dashes: #(3 3);
-			destinationsBlock: [ :node | 
-				node isWorkingCopy
-					ifFalse: [ #() ]
-					ifTrue: [ node priors asArray ]
-				] ].
+			conditionBlock: [ :node | node isWorkingCopy ];
+			destinationsBlock: [ :node | node priors asArray ] ].
 
 ]
 

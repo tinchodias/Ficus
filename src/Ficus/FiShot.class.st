@@ -79,18 +79,12 @@ FiShot >> editAtPath: aPath do: aBlockClosure [
 
 { #category : #edits }
 FiShot >> editFromSimpleEffects: simpleEffects [
-	"Answer the edit that corresponds to apply the simpleEffects."
+	"Convert as edit, assuming the FiSimpleEffect applies to myself *as root*."
 
-	^ self editFromSimpleEffects: simpleEffects basePath: FiPath root
-]
-
-{ #category : #edits }
-FiShot >> editFromSimpleEffects: simpleEffects basePath: basePath [
-	"Answer the edit that corresponds to apply the simpleEffects."
-
-	^ self editAll: 
-		(simpleEffects collect: [ :each | 
-			self editFromSimpleEffect: each basePath: basePath ])
+	^ self editAll: (simpleEffects collect: [ :each | 
+		self 
+			editAtPath: each path basePath "skip the last step of the path of the simple effect"
+			do: [ :target | target editFromSimpleEffect: each ]])
 ]
 
 { #category : #convenience }

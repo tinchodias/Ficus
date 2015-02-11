@@ -80,6 +80,25 @@ FiDictionary >> editExclude: key [
 	^ FiExcludeKey key: key
 ]
 
+{ #category : #edits }
+FiDictionary >> editFromSimpleEffect: aSimpleEffect [
+	"Convert as edit, assuming the FiSimpleEffect applies to myself."
+	
+	aSimpleEffect
+		ifAdd: [ ^ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ] 
+		ifRemove: [ ^ self editExclude: aSimpleEffect path step ] 
+		ifUpdate: [ ].
+	
+	^ aSimpleEffect children asArray
+		ifEmpty: [ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ]
+		ifNotEmpty: [ :children | 
+			self 
+				editAt: aSimpleEffect path step
+				do: [ :oneStepForward |
+					self editAll: (children collect: [ :each | 
+						oneStepForward editFromSimpleEffect: each ]) ]].
+]
+
 { #category : #effects }
 FiDictionary >> effectOfAcceptKey: anAcceptKey [ 
 

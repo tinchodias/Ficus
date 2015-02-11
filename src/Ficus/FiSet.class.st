@@ -133,29 +133,22 @@ FiSet >> editExclude: aValue [
 ]
 
 { #category : #edits }
-FiSet >> editFromSimpleEffect: aSimpleEffect basePath: basePath [
+FiSet >> editFromSimpleEffect: aSimpleEffect [
+	"Convert as edit, assuming the FiSimpleEffect applies to myself."
 	
-	| forwardPath newBasePath |
-	self assert: 
-		(basePath length isZero or: [ 
-		aSimpleEffect path steps beginsWith: basePath steps ]).
-
-	forwardPath := (aSimpleEffect path steps allButFirst: basePath length) asFiPath. 
-	newBasePath := (aSimpleEffect path steps first: basePath length) asFiPath.
+	aSimpleEffect
+		ifAdd: [ ^ self editInclude: aSimpleEffect newValue ] 
+		ifRemove: [ ^ self editExclude: aSimpleEffect oldValue ] 
+		ifUpdate: [ ].
 	
 	^ aSimpleEffect children asArray
-		ifEmpty: [
-			aSimpleEffect
-				ifAdd: [ self editInclude: aSimpleEffect newValue ] 
-				ifRemove: [ self editExclude: aSimpleEffect oldValue ] 
-				ifUpdate: [ self editInclude: aSimpleEffect newValue ] ]
+		ifEmpty: [ self editInclude: aSimpleEffect newValue ]
 		ifNotEmpty: [ :children | 
 			self 
-				editAtPath: forwardPath
-				do: [ :target |
-					target 
-						editFromSimpleEffects: children
-						basePath: newBasePath ] ]
+				editAt: aSimpleEffect path step
+				do: [ :oneStepForward |
+					self editAll: (children collect: [ :each | 
+						oneStepForward editFromSimpleEffect: each ]) ]].
 ]
 
 { #category : #edits }

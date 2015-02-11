@@ -83,25 +83,18 @@ FiFixedObject >> editAt: step equal: value [
 ]
 
 { #category : #edits }
-FiFixedObject >> editFromSimpleEffect: aSimpleEffect basePath: basePath [
+FiFixedObject >> editFromSimpleEffect: aSimpleEffect [
+	"Convert as edit, assuming the FiSimpleEffect applies to myself."
 	
-	| forwardPath newBasePath |
-	self assert: 
-		(basePath length isZero or: [ 
-		aSimpleEffect path steps beginsWith: basePath steps ]).
-
-	forwardPath := (aSimpleEffect path steps allButFirst: basePath length) asFiPath. 
-	newBasePath := (aSimpleEffect path steps first: basePath length) asFiPath.
-
 	^ self 
-		editAtPath: forwardPath
-		do: [ :shot |
+		editAt: aSimpleEffect path step
+		do: [ :oneStepForward |
 			aSimpleEffect children asArray
-				ifEmpty: [ shot editReplaceBy: aSimpleEffect newValue ]
+				ifEmpty: [ 
+					oneStepForward editReplaceBy: aSimpleEffect newValue ]
 				ifNotEmpty: [ :children | 
-					shot 
-						editFromSimpleEffects: children
-						basePath: newBasePath ] ]
+					self editAll: (children collect: [ :each | 
+						oneStepForward editFromSimpleEffect: each ]) ]].
 ]
 
 { #category : #convenience }

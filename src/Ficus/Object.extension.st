@@ -20,6 +20,20 @@ Object >> differenceFrom: other [
 ]
 
 { #category : #'*Ficus' }
+Object >> editFromSimpleEffect: aSimpleEffect [ 
+	"Convert as edit, assuming the FiSimpleEffect applies to myself."
+	
+	self assert: aSimpleEffect children isEmpty.
+	
+	aSimpleEffect
+		ifAdd: [ ] 
+		ifRemove: [ ] 
+		ifUpdate: [ ^ self editReplaceBy: aSimpleEffect newValue ].
+
+	^ self error: 'Should not happen'
+]
+
+{ #category : #'*Ficus' }
 Object >> editReplaceBy: aValue [
 
 	^ FiEqual value: aValue

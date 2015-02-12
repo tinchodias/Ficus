@@ -11,11 +11,10 @@ Class {
 	#category : #'FicusStore-Comments-Model'
 }
 
-{ #category : #examples }
-FiCommentSet class >> exampleFlatStoreFor: store [
+{ #category : #private }
+FiCommentSet class >> exampleCommentsFor: store [
 
-	| comments |
-	comments := { 
+	^ { 
 		FiComment builder 
 			target: store historyNodes first origin;
 			score: FiCommentAgree new;
@@ -31,7 +30,14 @@ FiCommentSet class >> exampleFlatStoreFor: store [
 			score: FiCommentAgree new;
 			message: 'Rock&roll :)';
 			new.
-	 }.
+	 }
+]
+
+{ #category : #examples }
+FiCommentSet class >> exampleFlatStoreFor: store [
+
+	| comments |
+	comments := self exampleCommentsFor: store.
 
 	^ FiFlatStore new
 		fileReference: 'comments_example.txt' asFileReference;
@@ -48,23 +54,7 @@ FiCommentSet class >> exampleFlatStoreFor: store [
 FiCommentSet class >> exampleStoreFor: store [
 
 	| comments commentsStore |
-	comments := { 
-		FiComment builder 
-			target: store historyNodes first origin;
-			score: FiCommentAgree new;
-			message: 'Good start!';
-			new.
-		FiComment builder 
-			target: store historyNodes first origin;
-			score: FiCommentDisagree new;
-			message: 'Should be splitted';
-			new.
-		FiComment builder 
-			target: store historyNodes third origin;
-			score: FiCommentAgree new;
-			message: 'Rock&roll :)';
-			new.
-	 }.
+	comments := self exampleCommentsFor: store.
 
 	commentsStore := FiMemoryStore new.
 	commentsStore 

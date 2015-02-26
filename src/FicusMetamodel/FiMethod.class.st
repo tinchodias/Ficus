@@ -29,16 +29,25 @@ FiMethod class >> sourceCode: aSourceCode [
 { #category : #'instance creation' }
 FiMethod class >> sourceCode: aSourceCode protocol: aProtocol [
 	
-	^ self builder
-		sourceCode: aSourceCode;
+	^ self basicNew
+		initializeWithSourceCode: aSourceCode
 		protocol: aProtocol;
-		new
+		yourself
 ]
 
 { #category : #accessing }
 FiMethod >> defaultStep [
 
 	^ self selector asSymbol
+]
+
+{ #category : #initialization }
+FiMethod >> initializeWithSourceCode: aSourceCode protocol: aProtocol [
+
+	super initialize.
+	
+	sourceCode := aSourceCode.
+	protocol := aProtocol.
 ]
 
 { #category : #printing }

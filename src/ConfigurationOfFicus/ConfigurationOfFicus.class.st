@@ -120,24 +120,31 @@ ConfigurationOfFicus >> baseline01: spec [
 				className: #ConfigurationOfEpicea;
 				versionString: #'bleedingEdge';
 				repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ].
+		spec project: #Yrupe with: [
+			spec
+				className: #ConfigurationOfYrupe;
+				versionString: #'bleedingEdge';
+				repository: 'http://smalltalkhub.com/mc/MartinDias/Yrupe/main/' ].
 		spec
 			package: #Hiedra with: [ 
 				spec repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ];
 			package: #Ficus;
 			package: #FicusMetamodel with: [
-				spec requires: #(#Ficus ) ];
+				spec requires: #(#Ficus) ];
 			package: #FicusRing with: [
 				spec requires: #(#FicusMetamodel ) ];
 			package: #FicusImpact with: [
-				spec requires: #(#FicusRing ) ];
+				spec requires: #(#FicusRing) ];
 			package: #FicusStore with: [
-				spec requires: #(#FicusMetamodel #Hiedra ) ];
+				spec requires: #(#FicusMetamodel #Hiedra) ];
 			package: #FicusMonticello with: [
 				spec requires: #(#FicusMetamodel #FicusStore) ];
+			package: #FicusMonticelloYrupe with: [
+				spec requires: #(#FicusMonticello #Yrupe) ];
 			package: #FicusEpicea with: [
 				spec requires: #(#FicusMetamodel #FicusMonticello #Epicea) ].
 		spec
-			group: 'default' with: #('Ficus' 'FicusEpicea' 'FicusStore' 'FicusImpact') ].
+			group: 'default' with: #('Ficus' 'FicusEpicea' 'FicusStore' 'FicusImpact' 'FicusMonticelloYrupe') ].
 
 ]
 

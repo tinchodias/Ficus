@@ -71,8 +71,26 @@ FiPath >> length [
 	^ self steps size
 ]
 
-{ #category : #accessing }
+{ #category : #resolving }
 FiPath >> resolvedOn: anObject [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #resolving }
+FiPath >> resolvedOn: anObject ifAbsent: absentBlockClosure [ 
+
+	^ self subclassResponsibility
+]
+
+{ #category : #resolving }
+FiPath >> resolvedOn: anObject ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #resolving }
+FiPath >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect: stepBlockClosure [
 
 	^ self subclassResponsibility
 ]

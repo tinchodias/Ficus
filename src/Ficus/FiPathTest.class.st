@@ -39,7 +39,7 @@ FiPathTest >> sampleShot [
 ]
 
 { #category : #tests }
-FiPathTest >> testAsFicusPath [
+FiPathTest >> testAsFiPath [
 
 	| pathA pathB |
 	pathA := FiPath root / #A / #admiredChefs / #X.
@@ -47,15 +47,6 @@ FiPathTest >> testAsFicusPath [
 		
 	self assert: pathB equals: pathA.
 
-]
-
-{ #category : #tests }
-FiPathTest >> testClass [
-
-	shot := self sampleShot.
-	path := FiPath root / #A.
-		
-	self assert: ((path resolvedOn: shot) isKindOf: FiChef).
 ]
 
 { #category : #tests }
@@ -109,12 +100,62 @@ FiPathTest >> testNotEquals [
 ]
 
 { #category : #tests }
-FiPathTest >> testSharedPools [
+FiPathTest >> testResolvedOn [
 
 	shot := self sampleShot.
 	path := FiPath root / #A / #admiredChefs.
-		
-	self assert: ((path resolvedOn: shot) isKindOf: FiSet).
+
+	self 
+		assert: (path resolvedOn: shot) 
+		equals: shot asArray first admiredChefs.
+]
+
+{ #category : #tests }
+FiPathTest >> testResolvedOnIfAbsent [
+
+	shot := self sampleShot.
+
+	(FiPath root / #A
+		resolvedOn: shot 
+		ifAbsent: [ self fail ]).
+
+	self deny: 
+		(FiPath root / #B
+			resolvedOn: shot 
+			ifAbsent: [ false ]).
+
+
+	path := FiPath root / #A / #absent
+		resolvedOn: shot 
+		ifAbsent: [ :resolvedSubPath | path := resolvedSubPath ].	
+	
+	self assert: path equals: FiPath root / #A
+]
+
+{ #category : #tests }
+FiPathTest >> testResolvedOnIfPresentIfAbsent [
+
+	shot := self sampleShot.
+
+	self assert:
+		(FiPath root / #A
+			resolvedOn: shot 
+			ifPresent: [ true ] 
+			ifAbsent: [ false ]).
+
+	self deny: 
+		(FiPath root / #B
+			resolvedOn: shot 
+			ifPresent: [ true ] 
+			ifAbsent: [ false ]).
+
+
+	path := FiPath root / #A / #absent
+		resolvedOn: shot 
+		ifPresent: [ self fail ] 
+		ifAbsent: [ :resolvedSubPath | path := resolvedSubPath ].	
+	
+	self assert: path equals: FiPath root / #A
 ]
 
 { #category : #tests }

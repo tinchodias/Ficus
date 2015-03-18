@@ -40,6 +40,18 @@ FiRootPath >> resolvedOn: anObject [
 ]
 
 { #category : #resolving }
+FiRootPath >> resolvedOn: anObject ifAbsent: absentBlockClosure [ 
+
+	^ anObject
+]
+
+{ #category : #resolving }
+FiRootPath >> resolvedOn: anObject ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [ 
+
+	^ anObject
+]
+
+{ #category : #resolving }
 FiRootPath >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect: stepBlockClosure [ 
 	
 	^ targetBlockClosure value: anObject

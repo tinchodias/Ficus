@@ -67,6 +67,31 @@ FiRelativePath >> resolvedOn: anObject [
 ]
 
 { #category : #resolving }
+FiRelativePath >> resolvedOn: anObject ifAbsent: absentBlockClosure [ 
+
+	| target |
+	target := basePath 
+		resolvedOn: anObject 
+		ifAbsent: absentBlockClosure.
+		
+	^ target
+		valueAt: step 
+		ifPresent: [ :value | value ]
+		ifAbsent: [ absentBlockClosure cull: basePath ]
+]
+
+{ #category : #resolving }
+FiRelativePath >> resolvedOn: anObject ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [ 
+
+	| target |
+	target := self 
+		resolvedOn: anObject 
+		ifAbsent: [ :resolvedSubPath | ^ absentBlockClosure cull: resolvedSubPath ].
+	
+	^ presentBlockClosure cull: target
+]
+
+{ #category : #resolving }
 FiRelativePath >> resolvedOn: anObject targetCollect: targetBlockClosure stepCollect: stepBlockClosure [ 
 	
 	^ stepBlockClosure 

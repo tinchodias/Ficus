@@ -1,18 +1,18 @@
 Class {
-	#name : #FiArbitraryGranularity,
+	#name : #FiAtomicGranularity,
 	#superclass : #FiGranularity,
 	#category : #'FicusImpact-Graph'
 }
 
 { #category : #accessing }
-FiArbitraryGranularity >> allEntitiesFor: aFiRGEnvironment [ 
+FiAtomicGranularity >> allEntitiesFor: aFiRGEnvironment [ 
 	
 	^ aFiRGEnvironment allClassesAndTraits flatCollect: [ :each |
 		each methods, each classSide methods ]
 ]
 
 { #category : #accessing }
-FiArbitraryGranularity >> entityFor: aFiRGObject [ 
+FiAtomicGranularity >> entityFor: aFiRGObject [ 
 
 	^ aFiRGObject
 ]

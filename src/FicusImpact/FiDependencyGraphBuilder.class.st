@@ -31,7 +31,7 @@ FiDependencyGraphBuilder class >> example3 [
 
 	^ (self new
 		environment: FiFragileBaseProblemResourcesA new ficusRGEnvironment;
-		granularity: FiArbitraryGranularity new;
+		granularity: FiAtomicGranularity new;
 		newGraph) inspect
 ]
 

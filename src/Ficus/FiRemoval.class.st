@@ -22,7 +22,5 @@ FiRemoval >> oldValue [
 { #category : #printing }
 FiRemoval >> oldValueString [
 
-	^ (oldValue isShot 
-		ifTrue: [ oldValue values ]
-		ifFalse: [ oldValue ]) asString
+	^ oldValue asString
 ]

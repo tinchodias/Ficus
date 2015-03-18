@@ -22,7 +22,5 @@ FiAddition >> newValue [
 { #category : #printing }
 FiAddition >> newValueString [
 
-	^ (newValue isShot 
-		ifTrue: [ newValue values ]
-		ifFalse: [ newValue ]) asString
+	^ newValue asString
 ]

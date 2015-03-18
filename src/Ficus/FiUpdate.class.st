@@ -23,9 +23,7 @@ FiUpdate >> newValue [
 { #category : #printing }
 FiUpdate >> newValueString [
 
-	^ (newValue isShot 
-		ifTrue: [ newValue values ]
-		ifFalse: [ newValue ]) asString
+	^ newValue asString
 ]
 
 { #category : #accessing }
@@ -37,7 +35,5 @@ FiUpdate >> oldValue [
 { #category : #printing }
 FiUpdate >> oldValueString [
 
-	^ (oldValue isShot 
-		ifTrue: [ oldValue values ]
-		ifFalse: [ oldValue ]) asString
+	^ oldValue asString
 ]

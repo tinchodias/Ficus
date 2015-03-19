@@ -65,6 +65,21 @@ FiPath >> / anObject [
 		step: anObject
 ]
 
+{ #category : #testing }
+FiPath >> beginsWith: aPath [
+	
+	^ self steps beginsWith: aPath steps
+]
+
+{ #category : #testing }
+FiPath >> canBeResolvedOn: anObject [
+	
+	^ self 
+		resolvedOn: anObject 
+		ifPresent: [ true ]
+		ifAbsent: [ false ]
+]
+
 { #category : #accessing }
 FiPath >> length [
 

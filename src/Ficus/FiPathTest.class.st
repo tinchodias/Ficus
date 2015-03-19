@@ -50,6 +50,27 @@ FiPathTest >> testAsFiPath [
 ]
 
 { #category : #tests }
+FiPathTest >> testBeginsWith [
+
+	| pathA pathB |
+	pathA := FiPath root / #A / #admiredChefs / #X.
+	pathB := FiPath root / #A / #admiredChefs.
+	
+	self assert: (pathA beginsWith: pathB).
+	self deny: (pathB beginsWith: pathA).
+]
+
+{ #category : #tests }
+FiPathTest >> testCanBeResolvedOn [
+
+	shot := self sampleShot.
+
+	self assert: (FiPath root / #A canBeResolvedOn: shot).
+
+	self deny: (FiPath root / #B canBeResolvedOn: shot).
+]
+
+{ #category : #tests }
 FiPathTest >> testEquals [
 
 	| pathA pathB |

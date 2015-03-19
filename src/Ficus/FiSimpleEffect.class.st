@@ -14,6 +14,34 @@ FiSimpleEffect >> children [
 	^ children
 ]
 
+{ #category : #accessing }
+FiSimpleEffect >> effectAt: aPath ifAbsent: absentBlockClosure [ 
+
+	path = aPath
+		ifTrue: [ ^ self ].
+	
+	(aPath beginsWith: path)
+		ifFalse: [ ^ absentBlockClosure value ].
+	
+	children do: [ :child |
+		(child
+			effectAt: aPath 
+			ifAbsent: [ nil ])
+			ifNotNil: [ :effect | ^ effect ] ].
+	
+	^ absentBlockClosure value
+]
+
+{ #category : #testing }
+FiSimpleEffect >> hasEffectAt: aPath [
+
+	self
+		effectAt: aPath 
+		ifAbsent: [ ^ false ].
+	
+	^ true
+]
+
 { #category : #testing }
 FiSimpleEffect >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
 	

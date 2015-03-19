@@ -5,6 +5,24 @@ Class {
 }
 
 { #category : #tests }
+FiFixedObjectSimpleEffectsTest >> testHasEffectAt [
+
+	| source editAdmiredChefs effect simpleEffects |
+	source := FiChef nickname: #A.
+
+	editAdmiredChefs := 
+		source 
+			editAt: #admiredChefs
+			do: [ :admiredChefs | admiredChefs editInclude: #X ].
+
+	effect := source effectOf: editAdmiredChefs.
+	simpleEffects := effect asSimpleEffects.
+
+	self assert: (simpleEffects asArray first hasEffectAt: FiPath root / #admiredChefs / #X).
+	self deny: (simpleEffects asArray first hasEffectAt: FiPath root / #admiredChefs / #Y).
+]
+
+{ #category : #tests }
 FiFixedObjectSimpleEffectsTest >> testNoEffect [
 
 	| edit effect source |

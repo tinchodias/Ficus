@@ -45,7 +45,7 @@ FiEpiceaTranslator >> editForMethodEqual: aRingMethod [
 FiEpiceaTranslator >> ficusClassFor: aRGClassDefinition [ 
 
 	^ FiClass builder
-		theName: aRGClassDefinition name asSymbol;
+		name: aRGClassDefinition name asSymbol;
 		metaclass: (self ficusMetaclassFor: aRGClassDefinition);
 		superclassName: aRGClassDefinition superclassName;
 		layout: (self ficusLayoutFor: aRGClassDefinition);

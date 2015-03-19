@@ -5,14 +5,14 @@ Class {
 	#name : #FiClass,
 	#superclass : #FiBehavior,
 	#instVars : [
-		'theName',
 		'metaclass',
 		'classPool',
 		'sharedPools',
 		'category',
 		'comment',
 		'traitComposition',
-		'superclassName'
+		'superclassName',
+		'name'
 	],
 	#category : #FicusMetamodel
 }
@@ -21,7 +21,7 @@ Class {
 FiClass class >> named: aString [ 
 
 	^ self builder
-		theName: aString;
+		name: aString;
 		new
 ]
 
@@ -52,7 +52,7 @@ FiClass >> comment [
 { #category : #accessing }
 FiClass >> defaultStep [
 
-	^ theName asSymbol
+	^ name asSymbol
 ]
 
 { #category : #testing }
@@ -66,7 +66,7 @@ FiClass >> initialize [
 
 	super initialize.
 
-	theName := #NoName.
+	name := #NoName.
 	superclassName := self class nullSuperclassName.
 	category := #NoCategory.
 	classPool := FiSet new.
@@ -105,13 +105,25 @@ FiClass >> metaclass [
 	^ metaclass
 ]
 
+{ #category : #accessing }
+FiClass >> name [
+	
+	^ name
+]
+
+{ #category : #accessing }
+FiClass >> name: a [
+	
+	self
+]
+
 { #category : #printing }
 FiClass >> printOn: aStream [
 
 	super printOn: aStream.
 
 	aStream nextPut: $(.
-	theName printOn: aStream.
+	name printOn: aStream.
 	aStream nextPut: $).
 	
 ]
@@ -127,12 +139,6 @@ FiClass >> superclassName [
 	
 	^ superclassName
 	
-]
-
-{ #category : #accessing }
-FiClass >> theName [
-	
-	^ theName
 ]
 
 { #category : #accessing }

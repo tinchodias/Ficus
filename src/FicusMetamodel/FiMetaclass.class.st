@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 FiMetaclass class >> named: aString [ 
 	^ self new
-		theName: aString;
+		name: aString;
 		yourself
 		
 ]

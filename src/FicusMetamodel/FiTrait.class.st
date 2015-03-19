@@ -5,11 +5,11 @@ Class {
 	#name : #FiTrait,
 	#superclass : #FiFixedObject,
 	#instVars : [
-		'theName',
 		'methods',
 		'category',
 		'comment',
-		'traitComposition'
+		'traitComposition',
+		'name'
 	],
 	#category : #FicusMetamodel
 }
@@ -17,7 +17,7 @@ Class {
 { #category : #'instance creation' }
 FiTrait class >> named: aString [ 
 	^ self new
-		theName: aString;
+		name: aString;
 		yourself
 		
 ]
@@ -37,7 +37,7 @@ FiTrait >> comment [
 { #category : #accessing }
 FiTrait >> defaultStep [
 
-	^ theName asSymbol
+	^ name asSymbol
 ]
 
 { #category : #initialize }
@@ -45,7 +45,7 @@ FiTrait >> initialize [
 
 	super initialize.
 
-	theName := nil.
+	name := nil.
 	category := nil.
 	comment := ''.
 	traitComposition := '{}'.
@@ -76,21 +76,21 @@ FiTrait >> methods [
 	^ methods
 ]
 
+{ #category : #accessing }
+FiTrait >> name [
+	
+	^ name
+]
+
 { #category : #printing }
 FiTrait >> printOn: aStream [
 
 	super printOn: aStream.
 
 	aStream nextPut: $(.
-	theName printOn: aStream.
+	name printOn: aStream.
 	aStream nextPut: $).
 	
-]
-
-{ #category : #accessing }
-FiTrait >> theName [
-	
-	^ theName
 ]
 
 { #category : #accessing }

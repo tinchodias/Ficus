@@ -5,8 +5,8 @@ Class {
 	#name : #FiPackage,
 	#superclass : #FiFixedObject,
 	#instVars : [
-		'theName',
-		'contents'
+		'contents',
+		'name'
 	],
 	#category : #FicusMetamodel
 }
@@ -26,7 +26,7 @@ FiPackage >> contents [
 { #category : #accessing }
 FiPackage >> defaultStep [
 
-	^ theName asSymbol
+	^ name asSymbol
 ]
 
 { #category : #accessing }
@@ -35,21 +35,21 @@ FiPackage >> extensionMethods [
 	^ contents select: [ :each | each isFicusExtensionMethods ]
 ]
 
+{ #category : #accessing }
+FiPackage >> name [
+	
+	^ name
+]
+
 { #category : #printing }
 FiPackage >> printOn: aStream [
 
 	super printOn: aStream.
 
 	aStream nextPut: $(.
-	theName printOn: aStream.
+	name printOn: aStream.
 	aStream nextPut: $).
 	
-]
-
-{ #category : #accessing }
-FiPackage >> theName [
-	
-	^ theName
 ]
 
 { #category : #accessing }

@@ -80,6 +80,12 @@ FiRGMethod >> environment [
 	^ methodClass environment
 ]
 
+{ #category : #accessing }
+FiRGMethod >> ficusPathFromEnvironment [
+
+	^ self environment ficusPathToMethod: self
+]
+
 { #category : #comparing }
 FiRGMethod >> hash [
 

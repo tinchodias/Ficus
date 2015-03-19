@@ -166,6 +166,20 @@ FiRGEnvironment >> extensionMethodsFor: aBehavior [
 ]
 
 { #category : #accessing }
+FiRGEnvironment >> ficusPathToClass: aFiRGClass [ 
+	
+	^ {aFiRGClass package name. #contents. aFiRGClass name} asFiPath
+]
+
+{ #category : #accessing }
+FiRGEnvironment >> ficusPathToMethod: aFiRGMethod [ 
+
+	self assert: aFiRGMethod methodClass isMeta not. "not yet implemented"
+		
+	^ (self ficusPathToClass: aFiRGMethod methodClass) / #methods / aFiRGMethod selector
+]
+
+{ #category : #accessing }
 FiRGEnvironment >> globalByName [
 
 	^ globalByName ifNil: [

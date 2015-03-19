@@ -210,6 +210,12 @@ FiRGClass >> environment: anObject [
 	environment := anObject
 ]
 
+{ #category : #accessing }
+FiRGClass >> ficusPathFromEnvironment [
+	
+	^ environment ficusPathToClass: self
+]
+
 { #category : #polymorphism }
 FiRGClass >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"

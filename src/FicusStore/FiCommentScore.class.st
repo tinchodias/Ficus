@@ -7,6 +7,12 @@ Class {
 	#category : #'FicusStore-Comments-Model'
 }
 
+{ #category : #inspecting }
+FiCommentScore >> ficusInspectorIcon [
+	
+	^ self prettyPrintString asMorph
+]
+
 { #category : #printing }
 FiCommentScore >> prettyPrintString [
 

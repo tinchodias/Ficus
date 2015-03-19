@@ -24,6 +24,12 @@ FiComment >> defaultStep [
 	^ (target shortDescription, '.', self hash printStringHex) asSymbol
 ]
 
+{ #category : #inspecting }
+FiComment >> ficusInspectorIcon [
+	
+	^ Smalltalk ui icons announcementIcon
+]
+
 { #category : #accessing }
 FiComment >> message [
 	

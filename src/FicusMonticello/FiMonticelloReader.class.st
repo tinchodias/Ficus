@@ -26,7 +26,7 @@ FiMonticelloReader >> instVarNamesFrom: aFiClass [
 FiMonticelloReader >> monticelloClassDefinitionFrom: aFiClass [ 
 
 	^ MCClassDefinition
-		name: aFiClass theName
+		name: aFiClass name
 		superclassName: aFiClass superclassName
 		traitComposition: aFiClass traitComposition
 		classTraitComposition: aFiClass metaclass traitComposition
@@ -46,8 +46,8 @@ FiMonticelloReader >> monticelloClassDefinitionsFrom: aFiClass [
 	^ Array streamContents: [ :stream | 
 		stream 
 			nextPut: (self monticelloClassDefinitionFrom: aFiClass);
-			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass className: aFiClass theName classIsMeta: false);
-			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass metaclass className: aFiClass theName classIsMeta: true) ]
+			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass className: aFiClass name classIsMeta: false);
+			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass metaclass className: aFiClass name classIsMeta: true) ]
 ]
 
 { #category : #private }
@@ -109,7 +109,7 @@ FiMonticelloReader >> monticelloMethodDefinitionsFrom: aFicusBehavior className:
 FiMonticelloReader >> monticelloTraitDefinitionFrom: aFiTrait [
 
 	^ MCTraitDefinition
-		name: aFiTrait theName
+		name: aFiTrait name
 		traitComposition: aFiTrait traitComposition
 		category: aFiTrait category
 		comment: aFiTrait comment
@@ -124,7 +124,7 @@ FiMonticelloReader >> monticelloTraitDefinitionsFrom: aFiTrait [
 	^ Array streamContents: [ :stream | 
 		stream 
 			nextPut: (self monticelloTraitDefinitionFrom: aFiTrait);
-			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiTrait className: aFiTrait theName classIsMeta: false)
+			nextPutAll: (self monticelloMethodDefinitionsFrom: aFiTrait className: aFiTrait name classIsMeta: false)
 			"nextPutAll: (self monticelloMethodDefinitionsFrom: aFiClass metaclass className: aFiClass theName classIsMeta: true)" ]
 ]
 

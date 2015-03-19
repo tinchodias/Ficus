@@ -16,7 +16,7 @@ Class {
 FiMonticelloDefinitionVisitor >> ficusClassFor: aMCClassDefinition [ 
 
 	^ FiClass builder
-		theName: aMCClassDefinition className asSymbol;
+		name: aMCClassDefinition className asSymbol;
 		metaclass: (self ficusMetaclassFor: aMCClassDefinition);
 		superclassName: aMCClassDefinition superclassName;
 		layout: (self ficusLayoutFor: aMCClassDefinition);
@@ -146,7 +146,7 @@ FiMonticelloDefinitionVisitor >> ficusSymbolSetFor: aCollection [
 FiMonticelloDefinitionVisitor >> ficusTraitFor: aMCTraitDefinition [ 
 
 	^ FiTrait builder
-		theName: aMCTraitDefinition className;
+		name: aMCTraitDefinition className;
 		methods: (self ficusMethodsFor: aMCTraitDefinition);
 		traitComposition: aMCTraitDefinition traitCompositionString;
 		category: aMCTraitDefinition category;

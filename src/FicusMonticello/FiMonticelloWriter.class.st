@@ -13,7 +13,7 @@ FiMonticelloWriter >> written: aMCSnapshot name: packageName [
 	aMCSnapshot definitions do: [ :each | each accept: visitor ].
 	
 	^ FiPackage builder
-		theName: packageName asSymbol;
+		name: packageName asSymbol;
 		contents: visitor ficusPackageContents;
 		new
 ]

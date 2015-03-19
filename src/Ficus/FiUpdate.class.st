@@ -20,20 +20,8 @@ FiUpdate >> newValue [
 	^ newValue
 ]
 
-{ #category : #printing }
-FiUpdate >> newValueString [
-
-	^ newValue asString
-]
-
 { #category : #accessing }
 FiUpdate >> oldValue [
 	
 	^ oldValue
-]
-
-{ #category : #printing }
-FiUpdate >> oldValueString [
-
-	^ oldValue asString
 ]

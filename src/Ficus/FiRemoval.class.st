@@ -18,9 +18,3 @@ FiRemoval >> oldValue [
 	
 	^ oldValue
 ]
-
-{ #category : #printing }
-FiRemoval >> oldValueString [
-
-	^ oldValue asString
-]

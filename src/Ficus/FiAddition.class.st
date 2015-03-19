@@ -18,9 +18,3 @@ FiAddition >> newValue [
 	
 	^ newValue
 ]
-
-{ #category : #printing }
-FiAddition >> newValueString [
-
-	^ newValue asString
-]

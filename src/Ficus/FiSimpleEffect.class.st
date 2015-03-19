@@ -56,18 +56,6 @@ FiSimpleEffect >> leavesDo: aBlockClosure [
 		ifNotEmpty: [ children do: [ :each | each leavesDo: aBlockClosure ] ].
 ]
 
-{ #category : #printing }
-FiSimpleEffect >> newValueString [
-
-	^ ''
-]
-
-{ #category : #printing }
-FiSimpleEffect >> oldValueString [
-
-	^ ''
-]
-
 { #category : #accessing }
 FiSimpleEffect >> path [
 	

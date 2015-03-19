@@ -11,7 +11,7 @@ Class {
 FiFragileBaseProblemResourcesB >> classLog [
 
 	^ FiClass builder 
-		theName: #Log;
+		name: #Log;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #(collection));
 		methods: {

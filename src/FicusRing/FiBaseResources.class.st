@@ -21,7 +21,7 @@ FiBaseResources >> browse [
 FiBaseResources >> classBlockClosure [
 
 	^ FiClass builder 
-		theName: #BlockClosure;
+		name: #BlockClosure;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
@@ -38,7 +38,7 @@ FiBaseResources >> classBlockClosure [
 FiBaseResources >> classBoolean [
 
 	^ FiClass builder 
-		theName: #Boolean;
+		name: #Boolean;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
@@ -54,7 +54,7 @@ FiBaseResources >> classBoolean [
 FiBaseResources >> classClass [
 
 	^ FiClass builder 
-		theName: #Class;
+		name: #Class;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {} asFiSet;
@@ -65,7 +65,7 @@ FiBaseResources >> classClass [
 FiBaseResources >> classCollection [
 
 	^ FiClass builder 
-		theName: #Collection;
+		name: #Collection;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: { 
@@ -88,7 +88,7 @@ FiBaseResources >> classCollection [
 FiBaseResources >> classFalse [
 
 	^ FiClass builder 
-		theName: #False;
+		name: #False;
 		superclassName: #Boolean;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
@@ -104,7 +104,7 @@ FiBaseResources >> classFalse [
 FiBaseResources >> classLinkedList [
 
 	^ FiClass builder 
-		theName: #LinkedList;
+		name: #LinkedList;
 		superclassName: #Collection;
 		layout: (FiFixedLayout withInstanceVariables: #(firstLink lastLink));
 		methods: (self methodsFor: { 
@@ -139,7 +139,7 @@ FiBaseResources >> classLinkedList [
 FiBaseResources >> classObject [ 
 
 	^ FiClass builder 
-		theName: #Object;
+		name: #Object;
 		superclassName: FiClass nullSuperclassName;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
@@ -166,7 +166,7 @@ FiBaseResources >> classObject [
 FiBaseResources >> classSmallInteger [
 
 	^ FiClass builder 
-		theName: #SmallInteger;
+		name: #SmallInteger;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
@@ -182,7 +182,7 @@ FiBaseResources >> classSmallInteger [
 FiBaseResources >> classTrue [
 
 	^ FiClass builder 
-		theName: #True;
+		name: #True;
 		superclassName: #Boolean;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: {
@@ -198,7 +198,7 @@ FiBaseResources >> classTrue [
 FiBaseResources >> classValueLink [
 
 	^ FiClass builder 
-		theName: #ValueLink;
+		name: #ValueLink;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #(value nextLink));
 		methods: (self methodsFor: { 
@@ -244,7 +244,7 @@ FiBaseResources >> newFicusEnvironment [
 FiBaseResources >> packageCollections [
 
 	^ FiPackage builder
-		theName: #Collections;
+		name: #Collections;
 		contents: { self classCollection. self classLinkedList. self classValueLink } asFiSet;
 		new	
 ]
@@ -253,7 +253,7 @@ FiBaseResources >> packageCollections [
 FiBaseResources >> packageKernel [
 
 	^ FiPackage builder
-		theName: #Kernel;
+		name: #Kernel;
 		contents: { self classObject. self classClass. self classBoolean. self classTrue. self classFalse. self classSmallInteger. self classBlockClosure } asFiSet;
 		new	
 ]

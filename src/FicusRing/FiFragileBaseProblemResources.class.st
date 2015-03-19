@@ -11,7 +11,7 @@ Class {
 FiFragileBaseProblemResources >> classLog [
 
 	^ FiClass builder 
-		theName: #Log;
+		name: #Log;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #(collection));
 		methods: {
@@ -36,7 +36,7 @@ FiFragileBaseProblemResources >> newFicusEnvironment [
 FiFragileBaseProblemResources >> packageLoggers [
 
 	^ FiPackage builder
-		theName: #Loggers;
+		name: #Loggers;
 		contents: { self classLog } asFiSet;
 		new
 ]

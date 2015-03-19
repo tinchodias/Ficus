@@ -62,7 +62,7 @@ FiRGPackage >> extensionMethods [
 { #category : #polymorphism }
 FiRGPackage >> name [
 
-	^ packageShot theName
+	^ packageShot name
 ]
 
 { #category : #accessing }

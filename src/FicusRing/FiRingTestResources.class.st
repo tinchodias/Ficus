@@ -11,7 +11,7 @@ Class {
 FiRingTestResources >> classA [
 
 	^ FiClass builder 
-		theName: #A;
+		name: #A;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #(#a1 #a2));
 		classPool: #(SomeClassVariable) asFiSet;
@@ -33,7 +33,7 @@ FiRingTestResources >> classA [
 FiRingTestResources >> classB [
 
 	^ FiClass builder 
-		theName: #B;
+		name: #B;
 		superclassName: #A;
 		layout: (FiFixedLayout withInstanceVariables: #(b1));
 		methods: { 
@@ -52,7 +52,7 @@ FiRingTestResources >> classB [
 FiRingTestResources >> classC [
 
 	^ FiClass builder 
-		theName: #C;
+		name: #C;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		methods: { 
@@ -72,7 +72,7 @@ FiRingTestResources >> classC [
 FiRingTestResources >> classP [
 
 	^ FiClass builder 
-		theName: #P;
+		name: #P;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		classPool: #(SomeSharedPoolVariable) asFiSet;
@@ -114,7 +114,7 @@ FiRingTestResources >> newFicusEnvironment [
 FiRingTestResources >> packageX [
 	
 	^ FiPackage builder
-		theName: #X;
+		name: #X;
 		contents: { self classA. self classB. self classC. self classP } asFiSet;
 		new
 ]
@@ -123,7 +123,7 @@ FiRingTestResources >> packageX [
 FiRingTestResources >> packageY [
 	
 	^ FiPackage builder
-		theName: #Y;
+		name: #Y;
 		contents: { self extensionMethodsToA. self extensionMethodsToAclass } asFiSet;
 		new
 ]

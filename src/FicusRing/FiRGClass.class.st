@@ -330,7 +330,7 @@ FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound:
 { #category : #polymorphism }
 FiRGClass >> name [
 
-	^ classShot theName
+	^ classShot name
 ]
 
 { #category : #polymorphism }

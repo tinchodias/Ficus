@@ -11,7 +11,7 @@ Class {
 FiFragileBaseProblemResourcesA >> classLRULog [
 
 	^ FiClass builder 
-		theName: #LRULog;
+		name: #LRULog;
 		superclassName: #Log;
 		layout: (FiFixedLayout withInstanceVariables: #(tally));
 		methods: {
@@ -30,7 +30,7 @@ FiFragileBaseProblemResourcesA >> classLRULog [
 FiFragileBaseProblemResourcesA >> packageLoggers [
 
 	^ FiPackage builder
-		theName: #Loggers;
+		name: #Loggers;
 		contents: { self classLog. self classLRULog. } asFiSet;
 		new
 ]

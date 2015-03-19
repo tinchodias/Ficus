@@ -298,18 +298,11 @@ FiSet >> stonOn: stonWriter [
 FiSet >> storeOn: aStream indent: level [
 
 	self isEmpty ifTrue: [ 
-		aStream 
-			nextPutAll: self className;
-			space;
-			nextPutAll: #new.
+		aStream nextPutAll: '{ } asFiSet'.
 		^ self ].
 
 	aStream 
-		nextPut: $(;
-		nextPutAll: self className;
-		space;
-		nextPutAll: #withValues:;
-		nextPutAll: ' {';
+		nextPut: ${;
 		cr.
 		
 	self valuesDo: [ :value |
@@ -324,8 +317,7 @@ FiSet >> storeOn: aStream indent: level [
 		
 	aStream 
 		tab: level;
-		nextPutAll: '}';
-		nextPut: $).
+		nextPutAll: '} asFiSet'.
 ]
 
 { #category : #accessing }

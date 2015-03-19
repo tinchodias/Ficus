@@ -118,37 +118,6 @@ FiEffectInspector >> dragWith: aBlock [
 
 ]
 
-{ #category : #private }
-FiEffectInspector >> iconFor: aShot [
-
-	aShot isShot ifFalse: [ ^ Smalltalk ui icons stringIcon ].
-
-	^ Smalltalk ui icons perform: 
-		(iconByClassName 
-			at: aShot species name 
-			ifAbsent: [ #smallHierarchyBrowserIcon "#nautilusIcon" "#emptyIcon" ])
-]
-
-{ #category : #initialization }
-FiEffectInspector >> initialize [
-
-	super initialize.
-	self initializeIconByClassName.	
-
-]
-
-{ #category : #initialization }
-FiEffectInspector >> initializeIconByClassName [
-
-	iconByClassName := 
-		Dictionary new
-			at: #FiAddition put: #changeAddIcon;
-			at: #FiRemoval put: #changeRemoveIcon;
-			at: #FiUpdate put: #changeUpdateIcon;
-			yourself.
-	
-]
-
 { #category : #initialization }
 FiEffectInspector >> initializePresenter [
 	
@@ -171,7 +140,7 @@ FiEffectInspector >> initializePresenterTreeModel [
 		evenRowColor: treeModel oddRowColor;
 		displayBlock: [ :aSimpleEffect | self displayMorphFor: aSimpleEffect ];
 		childrenBlock: [ :aSimpleEffect | aSimpleEffect children asArray ];
-		iconBlock: [ :aSimpleEffect | self iconFor: aSimpleEffect ];
+		iconBlock: [ :aSimpleEffect | aSimpleEffect ficusInspectorIcon ];
 		autoDeselection:true;
 		whenRootsChanged: [ 
 			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 

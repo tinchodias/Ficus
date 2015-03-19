@@ -65,50 +65,6 @@ FiInspector >> emptyRoots [
 	self rootInspectorItems: #()
 ]
 
-{ #category : #private }
-FiInspector >> iconFor: aShot [
-
-	aShot isShot ifFalse: [ ^ Smalltalk ui icons stringIcon ].
-
-	^ Smalltalk ui icons perform: 
-		(iconByClassName 
-			at: aShot species name 
-			ifAbsent: [ #smallHierarchyBrowserIcon "#nautilusIcon" "#emptyIcon" ])
-]
-
-{ #category : #initialization }
-FiInspector >> initialize [
-
-	super initialize.
-
-	self initializeIconByClassName.	
-
-]
-
-{ #category : #initialization }
-FiInspector >> initializeIconByClassName [
-
-	iconByClassName := 
-		Dictionary new
-			"effects"
-			at: #FiDictionaryAddition put: #changeAddIcon;
-			at: #FiDictionaryRemoval put: #changeRemoveIcon;
-			at: #FiDictionaryUpdate put: #changeUpdateIcon;
-
-			at: #FiSetAddition put: #changeAddIcon;
-			at: #FiSetRemoval put: #changeRemoveIcon;
-			at: #FiSetUpdate put: #changeUpdateIcon;
-
-			at: #FiReplacement put: #changeUpdateIcon;
-			
-			"core"
-			at: #FiSet put: #collectionIcon;
-			at: #FiDictionary put: #collectionIcon;
-
-			yourself.
-	
-]
-
 { #category : #initialization }
 FiInspector >> initializePresenter [
 	
@@ -121,9 +77,9 @@ FiInspector >> initializePresenter [
 		
 	treeModel
 		evenRowColor: treeModel oddRowColor;
-		displayBlock: [ :inspectorItem | inspectorItem step asMorph ];
+		displayBlock: [ :inspectorItem | inspectorItem step ];
 		childrenBlock: [ :inspectorItem | inspectorItem children ];
-		iconBlock: [ :inspectorItem | self iconFor: inspectorItem content ];
+		iconBlock: [ :inspectorItem | inspectorItem content ficusInspectorIcon ];
 		autoDeselection: true;
 		whenRootsChanged: [ 
 			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 

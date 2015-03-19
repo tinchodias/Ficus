@@ -27,10 +27,10 @@ FiFragileBaseProblemResourcesA >> classLRULog [
 ]
 
 { #category : #resources }
-FiFragileBaseProblemResourcesA >> packageLog [
+FiFragileBaseProblemResourcesA >> packageLoggers [
 
 	^ FiPackage builder
-		theName: #Log;
+		theName: #Loggers;
 		contents: { self classLog. self classLRULog. } asFiSet;
 		new
 ]

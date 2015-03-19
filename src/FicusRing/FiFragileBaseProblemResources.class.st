@@ -29,14 +29,14 @@ FiFragileBaseProblemResources >> classLog [
 { #category : #private }
 FiFragileBaseProblemResources >> newFicusEnvironment [
 
-	^ { self packageKernel. self packageCollections. self packageLog. } asFiSet
+	^ { self packageKernel. self packageCollections. self packageLoggers. } asFiSet
 ]
 
 { #category : #resources }
-FiFragileBaseProblemResources >> packageLog [
+FiFragileBaseProblemResources >> packageLoggers [
 
 	^ FiPackage builder
-		theName: #Log;
+		theName: #Loggers;
 		contents: { self classLog } asFiSet;
 		new
 ]

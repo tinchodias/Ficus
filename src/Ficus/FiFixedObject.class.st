@@ -134,7 +134,7 @@ FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 	
 	aDictionary 
 		keysAndValuesDo: [ :slotName :value |
-			(availableSteps includes: slotName) ifFalse: [ self error ].
+			(availableSteps includes: slotName) ifFalse: [ self error: slotName asString, ' not found in ', availableSteps asString ].
 
 			self instVarNamed: slotName put: value ]
 ]

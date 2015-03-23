@@ -15,7 +15,10 @@ FiRequisiteInterpreterTest >> assertDependencyOf: aRequisite in: host equals: aD
 			(FiRequisiteInterpreter new 
 				dependencyOf: aRequisite 
 				in: host)
-		equals: aDependency
+		equals: aDependency.
+		
+	self assert: (host ficusRequisites includes: aRequisite).
+	
 ]
 
 { #category : #running }
@@ -155,6 +158,19 @@ FiRequisiteInterpreterTest >> testClassBSum [
 				methods: {
 					resources ringClassA >> #sum.
 					} asFiSet;
+				new)
+]
+
+{ #category : #tests }
+FiRequisiteInterpreterTest >> testClassBSumMethodOwner [
+
+	self 
+		assertDependencyOf: (
+			FiMethodOwnerDeclaration named: #B)
+		in: (resources ringClassB >> #sum)
+		equals: 
+			(FiMethodOwner builder
+				target: resources ringClassB;
 				new)
 ]
 

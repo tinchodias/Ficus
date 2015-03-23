@@ -44,7 +44,8 @@ FiMethodRequisitesTest >> testClassAClassInitialize [
 			FiMessageSend builder
 				receiver: FiAnyMessageReceiver new;
 				selector: #new;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #A isMeta: true.
 				}
 ]
 
@@ -63,7 +64,8 @@ FiMethodRequisitesTest >> testClassASum [
 				new.
 			FiVariableAccess builder
 				variableName: #a2;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #A.
 			}
 ]
 
@@ -81,6 +83,7 @@ FiMethodRequisitesTest >> testClassASum42 [
 				receiver: FiAnyMessageReceiver new;
 				selector: #+;
 				new.
+			FiMethodOwnerDeclaration named: #A.
 			}
 ]
 
@@ -92,7 +95,8 @@ FiMethodRequisitesTest >> testClassBDefaultClass [
 		equals: {
 			FiVariableAccess builder
 				variableName: #C;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -104,7 +108,8 @@ FiMethodRequisitesTest >> testClassBReadSomeClassVariable [
 		equals: {
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -124,7 +129,8 @@ FiMethodRequisitesTest >> testClassBSum [
 				new.
 			FiVariableAccess builder
 				variableName: #b1;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -136,7 +142,8 @@ FiMethodRequisitesTest >> testClassBVariableInSuper [
 		equals: {
 			FiVariableAccess builder
 				variableName: #a1;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -145,7 +152,9 @@ FiMethodRequisitesTest >> testClassCSum [
 
 	self 
 		assertRequisitesOf: resources ringClassC >> #sum
-		equals: { }
+		equals: {
+			FiMethodOwnerDeclaration named: #C.
+		}
 ]
 
 { #category : #tests }
@@ -157,7 +166,8 @@ FiMethodRequisitesTest >> testClassCSumAt [
 			FiMessageSend builder 
 				receiver: FiAnyMessageReceiver new;
 				selector: #sum;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #C.
 		}
 
 ]
@@ -176,6 +186,7 @@ FiMethodRequisitesTest >> testClassCSumTmp [
 				receiver: FiAnyMessageReceiver new;
 				selector: #+;
 				new.
+			FiMethodOwnerDeclaration named: #C.
 		}
 
 ]
@@ -188,6 +199,7 @@ FiMethodRequisitesTest >> testClassCUndeclared [
 		equals: {
 			FiVariableAccess builder
 				variableName: #undeclaredVar;
-				new
+				new.
+			FiMethodOwnerDeclaration named: #C.
 		}
 ]

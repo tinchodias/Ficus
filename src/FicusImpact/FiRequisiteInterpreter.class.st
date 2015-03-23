@@ -17,6 +17,9 @@ FiRequisiteInterpreter >> dependencyOf: aRequisite in: aFiRGObject [
 
 	(aRequisite isKindOf: FiInheritanceDeclaration) ifTrue: [	
 		^ self dependencyOfInheritanceDeclaration: aRequisite in: aFiRGObject ].
+
+	(aRequisite isKindOf: FiMethodOwnerDeclaration) ifTrue: [	
+		^ self dependencyOfMethodOwnerDeclaration: aRequisite in: aFiRGObject ].
 		
 	self shouldBeImplemented.
 ]
@@ -42,6 +45,15 @@ FiRequisiteInterpreter >> dependencyOfMessageSend: aRequisite in: aFiRGMethod [
 	^ FiPossibleMethodInvocation builder
 		methods: possibleInvocations asFiSet;
 		new
+]
+
+{ #category : #public }
+FiRequisiteInterpreter >> dependencyOfMethodOwnerDeclaration: aFiMethodOwnerDeclaration in: aFiRGMethod [ 
+	
+	^ FiMethodOwner builder 
+		target: aFiRGMethod methodClass;
+		new
+
 ]
 
 { #category : #public }

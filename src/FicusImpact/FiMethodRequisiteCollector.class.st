@@ -23,6 +23,11 @@ FiMethodRequisiteCollector >> messageReceiverFor: aRBNode [
 FiMethodRequisiteCollector >> requisitesFor: aFiRGMethod [ 
 
 	dependencies := OrderedCollection new.
+	
+	dependencies add: 
+		(FiMethodOwnerDeclaration 
+			named: aFiRGMethod origin theNonMetaClass name 
+			isMeta: aFiRGMethod origin isMeta).
 
 	aFiRGMethod parseTree acceptVisitor: self.
 	

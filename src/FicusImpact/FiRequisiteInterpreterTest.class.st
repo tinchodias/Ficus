@@ -226,7 +226,7 @@ FiRequisiteInterpreterTest >> testClassCUndeclared [
 FiRequisiteInterpreterTest >> testLinkedListAdd [
 
 	| anEnvironment |
-	anEnvironment := FiFragileBaseProblemResources new ficusRGEnvironment.
+	anEnvironment := FiBaseResources new ficusRGEnvironment.
 	self 
 		assertDependencyOf: (
 			FiMessageSend builder 
@@ -248,7 +248,7 @@ FiRequisiteInterpreterTest >> testLinkedListAdd [
 FiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
 
 	| anEnvironment |
-	anEnvironment := FiFragileBaseProblemResources new ficusRGEnvironment.
+	anEnvironment := FiBaseResources new ficusRGEnvironment.
 	self 
 		assertDependencyOf: (
 			FiMessageSend builder 

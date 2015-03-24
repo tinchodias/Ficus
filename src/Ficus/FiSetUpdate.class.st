@@ -23,6 +23,7 @@ FiSetUpdate >> asSimpleEffectsAt: aBasePath [
 { #category : #accessing }
 FiSetUpdate >> edit [
 	
+	self flag: #todo. "Answer a SubEdit when there is a subEffect like FiFixedObjectUpdate"
 	^ FiInclude value: newValue
 ]
 

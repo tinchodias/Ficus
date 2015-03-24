@@ -72,3 +72,16 @@ FiSimpleEffect >> printOn: aStream [
 		print: path;
 		nextPut: $).
 ]
+
+{ #category : #accessing }
+FiSimpleEffect >> relevantSimpleEffects [
+	
+	^ Array streamContents: [ :stream |
+		self relevantSimpleEffectsDo: [ :each | stream nextPut: each ] ]
+]
+
+{ #category : #enumerating }
+FiSimpleEffect >> relevantSimpleEffectsDo: aBlockClosure [
+	
+	^ aBlockClosure value: self
+]

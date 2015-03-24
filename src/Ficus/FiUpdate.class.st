@@ -25,3 +25,11 @@ FiUpdate >> oldValue [
 	
 	^ oldValue
 ]
+
+{ #category : #enumerating }
+FiUpdate >> relevantSimpleEffectsDo: aBlockClosure [
+
+	^ children values
+		ifEmpty: [ aBlockClosure value: self ]
+		ifNotEmpty: [ children do: [ :each | each relevantSimpleEffectsDo: aBlockClosure ] ]
+]

@@ -132,11 +132,11 @@ FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 	availableSteps := self class steps.
 	self initialize.
 	
-	aDictionary 
-		keysAndValuesDo: [ :slotName :value |
-			(availableSteps includes: slotName) ifFalse: [ self error: slotName asString, ' not found in ', availableSteps asString ].
-
-			self instVarNamed: slotName put: value ]
+	aDictionary keysAndValuesDo: [ :slotName :value |
+		[ self instVarNamed: slotName put: value ]
+			on: Error 
+			do: [ :e | 
+				self error: slotName asString, ' not found in ', availableSteps asString ] ]
 ]
 
 { #category : #accessing }

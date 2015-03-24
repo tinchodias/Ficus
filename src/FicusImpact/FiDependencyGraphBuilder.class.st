@@ -12,7 +12,7 @@ Class {
 FiDependencyGraphBuilder class >> example1 [
 
 	^ (self new
-		environment: FiFragileBaseClassProblemResourcesA new ficusRGEnvironment;
+		environment: FiFragileBaseClassProblemResources4A new ficusRGEnvironment;
 		granularity: FiPackageGranularity new;
 		newGraph) inspect
 ]
@@ -21,7 +21,7 @@ FiDependencyGraphBuilder class >> example1 [
 FiDependencyGraphBuilder class >> example2 [
 
 	^ (self new
-		environment: FiFragileBaseClassProblemResourcesA new ficusRGEnvironment;
+		environment: FiFragileBaseClassProblemResources4A new ficusRGEnvironment;
 		granularity: FiClassGranularity new;
 		newGraph) inspect
 ]
@@ -30,7 +30,7 @@ FiDependencyGraphBuilder class >> example2 [
 FiDependencyGraphBuilder class >> example3 [
 
 	^ (self new
-		environment: FiFragileBaseClassProblemResourcesA new ficusRGEnvironment;
+		environment: FiFragileBaseClassProblemResources4A new ficusRGEnvironment;
 		granularity: FiAtomicGranularity new;
 		newGraph) inspect
 ]

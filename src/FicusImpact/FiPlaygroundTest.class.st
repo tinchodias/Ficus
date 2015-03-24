@@ -3,10 +3,12 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'store',
-		'nodeB',
-		'node0',
 		'envB',
-		'env0'
+		'node2',
+		'node4B',
+		'node3',
+		'env3',
+		'env2'
 	],
 	#category : #'FicusImpact-Tests'
 }
@@ -16,11 +18,13 @@ FiPlaygroundTest >> setUp [
 
 	store := FiMemoryStore exampleFragileBaseProblem.
 
-	nodeB := store headHistoryNode.
-	node0 := nodeB priors asArray anyOne.
+	node4B := store headHistoryNode.
+	node3 := node4B priors anyOne.
+	node2 := node3 priors anyOne.
 
-	envB := nodeB snapshot asFiRGEnvironment.
-	env0 := node0 snapshot asFiRGEnvironment.
+	envB := node4B snapshot asFiRGEnvironment.
+	env3 := node3 snapshot asFiRGEnvironment.
+	env2 := node2 snapshot asFiRGEnvironment.
 
 
 ]
@@ -44,9 +48,9 @@ FiPlaygroundTest >> test02mostRecentHistoryNodeChanging [
 	aClass := envB classNamed: #Log.
 	aMethod := aClass >> #log:.
 
-	self assert: (nodeB mostRecentHistoryNodeChanging: aClass ficusPathFromEnvironment) = nodeB.
-	self assert: (nodeB mostRecentHistoryNodeChanging: aMethod ficusPathFromEnvironment) = node0.
-	self assert: (nodeB mostRecentHistoryNodeChanging: (aClass >> #logAll:) ficusPathFromEnvironment) = nodeB.
+	self assert: (node4B mostRecentHistoryNodeChanging: aClass ficusPathFromEnvironment) = node4B.
+	self assert: (node4B mostRecentHistoryNodeChanging: aMethod ficusPathFromEnvironment) = node2.
+	self assert: (node4B mostRecentHistoryNodeChanging: (aClass >> #logAll:) ficusPathFromEnvironment) = node4B.
 ]
 
 { #category : #tests }
@@ -56,7 +60,7 @@ FiPlaygroundTest >> test03ChangeDependencies [
 	aClass := envB classNamed: #Log.
 	aMethod := aClass >> #log:.
 
-	aFiDelta := nodeB snapshot differenceFrom: node0 snapshot.
+	aFiDelta := node4B snapshot differenceFrom: node3 snapshot.
 	dependencies := envB ficusDependenciesForRedoing: aFiDelta asSimpleEffects anyOne.
 	self assert: dependencies isNotEmpty.
 	pathsToDependencies := dependencies asSet flatCollect: [ :dep | 

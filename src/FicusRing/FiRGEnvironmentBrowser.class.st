@@ -10,7 +10,7 @@ FiRGEnvironmentBrowser class >> example1 [
 	self example1
 	"
 	
-	^ self openOn: FiFragileBaseProblemResources new ficusRGEnvironment
+	^ self openOn: FiFragileBaseClassProblemResources new ficusRGEnvironment
 ]
 
 { #category : #examples }
@@ -19,7 +19,7 @@ FiRGEnvironmentBrowser class >> example2 [
 	self example2
 	"
 	
-	^ self openOn: FiFragileBaseProblemResourcesA new ficusRGEnvironment
+	^ self openOn: FiFragileBaseClassProblemResourcesA new ficusRGEnvironment
 ]
 
 { #category : #examples }

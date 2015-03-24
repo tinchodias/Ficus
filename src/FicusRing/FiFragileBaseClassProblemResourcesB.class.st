@@ -2,13 +2,13 @@
 I answer a variant of my superclass which modifies Log>>logAll:.
 "
 Class {
-	#name : #FiFragileBaseProblemResourcesB,
-	#superclass : #FiFragileBaseProblemResources,
+	#name : #FiFragileBaseClassProblemResourcesB,
+	#superclass : #FiFragileBaseClassProblemResources,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseProblemResourcesB >> classLog [
+FiFragileBaseClassProblemResourcesB >> classLog [
 
 	^ FiClass builder 
 		name: #Log;

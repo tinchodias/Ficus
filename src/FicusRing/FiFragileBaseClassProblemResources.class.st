@@ -2,13 +2,13 @@
 I know how to create set of Ficus Metalevel entities that exemplify the Fragile Base Problem.
 "
 Class {
-	#name : #FiFragileBaseProblemResources,
+	#name : #FiFragileBaseClassProblemResources,
 	#superclass : #FiBaseResources,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseProblemResources >> classLog [
+FiFragileBaseClassProblemResources >> classLog [
 
 	^ FiClass builder 
 		name: #Log;
@@ -27,13 +27,13 @@ FiFragileBaseProblemResources >> classLog [
 ]
 
 { #category : #private }
-FiFragileBaseProblemResources >> newFicusEnvironment [
+FiFragileBaseClassProblemResources >> newFicusEnvironment [
 
 	^ { self packageKernel. self packageCollections. self packageLoggers. } asFiSet
 ]
 
 { #category : #resources }
-FiFragileBaseProblemResources >> packageLoggers [
+FiFragileBaseClassProblemResources >> packageLoggers [
 
 	^ FiPackage builder
 		name: #Loggers;

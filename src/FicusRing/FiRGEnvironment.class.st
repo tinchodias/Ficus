@@ -180,6 +180,20 @@ FiRGEnvironment >> ficusPathToMethod: aFiRGMethod [
 ]
 
 { #category : #accessing }
+FiRGEnvironment >> ficusRGObjectFromPath: aFiPath [
+	
+	| steps |
+	self flag: #todo. "FIX..."
+	
+	steps := aFiPath steps.
+	
+	(steps size >= 4 and: [ steps fourth = #methods ]) ifTrue: [ 
+		^ (self classNamed: steps third) >> steps fifth ].
+	
+	^ self notYetImplemented 
+]
+
+{ #category : #accessing }
 FiRGEnvironment >> globalByName [
 
 	^ globalByName ifNil: [

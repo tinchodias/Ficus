@@ -12,50 +12,42 @@ Class {
 }
 
 { #category : #example }
-FiMemoryStore class >> example [
-	"
-	self example inspect
-	"
-
-	^ self exampleWithAll: ((1 to: 10) collect: [ :index | 'Item ', index asString ])
-]
-
-{ #category : #example }
 FiMemoryStore class >> exampleFragileBaseProblem [
 	"
 	self exampleFragileBaseProblem inspect
 	"
 
-	| store initialCommit |
+	| store snapshots commonPrior |
+	snapshots := { 
+		FiFragileBaseClassProblemResources0.
+		FiFragileBaseClassProblemResources1.
+		FiFragileBaseClassProblemResources2.
+		FiFragileBaseClassProblemResources3.
+	} collect: [ :each | each new ficusEnvironment ].
+
 	store := FiMemoryStore new.
 	store name: 'FragileBaseClassProblem'.
-	
-	initialCommit := store 
-		commitSnapshot: FiFragileBaseClassProblemResources new ficusEnvironment
+
+	"first commit"
+	store 
+		commitSnapshot: snapshots first
 		priors: FiSet new.
 
-	store 
-		commitSnapshot: FiFragileBaseClassProblemResourcesA new ficusEnvironment 
-		priors: { initialCommit } asFiSet.
-	
-	store 
-		commitSnapshot: FiFragileBaseClassProblemResourcesB new ficusEnvironment 
-		priors: { initialCommit } asFiSet.
-
-	^ store
-]
-
-{ #category : #example }
-FiMemoryStore class >> exampleWithAll: items [
-
-	| store |
-	store := FiMemoryStore new.
-	store commitSnapshot: FiSet new priors: FiSet new.
-
-	1 to: items size do: [ :index |
+	"more commits"
+	2 to: snapshots size do: [ :index |
 		store 
-			commitSnapshot: (items first: index) asFiSet 
+			commitSnapshot: (snapshots at: index)
 			priors: { store headHistoryNode } asFiSet ].
+			
+	commonPrior := store headHistoryNode.
+
+	"two forks"
+	store 
+		commitSnapshot: FiFragileBaseClassProblemResources4A new ficusEnvironment
+		priors: { commonPrior } asFiSet.
+	store 
+		commitSnapshot: FiFragileBaseClassProblemResources4B new ficusEnvironment 
+		priors: { commonPrior } asFiSet.
 
 	^ store
 ]

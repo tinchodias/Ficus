@@ -120,14 +120,14 @@ FiStoreBrowser >> initializeTabs [
 
 	snapshotTabModel
 		label: 'Snapshot';
-		icon: Smalltalk ui icons smallSaveIcon;
+		icon: Smalltalk ui icons smallScreenshotIcon;
 		model: self snapshotModel;
 		whenTabSelected: [ self refreshSnapshotTab ];
 		closeable: false.
 		
 	deltasTabModel
 		label: 'Deltas';
-		icon: Smalltalk ui icons smallJustifiedIcon;
+		icon: Smalltalk ui icons smallCopyIcon;
 		model: self deltasModel;
 		whenTabSelected: [ self refreshDeltasTab ];
 		closeable: false.

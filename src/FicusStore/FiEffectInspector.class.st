@@ -71,13 +71,12 @@ FiEffectInspector >> diffChunkMorphFor: aSimpleEffect [
 ]
 
 { #category : #private }
-FiEffectInspector >> diffChunkMorphsFor: anEffectOrNil [
+FiEffectInspector >> diffChunkMorphsFor: aSimpleEffect [
 
-	^ Array 
+	^ Array
 		streamContents: [ :stream |
-			anEffectOrNil
-				leavesDo: [ :aSimpleEffect | 
-					stream nextPut: (self diffChunkMorphFor: aSimpleEffect) ] ] 
+			aSimpleEffect relevantSimpleEffectsDo: [ :each | 
+				stream nextPut: (self diffChunkMorphFor: each) ] ] 
 		limitedTo: 15
 ]
 

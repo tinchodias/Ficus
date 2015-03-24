@@ -31,15 +31,15 @@ FiMemoryStore class >> exampleFragileBaseProblem [
 	store name: 'FragileBaseClassProblem'.
 	
 	initialCommit := store 
-		commitSnapshot: FiFragileBaseProblemResources new ficusEnvironment
+		commitSnapshot: FiFragileBaseClassProblemResources new ficusEnvironment
 		priors: FiSet new.
 
 	store 
-		commitSnapshot: FiFragileBaseProblemResourcesA new ficusEnvironment 
+		commitSnapshot: FiFragileBaseClassProblemResourcesA new ficusEnvironment 
 		priors: { initialCommit } asFiSet.
 	
 	store 
-		commitSnapshot: FiFragileBaseProblemResourcesB new ficusEnvironment 
+		commitSnapshot: FiFragileBaseClassProblemResourcesB new ficusEnvironment 
 		priors: { initialCommit } asFiSet.
 
 	^ store

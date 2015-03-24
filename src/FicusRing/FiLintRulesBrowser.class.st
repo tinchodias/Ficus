@@ -8,7 +8,7 @@ Class {
 FiLintRulesBrowser class >> example1 [
 
 	| rbEnvironment compositeRule |
-	rbEnvironment := FiRBBrowserEnvironment new environment: FiFragileBaseClassProblemResources new ficusRGEnvironment.
+	rbEnvironment := FiRBBrowserEnvironment new environment: FiFragileBaseClassProblemResources3 new ficusRGEnvironment.
 	compositeRule := FiLintRulesTest new newRule.
 
 	RBSmalllintChecker 

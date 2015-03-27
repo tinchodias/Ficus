@@ -36,8 +36,21 @@ FiPlaygroundTest >> test01ficusPathFromEnvironment [
 	aClass := envB classNamed: #Log.
 	aMethod := aClass >> #log:.
 
-	self assert: aClass ficusPathFromEnvironment equals: #(Loggers contents Log) asFiPath.
-	self assert: aMethod ficusPathFromEnvironment equals: #(Loggers contents Log methods log:) asFiPath.
+	self 
+		assert: aClass ficusPathFromEnvironment 
+		equals: #(Loggers contents Log) asFiPath.
+
+	self 
+		assert: aClass theMetaClass ficusPathFromEnvironment 
+		equals: #(Loggers contents Log metaclass) asFiPath.
+
+	self 
+		assert: aMethod ficusPathFromEnvironment 
+		equals: #(Loggers contents Log methods log:) asFiPath.
+
+	self 
+		assert: ((envB classNamed: #Object) classSide >> #new) ficusPathFromEnvironment 
+		equals: #(Kernel contents Object metaclass methods new) asFiPath.
 
 ]
 
@@ -62,6 +75,7 @@ FiPlaygroundTest >> test03ChangeDependencies [
 
 	aFiDelta := node4B snapshot differenceFrom: node3 snapshot.
 	dependencies := envB ficusDependenciesForRedoing: aFiDelta asSimpleEffects anyOne.
+
 	self assert: dependencies isNotEmpty.
 	pathsToDependencies := dependencies asSet flatCollect: [ :dep | 
 		dep targets collect: #ficusPathFromEnvironment ].

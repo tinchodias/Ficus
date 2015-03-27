@@ -150,6 +150,7 @@ FiBaseResources >> classObject [
 			FiMethod sourceCode: 'yourself  ^ self'. 
 			FiMethod sourceCode: 'subclassResponsibility  self error'. 
 			FiMethod sourceCode: 'notYetImplemented  self error'. 
+			FiMethod sourceCode: 'assert: aBoolean  aBoolean ifFalse: [self error]'. 
 			FiMethod sourceCode: 'error  0/0'. 
 			} asFiSet;
 		metaclass: 

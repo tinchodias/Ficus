@@ -1,5 +1,5 @@
 "
-I answer a variant of my superclass which adds the LRULog.
+I answer a variant of my superclass which adds the LRULog, with a test.
 "
 Class {
 	#name : #FiFragileBaseClassProblemResources4A,
@@ -15,6 +15,7 @@ FiFragileBaseClassProblemResources4A >> classLRULog [
 		superclassName: #Log;
 		layout: (FiFixedLayout withInstanceVariables: #(tally));
 		methods: {
+			FiMethod sourceCode: 'tally  ^tally'. 
 			FiMethod sourceCode: 'log: aMessage  
 	tally > 100 ifTrue: [ collection removeFirst ].
 	super log: aMessage.
@@ -27,10 +28,28 @@ FiFragileBaseClassProblemResources4A >> classLRULog [
 ]
 
 { #category : #resources }
+FiFragileBaseClassProblemResources4A >> classLRULogTest [
+
+	^ FiClass builder 
+		name: #LRULogTest;
+		superclassName: #Log;
+		layout: (FiFixedLayout withInstanceVariables: #());
+		methods: {
+			FiMethod sourceCode: 'testLog
+	| log |
+	log := LRULog new.
+	log log: #bonjour.
+	self assert: log tally = 1.'.
+			FiMethod sourceCode: 'testLogAll  "TODO"'.
+			} asFiSet;
+		new
+]
+
+{ #category : #resources }
 FiFragileBaseClassProblemResources4A >> packageLoggers [
 
 	^ FiPackage builder
 		name: #Loggers;
-		contents: { self classLog. self classLRULog. } asFiSet;
+		contents: { self classLog. self classLRULog. self classLRULogTest. } asFiSet;
 		new
 ]

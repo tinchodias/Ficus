@@ -56,6 +56,12 @@ FiRGMetaclass >> environment [
 	^ theNonMetaClass environment
 ]
 
+{ #category : #accessing }
+FiRGMetaclass >> ficusPathFromEnvironment [
+
+	^ theNonMetaClass ficusPathFromEnvironment / #metaclass
+]
+
 { #category : #comparing }
 FiRGMetaclass >> hash [
 

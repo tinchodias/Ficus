@@ -174,9 +174,7 @@ FiRGEnvironment >> ficusPathToClass: aFiRGClass [
 { #category : #accessing }
 FiRGEnvironment >> ficusPathToMethod: aFiRGMethod [ 
 
-	self assert: aFiRGMethod methodClass isMeta not. "not yet implemented"
-		
-	^ (self ficusPathToClass: aFiRGMethod methodClass) / #methods / aFiRGMethod selector
+	^ aFiRGMethod origin ficusPathFromEnvironment / #methods / aFiRGMethod selector
 ]
 
 { #category : #accessing }
@@ -187,10 +185,18 @@ FiRGEnvironment >> ficusRGObjectFromPath: aFiPath [
 	
 	steps := aFiPath steps.
 	
-	(steps size >= 4 and: [ steps fourth = #methods ]) ifTrue: [ 
-		^ (self classNamed: steps third) >> steps fifth ].
+	steps size < 4 ifTrue: [ self notYetImplemented  ].
 	
-	^ self notYetImplemented 
+	steps fourth = #methods ifTrue: [ 
+		^ (self classNamed: steps third) >> steps fifth ].
+
+	steps fourth = #layout ifTrue: [ 
+		^ self classNamed: steps third ].
+
+	steps fourth = #metaclass ifTrue: [ 
+		^ (self classNamed: steps third) theMetaClass ].
+	
+	self notYetImplemented 
 ]
 
 { #category : #accessing }

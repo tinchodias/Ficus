@@ -41,10 +41,15 @@ FiMemoryStore class >> exampleFragileBaseProblem [
 			
 	commonPrior := store headHistoryNode.
 
-	"two forks"
+	"fork A"
 	store 
 		commitSnapshot: FiFragileBaseClassProblemResources4A new ficusEnvironment
 		priors: { commonPrior } asFiSet.
+	store 
+		commitSnapshot: FiFragileBaseClassProblemResources5A new ficusEnvironment
+		priors: { store headHistoryNode } asFiSet.
+
+	"fork B"
 	store 
 		commitSnapshot: FiFragileBaseClassProblemResources4B new ficusEnvironment 
 		priors: { commonPrior } asFiSet.

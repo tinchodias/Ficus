@@ -34,7 +34,7 @@ FiHistoryNodesBrowser class >> example [
 	"
 
 	^ self new
-		store: (FiMonticelloStore forPackageNamed: #Tetris);
+		store: FiMemoryStore exampleFragileBaseProblem;
 		refresh;
 		openWithSpec;
 		yourself
@@ -53,7 +53,7 @@ FiHistoryNodesBrowser >> descriptionMorphFor: aHistoryNode [
 		ifFalse: [ aHistoryNode origin shortDescription asMorph ]).
 	
 	self plugin 
-		prepareDescriptionMorphs: morphs 
+		prepareHistoryNodeDescriptionMorphs: morphs 
 		for: aHistoryNode.
 	
 	^ FiMorphBuilder default rowMorphWithAll: morphs
@@ -180,7 +180,18 @@ FiHistoryNodesBrowser >> plugin [
 { #category : #accessing }
 FiHistoryNodesBrowser >> plugin: aPlugin [
 
-	plugin := aPlugin
+	plugin := aPlugin.
+	
+	aPlugin announcer weak
+		when: FiStoreBrowserPluginRefreshed 
+		send: #pluginRefreshed
+		to: self.
+]
+
+{ #category : #refreshing }
+FiHistoryNodesBrowser >> pluginRefreshed [
+		
+	historyTreeModel updateTree
 ]
 
 { #category : #refreshing }

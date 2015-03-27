@@ -95,7 +95,7 @@ FiEffectInspector >> displayMorphFor: aSimpleEffect [
 	morphs add: aSimpleEffect path step asMorph.
 	
 	self plugin 
-		prepareEffectInspectorTreeMorphs: morphs 
+		prepareEffectDescriptionMorphs: morphs 
 		for: aSimpleEffect.
 	
 	^ FiMorphBuilder default rowMorphWithAll: morphs
@@ -140,13 +140,9 @@ FiEffectInspector >> initializePresenterTreeModel [
 		displayBlock: [ :aSimpleEffect | self displayMorphFor: aSimpleEffect ];
 		childrenBlock: [ :aSimpleEffect | aSimpleEffect children asArray ];
 		iconBlock: [ :aSimpleEffect | aSimpleEffect ficusInspectorIcon ];
-		autoDeselection:true;
-		whenRootsChanged: [ 
-			self flag: #fix. "Workaround: Spec in Pharo3 does not trigger that selection changed 
-				when it changed due to roots update."
-			self showDiffFor: nil ];
 		whenSelectedItemChanged: [ :aSimpleEffectOrNil | 
-			self showDiffFor: aSimpleEffectOrNil value ].
+			self selected: aSimpleEffectOrNil value ];
+		menu: [ :aMenu | self prepareMenu: aMenu ].
 ]
 
 { #category : #initialization }
@@ -178,25 +174,47 @@ FiEffectInspector >> plugin [
 { #category : #accessing }
 FiEffectInspector >> plugin: aPlugin [
 
-	plugin := aPlugin
+	plugin := aPlugin.
+	
+	aPlugin announcer weak
+		when: FiStoreBrowserPluginRefreshed 
+		send: #pluginRefreshed
+		to: self.
+]
+
+{ #category : #accessing }
+FiEffectInspector >> pluginRefreshed [
+	
+	treeModel updateTree
+]
+
+{ #category : #private }
+FiEffectInspector >> prepareMenu: aMenu [
+
+	treeModel selectedItems ifNotEmpty: [ 
+		self plugin prepareEffectMenu: aMenu ]
 ]
 
 { #category : #opening }
 FiEffectInspector >> rootEffect: anEffect [
 
+	treeModel deselectAll.
 	treeModel roots: (self treeRootsFor: anEffect).
-
-	treeModel expandAll
+	treeModel expandAll.
 
 ]
 
 { #category : #private }
-FiEffectInspector >> showDiffFor: anEffectOrNil [ 
+FiEffectInspector >> selected: anEffectOrNil [ 
 
 	self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
 	currentSelection = anEffectOrNil ifTrue: [ ^ self ].
 	currentSelection := anEffectOrNil.
 
+	"Transmit to plugin"
+	self plugin selectedEffect: anEffectOrNil. 
+	self flag: #todo. "fix?"
+	
 	diffModel roots: 
 		(anEffectOrNil 
 			ifNil: [ #() ]

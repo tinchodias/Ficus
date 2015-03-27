@@ -149,8 +149,7 @@ FiStoreBrowser >> initializeTransmitionOfHistoryNodesSelection [
 					ifNil: [ 	snapshotTabModel ] "This is a workaround because you can not convince Spec that the tab initially selected is actually selected."
 					ifNotNil: [ :tabModel | tabModel ].
 			
-			selectedItems ifNotEmpty: [
-				self plugin selectedHistoryNode: selectedItems anyOne. self flag: #fix. "Transmit to plugin" ].
+				self plugin selectedHistoryNodes: selectedItems. self flag: #fix. "Transmit to plugin".
 
 			actuallySelectedTab tabSelected ]
 ]
@@ -184,11 +183,6 @@ FiStoreBrowser >> plugin: aPlugin [
 	
 	historyBrowserModel plugin: aPlugin.
 	deltasModel plugin: aPlugin.
-	
-	aPlugin announcer weak
-		when: FiStoreBrowserPluginRefreshed 
-		send: #refresh
-		to: self.
 ]
 
 { #category : #refreshing }

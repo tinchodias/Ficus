@@ -23,15 +23,24 @@ FiStoreBrowserPlugin >> announcer [
 ]
 
 { #category : #accessing }
-FiStoreBrowserPlugin >> prepareDescriptionMorphs: morphs for: aHistoryNode [
+FiStoreBrowserPlugin >> prepareEffectDescriptionMorphs: morphs for: aSimpleEffect [
 
 ]
 
 { #category : #accessing }
-FiStoreBrowserPlugin >> prepareEffectInspectorTreeMorphs: morphs for: aSimpleEffect [
+FiStoreBrowserPlugin >> prepareEffectMenu: aMenuModel [
 
 ]
 
 { #category : #accessing }
-FiStoreBrowserPlugin >> selectedHistoryNode: aHistoryNode [
+FiStoreBrowserPlugin >> prepareHistoryNodeDescriptionMorphs: morphs for: aHistoryNode [
+
+]
+
+{ #category : #accessing }
+FiStoreBrowserPlugin >> selectedEffect: aSimpleEffectOrNil [
+]
+
+{ #category : #accessing }
+FiStoreBrowserPlugin >> selectedHistoryNodes: aHistoryNode [
 ]

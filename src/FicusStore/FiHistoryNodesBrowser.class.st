@@ -144,6 +144,7 @@ FiHistoryNodesBrowser >> initializePresenterHistoryTreeModel [
 			}.
 
 	historyTreeModel
+		menu: [ :aMenu | self prepareMenu: aMenu ];
 		dragEnabled: false;
 		dropEnabled: true;
 		wantDropBlock: [ :transfer :event :source |
@@ -192,6 +193,13 @@ FiHistoryNodesBrowser >> plugin: aPlugin [
 FiHistoryNodesBrowser >> pluginRefreshed [
 		
 	historyTreeModel updateTree
+]
+
+{ #category : #private }
+FiHistoryNodesBrowser >> prepareMenu: aMenu [
+
+	historyTreeModel selectedItems ifNotEmpty: [ 
+		self plugin prepareHistoryNodeMenu: aMenu ]
 ]
 
 { #category : #refreshing }

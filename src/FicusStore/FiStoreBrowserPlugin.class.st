@@ -38,6 +38,11 @@ FiStoreBrowserPlugin >> prepareHistoryNodeDescriptionMorphs: morphs for: aHistor
 ]
 
 { #category : #accessing }
+FiStoreBrowserPlugin >> prepareHistoryNodeMenu: aMenuModel [
+
+]
+
+{ #category : #accessing }
 FiStoreBrowserPlugin >> selectedEffect: aSimpleEffectOrNil [
 ]
 

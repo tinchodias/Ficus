@@ -40,13 +40,39 @@ FiRGEnvironmentBrowser class >> example4yrupe [
 	^ self openOn: (YrPharoMigrator example1readTag: '30005') asFiRGEnvironment
 ]
 
+{ #category : #actions }
+FiRGEnvironmentBrowser >> browseDependenciesOf: aFiRGObject [
+
+	(FiDependenciesBrowser openOn: aFiRGObject) extent: 700@600
+]
+
+{ #category : #actions }
+FiRGEnvironmentBrowser >> browseImplementorsInHierarchyOf: aFiRGMethod [
+
+	| methods |
+	methods := aFiRGMethod environment 
+		implementorsOf: aFiRGMethod selector 
+		inHierarchyOf: aFiRGMethod methodClass.
+
+	FiMethodsBrowser openOn: methods.
+]
+
+{ #category : #actions }
+FiRGEnvironmentBrowser >> browseImplementorsOf: aFiRGMethod [
+
+	| methods |
+	methods := aFiRGMethod environment implementorsOf: aFiRGMethod selector.
+
+	FiMethodsBrowser openOn: methods.
+]
+
 { #category : #private }
 FiRGEnvironmentBrowser >> classDefinitionIn: a [ 
 
 	a smalltalkCode
 		variableBindings: [ :class | 
 			{ class name -> class. class superclass name -> class superclass } 
-			"Just for highlighting" ];
+			"For syntax highlighting" ];
 		display: [ :class  | 
 			String streamContents: [ :stream |
 				stream 
@@ -63,14 +89,7 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 	a list 
 		title: [ :class  | 'Meta (', class classSide methods size asString, ')' ];
 		display: [ :class  | class classSide methods ];
-		sorted: [ :x :y | x selector < y selector ];
-		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
-		tags: [ :each | {each protocol} ];
-		format: [ :method | method selector ];
-		selectionAct: [:each :e | 
-			(FiDependenciesBrowser openOn: each selection) extent: 700@600 ] 
-			on: $d 
-			entitled: 'Dependencies'.
+		in: [ :aList | self sharedSetupForMethodsIn: aList ].
 ]
 
 { #category : #private }
@@ -83,7 +102,7 @@ FiRGEnvironmentBrowser >> classesIn: a [
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each category} ];
 		selectionAct: [:each :e | 
-			(FiDependenciesBrowser openOn: each selection) extent: 700@600 ] 
+			self browseDependenciesOf: each selection ] 
 			on: $d 
 			entitled: 'Dependencies'.
 ]
@@ -144,14 +163,7 @@ FiRGEnvironmentBrowser >> instanceSideMethodsIn: a [
 	a list
 		title: [ :class  | 'Instance (', class methods size asString, ')' ];
 		display: [ :class  | class methods ];
-		sorted: [ :x :y | x selector < y selector ];
-		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
-		tags: [ :each | {each protocol} ];
-		format: [ :method | method selector ];
-		selectionAct: [:each :e | 
-			(FiDependenciesBrowser openOn: each selection) extent: 700@600 ] 
-			on: $d 
-			entitled: 'Dependencies'.
+		in: [ :aList | self sharedSetupForMethodsIn: aList ].
 ]
 
 { #category : #private }
@@ -170,4 +182,26 @@ FiRGEnvironmentBrowser >> packagesIn: a [
 		sorted: [ :x :y | x name < y name ];
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
 		format: [ :package | package name ]
+]
+
+{ #category : #private }
+FiRGEnvironmentBrowser >> sharedSetupForMethodsIn: aList [
+
+	aList
+		sorted: [ :x :y | x selector < y selector ];
+		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
+		tags: [ :each | {each protocol} ];
+		format: [ :method | method selector ];
+		selectionAct: [:each :e | 
+			self browseDependenciesOf: each selection ] 
+			on: $d 
+			entitled: 'Dependencies';
+		selectionAct: [:each :e | 
+			self browseImplementorsOf: each selection ]
+			on: $m
+			entitled: 'Implementors';
+		selectionAct: [:each :e | 
+			self browseImplementorsInHierarchyOf: each selection ]
+			on: $M
+			entitled: 'Implementors in hierarchy'.
 ]

@@ -6,6 +6,9 @@ Class {
 	#superclass : #FiRGObject,
 	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:})',
 	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
+	#instVars : [
+		'cachedMethods'
+	],
 	#category : #'FicusRing-Core'
 }
 
@@ -136,7 +139,12 @@ FiRGBehavior >> methodDict: aDictionary [
 { #category : #polymorphism }
 FiRGBehavior >> methods [
 	
-	^ (self environment extensionMethodsFor: self) union: self localMethods
+	^ cachedMethods ifNil: [ 
+		cachedMethods := Array streamContents: [ :stream |
+			stream 
+				nextPutAll: (self environment extensionMethodsFor: self); 
+				nextPutAll: self localMethods 
+			] ]
 ]
 
 { #category : #polymorphism }

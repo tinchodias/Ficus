@@ -5,8 +5,7 @@ Class {
 	#name : #FiRGMetaclass,
 	#superclass : #FiRGBehavior,
 	#instVars : [
-		'theNonMetaClass',
-		'cachedLocalMethods'
+		'theNonMetaClass'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -99,9 +98,8 @@ FiRGMetaclass >> isMeta [
 { #category : #polymorphism }
 FiRGMetaclass >> localMethods [
 
-	^ cachedLocalMethods ifNil: [
-		cachedLocalMethods := self theNonMetaClass classShot metaclass methods values 
-			collect: [ :aMethodShot | self ringMethodFor: aMethodShot ] ]
+	^ self theNonMetaClass classShot metaclass methods values 
+		collect: [ :aMethodShot | self ringMethodFor: aMethodShot ]
 ]
 
 { #category : #lookup }

@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'classShot',
 		'environment',
-		'cachedLocalMethods',
 		'cachedSuperclass',
 		'cachedMetaClass'
 	],
@@ -292,9 +291,8 @@ FiRGClass >> isMeta [
 { #category : #polymorphism }
 FiRGClass >> localMethods [
 
-	^ cachedLocalMethods ifNil: [
-		cachedLocalMethods := classShot methods 
-			collect: [ :aMethodShot | self ringMethodFor: aMethodShot ] ]
+	^ classShot methods collect: [ :aMethodShot | 
+		self ringMethodFor: aMethodShot ]
 ]
 
 { #category : #polymorphism }

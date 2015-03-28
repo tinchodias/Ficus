@@ -28,10 +28,15 @@ FiRGPackage >> definedClasses [
 
 { #category : #accessing }
 FiRGPackage >> definedMethods [
-	
-	^ (self definedClasses flatCollect: [ :each | 
-		each localMethods, each classSide localMethods ]) 
-			union: self extensionMethods
+
+	^ Array streamContents: [ :stream |
+		self definedClasses do: [ :each | 
+			stream 
+				nextPutAll: each localMethods;
+				nextPutAll: each classSide localMethods ].
+
+		stream nextPutAll: self extensionMethods 
+		]
 ]
 
 { #category : #accessing }

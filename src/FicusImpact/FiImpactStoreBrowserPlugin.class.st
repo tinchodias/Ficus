@@ -36,6 +36,12 @@ FiImpactStoreBrowserPlugin class >> example [
 		yourself
 ]
 
+{ #category : #accessing }
+FiImpactStoreBrowserPlugin >> browseInEnvironment [
+
+	selectedHistoryNode snapshot asFiRGEnvironment browse
+]
+
 { #category : #private }
 FiImpactStoreBrowserPlugin >> dependenciesFor: aHistoryNode [ 
 
@@ -101,6 +107,16 @@ FiImpactStoreBrowserPlugin >> prepareHistoryNodeDescriptionMorphs: morphs for: a
 		borderWidth: 0.
 		
 	morphs add: icon
+]
+
+{ #category : #accessing }
+FiImpactStoreBrowserPlugin >> prepareHistoryNodeMenu: aMenu [
+
+	aMenu addGroup: [:aGroup | 
+		aGroup addItem: [:anItem | 
+			anItem 
+				name: 'Browse in environment';
+				action: [ self browseInEnvironment ] ] ]
 ]
 
 { #category : #private }

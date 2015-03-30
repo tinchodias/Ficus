@@ -13,6 +13,12 @@ YrMethodEncoding class >> id [
 	^ 'st'
 ]
 
+{ #category : #testing }
+YrMethodEncoding class >> isAbstract [
+
+	^ false
+]
+
 { #category : #private }
 YrMethodEncoding >> objectFrom: aString [
 

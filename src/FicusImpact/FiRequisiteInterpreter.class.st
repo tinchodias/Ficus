@@ -42,9 +42,7 @@ FiRequisiteInterpreter >> dependencyOfMessageSend: aRequisite in: aFiRGMethod [
 			implementorsOf: aRequisite selector 
 			in: aFiRGMethod.
 
-	^ FiPossibleMethodInvocation builder
-		methods: possibleInvocations asFiSet;
-		new
+	^ FiPossibleMethodInvocation methods: possibleInvocations
 ]
 
 { #category : #public }

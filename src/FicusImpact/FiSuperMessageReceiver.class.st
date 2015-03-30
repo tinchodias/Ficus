@@ -12,7 +12,7 @@ FiSuperMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 		inSuperclassesOf: aFiRGMethod methodClass
 		ifPresent: [ :method | { method } ]
 		ifAbsent: [ #() ])
-		select: [ :each | each isProvided ]
+		"select: [ :each | each isProvided ]"
 ]
 
 { #category : #printing }

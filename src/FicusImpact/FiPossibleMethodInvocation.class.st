@@ -13,6 +13,22 @@ FiPossibleMethodInvocation class >> empty [
 	^ self builder methods: FiSet new; new.
 ]
 
+{ #category : #'instance creation' }
+FiPossibleMethodInvocation class >> methods: possibleInvocations [
+
+	^ FiPossibleMethodInvocation basicNew
+		initializeWithMethods: possibleInvocations asFiSet;
+		yourself
+]
+
+{ #category : #initialization }
+FiPossibleMethodInvocation >> initializeWithMethods: possibleInvocations [
+
+	self initialize.
+	
+	methods := possibleInvocations
+]
+
 { #category : #accessing }
 FiPossibleMethodInvocation >> methods [
 	

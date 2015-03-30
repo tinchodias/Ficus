@@ -39,7 +39,7 @@ FiImpactStoreBrowserPlugin class >> example [
 { #category : #accessing }
 FiImpactStoreBrowserPlugin >> browseInEnvironment [
 
-	selectedHistoryNode snapshot asFiRGEnvironment browse
+	FiImpactRGEnvironmentBrowser openOn: selectedHistoryNode snapshot asFiRGEnvironment
 ]
 
 { #category : #private }

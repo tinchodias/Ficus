@@ -11,28 +11,37 @@ Class {
 { #category : #examples }
 FiDependencyGraphBuilder class >> example1 [
 
-	^ (self new
-		environment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment;
-		granularity: FiPackageGranularity new;
-		newGraph) inspect
+	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
 ]
 
 { #category : #examples }
 FiDependencyGraphBuilder class >> example2 [
 
-	^ (self new
-		environment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment;
-		granularity: FiClassGranularity new;
-		newGraph) inspect
+	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
 ]
 
 { #category : #examples }
 FiDependencyGraphBuilder class >> example3 [
 
-	^ (self new
-		environment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment;
+	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
+]
+
+{ #category : #examples }
+FiDependencyGraphBuilder class >> exampleYrupe [
+	"
+	[self exampleYrupe] timeToRun
+	"
+
+	^ self graphForEnvironment: (YrPharoMigrator example1readTag: '30014') asFiRGEnvironment
+]
+
+{ #category : #convenience }
+FiDependencyGraphBuilder class >> graphForEnvironment: aFiRGEnvironment [
+
+	^ self new
+		environment: aFiRGEnvironment;
 		granularity: FiAtomicGranularity new;
-		newGraph) inspect
+		newGraph
 ]
 
 { #category : #private }
@@ -45,7 +54,7 @@ FiDependencyGraphBuilder >> dependenciesByTargetNodeOf: entity graph: graph [
 		dependency targets do: [ :dependencyTarget |
 			(dependenciesByTargetNode
 				at: (graph nodeFor: (granularity entityFor: dependencyTarget))
-				ifAbsentPut: [ Set new ])
+				ifAbsentPut: [ OrderedCollection new ])
 				add: dependency.
 			]].
 
@@ -88,7 +97,8 @@ FiDependencyGraphBuilder >> newGraph [
 		(self dependenciesByTargetNodeOf: entity graph: graph) 
 			keysAndValuesDo: [ :targetNode :dependencies |
 				node addOuterEdgeTo: targetNode contents: dependencies ].
-		 ].
+		 ]
+		displayingProgress: [ :entity | 'Calculating dependencies for ', entity printString ] every: 500.
 	
 	^ graph
 ]

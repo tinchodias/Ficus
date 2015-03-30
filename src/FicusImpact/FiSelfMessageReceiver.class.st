@@ -10,7 +10,7 @@ FiSelfMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 	^ (aFiRGMethod environment
 		implementorsOf: aSelector 
 		inHierarchyOf: aFiRGMethod methodClass)
-		select: [ :each | each isProvided ]
+		"select: [ :each | each isProvided ]"
 ]
 
 { #category : #printing }

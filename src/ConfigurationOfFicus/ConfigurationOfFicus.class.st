@@ -132,9 +132,9 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #FicusMetamodel with: [
 				spec requires: #(#Ficus) ];
 			package: #FicusRing with: [
-				spec requires: #(#FicusMetamodel ) ];
+				spec requires: #(#FicusMetamodel) ];
 			package: #FicusImpact with: [
-				spec requires: #(#FicusRing) ];
+				spec requires: #(#FicusRing #FicusStore) ];
 			package: #FicusStore with: [
 				spec requires: #(#FicusMetamodel #Hiedra) ];
 			package: #FicusMonticello with: [

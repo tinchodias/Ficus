@@ -10,7 +10,8 @@ Class {
 		'packageByClassName',
 		'extensionMethodsByBehaviorName',
 		'packages',
-		'globalByName'
+		'globalByName',
+		'cachedImplementorsBySelector'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -237,16 +238,23 @@ FiRGEnvironment >> hash [
 { #category : #lookup }
 FiRGEnvironment >> implementorsOf: aSelector [ 
 	
-	^ Array streamContents: [ :stream |
+	cachedImplementorsBySelector ifNil: [
+		cachedImplementorsBySelector := Dictionary new.
+		
 		self allClassesAndTraitsDo: [ :aClassOrTrait |
-			aClassOrTrait 
-				compiledMethodAt: aSelector 
-				ifPresent: [ :method | stream nextPut: method ] 
-				ifAbsent: [ ].
-			aClassOrTrait classSide
-				compiledMethodAt: aSelector 
-				ifPresent: [ :method | stream nextPut: method ] 
-				ifAbsent: [ ] ] ]
+			|block |
+			block := [ :method |
+				(cachedImplementorsBySelector 
+					at: method selector
+					ifAbsentPut: [ OrderedCollection new ]) 
+					add: method ].
+			aClassOrTrait methods do: block.
+			aClassOrTrait classSide methods do: block.
+			] ].
+		
+	^ cachedImplementorsBySelector 
+		at: aSelector
+		ifAbsent: [ #() ]
 ]
 
 { #category : #lookup }

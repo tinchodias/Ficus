@@ -8,7 +8,8 @@ Class {
 		'classShot',
 		'environment',
 		'cachedSuperclass',
-		'cachedMetaClass'
+		'cachedMetaClass',
+		'cachedSubclasses'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -375,9 +376,11 @@ FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
 { #category : #polymorphism }
 FiRGClass >> subclasses [
 	
-	^ (environment allClasses
-		select: [ :aClass | aClass classShot superclassName = self name ])
-		asArray
+	^ cachedSubclasses ifNil: [
+		cachedSubclasses := 
+			(environment allClasses
+				select: [ :aClass | aClass classShot superclassName = self name ])
+				asArray ]
 ]
 
 { #category : #polymorphism }

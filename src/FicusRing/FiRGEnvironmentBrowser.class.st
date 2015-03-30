@@ -41,12 +41,6 @@ FiRGEnvironmentBrowser class >> example4yrupe [
 ]
 
 { #category : #actions }
-FiRGEnvironmentBrowser >> browseDependenciesOf: aFiRGObject [
-
-	(FiDependenciesBrowser openOn: aFiRGObject) extent: 700@600
-]
-
-{ #category : #actions }
 FiRGEnvironmentBrowser >> browseImplementorsInHierarchyOf: aFiRGMethod [
 
 	| methods |
@@ -93,18 +87,14 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> classesIn: a [ 
+FiRGEnvironmentBrowser >> classesIn: aList [
 
-	a list
+	aList
 		display: [ :package | package definedClasses ];
 		sorted: [:x :y | x name < y name ];
 		format: [ :class | class name ];
 		filterOn: [ :text :each | each name includesSubstring: text caseSensitive: false ];
-		tags: [ :each | {each category} ];
-		selectionAct: [:each :e | 
-			self browseDependenciesOf: each selection ] 
-			on: $d 
-			entitled: 'Dependencies'.
+		tags: [ :each | {each category} ]
 ]
 
 { #category : #building }
@@ -134,7 +124,7 @@ FiRGEnvironmentBrowser >> compose [
 		browser transmit 
 			from: #packages;
 			to: #classes;
-			andShow: [ :a | self classesIn: a ].
+			andShow: [ :a | self classesIn: a list ].
 
 		browser transmit 
 			from: #classes;
@@ -192,10 +182,6 @@ FiRGEnvironmentBrowser >> sharedSetupForMethodsIn: aList [
 		filterOn: [ :text :each | each selector includesSubstring: text caseSensitive: false ];
 		tags: [ :each | {each protocol} ];
 		format: [ :method | method selector ];
-		selectionAct: [:each :e | 
-			self browseDependenciesOf: each selection ] 
-			on: $d 
-			entitled: 'Dependencies';
 		selectionAct: [:each :e | 
 			self browseImplementorsOf: each selection ]
 			on: $m

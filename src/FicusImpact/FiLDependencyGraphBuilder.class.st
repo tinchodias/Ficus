@@ -15,18 +15,6 @@ FiLDependencyGraphBuilder class >> example1 [
 ]
 
 { #category : #examples }
-FiLDependencyGraphBuilder class >> example2 [
-
-	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
-]
-
-{ #category : #examples }
-FiLDependencyGraphBuilder class >> example3 [
-
-	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
-]
-
-{ #category : #examples }
 FiLDependencyGraphBuilder class >> exampleYrupe [
 	"
 	[self exampleYrupe] timeToRun
@@ -69,13 +57,12 @@ FiLDependencyGraphBuilder >> newGraph [
 
 	| graph entities |
 	graph := FiLGraph new.
-	graph environment: environment.
 
 	entities := granularity allEntitiesFor: environment.
 	
 	entities 
 		do: [ :entity | self processEntity: entity graph: graph ]
-		inParallel: 4.
+		displayingProgress: [ :entity | 'Calculating dependencies for ', entity shortPrintString ] every: 500.
 	
 	^ graph
 ]
@@ -86,12 +73,9 @@ FiLDependencyGraphBuilder >> processEntity: entity graph: graph [
 	| node |
 	node := graph nodeFor: entity.
 
-	entity ficusAllDependencies do: [ :dependency | 
-		dependency targets do: [ :dependencyTarget |
-			| targetNode |
-			targetNode := graph nodeFor: (granularity entityFor: dependencyTarget).
-			
-			node ensurePointTo: targetNode.
-		]].
-
+	FiLDependencyInterpreter new
+		targetsCallback: [ :target |
+			node ensurePointTo: (graph nodeFor: target) ];
+		entity: entity;
+		run.
 ]

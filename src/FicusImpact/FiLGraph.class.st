@@ -2,16 +2,15 @@ Class {
 	#name : #FiLGraph,
 	#superclass : #Object,
 	#instVars : [
-		'environment',
 		'nodeByContents'
 	],
 	#category : #'FicusImpact-LGraph'
 }
 
-{ #category : #accessing }
-FiLGraph >> environment: aFiRGEnvironment [ 
+{ #category : #'as yet unclassified' }
+FiLGraph >> compact [
 	
-	environment := aFiRGEnvironment 
+	self nodes do: #compact
 ]
 
 { #category : #initialization }
@@ -29,7 +28,6 @@ FiLGraph >> nodeFor: anObject [
 		at: anObject 
 		ifAbsentPut: [
 			FiLNode new
-				graph: self;
 				contents: anObject;
 				yourself ]
 ]

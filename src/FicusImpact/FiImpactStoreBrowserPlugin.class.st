@@ -84,32 +84,6 @@ FiImpactStoreBrowserPlugin >> prepareEffectMenu: aMenu [
 ]
 
 { #category : #accessing }
-FiImpactStoreBrowserPlugin >> prepareHistoryNodeDescriptionMorphs: morphs for: aHistoryNode [
-
-	| dependencies icon button |
-	aHistoryNode isWorkingCopy ifTrue: [ ^ self ].
-
-	dependencies := self dependenciesFor: aHistoryNode.
-
-	icon := 
-		FiMorphBuilder default 
-			tagWith: '# deps: ', dependencies size asString
-			backgroundColor: Color blue muchLighter muchLighter
-			fontColor: Color black.
-
-	button := IconicButton new 
-		target: self;
-"		actionSelector: #browseComments:;
-		arguments: { aHistoryNode };"
-		labelGraphic: icon imageForm;
-		color: Color transparent;
-		helpText: dependencies asString;
-		borderWidth: 0.
-		
-	morphs add: icon
-]
-
-{ #category : #accessing }
 FiImpactStoreBrowserPlugin >> prepareHistoryNodeMenu: aMenu [
 
 	aMenu addGroup: [:aGroup | 

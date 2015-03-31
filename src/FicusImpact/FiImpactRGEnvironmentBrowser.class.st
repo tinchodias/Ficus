@@ -49,7 +49,7 @@ FiImpactRGEnvironmentBrowser >> classesIn: aList [
 FiImpactRGEnvironmentBrowser >> dependencyGraph [
 
 	^ dependencyGraph ifNil: [
-		dependencyGraph := FiDependencyGraphBuilder graphForEnvironment: self entity ].
+		dependencyGraph := FiLDependencyGraphBuilder graphForEnvironment: self entity ].
 ]
 
 { #category : #private }

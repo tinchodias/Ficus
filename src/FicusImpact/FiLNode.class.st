@@ -2,10 +2,9 @@ Class {
 	#name : #FiLNode,
 	#superclass : #Object,
 	#instVars : [
-		'graph',
 		'contents',
-		'outerEdges',
-		'innerEdges'
+		'nodesPointingToMe',
+		'nodesPointedByMe'
 	],
 	#category : #'FicusImpact-LGraph'
 }
@@ -15,6 +14,13 @@ FiLNode >> = other [
 
 	^ self class = other class and: [ 
 		self contents = other contents ]
+]
+
+{ #category : #'as yet unclassified' }
+FiLNode >> compact [
+	
+	nodesPointedByMe := nodesPointedByMe asArray.
+	nodesPointingToMe := nodesPointingToMe asArray.
 ]
 
 { #category : #accessing }
@@ -33,7 +39,7 @@ FiLNode >> contents: anObject [
 FiLNode >> ensurePointTo: targetNode [
 	"Outer edges are owned by self, unlike inner edges."
 	
-	outerEdges add: targetNode.	
+	nodesPointedByMe add: targetNode.	
 	targetNode ensurePointedFrom: self.
 ]
 
@@ -41,13 +47,7 @@ FiLNode >> ensurePointTo: targetNode [
 FiLNode >> ensurePointedFrom: aNode [
 	"Inner edges are owned by the source node, unlike outer edges."
 
-	innerEdges add: aNode
-]
-
-{ #category : #accessing }
-FiLNode >> graph: aFiGraph [ 
-	
-	graph := aFiGraph 
+	nodesPointingToMe add: aNode
 ]
 
 { #category : #comparing }
@@ -61,20 +61,20 @@ FiLNode >> initialize [
 
 	super initialize.
 	
-	outerEdges := Set new: 1.
-	innerEdges := Set new: 1.
+	nodesPointedByMe := Set new: 1.
+	nodesPointingToMe := Set new: 1.
 ]
 
 { #category : #accessing }
 FiLNode >> nodesPointedByMe [
 	
-	^ outerEdges asArray
+	^ nodesPointedByMe asArray
 ]
 
 { #category : #accessing }
 FiLNode >> nodesPointingToMe [
 	
-	^ innerEdges asArray
+	^ nodesPointingToMe asArray
 ]
 
 { #category : #printing }

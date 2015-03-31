@@ -10,26 +10,22 @@ Class {
 { #category : #actions }
 FiImpactRGEnvironmentBrowser >> browseDependenciesOf: aFiRGObject [
 
-	| node |
+	| node entities |
 	node := self dependencyGraph nodeFor: aFiRGObject.
+	entities := (node nodesPointedByMe collect: [:each | each contents ]).
 
-	(FiDependenciesBrowser openOn: 
-		(node outerEdges 
-			collect: [:each | each target contents ] 
-			as: Set))
+	(FiDependenciesBrowser openOn: entities)
 		title: 'Dependencies of ', aFiRGObject shortPrintString.
 ]
 
 { #category : #actions }
 FiImpactRGEnvironmentBrowser >> browseImpactsOf: aFiRGObject [
 
-	| node |
+	| node entities |
 	node := self dependencyGraph nodeFor: aFiRGObject.
+	entities := (node nodesPointingToMe collect: [:each | each contents ]).
 
-	(FiDependenciesBrowser openOn: 
-		(node innerEdges 
-			collect: [:each | each source contents ] 
-			as: Set))
+	(FiDependenciesBrowser openOn: entities)
 		title: 'Impacts of ', aFiRGObject shortPrintString.
 ]
 

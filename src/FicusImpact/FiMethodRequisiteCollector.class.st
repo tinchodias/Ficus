@@ -11,12 +11,12 @@ Class {
 FiMethodRequisiteCollector >> messageReceiverFor: aRBNode [ 
 
 	aRBNode isSelf ifTrue: [ 
-		^ FiSelfMessageReceiver new ].
+		^ FiSelfMessageReceiver defaultInstance ].
 
 	aRBNode isSuper ifTrue: [ 
-		^ FiSuperMessageReceiver new ].
+		^ FiSuperMessageReceiver defaultInstance ].
 	
-	^ FiAnyMessageReceiver new
+	^ FiAnyMessageReceiver defaultInstance
 ]
 
 { #category : #public }
@@ -24,14 +24,9 @@ FiMethodRequisiteCollector >> requisitesFor: aFiRGMethod [
 
 	dependencies := OrderedCollection new.
 	
-	dependencies add: 
-		(FiMethodOwnerDeclaration 
-			named: aFiRGMethod origin theNonMetaClass name 
-			isMeta: aFiRGMethod origin isMeta).
-
 	aFiRGMethod parseTree acceptVisitor: self.
 	
-	^ dependencies asArray
+	^ dependencies
 ]
 
 { #category : #visitor }

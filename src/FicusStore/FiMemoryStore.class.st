@@ -17,13 +17,19 @@ FiMemoryStore class >> exampleFragileBaseProblem [
 	self exampleFragileBaseProblem inspect
 	"
 
+	^ self exampleFragileBaseProblem: [ :each | each new ficusEnvironment ]
+]
+
+{ #category : #example }
+FiMemoryStore class >> exampleFragileBaseProblem: factoryBlock [
+
 	| store snapshots commonPrior |
 	snapshots := { 
 		FiFragileBaseClassProblemResources0.
 		FiFragileBaseClassProblemResources1.
 		FiFragileBaseClassProblemResources2.
 		FiFragileBaseClassProblemResources3.
-	} collect: [ :each | each new ficusEnvironment ].
+	} collect: [ :each | factoryBlock value: each ].
 
 	store := FiMemoryStore new.
 	store name: 'FragileBaseClassProblem'.
@@ -43,18 +49,27 @@ FiMemoryStore class >> exampleFragileBaseProblem [
 
 	"fork A"
 	store 
-		commitSnapshot: FiFragileBaseClassProblemResources4A new ficusEnvironment
+		commitSnapshot: (factoryBlock value: FiFragileBaseClassProblemResources4A)
 		priors: { commonPrior } asFiSet.
 	store 
-		commitSnapshot: FiFragileBaseClassProblemResources5A new ficusEnvironment
+		commitSnapshot: (factoryBlock value: FiFragileBaseClassProblemResources5A)
 		priors: { store headHistoryNode } asFiSet.
 
 	"fork B"
 	store 
-		commitSnapshot: FiFragileBaseClassProblemResources4B new ficusEnvironment 
+		commitSnapshot: (factoryBlock value: FiFragileBaseClassProblemResources4B)
 		priors: { commonPrior } asFiSet.
 
 	^ store
+]
+
+{ #category : #example }
+FiMemoryStore class >> exampleFragileBaseProblemOnlyPackage [
+	"
+	self exampleFragileBaseProblemOnlyPackage inspect
+	"
+
+	^ self exampleFragileBaseProblem: [ :each | each new packageLoggers ]
 ]
 
 { #category : #accessing }

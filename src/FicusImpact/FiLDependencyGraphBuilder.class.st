@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'environment',
-		'granularity'
+		'dependencyInterpreter'
 	],
 	#category : #'FicusImpact-LGraph'
 }
@@ -28,8 +28,17 @@ FiLDependencyGraphBuilder class >> graphForEnvironment: aFiRGEnvironment [
 
 	^ self new
 		environment: aFiRGEnvironment;
-		granularity: FiAtomicGranularity new;
 		newGraph
+]
+
+{ #category : #building }
+FiLDependencyGraphBuilder >> entities [
+
+	^ Array streamContents: [ :stream |
+		environment allClassesAndTraitsDo: [ :class |
+			stream 
+				nextPutAll: class methods;
+				nextPutAll: class classSide methods ]]
 ]
 
 { #category : #accessing }
@@ -42,27 +51,23 @@ FiLDependencyGraphBuilder >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #accessing }
-FiLDependencyGraphBuilder >> granularity [
-	^ granularity
-]
+{ #category : #initialization }
+FiLDependencyGraphBuilder >> initialize [
 
-{ #category : #accessing }
-FiLDependencyGraphBuilder >> granularity: anObject [
-	granularity := anObject
+	super initialize.
+	
+	dependencyInterpreter := FiLDependencyInterpreter new.
 ]
 
 { #category : #building }
 FiLDependencyGraphBuilder >> newGraph [
 
-	| graph entities |
+	| graph |
 	graph := FiLGraph new.
 
-	entities := granularity allEntitiesFor: environment.
-	
-	entities 
+	self entities 
 		do: [ :entity | self processEntity: entity graph: graph ]
-		displayingProgress: [ :entity | 'Calculating dependencies for ', entity shortPrintString ] every: 500.
+		displayingProgress: [ :entity | 'Calculating dependencies for ', entity shortPrintString ] every: 800.
 	
 	^ graph
 ]
@@ -73,7 +78,7 @@ FiLDependencyGraphBuilder >> processEntity: entity graph: graph [
 	| node |
 	node := graph nodeFor: entity.
 
-	FiLDependencyInterpreter new
+	dependencyInterpreter
 		targetsCallback: [ :target |
 			node ensurePointTo: (graph nodeFor: target) ];
 		entity: entity;

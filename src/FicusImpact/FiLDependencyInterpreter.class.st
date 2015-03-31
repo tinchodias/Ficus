@@ -3,51 +3,19 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'targetsCallback',
-		'entity'
+		'entity',
+		'methodVisitor'
 	],
 	#category : #'FicusImpact-LGraph'
 }
 
-{ #category : #public }
-FiLDependencyInterpreter >> dependencyOfInheritanceDeclaration: aRequisite in: aFiRGObject [
-	
-	^ aFiRGObject environment 
-		at: aRequisite theClassName
-		ifPresent: [ :foundClass | FiInheritance builder target: foundClass; new ]
-		ifAbsent: [ FiInheritance notFound ]
-]
-
-{ #category : #public }
-FiLDependencyInterpreter >> dependencyOfMessageSend: aRequisite in: aFiRGMethod [
-	
-	| possibleInvocations |
-	possibleInvocations := 
-		aRequisite receiver 
-			implementorsOf: aRequisite selector 
-			in: aFiRGMethod.
-
-	^ FiPossibleMethodInvocation methods: possibleInvocations
-]
-
-{ #category : #public }
-FiLDependencyInterpreter >> dependencyOfVariableAccess: aRequisite in: aFiRGObject [
-	
-	^ aFiRGObject 
-		lookupVariableNamed: aRequisite variableName 
-		ifFound: [ :variable | 
-			FiVariableBinding builder 
-				target: variable;
-				new ]
-		ifNotFound: [ FiVariableBinding undeclared ]
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiLDependencyInterpreter >> entity: aFiRGObject [
 
 	entity := aFiRGObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiLDependencyInterpreter >> messageSendTo: aReceiver of: aSelector [
 
 	(aReceiver 
@@ -56,7 +24,13 @@ FiLDependencyInterpreter >> messageSendTo: aReceiver of: aSelector [
 		do: targetsCallback
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+FiLDependencyInterpreter >> methodVisitor [
+	
+	^ methodVisitor ifNil: [ methodVisitor := FiLMethodVisitor new ]
+]
+
+{ #category : #public }
 FiLDependencyInterpreter >> run [
 	
 	self flag: #todo. "fix"
@@ -67,21 +41,21 @@ FiLDependencyInterpreter >> run [
 	self notYetImplemented 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiLDependencyInterpreter >> runOnMethod [
 
-	FiLMethodVisitor new
+	self methodVisitor
 		collector: self;
 		visitMethod: entity.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiLDependencyInterpreter >> targetsCallback: aBlockClosure [ 
 
 	targetsCallback := aBlockClosure 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 FiLDependencyInterpreter >> variableAccess: aName [
 
 	entity

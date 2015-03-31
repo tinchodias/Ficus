@@ -16,7 +16,7 @@ FiLNode >> = other [
 		self contents = other contents ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'optimizing space' }
 FiLNode >> compact [
 	
 	nodesPointedByMe := nodesPointedByMe asArray.
@@ -61,8 +61,8 @@ FiLNode >> initialize [
 
 	super initialize.
 	
-	nodesPointedByMe := Set new: 1.
-	nodesPointingToMe := Set new: 1.
+	nodesPointedByMe := IdentitySet new: 1.
+	nodesPointingToMe := IdentitySet new: 1.
 ]
 
 { #category : #accessing }

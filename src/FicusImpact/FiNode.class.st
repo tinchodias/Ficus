@@ -7,7 +7,7 @@ Class {
 		'outerEdges',
 		'innerEdges'
 	],
-	#category : #'FicusImpact-Graph'
+	#category : #'FicusImpact-Old-Graph'
 }
 
 { #category : #comparing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #FiClassGranularity,
 	#superclass : #FiGranularity,
-	#category : #'FicusImpact-Graph'
+	#category : #'FicusImpact-Old-Graph'
 }
 
 { #category : #accessing }

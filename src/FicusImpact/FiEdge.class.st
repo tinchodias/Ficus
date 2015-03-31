@@ -7,7 +7,7 @@ Class {
 		'source',
 		'target'
 	],
-	#category : #'FicusImpact-Graph'
+	#category : #'FicusImpact-Old-Graph'
 }
 
 { #category : #accessing }

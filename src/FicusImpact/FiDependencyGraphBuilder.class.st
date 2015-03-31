@@ -5,7 +5,7 @@ Class {
 		'environment',
 		'granularity'
 	],
-	#category : #'FicusImpact-Graph'
+	#category : #'FicusImpact-Old-Graph'
 }
 
 { #category : #examples }

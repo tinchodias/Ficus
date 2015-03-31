@@ -7,7 +7,7 @@ Class {
 	#category : #'FicusImpact-LGraph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'optimizing space' }
 FiLGraph >> compact [
 	
 	self nodes do: #compact
@@ -18,7 +18,7 @@ FiLGraph >> initialize [
 
 	super initialize.
 	
-	nodeByContents := Dictionary new.
+	nodeByContents := FLLargeIdentityDictionary new.
 ]
 
 { #category : #accessing }

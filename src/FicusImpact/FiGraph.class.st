@@ -5,7 +5,7 @@ Class {
 		'environment',
 		'nodeByContents'
 	],
-	#category : #'FicusImpact-Graph'
+	#category : #'FicusImpact-Old-Graph'
 }
 
 { #category : #accessing }

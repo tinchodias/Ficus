@@ -84,6 +84,6 @@ FiPlaygroundTest >> test03ChangeDependencies [
 		assert: pathsToDependencies 
 		equals: {
 			FiPath root / #Collections / #contents / #Collection / #methods / #addAll:. 
-			FiPath root / #Loggers / #contents / #Log
+			FiPath root / #Loggers / #contents / #Log / #layout/ #instanceVariables / #collection
 			} asSet
 ]

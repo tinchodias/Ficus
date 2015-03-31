@@ -45,7 +45,6 @@ FiMethodRequisitesTest >> testClassAClassInitialize [
 				receiver: FiAnyMessageReceiver new;
 				selector: #new;
 				new.
-			FiMethodOwnerDeclaration named: #A isMeta: true.
 				}
 ]
 
@@ -65,7 +64,6 @@ FiMethodRequisitesTest >> testClassASum [
 			FiVariableAccess builder
 				variableName: #a2;
 				new.
-			FiMethodOwnerDeclaration named: #A.
 			}
 ]
 
@@ -83,7 +81,6 @@ FiMethodRequisitesTest >> testClassASum42 [
 				receiver: FiAnyMessageReceiver new;
 				selector: #+;
 				new.
-			FiMethodOwnerDeclaration named: #A.
 			}
 ]
 
@@ -96,7 +93,6 @@ FiMethodRequisitesTest >> testClassBDefaultClass [
 			FiVariableAccess builder
 				variableName: #C;
 				new.
-			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -109,7 +105,6 @@ FiMethodRequisitesTest >> testClassBReadSomeClassVariable [
 			FiVariableAccess builder
 				variableName: #SomeClassVariable;
 				new.
-			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -130,7 +125,6 @@ FiMethodRequisitesTest >> testClassBSum [
 			FiVariableAccess builder
 				variableName: #b1;
 				new.
-			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -143,7 +137,6 @@ FiMethodRequisitesTest >> testClassBVariableInSuper [
 			FiVariableAccess builder
 				variableName: #a1;
 				new.
-			FiMethodOwnerDeclaration named: #B.
 			}
 ]
 
@@ -152,9 +145,7 @@ FiMethodRequisitesTest >> testClassCSum [
 
 	self 
 		assertRequisitesOf: resources ringClassC >> #sum
-		equals: {
-			FiMethodOwnerDeclaration named: #C.
-		}
+		equals: {}
 ]
 
 { #category : #tests }
@@ -167,7 +158,6 @@ FiMethodRequisitesTest >> testClassCSumAt [
 				receiver: FiAnyMessageReceiver new;
 				selector: #sum;
 				new.
-			FiMethodOwnerDeclaration named: #C.
 		}
 
 ]
@@ -186,7 +176,6 @@ FiMethodRequisitesTest >> testClassCSumTmp [
 				receiver: FiAnyMessageReceiver new;
 				selector: #+;
 				new.
-			FiMethodOwnerDeclaration named: #C.
 		}
 
 ]
@@ -200,6 +189,5 @@ FiMethodRequisitesTest >> testClassCUndeclared [
 			FiVariableAccess builder
 				variableName: #undeclaredVar;
 				new.
-			FiMethodOwnerDeclaration named: #C.
 		}
 ]

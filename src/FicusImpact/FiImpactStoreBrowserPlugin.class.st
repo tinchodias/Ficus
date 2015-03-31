@@ -20,33 +20,15 @@ FiImpactStoreBrowserPlugin class >> example [
 	self example.
 	"
 
-	| store registry |
-	store := FiMemoryStore exampleFragileBaseProblem.
-
-	registry :=
-		(FiWorkingCopyRegistry new 
-			addWorkingCopy: store newWorkingCopy; 
-			yourself).
-		
-	FiStoreBrowser new
-		store: store;
-		workingCopyRegistry: registry;
-		plugin: self new;
-		refresh;
-		openWithSpec;
-		yourself
+	self exampleFragileBaseProblemWith: FiBaseResources new ficusEnvironment asArray
 ]
 
 { #category : #examples }
-FiImpactStoreBrowserPlugin class >> exampleYrupe [
-	"
-	self exampleYrupe.
-	"
+FiImpactStoreBrowserPlugin class >> exampleFragileBaseProblemWith: environmentalPackages [
 
-	| store environmentalPackages registry plugin |
+	| store registry plugin |
 	store := FiMemoryStore exampleFragileBaseProblemOnlyPackage.
 
-	environmentalPackages := (YrPharoMigrator example1readTag: '30014') asArray.
 	plugin := self new
 		environmentalPackages: environmentalPackages;
 		yourself.	
@@ -63,6 +45,15 @@ FiImpactStoreBrowserPlugin class >> exampleYrupe [
 		refresh;
 		openWithSpec;
 		yourself
+]
+
+{ #category : #examples }
+FiImpactStoreBrowserPlugin class >> exampleYrupe [
+	"
+	self exampleYrupe.
+	"
+
+	self exampleFragileBaseProblemWith: (YrPharoMigrator example1readTag: '30014') asArray
 ]
 
 { #category : #accessing }

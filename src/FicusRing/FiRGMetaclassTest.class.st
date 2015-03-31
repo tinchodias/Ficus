@@ -94,6 +94,25 @@ FiRGMetaclassTest >> testPackage [
 ]
 
 { #category : #tests }
+FiRGMetaclassTest >> testRingInstanceVariableNamed [
+
+	self deny: (resources ringClassA theMetaClass ringInstanceVariableNamed: 'a3') isNil.
+	self deny: (resources ringClassA theMetaClass ringInstanceVariableNamed: #a3) isNil.
+
+	self 
+		assert: (resources ringClassA theMetaClass ringInstanceVariableNamed: 'a3') definingClass 
+		equals: resources ringClassA theMetaClass
+]
+
+{ #category : #tests }
+FiRGMetaclassTest >> testRingInstanceVariables [
+
+	self 
+		assert: (resources ringClassA theMetaClass ringInstanceVariables collect: #name) asArray
+		equals: #(a3)
+]
+
+{ #category : #tests }
 FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 
 	| results |

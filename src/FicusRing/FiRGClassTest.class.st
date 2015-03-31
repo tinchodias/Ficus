@@ -125,7 +125,7 @@ FiRGClassTest >> testCanUnderstand [
 
 ]
 
-{ #category : #'tests-polymorphism' }
+{ #category : #tests }
 FiRGClassTest >> testClassPool [
 
 	self assert: resources ringClassA classPool isDictionary.
@@ -139,6 +139,13 @@ FiRGClassTest >> testClassVarNames [
 
 	self assert: resources ringClassA classVarNames equals: #('SomeClassVariable').
 	self assert: resources ringClassB classVarNames isEmpty
+]
+
+{ #category : #tests }
+FiRGClassTest >> testClassVariableNamed [
+
+	self deny: (resources ringClassA classVariableNamed: 'SomeClassVariable') isNil.
+
 ]
 
 { #category : #tests }
@@ -173,7 +180,7 @@ FiRGClassTest >> testCompiledMethodAtIfPresentIfAbsent [
 	self deny: presentOrNil.
 ]
 
-{ #category : #'tests-polymorphism' }
+{ #category : #tests }
 FiRGClassTest >> testDefinition [
 
 	self 
@@ -284,7 +291,7 @@ FiRGClassTest >> testMethods [
 
 ]
 
-{ #category : #'tests-polymorphism' }
+{ #category : #tests }
 FiRGClassTest >> testName [
 
 	self assert: resources ringClassA name equals: 'A'
@@ -301,6 +308,46 @@ FiRGClassTest >> testParseTreeFor [
 		
 	self deny: (resources ringClassA parseTreeFor: #sum) isNil.
 	self assert: (resources ringClassA parseTreeFor: #unexistentMethod) isNil.
+
+]
+
+{ #category : #'tests-accessing' }
+FiRGClassTest >> testRingClassVariableNamed [
+
+	self deny: (resources ringClassA ringClassVariableNamed: 'SomeClassVariable') isNil.
+	self deny: (resources ringClassA ringClassVariableNamed: #SomeClassVariable) isNil.
+
+	self 
+		assert: (resources ringClassA ringClassVariableNamed: 'SomeClassVariable') definingClass 
+		equals: resources ringClassA 
+]
+
+{ #category : #'tests-accessing' }
+FiRGClassTest >> testRingClassVariables [
+
+	self 
+		assert: (resources ringClassA ringClassVariables collect: #name) asArray 
+		equals: #('SomeClassVariable')
+
+]
+
+{ #category : #'tests-accessing' }
+FiRGClassTest >> testRingInstanceVariableNamed [
+
+	self deny: (resources ringClassA ringInstanceVariableNamed: 'a1') isNil.
+	self deny: (resources ringClassA ringInstanceVariableNamed: #a1) isNil.
+
+	self 
+		assert: (resources ringClassA ringInstanceVariableNamed: 'a1') definingClass 
+		equals: resources ringClassA 
+]
+
+{ #category : #'tests-accessing' }
+FiRGClassTest >> testRingInstanceVariables [
+
+	self 
+		assert: (resources ringClassA ringInstanceVariables collect: #name) asSet 
+		equals: #(a1 a2) asSet.
 
 ]
 
@@ -375,7 +422,7 @@ FiRGClassTest >> testSuperclass [
 	self assert: resources ringClassB superclass equals: resources ringClassA.
 ]
 
-{ #category : #'tests-polymorphism' }
+{ #category : #tests }
 FiRGClassTest >> testTheMetaClass [
 
 	self assert: resources ringClassA theMetaClass isMeta.
@@ -425,7 +472,7 @@ FiRGClassTest >> testWhichSelectorsRead [
 
 ]
 
-{ #category : #'tests-polymorphism' }
+{ #category : #tests }
 FiRGClassTest >> testWhichSelectorsReferTo [
 
 	self assert: (resources ringClassC whichSelectorsReferTo: #+) asArray equals: #(sumTmp)
@@ -460,7 +507,7 @@ FiRGClassTest >> testWithAllSuperAndSubclassesDo [
 	self assert: result asArray equals: { resources ringClassObject. resources ringClassA. resources ringClassB }.
 ]
 
-{ #category : #'tests-polymorphism' }
+{ #category : #tests }
 FiRGClassTest >> testWithAllSuperclasses [
 
 	self 

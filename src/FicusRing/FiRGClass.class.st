@@ -9,7 +9,8 @@ Class {
 		'environment',
 		'cachedSuperclass',
 		'cachedMetaClass',
-		'cachedSubclasses'
+		'cachedSubclasses',
+		'cachedClassVariables'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -162,6 +163,13 @@ FiRGClass >> classVarNames [
 ]
 
 { #category : #polymorphism }
+FiRGClass >> classVariableNamed: aString [
+	"Copied from TClass"
+
+	^self classPool associationAt: aString asSymbol ifAbsent: [self error: 'no such class var']
+]
+
+{ #category : #polymorphism }
 FiRGClass >> comment [
 
 	^ classShot comment
@@ -257,10 +265,10 @@ FiRGClass >> innerBindingOf: aSymbol [
 FiRGClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
 	(self instVarNames includes: aName)
-		ifTrue: [ ^ presentBlockClosure value: self ].
+		ifTrue: [ ^ presentBlockClosure value: (self ringInstanceVariableNamed: aName) ].
 
 	(self classVarNames includes: aName)
-		ifTrue: [ ^ presentBlockClosure value: self ].
+		ifTrue: [ ^ presentBlockClosure value: (self ringClassVariableNamed: aName) ].
 		
 	^ self superclass 
 		ifNil: absentBlockClosure
@@ -339,6 +347,20 @@ FiRGClass >> parseTreeFor: aSymbol [
 		compiledMethodAt: aSymbol 
 		ifPresent: [ :method | method parseTree ]
 		ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+FiRGClass >> ringClassVariableNamed: aString [
+
+	^ self ringClassVariables detect: [ :each | each name = aString ]
+]
+
+{ #category : #accessing }
+FiRGClass >> ringClassVariables [ 
+
+	^ cachedClassVariables ifNil: [
+		cachedClassVariables := self classVarNames collect: [ :each |
+			FiRGClassVariable definingClass: self name: each ] ]
 ]
 
 { #category : #polymorphism }

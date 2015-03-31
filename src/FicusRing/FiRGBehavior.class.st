@@ -7,7 +7,8 @@ Class {
 	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:})',
 	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
 	#instVars : [
-		'cachedMethods'
+		'cachedMethods',
+		'cachedInstanceVariables'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -164,8 +165,23 @@ FiRGBehavior >> printOn: aStream [
 		nextPut: $)
 ]
 
+{ #category : #accessing }
+FiRGBehavior >> ringInstanceVariableNamed: aString [
+
+	^ self ringInstanceVariables detect: [ :each | each name = aString ]
+]
+
+{ #category : #accessing }
+FiRGBehavior >> ringInstanceVariables [ 
+
+	^ cachedInstanceVariables ifNil: [
+		cachedInstanceVariables := self instVarNames collect: [ :each |
+			FiRGInstanceVariable definingClass: self name: each ] ]
+]
+
 { #category : #private }
 FiRGBehavior >> ringMethodFor: aMethodShot [
+	"Not API"
 
 	^ FiRGMethod new 
 		methodClass: self;

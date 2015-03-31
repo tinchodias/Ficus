@@ -71,7 +71,7 @@ FiRGMetaclass >> hash [
 FiRGMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
 	(self instVarNames includes: aName)
-		ifTrue: [ ^ presentBlockClosure value: self ].
+		ifTrue: [ ^ presentBlockClosure value: (self ringInstanceVariableNamed: aName) ].
 		
 	^ self superclass 
 		ifNil: absentBlockClosure

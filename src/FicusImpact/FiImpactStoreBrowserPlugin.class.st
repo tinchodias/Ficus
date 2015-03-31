@@ -8,7 +8,8 @@ Class {
 		'selectedEffect',
 		'selectedHistoryNode',
 		'dependenciesByHistoryNode',
-		'backgroundExecutor'
+		'backgroundExecutor',
+		'environmentalPackages'
 	],
 	#category : #'FicusImpact-UI'
 }
@@ -36,10 +37,39 @@ FiImpactStoreBrowserPlugin class >> example [
 		yourself
 ]
 
+{ #category : #examples }
+FiImpactStoreBrowserPlugin class >> exampleYrupe [
+	"
+	self exampleYrupe.
+	"
+
+	| store environmentalPackages registry plugin |
+	store := FiMemoryStore exampleFragileBaseProblemOnlyPackage.
+
+	environmentalPackages := (YrPharoMigrator example1readTag: '30014') asArray.
+	plugin := self new
+		environmentalPackages: environmentalPackages;
+		yourself.	
+	
+	registry :=
+		(FiWorkingCopyRegistry new 
+			addWorkingCopy: store newWorkingCopy; 
+			yourself).
+	
+	FiStoreBrowser new
+		store: store;
+		workingCopyRegistry: registry;
+		plugin: plugin;
+		refresh;
+		openWithSpec;
+		yourself
+]
+
 { #category : #accessing }
 FiImpactStoreBrowserPlugin >> browseInEnvironment [
 
-	FiImpactRGEnvironmentBrowser openOn: selectedHistoryNode snapshot asFiRGEnvironment
+	FiImpactRGEnvironmentBrowser openOn: 
+		(self environmentFor: selectedHistoryNode snapshot)
 ]
 
 { #category : #private }
@@ -48,6 +78,18 @@ FiImpactStoreBrowserPlugin >> dependenciesFor: aHistoryNode [
 	^ dependenciesByHistoryNode 
 		at: aHistoryNode
 		ifAbsent: [ #() ]
+]
+
+{ #category : #accessing }
+FiImpactStoreBrowserPlugin >> environmentFor: aPackage [
+
+	^ (environmentalPackages copyWith: aPackage) asFiSet asFiRGEnvironment
+]
+
+{ #category : #'as yet unclassified' }
+FiImpactStoreBrowserPlugin >> environmentalPackages: aCollection [ 
+
+	environmentalPackages := aCollection 
 ]
 
 { #category : #initialization }

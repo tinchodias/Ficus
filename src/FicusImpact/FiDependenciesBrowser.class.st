@@ -40,6 +40,7 @@ FiDependenciesBrowser >> dependenciesIn: a [
 	a list
 		format: [ :dependency | dependency shortPrintString ];
 		sorted: [ :x :y | x shortPrintString < y shortPrintString ];
-		filterOn: [ :text :each | each shortPrintString includesSubstring: text caseSensitive: false ].
-
+		filterOn: [ :text :each | each shortPrintString includesSubstring: text caseSensitive: false ];
+		showOnly: 50;
+		tags: [ :each | {each package name} ]
 ]

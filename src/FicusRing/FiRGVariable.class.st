@@ -44,3 +44,14 @@ FiRGVariable >> package [
 	
 	^ definingClass package
 ]
+
+{ #category : #printing }
+FiRGVariable >> printOn: aStream [
+
+	super printOn: aStream.
+	
+	aStream
+		nextPut: $(;
+		nextPutAll: self shortPrintString;
+		nextPut: $).
+]

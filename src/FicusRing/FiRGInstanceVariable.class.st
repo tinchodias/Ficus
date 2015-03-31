@@ -7,6 +7,12 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #accessing }
+FiRGInstanceVariable >> ficusPathFromEnvironment [
+
+	^ definingClass environment ficusPathToInstanceVariable: self
+]
+
 { #category : #printing }
 FiRGInstanceVariable >> shortPrintString [
 	

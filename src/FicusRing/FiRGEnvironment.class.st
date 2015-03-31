@@ -173,6 +173,13 @@ FiRGEnvironment >> ficusPathToClass: aFiRGClass [
 ]
 
 { #category : #accessing }
+FiRGEnvironment >> ficusPathToInstanceVariable: aFiRGInstanceVariable [ 
+
+	^ aFiRGInstanceVariable definingClass ficusPathFromEnvironment / 
+		#layout / #instanceVariables / aFiRGInstanceVariable name
+]
+
+{ #category : #accessing }
 FiRGEnvironment >> ficusPathToMethod: aFiRGMethod [ 
 
 	^ aFiRGMethod origin ficusPathFromEnvironment / #methods / aFiRGMethod selector

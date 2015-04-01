@@ -13,5 +13,5 @@ FiAnyMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
 { #category : #printing }
 FiAnyMessageReceiver >> shortPrintString [
 
-	^ 'any'
+	^ '*'
 ]

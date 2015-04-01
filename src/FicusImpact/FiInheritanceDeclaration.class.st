@@ -18,6 +18,12 @@ FiInheritanceDeclaration >> printOn: aStream [
 		nextPut: $).
 ]
 
+{ #category : #printing }
+FiInheritanceDeclaration >> shortPrintString [
+
+	^ 'Subclass of ', theClassName
+]
+
 { #category : #accessing }
 FiInheritanceDeclaration >> theClassName [
 	

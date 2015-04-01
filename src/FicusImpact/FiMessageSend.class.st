@@ -32,3 +32,9 @@ FiMessageSend >> selector [
 	
 	^ selector
 ]
+
+{ #category : #printing }
+FiMessageSend >> shortPrintString [
+
+	^ 'Send ', receiver shortPrintString, ' ', selector
+]

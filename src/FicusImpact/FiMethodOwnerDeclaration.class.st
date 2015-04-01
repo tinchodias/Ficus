@@ -20,7 +20,7 @@ FiMethodOwnerDeclaration class >> named: aString [
 { #category : #'instance creation' }
 FiMethodOwnerDeclaration class >> named: aString isMeta: aBoolean [
 
-	^ FiMethodOwnerDeclaration builder
+	^ self builder
 		theNonMetaSideName: aString;
 		isMeta: aBoolean;
 		new

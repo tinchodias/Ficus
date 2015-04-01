@@ -35,5 +35,7 @@ FiVariableBinding >> target [
 { #category : #accessing }
 FiVariableBinding >> targets [
 	
-	^ { target }
+	^ target 
+		ifNil: [ #() ]
+		ifNotNil: [ {target} ]
 ]

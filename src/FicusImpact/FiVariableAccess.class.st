@@ -18,6 +18,12 @@ FiVariableAccess >> printOn: aStream [
 		nextPut: $).
 ]
 
+{ #category : #printing }
+FiVariableAccess >> shortPrintString [
+
+	^ 'Access ', variableName
+]
+
 { #category : #accessing }
 FiVariableAccess >> variableName [
 	

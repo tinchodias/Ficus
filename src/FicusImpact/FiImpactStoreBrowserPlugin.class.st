@@ -9,7 +9,8 @@ Class {
 		'selectedHistoryNode',
 		'dependenciesByHistoryNode',
 		'backgroundExecutor',
-		'environmentalPackages'
+		'environmentalPackages',
+		'environmentByHistoryNode'
 	],
 	#category : #'FicusImpact-UI'
 }
@@ -57,27 +58,38 @@ FiImpactStoreBrowserPlugin class >> exampleYrupe [
 ]
 
 { #category : #accessing }
-FiImpactStoreBrowserPlugin >> browseInEnvironment [
+FiImpactStoreBrowserPlugin >> browseCritics [
 
-	FiImpactRGEnvironmentBrowser openOn: 
-		(self environmentFor: selectedHistoryNode snapshot)
-]
+	backgroundExecutor spawnNewProcessWith: [ 
+		| rbEnvironment |
+		rbEnvironment :=
+			(FiRBBrowserEnvironment new 
+				environment: self selectedEnvironment)
+				forClasses: self selectedPackage definedClasses.
 
-{ #category : #private }
-FiImpactStoreBrowserPlugin >> dependenciesFor: aHistoryNode [ 
+	self flag: #todo. "Extension methods are not included!"
 
-	^ dependenciesByHistoryNode 
-		at: aHistoryNode
-		ifAbsent: [ #() ]
+		FiLintRulesBrowser exampleOn: rbEnvironment.
+		]
 ]
 
 { #category : #accessing }
-FiImpactStoreBrowserPlugin >> environmentFor: aPackage [
+FiImpactStoreBrowserPlugin >> browseInEnvironment [
 
-	^ (environmentalPackages copyWith: aPackage) asFiSet asFiRGEnvironment
+	FiImpactRGEnvironmentBrowser openOn: self selectedEnvironment
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+FiImpactStoreBrowserPlugin >> environmentFor: aHistoryNode [
+
+	^ environmentByHistoryNode 
+		at: aHistoryNode
+		ifAbsentPut: [
+			(environmentalPackages copyWith: aHistoryNode snapshot) asFiSet asFiRGEnvironment ]
+]
+
+{ #category : #accessing }
 FiImpactStoreBrowserPlugin >> environmentalPackages: aCollection [ 
 
 	environmentalPackages := aCollection 
@@ -88,32 +100,10 @@ FiImpactStoreBrowserPlugin >> initialize [
 
 	super initialize.
 	
+	environmentByHistoryNode := Dictionary new.
+	
 	backgroundExecutor := FiExclusiveExecutor new.
-	
-	self resetCache.
-]
 
-{ #category : #accessing }
-FiImpactStoreBrowserPlugin >> pinSelection [ 
-
-	selectedEffect ifNil: [ 
-		self resetCache.
-		^ self ].
-	
-	backgroundExecutor spawnNewProcessWith: [ self refresh ].
-]
-
-{ #category : #accessing }
-FiImpactStoreBrowserPlugin >> prepareEffectMenu: aMenu [
-
-	aMenu addGroup: [:aGroup | 
-		aGroup addItem: [:anItem | 
-			anItem 
-				name: 'Pin for Dependency Analysis';
-				description: '...';
-"				icon: EpSorterView icon;"
-				shortcut: $d command;
-				action: [ self pinSelection ] ] ]
 ]
 
 { #category : #accessing }
@@ -123,15 +113,20 @@ FiImpactStoreBrowserPlugin >> prepareHistoryNodeMenu: aMenu [
 		aGroup addItem: [:anItem | 
 			anItem 
 				name: 'Browse in environment';
-				action: [ self browseInEnvironment ] ] ]
+				action: [ self browseInEnvironment ] ].
+		aGroup addItem: [:anItem | 
+			anItem 
+				name: 'Browse critics in environment';
+				action: [ self browseCritics ] ].
+		]
 ]
 
 { #category : #private }
 FiImpactStoreBrowserPlugin >> refresh [
 
 	| env dependencies |
-	self resetCache.
-		
+	self flag: #todo. "now unused. See version 62."
+
 	env := selectedHistoryNode snapshot asFiRGEnvironment.
 
 	dependencies := env ficusDependenciesForRedoing: selectedEffect.
@@ -155,26 +150,14 @@ FiImpactStoreBrowserPlugin >> refresh [
 	self announceRefreshed.
 ]
 
-{ #category : #private }
-FiImpactStoreBrowserPlugin >> resetCache [
-
-	dependenciesByHistoryNode := Dictionary new
-]
-
 { #category : #accessing }
-FiImpactStoreBrowserPlugin >> selectedEffect: aSimpleEffectOrNil [
+FiImpactStoreBrowserPlugin >> selectedEnvironment [
 
-	selectedEffect = aSimpleEffectOrNil ifTrue: [ ^ self ].
-
-	self logCr: 'selectedEffect: ', aSimpleEffectOrNil asString.
-
-	selectedEffect := aSimpleEffectOrNil.
+	^ self environmentFor: selectedHistoryNode
 ]
 
 { #category : #accessing }
 FiImpactStoreBrowserPlugin >> selectedHistoryNodes: historyNodes [
-
-	self logCr: 'selectedHistoryNodes: ', historyNodes asString.
 
 	historyNodes ifEmpty: [ 
 		selectedHistoryNode := nil.
@@ -183,4 +166,13 @@ FiImpactStoreBrowserPlugin >> selectedHistoryNodes: historyNodes [
 	self assert: historyNodes size = 1.
 
 	selectedHistoryNode := historyNodes anyOne.
+]
+
+{ #category : #accessing }
+FiImpactStoreBrowserPlugin >> selectedPackage [
+
+	self assert: selectedHistoryNode snapshot class = FiPackage.
+
+	^ self selectedEnvironment packages detect: [:each | 
+		each name = selectedHistoryNode snapshot name ]
 ]

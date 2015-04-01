@@ -189,7 +189,7 @@ FiRGClassTest >> testDefinition [
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''''
-	category: ''NoCategory''.
+	category: ''Kernel''.
 Object superclass: nil'.
 
 	self 

@@ -9,11 +9,11 @@ FiUpdate >> ficusInspectorIcon [
 { #category : #'*FicusStore' }
 FiUpdate >> newValueString [
 
-	^ newValue storeString
+	^ newValue ficusInspectorDefinitionString
 ]
 
 { #category : #'*FicusStore' }
 FiUpdate >> oldValueString [
 
-	^ oldValue storeString
+	^ oldValue ficusInspectorDefinitionString
 ]

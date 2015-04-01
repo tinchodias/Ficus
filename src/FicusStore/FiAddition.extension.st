@@ -9,5 +9,5 @@ FiAddition >> ficusInspectorIcon [
 { #category : #'*FicusStore' }
 FiAddition >> newValueString [
 
-	^ newValue storeString
+	^ newValue ficusInspectorDefinitionString
 ]

@@ -9,5 +9,5 @@ FiRemoval >> ficusInspectorIcon [
 { #category : #'*FicusStore' }
 FiRemoval >> oldValueString [
 
-	^ oldValue storeString
+	^ oldValue ficusInspectorDefinitionString
 ]

@@ -49,7 +49,7 @@ FiInspector >> contentsFor: inspectorItemOrNil [
 	morphBuilder := FiMorphBuilder default.
 	^ { morphBuilder columnMorphWithAll: { 
 			morphBuilder pathMorphWith: inspectorItemOrNil path.
-			morphBuilder stringMorphWith: inspectorItemOrNil content storeString asText }}
+			morphBuilder stringMorphWith: inspectorItemOrNil content ficusInspectorDefinitionString asText }}
 
 ]
 

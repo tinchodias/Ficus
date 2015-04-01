@@ -18,12 +18,25 @@ FiBaseResources >> browse [
 ]
 
 { #category : #resources }
+FiBaseResources >> categoryNameCollection [
+
+	^ 'Collection'
+]
+
+{ #category : #resources }
+FiBaseResources >> categoryNameKernel [
+
+	^ 'Kernel'
+]
+
+{ #category : #resources }
 FiBaseResources >> classBlockClosure [
 
 	^ FiClass builder 
 		name: #BlockClosure;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameKernel;
 		methods: {
 			FiMethod sourceCode: 'value  <primitive>'. 
 			FiMethod sourceCode: 'whileFalse: aBlock  
@@ -41,6 +54,7 @@ FiBaseResources >> classBoolean [
 		name: #Boolean;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameKernel;
 		methods: {
 			FiMethod sourceCode: 'ifTrue: aBlock  self subclassResponsibility'. 
 			FiMethod sourceCode: 'ifFalse: aBlock  self subclassResponsibility'.
@@ -57,6 +71,7 @@ FiBaseResources >> classClass [
 		name: #Class;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameKernel;
 		methods: {} asFiSet;
 		new
 ]
@@ -68,6 +83,7 @@ FiBaseResources >> classCollection [
 		name: #Collection;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameCollection;
 		methods: { 
 			FiMethod sourceCode: 'add: anObject  self subclassResponsibility'.
 			FiMethod sourceCode: 'addAll: aCollection 
@@ -91,6 +107,7 @@ FiBaseResources >> classFalse [
 		name: #False;
 		superclassName: #Boolean;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameKernel;
 		methods: {
 			FiMethod sourceCode: 'ifTrue: aBlock  ^ nil'. 
 			FiMethod sourceCode: 'ifFalse: aBlock  ^ aBlock value'. 
@@ -107,6 +124,7 @@ FiBaseResources >> classLinkedList [
 		name: #LinkedList;
 		superclassName: #Collection;
 		layout: (FiFixedLayout withInstanceVariables: #(firstLink lastLink));
+		category: self categoryNameCollection;
 		methods: (self methodsFor: { 
 'add: anObject
 	|aLink|
@@ -142,6 +160,7 @@ FiBaseResources >> classObject [
 		name: #Object;
 		superclassName: FiClass nullSuperclassName;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameKernel;
 		methods: {
 			FiMethod sourceCode: 'initialize '. 
 			FiMethod sourceCode: '= other  ^ self = other'. 
@@ -170,6 +189,7 @@ FiBaseResources >> classSmallInteger [
 		name: #SmallInteger;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameKernel;
 		methods: {
 			FiMethod sourceCode: '+ other  <primitive>'. 
 			FiMethod sourceCode: '/ other  <primitive>'. 
@@ -186,6 +206,7 @@ FiBaseResources >> classTrue [
 		name: #True;
 		superclassName: #Boolean;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameKernel;
 		methods: {
 			FiMethod sourceCode: 'ifTrue: aBlock  ^ aBlock value'. 
 			FiMethod sourceCode: 'ifFalse: aBlock  ^ nil'. 
@@ -202,6 +223,7 @@ FiBaseResources >> classValueLink [
 		name: #ValueLink;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #(value nextLink));
+		category: self categoryNameCollection;
 		methods: (self methodsFor: { 
 'value: anObject
 	value := anObject'.

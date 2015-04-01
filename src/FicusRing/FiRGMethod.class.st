@@ -245,12 +245,14 @@ FiRGMethod >> package [
 
 { #category : #polymorphism }
 FiRGMethod >> parseTree [
-	"Answer my AST (without semantic analysis). See #ast."
+	"Answer my AST, without semantic analysis, unless it's anlready cached. See #ast."
+
+	cachedAst ifNotNil: [ ^ cachedAst ].
 
 	^(RBExplicitVariableParser 
 		parseMethod: self sourceCode 
 		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass.
-	
+
 ]
 
 { #category : #polymorphism }

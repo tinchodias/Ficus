@@ -7,8 +7,30 @@ Class {
 { #category : #examples }
 FiLintRulesBrowser class >> example1 [
 
-	| rbEnvironment compositeRule |
-	rbEnvironment := FiRBBrowserEnvironment new environment: FiFragileBaseClassProblemResources3 new ficusRGEnvironment.
+	^ self exampleOn: 
+		(FiRBBrowserEnvironment new 
+			environment: FiFragileBaseClassProblemResources3 new ficusRGEnvironment).
+
+]
+
+{ #category : #examples }
+FiLintRulesBrowser class >> example2 [
+
+	| rbEnvironment |
+	self flag: #fix. "Shouldn't depend on Yrupe"
+	
+	rbEnvironment := 
+		(FiRBBrowserEnvironment new 
+			environment: (YrPharoMigrator example1readTag: '30014') asFiRGEnvironment) 
+			forCategories: #('Fuel-Core' 'Fuel-Clusters').
+	
+	^ self exampleOn: rbEnvironment
+]
+
+{ #category : #examples }
+FiLintRulesBrowser class >> exampleOn: rbEnvironment [
+
+	| compositeRule |
 	compositeRule := FiLintRulesTest new newRule.
 
 	RBSmalllintChecker 
@@ -16,25 +38,7 @@ FiLintRulesBrowser class >> example1 [
 		onEnvironment: rbEnvironment.
 		
 	^ self 
-		openOn: rbEnvironment
-		rules: compositeRule rules
-]
-
-{ #category : #examples }
-FiLintRulesBrowser class >> example2 [
-
-	| rbEnvironment compositeRule |
-	self flag: #fix. "Shouldn't depend on Yrupe"
-	
-	rbEnvironment := FiRBBrowserEnvironment new environment: YrPharoMigrator example1readHead asFiRGEnvironment.
-	compositeRule := FiLintRulesTest new newRule.
-
-	RBSmalllintChecker 
-		runRule: compositeRule
-		onEnvironment: (rbEnvironment forCategories: #('Fuel-Core' 'Fuel-Clusters')).
-		
-	^ self 
-		openOn: rbEnvironment
+		openOn: rbEnvironment rootEnvironment
 		rules: compositeRule rules
 ]
 
@@ -50,7 +54,7 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 					column: #critics ].
 			column row: #criticDetail
 				];
-		title: 'Ficus Lint Rules Runner';
+		title: 'Critics to ', rbEnvironment label;
 		yourself.
 		
 	browser transmit 

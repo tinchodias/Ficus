@@ -12,8 +12,9 @@ FiFragileBaseClassProblemResources5A >> classLRULogTest [
 
 	^ FiClass builder 
 		name: #LRULogTest;
-		superclassName: #Log;
+		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameLoggersTest;
 		methods: {
 			FiMethod sourceCode: 'testLog
 	| log |

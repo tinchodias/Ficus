@@ -64,6 +64,12 @@ FiRGPackage >> extensionMethods [
 				yourself ] ]
 ]
 
+{ #category : #testing }
+FiRGPackage >> includesClass: aFiRGClass [ 
+
+	^ self definedClasses includes: aFiRGClass
+]
+
 { #category : #polymorphism }
 FiRGPackage >> name [
 

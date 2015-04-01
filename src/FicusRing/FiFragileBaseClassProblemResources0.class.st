@@ -8,12 +8,25 @@ Class {
 }
 
 { #category : #resources }
+FiFragileBaseClassProblemResources0 >> categoryNameLoggersCore [
+
+	^ 'Loggers-Core'
+]
+
+{ #category : #resources }
+FiFragileBaseClassProblemResources0 >> categoryNameLoggersTest [
+
+	^ 'Loggers-Test'
+]
+
+{ #category : #resources }
 FiFragileBaseClassProblemResources0 >> classLog [
 
 	^ FiClass builder 
 		name: #Log;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameLoggersCore;
 		methods: {
 			FiMethod sourceCode: 'initialize  
 	super initialize.

@@ -14,6 +14,7 @@ FiFragileBaseClassProblemResources1 >> classLog [
 		name: #Log;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #(msgs));
+		category: self categoryNameLoggersCore;
 		methods: {
 			FiMethod sourceCode: 'log: msg  
 	msgs add: msg'. 

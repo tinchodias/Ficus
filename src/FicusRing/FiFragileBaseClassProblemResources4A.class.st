@@ -14,6 +14,7 @@ FiFragileBaseClassProblemResources4A >> classLRULog [
 		name: #LRULog;
 		superclassName: #Log;
 		layout: (FiFixedLayout withInstanceVariables: #(tally));
+		category: self categoryNameLoggersCore;
 		methods: {
 			FiMethod sourceCode: 'tally  ^tally'. 
 			FiMethod sourceCode: 'log: aMessage  
@@ -32,8 +33,9 @@ FiFragileBaseClassProblemResources4A >> classLRULogTest [
 
 	^ FiClass builder 
 		name: #LRULogTest;
-		superclassName: #Log;
+		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
+		category: self categoryNameLoggersTest;
 		methods: {
 			FiMethod sourceCode: 'testLog
 	| log |

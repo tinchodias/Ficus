@@ -33,6 +33,12 @@ FiRGPackageTest >> testDefinedMethods [
 ]
 
 { #category : #tests }
+FiRGPackageTest >> testIncludesClass [
+
+	self assert: (resources ringClassA package includesClass: resources ringClassA)
+]
+
+{ #category : #tests }
 FiRGPackageTest >> testName [
 
 	self 

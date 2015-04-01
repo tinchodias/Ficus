@@ -25,6 +25,12 @@ FiRGVariable >> definingClass [
 	^ definingClass
 ]
 
+{ #category : #accessing }
+FiRGVariable >> environment [
+	
+	^ definingClass environment
+]
+
 { #category : #initialization }
 FiRGVariable >> initializeWithDefiningClass: aFiRGBehavior name: aString [ 
 

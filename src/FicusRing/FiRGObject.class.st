@@ -7,6 +7,18 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #accessing }
+FiRGObject >> ficusObject [
+
+	^ self ficusPathFromEnvironment resolvedOn: self environment environmentShot 
+]
+
+{ #category : #accessing }
+FiRGObject >> ficusPathFromEnvironment [
+
+	^ self subclassResponsibility
+]
+
 { #category : #printing }
 FiRGObject >> shortPrintString [
 

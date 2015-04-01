@@ -27,6 +27,10 @@ FiBuilderTest >> testCached [
 { #category : #tests }
 FiBuilderTest >> testErrorWhenSettingAnExcludedVariable [
 
+	self skip: 'Decided to optimize and remove this validation'.
+	self flag: #todo.
+	
+
 	self 
 		assert: (FiRecipe excludedInstanceVariableNamesForSteps includes: #cachedHash)
 		description: 'This is an assumption of this test'.

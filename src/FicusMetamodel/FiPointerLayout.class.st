@@ -18,6 +18,12 @@ FiPointerLayout >> initialize [
 	instanceVariables := FiSet new
 ]
 
+{ #category : #printing }
+FiPointerLayout >> instanceVariableNames [
+	
+	^ instanceVariables asArray
+]
+
 { #category : #accessing }
 FiPointerLayout >> instanceVariables [
 	

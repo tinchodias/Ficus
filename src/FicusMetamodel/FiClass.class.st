@@ -43,6 +43,12 @@ FiClass >> classPool [
 	^ classPool
 ]
 
+{ #category : #printing }
+FiClass >> classVariablesString [
+	
+	^ Character space join: classPool asArray
+]
+
 { #category : #accessing }
 FiClass >> comment [
 
@@ -53,6 +59,36 @@ FiClass >> comment [
 FiClass >> defaultStep [
 
 	^ name asSymbol
+]
+
+{ #category : #printing }
+FiClass >> definition [
+	"Answer a String that defines the receiver."
+
+	| aStream |
+	aStream := (String new: 800) writeStream.
+	self hasNullSuperclass
+		ifTrue: [aStream nextPutAll: 'ProtoObject' ]
+		ifFalse: [aStream nextPutAll: self superclassName ].
+	aStream nextPutAll: self kindOfSubclass;
+			store: self name.
+	aStream cr; tab; nextPutAll: 'uses: ';
+			nextPutAll: self traitComposition.
+	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString.
+	aStream cr; tab; nextPutAll: 'classVariableNames: ';
+			store: self classVariablesString.
+	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
+			store: self sharedPoolsString.
+	aStream cr; tab; nextPutAll: 'category: ';
+			store: self category asString.
+
+	self hasNullSuperclass ifTrue: [ 
+		aStream nextPutAll: '.'; cr.
+		aStream nextPutAll: self name.
+		aStream space; nextPutAll: 'superclass: nil'. ].
+
+	^ aStream contents
 ]
 
 { #category : #testing }
@@ -100,6 +136,16 @@ FiClass >> isMeta [
 	^ false
 ]
 
+{ #category : #printing }
+FiClass >> kindOfSubclass [
+	"Answer a String that is the keyword that describes the receiver's kind 
+	of subclass, either a regular subclass, a variableSubclass, a  
+	variableByteSubclass, a variableWordSubclass, or a weakSubclass."
+
+	self flag: #todo. "FIX"
+	^ ' subclass: '
+]
+
 { #category : #accessing }
 FiClass >> metaclass [
 	^ metaclass
@@ -132,6 +178,12 @@ FiClass >> printOn: aStream [
 FiClass >> sharedPools [
 	
 	^ sharedPools
+]
+
+{ #category : #printing }
+FiClass >> sharedPoolsString [
+
+	^ Character space join: sharedPools asArray
 ]
 
 { #category : #accessing }

@@ -18,6 +18,23 @@ FiMetaclass class >> named: aString [
 		
 ]
 
+{ #category : #printing }
+FiMetaclass >> definition [
+	"Refer to the comment in ClassDescription|definition."
+
+	^ String streamContents: 
+		[:strm |
+		strm nextPutAll: 'Metaclass'.
+		strm
+			crtab;
+			nextPutAll: 'uses: ';
+			print: self traitComposition.
+		strm
+			crtab;
+			nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString]
+]
+
 { #category : #initialization }
 FiMetaclass >> initialize [
 

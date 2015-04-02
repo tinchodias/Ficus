@@ -6,3 +6,9 @@ Class {
 	#superclass : #FiFixedObject,
 	#category : #FicusMetamodel
 }
+
+{ #category : #printing }
+FiLayout >> instanceVariableNames [
+	
+	^ #()
+]

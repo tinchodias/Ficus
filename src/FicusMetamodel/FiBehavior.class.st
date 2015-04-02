@@ -20,6 +20,12 @@ FiBehavior >> initialize [
 	layout := FiFixedLayout new.
 ]
 
+{ #category : #printing }
+FiBehavior >> instanceVariablesString [
+
+	^ Character space join: layout instanceVariableNames
+]
+
 { #category : #testing }
 FiBehavior >> isMeta [
 

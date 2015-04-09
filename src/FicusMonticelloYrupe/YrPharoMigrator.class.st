@@ -219,6 +219,12 @@ YrPharoMigrator class >> example1readTagMCs [
 	^ packageShotsByTag 
 ]
 
+{ #category : #private }
+YrPharoMigrator class >> example1tags [
+
+	^ self newOpenGitRepository tags
+]
+
 { #category : #examples }
 YrPharoMigrator class >> example1writeNew [
 

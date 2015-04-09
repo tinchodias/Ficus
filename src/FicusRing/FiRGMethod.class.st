@@ -74,6 +74,13 @@ FiRGMethod >> ast [
 		cachedAst := self parseTree doSemanticAnalysisIn: self methodClass ]
 ]
 
+{ #category : #printing }
+FiRGMethod >> definition [
+	"Polymorphic to class definition"
+	
+	^ self sourceCode
+]
+
 { #category : #polymorphism }
 FiRGMethod >> environment [
 	

@@ -97,7 +97,7 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 		to: #criticDetail;
 		andShow: [ :a | 
 			a text
-				format: [ :critic | critic asString ].
+				format: [ :critic | critic definition ].
 		 ].
 	
 	^ browser

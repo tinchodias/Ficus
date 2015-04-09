@@ -57,6 +57,23 @@ FiImpactStoreBrowserPlugin class >> exampleYrupe [
 	self exampleFragileBaseProblemWith: (YrPharoMigrator example1readTag: '30014') asArray
 ]
 
+{ #category : #examples }
+FiImpactStoreBrowserPlugin class >> exampleYrupeChoosing [
+
+	| tags result env |
+	tags := YrPharoMigrator example1tags.
+
+	result := UIManager default
+		chooseFrom: tags 
+		title: 'Select a Pharo version'.
+		
+	result isZero ifTrue: [ ^ self ].
+
+	env := YrPharoMigrator example1readTag: (tags at: result).
+
+	^ self exampleFragileBaseProblemWith: env asArray
+]
+
 { #category : #accessing }
 FiImpactStoreBrowserPlugin >> browseCritics [
 

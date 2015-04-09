@@ -32,7 +32,7 @@ FiMemoryStore class >> exampleFragileBaseProblem: factoryBlock [
 	} collect: [ :each | factoryBlock value: each ].
 
 	store := FiMemoryStore new.
-	store name: 'FragileBaseClassProblem'.
+	store name: 'FragileBaseClassProblem-MartinDias'. self flag: #todo. "Workaround to look like .mcz"
 
 	"first commit"
 	store 
@@ -59,6 +59,8 @@ FiMemoryStore class >> exampleFragileBaseProblem: factoryBlock [
 	store 
 		commitSnapshot: (factoryBlock value: FiFragileBaseClassProblemResources4B)
 		priors: { commonPrior } asFiSet.
+
+	store name: 'FragileBaseClassProblem'.
 
 	^ store
 ]

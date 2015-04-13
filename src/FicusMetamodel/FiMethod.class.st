@@ -70,8 +70,13 @@ FiMethod >> protocol [
 { #category : #accessing }
 FiMethod >> selector [
 
-	^ selector ifNil: [ 
-		selector := RBParser parseMethodPattern: sourceCode ]
+	self flag: #fix. "Horrible! Keep as a step instead of calculating it?"
+
+	^ selector ifNil: [
+		selector := [ RBParser parseMethodPattern: sourceCode ]
+			on: SyntaxErrorNotification 
+			do: [ :error | ('_unparsed_selector_', self hash printStringHex) asSymbol ].
+		]
 ]
 
 { #category : #accessing }

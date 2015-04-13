@@ -34,24 +34,14 @@ FiStoreBrowser class >> exampleFragileBaseProblem [
 	self exampleFragileBaseProblem.
 	"
 
-	^ self new
-		store: FiMemoryStore exampleFragileBaseProblem;
-		plugin: FiNullStoreBrowserPlugin new;
-		refresh;
-		openWithSpec;
-		yourself
-
-
+	^ self exampleWithStore: FiMemoryStore exampleFragileBaseProblem
 ]
 
 { #category : #example }
-FiStoreBrowser class >> exampleMemory [
-	"
-	self exampleMemory.
-	"
+FiStoreBrowser class >> exampleWithStore: aStore [
 
 	^ self new
-		store: FiMemoryStore example;
+		store: aStore;
 		plugin: FiNullStoreBrowserPlugin new;
 		refresh;
 		openWithSpec;

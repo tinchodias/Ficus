@@ -74,6 +74,30 @@ FiMemoryStore class >> exampleFragileBaseProblemOnlyPackage [
 	^ self exampleFragileBaseProblem: [ :each | each new packageLoggers ]
 ]
 
+{ #category : #example }
+FiMemoryStore class >> exampleWithAll: snapshots [
+	"
+	self exampleWithAll: (1 to: 17)
+	"
+
+	| store |
+	store := FiMemoryStore new.
+	store name: 'Example'.
+
+	"first commit"
+	store 
+		commitSnapshot: snapshots first
+		priors: FiSet new.
+
+	"more commits"
+	2 to: snapshots size do: [ :index |
+		store 
+			commitSnapshot: (snapshots at: index)
+			priors: { store headHistoryNode } asFiSet ].
+			
+	^ store
+]
+
 { #category : #accessing }
 FiMemoryStore >> allPriorsOf: aValue [ 
 	

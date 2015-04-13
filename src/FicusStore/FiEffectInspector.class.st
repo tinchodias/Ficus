@@ -200,8 +200,8 @@ FiEffectInspector >> rootEffect: anEffect [
 
 	treeModel deselectAll.
 	treeModel roots: (self treeRootsFor: anEffect).
-	treeModel expandAll.
 
+	"treeModel expandRoots."
 ]
 
 { #category : #private }

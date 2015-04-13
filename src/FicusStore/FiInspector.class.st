@@ -118,7 +118,7 @@ FiInspector >> rootInspectorItems: inspectorItems [
 
 	treeModel roots: inspectorItems.
 	
-	treeModel expandRoots
+	"treeModel expandRoots"
 ]
 
 { #category : #accessing }

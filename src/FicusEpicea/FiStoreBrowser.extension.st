@@ -6,14 +6,7 @@ FiStoreBrowser classSide >> exampleEpiceaFicusStore [
 	self exampleEpiceaFicusStore.
 	"
 
-	^ self new
-		store: (FiEpiceaStore forPackageNamed: #FicusStore);
-		plugin: FiNullStoreBrowserPlugin new;
-		refresh;
-		openWithSpec;
-		yourself
-
-
+	^ self exampleWithStore: (FiEpiceaStore forPackageNamed: #FicusStore)
 ]
 
 { #category : #'*FicusEpicea' }
@@ -23,12 +16,5 @@ FiStoreBrowser classSide >> exampleEpiceaTetris [
 	self exampleEpiceaTetris.
 	"
 
-	^ self new
-		store: (FiEpiceaStore forPackageNamed: #Tetris);
-		plugin: FiNullStoreBrowserPlugin new;
-		refresh;
-		openWithSpec;
-		yourself
-
-
+	^ self exampleWithStore: (FiEpiceaStore forPackageNamed: #Tetris)
 ]

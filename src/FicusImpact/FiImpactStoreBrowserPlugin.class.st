@@ -64,6 +64,19 @@ FiImpactStoreBrowserPlugin class >> exampleYrupe [
 ]
 
 { #category : #examples }
+FiImpactStoreBrowserPlugin class >> exampleYrupeAllPharos [
+	"
+	[self exampleYrupeAllPharos] timeToRun.
+	"
+	
+	| pharos |
+	pharos := YrPharoMigrator example1tags collect: [ :tag |
+		(YrPharoMigrator example1readTag: tag) ].
+
+	^ self exampleWith: (FiMemoryStore exampleWithAll: pharos) and: #()
+]
+
+{ #category : #examples }
 FiImpactStoreBrowserPlugin class >> exampleYrupeChoosing [
 
 	| tags result env |

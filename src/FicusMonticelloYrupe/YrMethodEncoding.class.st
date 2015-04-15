@@ -37,7 +37,11 @@ YrMethodEncoding >> objectFrom: aString [
 YrMethodEncoding >> stringFor: aFiMethod [
 
 	| source |
-	source := aFiMethod sourceCode copy withUnixLineEndings.
+	source := aFiMethod sourceCode copy.
+	source := source withUnixLineEndings.
+
+	source := source copyWithout: Character null. "-> this weird thing that happens in AJx86Assembler>>syscall in many Pharo versions, like 30465"
+
 	source := [ source convertToWithConverter: UTF8TextConverter new ]
 		on: Error
 		do: [ :error | (aFiMethod lineNumber: 1), '

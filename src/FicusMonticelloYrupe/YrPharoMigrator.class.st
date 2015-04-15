@@ -152,7 +152,7 @@ YrPharoMigrator class >> example1readTag [
 { #category : #examples }
 YrPharoMigrator class >> example1readTag: pharoTag [
 	"
-	self example1readTag: '30514'
+	self example1readTag: '30465'
 	"
 
 	^ YrCommitReader new 

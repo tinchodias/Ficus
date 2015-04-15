@@ -71,7 +71,7 @@ FiMemoryStore class >> exampleFragileBaseProblemOnlyPackage [
 	self exampleFragileBaseProblemOnlyPackage inspect
 	"
 
-	^ self exampleFragileBaseProblem: [ :each | each new packageLoggers ]
+	^ self exampleFragileBaseProblem: [ :each | { each new packageLoggers } asFiSet ]
 ]
 
 { #category : #example }

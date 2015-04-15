@@ -27,9 +27,15 @@ FiImpactStoreBrowserPlugin class >> example [
 { #category : #examples }
 FiImpactStoreBrowserPlugin class >> exampleFragileBaseProblemWith: environmentalPackages [
 
-	| store registry plugin |
-	store := FiMemoryStore exampleFragileBaseProblemOnlyPackage.
+	^ self 
+		exampleWith: FiMemoryStore exampleFragileBaseProblemOnlyPackage
+		and: environmentalPackages
+]
 
+{ #category : #examples }
+FiImpactStoreBrowserPlugin class >> exampleWith: store and: environmentalPackages [
+
+	| registry plugin |
 	plugin := self new
 		environmentalPackages: environmentalPackages;
 		yourself.	
@@ -74,6 +80,19 @@ FiImpactStoreBrowserPlugin class >> exampleYrupeChoosing [
 	^ self exampleFragileBaseProblemWith: env asArray
 ]
 
+{ #category : #examples }
+FiImpactStoreBrowserPlugin class >> exampleYrupeManyPharos [
+	"
+	[self exampleYrupeManyPharos] timeToRun.
+	"
+	
+	| pharos |
+	pharos := (YrPharoMigrator example1tags first: 25) collect: [ :tag |
+		(YrPharoMigrator example1readTag: tag) ].
+
+	^ self exampleWith: (FiMemoryStore exampleWithAll: pharos) and: #()
+]
+
 { #category : #accessing }
 FiImpactStoreBrowserPlugin >> browseCritics [
 
@@ -103,7 +122,7 @@ FiImpactStoreBrowserPlugin >> environmentFor: aHistoryNode [
 	^ environmentByHistoryNode 
 		at: aHistoryNode
 		ifAbsentPut: [
-			(environmentalPackages copyWith: aHistoryNode snapshot) asFiSet asFiRGEnvironment ]
+			(environmentalPackages, aHistoryNode snapshot) asFiSet asFiRGEnvironment ]
 ]
 
 { #category : #accessing }

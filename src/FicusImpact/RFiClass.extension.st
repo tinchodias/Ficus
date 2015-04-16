@@ -9,5 +9,5 @@ RFiClass >> ficusAllDependencies [
 { #category : #'*FicusImpact' }
 RFiClass >> ficusRequisites [
 	
-	^ FiClassRequisiteCollector new requisitesFor: self
+	^ RFiClassRequisiteCollector new requisitesFor: self
 ]

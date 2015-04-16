@@ -10,7 +10,7 @@ RFiObject >> ficusAllDependencies [
 RFiObject >> ficusDependencies [
 	
 	^ self ficusRequisites collect: [ :each |
-		FiRequisiteInterpreter new 
+		RFiRequisiteInterpreter new 
 			dependencyOf: each 
 			in: self ]
 ]
@@ -20,7 +20,7 @@ RFiObject >> ficusInterpretedDependencies [
 
 	^ (self ficusRequisites collect: [ :each |
 		| dependency objectByName |
-		dependency := FiRequisiteInterpreter new 
+		dependency := RFiRequisiteInterpreter new 
 			dependencyOf: each 
 			in: self.
 
@@ -30,7 +30,7 @@ RFiObject >> ficusInterpretedDependencies [
 				at: target shortPrintString
 				put: target ficusObject ].
 		
-		FiInterpretedDependency builder
+		RFiInterpretedDependency builder
 			requisite: each;
 			targets: objectByName asFiDictionary;
 			new

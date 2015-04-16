@@ -1,0 +1,58 @@
+Class {
+	#name : #RFiMethodRequisiteCollector,
+	#superclass : #RBProgramNodeVisitor,
+	#instVars : [
+		'dependencies'
+	],
+	#category : #'FicusImpact-Requisites'
+}
+
+{ #category : #public }
+RFiMethodRequisiteCollector >> messageReceiverFor: aRBNode [ 
+
+	aRBNode isSelf ifTrue: [ 
+		^ RFiSelfMessageReceiver defaultInstance ].
+
+	aRBNode isSuper ifTrue: [ 
+		^ RFiSuperMessageReceiver defaultInstance ].
+	
+	^ RFiAnyMessageReceiver defaultInstance
+]
+
+{ #category : #public }
+RFiMethodRequisiteCollector >> requisitesFor: aFiRGMethod [ 
+
+	dependencies := OrderedCollection new.
+	
+	aFiRGMethod parseTree acceptVisitor: self.
+	
+	^ dependencies
+]
+
+{ #category : #visitor }
+RFiMethodRequisiteCollector >> visitMessageNode: aMessageNode [
+
+	| receiver |
+	receiver := self messageReceiverFor: aMessageNode receiver.
+
+	dependencies add: 
+		(RFiMessageSend builder
+			selector: aMessageNode selector;
+			receiver: receiver;
+			new).
+
+	super visitMessageNode: aMessageNode.
+]
+
+{ #category : #visitor }
+RFiMethodRequisiteCollector >> visitVariableNode: aVariableNode [
+
+	"This means that it is not any an argument, nor temporaty, nor self, nor super, etc."
+	aVariableNode class == RBVariableNode ifTrue: [
+		dependencies add: 
+			(RFiVariableAccess builder
+				variableName: aVariableNode name;
+				new) ].
+
+	super visitVariableNode: aVariableNode.
+]

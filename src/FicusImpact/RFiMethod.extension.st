@@ -3,5 +3,5 @@ Extension { #name : #RFiMethod }
 { #category : #'*FicusImpact' }
 RFiMethod >> ficusRequisites [
 
-	^ FiMethodRequisiteCollector new requisitesFor: self
+	^ RFiMethodRequisiteCollector new requisitesFor: self
 ]

@@ -21,7 +21,7 @@ FiImpactStoreBrowserPlugin class >> example [
 	self example.
 	"
 
-	self exampleFragileBaseProblemWith: FiBaseResources new ficusEnvironment asArray
+	self exampleFragileBaseProblemWith: RFiBaseResources new ficusEnvironment asArray
 ]
 
 { #category : #examples }
@@ -135,7 +135,7 @@ FiImpactStoreBrowserPlugin >> environmentFor: aHistoryNode [
 	^ environmentByHistoryNode 
 		at: aHistoryNode
 		ifAbsentPut: [
-			(environmentalPackages, aHistoryNode snapshot) asFiSet asFiRGEnvironment ]
+			(environmentalPackages, aHistoryNode snapshot) asFiSet asRFiEnvironment ]
 ]
 
 { #category : #accessing }
@@ -176,7 +176,7 @@ FiImpactStoreBrowserPlugin >> refresh [
 	| env dependencies |
 	self flag: #todo. "now unused. See version 62."
 
-	env := selectedHistoryNode snapshot asFiRGEnvironment.
+	env := selectedHistoryNode snapshot asRFiEnvironment.
 
 	dependencies := env ficusDependenciesForRedoing: selectedEffect.
 

@@ -20,8 +20,8 @@ FiInterpretedDependency class >> example [
 				equal: 'log: aMessage  
 		collection addFirst: aMessage').
 
-	env1 := (FiBaseResources new ficusEnvironment asArray copyWith: pkg1) asFiSet asFiRGEnvironment.
-	env2 := (FiBaseResources new ficusEnvironment asArray copyWith: pkg2) asFiSet asFiRGEnvironment.
+	env1 := (FiBaseResources new ficusEnvironment asArray copyWith: pkg1) asFiSet asRFiEnvironment.
+	env2 := (FiBaseResources new ficusEnvironment asArray copyWith: pkg2) asFiSet asRFiEnvironment.
 	"
 	env1 browse.
 	env2 browse.

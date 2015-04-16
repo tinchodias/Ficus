@@ -11,19 +11,19 @@ Class {
 { #category : #examples }
 FiDependencyGraphBuilder class >> example1 [
 
-	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
+	^ self graphForEnvironment: RFiFragileBaseClassProblemResources5A new ringEnvironment
 ]
 
 { #category : #examples }
 FiDependencyGraphBuilder class >> example2 [
 
-	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
+	^ self graphForEnvironment: RFiFragileBaseClassProblemResources5A new ringEnvironment
 ]
 
 { #category : #examples }
 FiDependencyGraphBuilder class >> example3 [
 
-	^ self graphForEnvironment: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
+	^ self graphForEnvironment: RFiFragileBaseClassProblemResources5A new ringEnvironment
 ]
 
 { #category : #examples }
@@ -32,7 +32,7 @@ FiDependencyGraphBuilder class >> exampleYrupe [
 	[self exampleYrupe] timeToRun
 	"
 
-	^ self graphForEnvironment: (YrPharoMigrator example1readTag: '30014') asFiRGEnvironment
+	^ self graphForEnvironment: (YrPharoMigrator example1readTag: '30014') asRFiEnvironment
 ]
 
 { #category : #convenience }

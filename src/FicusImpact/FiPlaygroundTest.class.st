@@ -22,9 +22,9 @@ FiPlaygroundTest >> setUp [
 	node3 := node4B priors anyOne.
 	node2 := node3 priors anyOne.
 
-	envB := node4B snapshot asFiRGEnvironment.
-	env3 := node3 snapshot asFiRGEnvironment.
-	env2 := node2 snapshot asFiRGEnvironment.
+	envB := node4B snapshot asRFiEnvironment.
+	env3 := node3 snapshot asRFiEnvironment.
+	env2 := node2 snapshot asRFiEnvironment.
 
 
 ]

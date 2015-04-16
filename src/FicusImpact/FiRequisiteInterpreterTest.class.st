@@ -72,7 +72,7 @@ FiRequisiteInterpreterTest >> testClassASum [
 		equals: (
 			FiPossibleMethodInvocation builder
 				methods: {
-					(resources ficusRGEnvironment classNamed: #SmallInteger) >> #+.
+					(resources ringEnvironment classNamed: #SmallInteger) >> #+.
 					} asFiSet;
 				new)
 ]
@@ -213,7 +213,7 @@ FiRequisiteInterpreterTest >> testClassCUndeclared [
 FiRequisiteInterpreterTest >> testLinkedListAdd [
 
 	| anEnvironment |
-	anEnvironment := RFiBaseResources new ficusRGEnvironment.
+	anEnvironment := RFiBaseResources new ringEnvironment.
 	self 
 		assertDependencyOf: (
 			FiMessageSend builder 
@@ -237,7 +237,7 @@ FiRequisiteInterpreterTest >> testLinkedListAdd [
 FiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
 
 	| anEnvironment |
-	anEnvironment := RFiBaseResources new ficusRGEnvironment.
+	anEnvironment := RFiBaseResources new ringEnvironment.
 	self 
 		assertDependencyOf: (
 			FiMessageSend builder 
@@ -262,11 +262,11 @@ FiRequisiteInterpreterTest >> testObjectNew [
 				receiver: FiSelfMessageReceiver new;
 				selector: #basicNew;
 				new)
-		in: ((resources ficusRGEnvironment classNamed: #Object) classSide >> #new)
+		in: ((resources ringEnvironment classNamed: #Object) classSide >> #new)
 		equals: 
 			(FiPossibleMethodInvocation builder
 				methods: {
-					(resources ficusRGEnvironment classNamed: #Object) classSide >> #basicNew.
+					(resources ringEnvironment classNamed: #Object) classSide >> #basicNew.
 					} asFiSet;
 				new)
 ]

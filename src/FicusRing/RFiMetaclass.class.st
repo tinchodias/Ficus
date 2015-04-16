@@ -86,7 +86,7 @@ RFiMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifN
 RFiMetaclass >> instanceVariables [
 
 	self flag: #fix.
-	^ theNonMetaClass classShot metaclass layout instanceVariables asArray
+	^ theNonMetaClass ficusClass metaclass layout instanceVariables asArray
 ]
 
 { #category : #polymorphism }
@@ -98,7 +98,7 @@ RFiMetaclass >> isMeta [
 { #category : #polymorphism }
 RFiMetaclass >> localMethods [
 
-	^ self theNonMetaClass classShot metaclass methods values 
+	^ self theNonMetaClass ficusClass metaclass methods values 
 		collect: [ :aMethodShot | self ringMethodFor: aMethodShot ]
 ]
 

@@ -180,13 +180,12 @@ RFiBehavior >> ringInstanceVariables [
 ]
 
 { #category : #private }
-RFiBehavior >> ringMethodFor: aMethodShot [
+RFiBehavior >> ringMethodFor: ficusMethod [
 	"Not API"
 
-	^ RFiMethod new 
-		methodClass: self;
-		methodShot: aMethodShot;
-		yourself
+	^ RFiMethod
+		methodClass: self
+		ficusMethod: ficusMethod
 ]
 
 { #category : #polymorphism }

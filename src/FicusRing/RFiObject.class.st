@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 RFiObject >> ficusObject [
 
-	^ self ficusPathFromEnvironment resolvedOn: self environment environmentShot 
+	^ self ficusPathFromEnvironment resolvedOn: self environment ficusPackages 
 ]
 
 { #category : #accessing }

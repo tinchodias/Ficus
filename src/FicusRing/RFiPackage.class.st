@@ -6,11 +6,20 @@ Class {
 	#superclass : #RFiObject,
 	#instVars : [
 		'environment',
-		'packageShot',
-		'definedClasses'
+		'definedClasses',
+		'ficusPackage'
 	],
 	#category : #'FicusRing-Core'
 }
+
+{ #category : #'instance creation' }
+RFiPackage class >> environment: aRFiEnvironment ficusPackage: aFiPackage [
+
+	^ self basicNew
+		initializeWithEnvironment: aRFiEnvironment 
+		ficusPackage: aFiPackage;
+		yourself
+]
 
 { #category : #polymorphism }
 RFiPackage >> asRingDefinition [
@@ -22,7 +31,7 @@ RFiPackage >> asRingDefinition [
 RFiPackage >> definedClasses [
 
 	^ definedClasses ifNil: [ 
-		definedClasses := packageShot classes 
+		definedClasses := ficusPackage classes 
 			collect: [ :classShot | environment ringClassFor: classShot ] ]
 ]
 
@@ -40,17 +49,11 @@ RFiPackage >> definedMethods [
 ]
 
 { #category : #accessing }
-RFiPackage >> environment: aFiRGEnvironment [ 
-
-	environment := aFiRGEnvironment
-]
-
-{ #category : #accessing }
 RFiPackage >> extensionMethods [
 
 	self flag: #todo. "delegate this instantiation to behaviors".
 	
-	^ packageShot extensionMethods flatCollect: [ :ficusExtensionMethods |
+	^ ficusPackage extensionMethods flatCollect: [ :ficusExtensionMethods |
 		| ringClass |
 		ringClass := environment classNamed: ficusExtensionMethods hostName.
 
@@ -58,10 +61,9 @@ RFiPackage >> extensionMethods [
 			ringClass := ringClass classSide ].
 
 		ficusExtensionMethods methods collect: [ :ficusMethod |
-			 RFiMethod new 
-				methodClass: ringClass;
-				methodShot: ficusMethod;
-				yourself ] ]
+			 RFiMethod
+				methodClass: ringClass
+				ficusMethod: ficusMethod ] ]
 ]
 
 { #category : #testing }
@@ -70,16 +72,19 @@ RFiPackage >> includesClass: aFiRGClass [
 	^ self definedClasses includes: aFiRGClass
 ]
 
+{ #category : #initialization }
+RFiPackage >> initializeWithEnvironment: aRFiEnvironment ficusPackage: aFiPackage [
+
+	self initialize.
+	
+	environment := aRFiEnvironment.
+	ficusPackage := aFiPackage.
+]
+
 { #category : #polymorphism }
 RFiPackage >> name [
 
-	^ packageShot name
-]
-
-{ #category : #accessing }
-RFiPackage >> packageShot: aFiPackage [ 
-
-	packageShot := aFiPackage
+	^ ficusPackage name
 ]
 
 { #category : #printing }

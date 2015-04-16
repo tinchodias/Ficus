@@ -5,16 +5,24 @@ Class {
 	#name : #RFiEnvironment,
 	#superclass : #RFiObject,
 	#instVars : [
-		'packagesShot',
+		'ficusPackages',
 		'allClasses',
 		'packageByClassName',
 		'extensionMethodsByBehaviorName',
-		'packages',
 		'globalByName',
-		'cachedImplementorsBySelector'
+		'cachedImplementorsBySelector',
+		'cachedPackages'
 	],
 	#category : #'FicusRing-Core'
 }
+
+{ #category : #'instance creation' }
+RFiEnvironment class >> ficusPackages: aFiSet [
+
+	^ self basicNew
+		initializeWithFicusPackages: aFiSet;
+		yourself
+]
 
 { #category : #comparing }
 RFiEnvironment >> = other [
@@ -22,7 +30,7 @@ RFiEnvironment >> = other [
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
 
-	^ self environmentShot = other environmentShot
+	^ self ficusPackages = other ficusPackages
 ]
 
 { #category : #polymorphism }
@@ -116,18 +124,6 @@ RFiEnvironment >> classNamed: aName [
 	^ self at: aName ifAbsent: [ NotFound signalFor: aName in: self ]
 ]
 
-{ #category : #accessing }
-RFiEnvironment >> environmentShot [
-	
-	^ packagesShot
-]
-
-{ #category : #accessing }
-RFiEnvironment >> environmentShot: anObject [
-	
-	packagesShot := anObject
-]
-
 { #category : #lookup }
 RFiEnvironment >> extensionMethodsByBehaviorName [
 	
@@ -136,7 +132,7 @@ RFiEnvironment >> extensionMethodsByBehaviorName [
 	extensionMethodsByBehaviorName ifNil: [
 		extensionMethodsByBehaviorName := Dictionary new.
 
-		packagesShot do: [ :aPackageShot |
+		ficusPackages do: [ :aPackageShot |
 			aPackageShot extensionMethods do: [ :anExtensionMethodsShot |
 				anExtensionMethodsShot methods collect: [ :aMethodShot | 
 					self 
@@ -164,6 +160,12 @@ RFiEnvironment >> extensionMethodsFor: aBehavior [
 		at: aBehavior theNonMetaClass name 
 		ifAbsent: [ ^ #() ]) 
 		select: [:aMethod | aMethod methodClass = aBehavior ]
+]
+
+{ #category : #accessing }
+RFiEnvironment >> ficusPackages [
+	
+	^ ficusPackages
 ]
 
 { #category : #accessing }
@@ -239,7 +241,7 @@ RFiEnvironment >> hasBindingThatBeginsWith: aString [
 RFiEnvironment >> hash [
 
 	^ self class hash 
-		bitXor: self environmentShot hash
+		bitXor: self ficusPackages hash
 ]
 
 { #category : #lookup }
@@ -294,6 +296,14 @@ RFiEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [
 				compiledMethodAt: aSelector 
 				ifPresent: [ :method | stream nextPut: method ] 
 				ifAbsent: [ ] ] ]
+]
+
+{ #category : #initialization }
+RFiEnvironment >> initializeWithFicusPackages: aFiSet [
+
+	self initialize.
+	
+	ficusPackages := aFiSet.
 ]
 
 { #category : #accessing }
@@ -373,24 +383,22 @@ RFiEnvironment >> packageOfClassNamed: aName [
 { #category : #accessing }
 RFiEnvironment >> packages [
 	
-	^ packages ifNil: [
-		packages := packagesShot collect: [ :each | self ringPackageFor: each ] ]
+	^ cachedPackages ifNil: [
+		cachedPackages := ficusPackages collect: [ :each | self ringPackageFor: each ] ]
 ]
 
 { #category : #private }
-RFiEnvironment >> ringClassFor: classShot [
+RFiEnvironment >> ringClassFor: aFiClass [
 
-	^ RFiClass new 
-		environment: self; 
-		classShot: classShot;
-		yourself
+	^ RFiClass
+		environment: self
+		ficusClass: aFiClass
 ]
 
 { #category : #private }
 RFiEnvironment >> ringPackageFor: aFiPackage [ 
 	
-	^ RFiPackage new 
-		environment: self;
-		packageShot: aFiPackage;
-		yourself
+	^ RFiPackage 
+		environment: self
+		ficusPackage: aFiPackage
 ]

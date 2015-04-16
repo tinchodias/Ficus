@@ -5,15 +5,24 @@ Class {
 	#name : #RFiClass,
 	#superclass : #RFiBehavior,
 	#instVars : [
-		'classShot',
 		'environment',
 		'cachedSuperclass',
 		'cachedMetaClass',
 		'cachedSubclasses',
-		'cachedClassVariables'
+		'cachedClassVariables',
+		'ficusClass'
 	],
 	#category : #'FicusRing-Core'
 }
+
+{ #category : #'instance creation' }
+RFiClass class >> environment: aRFiEnvironment ficusClass: aFiClass [
+
+	^ self basicNew
+		initializeWithEnvironment: aRFiEnvironment 
+		ficusClass: aFiClass;
+		yourself
+]
 
 { #category : #comparing }
 RFiClass >> = other [
@@ -23,13 +32,13 @@ RFiClass >> = other [
 
 	self flag: #todo. "The == may be a wrong assumption"
 	^ environment == other environment 
-		and: [ classShot == other classShot ]
+		and: [ ficusClass == other ficusClass ]
 ]
 
 { #category : #polymorphism }
 RFiClass >> allInstVarNames [
 
-	^ classShot hasNullSuperclass
+	^ ficusClass hasNullSuperclass
 		ifTrue: [ self instVarNames ]
 		ifFalse: [ self superclass allInstVarNames, self instVarNames ].
 
@@ -75,7 +84,7 @@ RFiClass >> allSuperclasses [
 RFiClass >> allSuperclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
-	classShot hasNullSuperclass ifFalse: [
+	ficusClass hasNullSuperclass ifFalse: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
 ]
@@ -130,13 +139,13 @@ RFiClass >> canUnderstand: aSymbol [
 { #category : #polymorphism }
 RFiClass >> category [
 
-	^ classShot category
+	^ ficusClass category
 ]
 
 { #category : #polymorphism }
 RFiClass >> classPool [
 
-	^ classShot classPool 
+	^ ficusClass classPool 
 		inject: Dictionary new
 		into: [ :dictionary :each |
 			dictionary 
@@ -144,22 +153,10 @@ RFiClass >> classPool [
 				yourself ]
 ]
 
-{ #category : #accessing }
-RFiClass >> classShot [
-	
-	^ classShot
-]
-
-{ #category : #accessing }
-RFiClass >> classShot: anObject [
-	
-	classShot := anObject
-]
-
 { #category : #polymorphism }
 RFiClass >> classVarNames [
 
-	^ classShot classPool values
+	^ ficusClass classPool values
 ]
 
 { #category : #polymorphism }
@@ -172,7 +169,7 @@ RFiClass >> classVariableNamed: aString [
 { #category : #polymorphism }
 RFiClass >> comment [
 
-	^ classShot comment
+	^ ficusClass comment
 ]
 
 { #category : #polymorphism }
@@ -219,6 +216,12 @@ RFiClass >> environment: anObject [
 ]
 
 { #category : #accessing }
+RFiClass >> ficusClass [
+	
+	^ ficusClass
+]
+
+{ #category : #accessing }
 RFiClass >> ficusPathFromEnvironment [
 	
 	^ environment ficusPathToClass: self
@@ -234,7 +237,7 @@ RFiClass >> hasAbstractMethods [
 { #category : #polymorphism }
 RFiClass >> hasComment [
 	
-	^ classShot comment isNotEmpty
+	^ ficusClass comment isNotEmpty
 ]
 
 { #category : #comparing }
@@ -244,7 +247,16 @@ RFiClass >> hash [
 
 	^ (self class hash 
 		bitXor: environment identityHash)
-		bitXor: classShot identityHash
+		bitXor: ficusClass identityHash
+]
+
+{ #category : #initialization }
+RFiClass >> initializeWithEnvironment: aRFiEnvironment ficusClass: aFiClass [
+
+	self initialize.
+	
+	environment := aRFiEnvironment.
+	ficusClass := aFiClass.
 ]
 
 { #category : #polymorphism }
@@ -288,7 +300,7 @@ RFiClass >> instVarNames [
 { #category : #polymorphism }
 RFiClass >> instanceVariables [
 
-	^ classShot layout instanceVariables asArray
+	^ ficusClass layout instanceVariables asArray
 ]
 
 { #category : #polymorphism }
@@ -300,7 +312,7 @@ RFiClass >> isMeta [
 { #category : #polymorphism }
 RFiClass >> localMethods [
 
-	^ classShot methods collect: [ :aMethodShot | 
+	^ ficusClass methods collect: [ :aMethodShot | 
 		self ringMethodFor: aMethodShot ]
 ]
 
@@ -337,7 +349,7 @@ RFiClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: 
 { #category : #polymorphism }
 RFiClass >> name [
 
-	^ classShot name
+	^ ficusClass name
 ]
 
 { #category : #polymorphism }
@@ -366,13 +378,13 @@ RFiClass >> ringClassVariables [
 { #category : #polymorphism }
 RFiClass >> sharedPoolNames [
 
-	^ classShot sharedPools values
+	^ ficusClass sharedPools values
 ]
 
 { #category : #polymorphism }
 RFiClass >> sharedPools [
 
-	^ classShot sharedPools asArray sorted
+	^ ficusClass sharedPools asArray sorted
 		collect: [ :name | environment classNamed: name ]
 ]
 
@@ -381,7 +393,7 @@ RFiClass >> sharedPoolsString [
 	"Answer a string of my shared pool names separated by spaces."
 
 	^ String streamContents: [ :stream |
-		classShot sharedPools values
+		ficusClass sharedPools values
 			do: [ :each | stream nextPutAll: each ]
 			separatedBy: [ stream space ] ]
 ]
@@ -401,7 +413,7 @@ RFiClass >> subclasses [
 	^ cachedSubclasses ifNil: [
 		cachedSubclasses := 
 			(environment allClasses
-				select: [ :aClass | aClass classShot superclassName = self name ])
+				select: [ :aClass | aClass ficusClass superclassName = self name ])
 				asArray ]
 ]
 
@@ -415,10 +427,10 @@ RFiClass >> subclassesDo: aBlock [
 { #category : #polymorphism }
 RFiClass >> superclass [
 	
-	classShot hasNullSuperclass ifTrue: [ ^ nil ].
+	ficusClass hasNullSuperclass ifTrue: [ ^ nil ].
 	
 	^ cachedSuperclass ifNil: [
-		cachedSuperclass := environment classNamed: classShot superclassName ]
+		cachedSuperclass := environment classNamed: ficusClass superclassName ]
 ]
 
 { #category : #polymorphism }

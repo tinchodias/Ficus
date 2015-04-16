@@ -5,12 +5,21 @@ Class {
 	#name : #RFiMethod,
 	#superclass : #RFiObject,
 	#instVars : [
-		'methodShot',
 		'methodClass',
-		'cachedAst'
+		'cachedAst',
+		'ficusMethod'
 	],
 	#category : #'FicusRing-Core'
 }
+
+{ #category : #'instance creation' }
+RFiMethod class >> methodClass: aRFiBehavior ficusMethod: aFiMethod [
+
+	^ self basicNew
+		initializeWithMethodClass: aRFiBehavior 
+		ficusMethod: aFiMethod;
+		yourself
+]
 
 { #category : #comparing }
 RFiMethod >> = other [
@@ -19,7 +28,7 @@ RFiMethod >> = other [
 	self class = other class ifFalse: [ ^ false ].
 
 	^ self methodClass = other methodClass 
-		and: [ methodShot = other methodShot ]
+		and: [ ficusMethod = other ficusMethod ]
 ]
 
 { #category : #polymorphism }
@@ -88,6 +97,12 @@ RFiMethod >> environment [
 ]
 
 { #category : #accessing }
+RFiMethod >> ficusMethod [
+	
+	^ ficusMethod
+]
+
+{ #category : #accessing }
 RFiMethod >> ficusPathFromEnvironment [
 
 	^ self environment ficusPathToMethod: self
@@ -98,7 +113,16 @@ RFiMethod >> hash [
 
 	^ (self class hash 
 		bitXor: methodClass hash)
-		bitXor: methodShot hash
+		bitXor: ficusMethod hash
+]
+
+{ #category : #initialization }
+RFiMethod >> initializeWithMethodClass: aRFiClass ficusMethod: aFiMethod [
+	
+	self initialize.
+
+	methodClass := aRFiClass.
+	ficusMethod := aFiMethod.
 ]
 
 { #category : #polymorphism }
@@ -219,18 +243,6 @@ RFiMethod >> methodClass: anObject [
 	methodClass := anObject
 ]
 
-{ #category : #accessing }
-RFiMethod >> methodShot [
-	
-	^ methodShot
-]
-
-{ #category : #accessing }
-RFiMethod >> methodShot: anObject [
-	
-	methodShot := anObject
-]
-
 { #category : #polymorphism }
 RFiMethod >> numArgs [
 	
@@ -285,7 +297,7 @@ RFiMethod >> printOn: aStream [
 { #category : #polymorphism }
 RFiMethod >> protocol [
 	
-	^ methodShot protocol
+	^ ficusMethod protocol
 ]
 
 { #category : #polymorphism }
@@ -328,7 +340,7 @@ RFiMethod >> selectAllVariables: aBlock [
 { #category : #polymorphism }
 RFiMethod >> selector [
 
-	^ methodShot selector
+	^ ficusMethod selector
 ]
 
 { #category : #polymorphism }
@@ -371,7 +383,7 @@ RFiMethod >> shortPrintString [
 { #category : #polymorphism }
 RFiMethod >> sourceCode [
 
-	^ methodShot sourceCode
+	^ ficusMethod sourceCode
 ]
 
 { #category : #polymorphism }

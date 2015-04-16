@@ -6,7 +6,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'cachedFicusEnvironment',
-		'cachedFicusRGEnvironment'
+		'cachedRFiEnvironment'
 	],
 	#category : #'FicusRing-Examples'
 }
@@ -14,7 +14,7 @@ Class {
 { #category : #ui }
 RFiBaseResources >> browse [
 
-	^ RFiEnvironmentBrowser openOn: self ficusRGEnvironment
+	^ RFiEnvironmentBrowser openOn: self ringEnvironment
 ]
 
 { #category : #resources }
@@ -244,13 +244,6 @@ RFiBaseResources >> ficusEnvironment [
 		cachedFicusEnvironment := self newFicusEnvironment ]
 ]
 
-{ #category : #'resources - ring level' }
-RFiBaseResources >> ficusRGEnvironment [
-
-	^ cachedFicusRGEnvironment ifNil: [
-		cachedFicusRGEnvironment := self ficusEnvironment asFiRGEnvironment ]
-]
-
 { #category : #private }
 RFiBaseResources >> methodsFor: sourceCodes [ 
 			
@@ -284,5 +277,12 @@ RFiBaseResources >> packageKernel [
 { #category : #'resources - ring level' }
 RFiBaseResources >> ringClassObject [
 
-	^ self ficusRGEnvironment classNamed: #Object
+	^ self ringEnvironment classNamed: #Object
+]
+
+{ #category : #'resources - ring level' }
+RFiBaseResources >> ringEnvironment [
+
+	^ cachedRFiEnvironment ifNil: [
+		cachedRFiEnvironment := self ficusEnvironment asRFiEnvironment ]
 ]

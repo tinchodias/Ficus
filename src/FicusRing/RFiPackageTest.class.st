@@ -16,7 +16,7 @@ RFiPackageTest >> testDefinedClasses [
 RFiPackageTest >> testDefinedMethods [
 
 	| resources2 package |
-	resources2 := RFiRingTestResources new ficusRGEnvironment.
+	resources2 := RFiRingTestResources new ringEnvironment.
 
 	package := resources2 packages detect: [ :each | each name = #X ].
 	self assert: (package definedMethods asSet 
@@ -42,6 +42,6 @@ RFiPackageTest >> testIncludesClass [
 RFiPackageTest >> testName [
 
 	self 
-		assert: (resources ficusRGEnvironment packages collect: #name) asSet 
+		assert: (resources ringEnvironment packages collect: #name) asSet 
 		equals: #(Kernel X Y) asSet.
 ]

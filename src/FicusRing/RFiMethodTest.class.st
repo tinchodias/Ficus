@@ -39,7 +39,7 @@ RFiMethodTest >> testAst [
 RFiMethodTest >> testEnvironment [
 		
 	| environment |
-	environment := resources ficusRGEnvironment.
+	environment := resources ringEnvironment.
 	
 	self assert: ((environment classNamed: #A) >> #sum) environment == environment
 ]
@@ -58,16 +58,16 @@ RFiMethodTest >> testIsProvided [
 
 	self flag: #todo. "Test with #explicitRequirement, #requirement, etc."
 
-	self assert: ((resources ficusRGEnvironment classNamed: #True) >> #ifTrue:) isProvided.
-	self deny: ((resources ficusRGEnvironment classNamed: #Boolean) >> #ifTrue:) isProvided.
+	self assert: ((resources ringEnvironment classNamed: #True) >> #ifTrue:) isProvided.
+	self deny: ((resources ringEnvironment classNamed: #Boolean) >> #ifTrue:) isProvided.
 
 ]
 
 { #category : #tests }
 RFiMethodTest >> testIsRequired [
 
-	self deny: ((resources ficusRGEnvironment classNamed: #True) >> #ifTrue:) isRequired.
-	self assert: ((resources ficusRGEnvironment classNamed: #Boolean) >> #ifTrue:) isRequired.
+	self deny: ((resources ringEnvironment classNamed: #True) >> #ifTrue:) isRequired.
+	self assert: ((resources ringEnvironment classNamed: #Boolean) >> #ifTrue:) isRequired.
 
 ]
 
@@ -91,11 +91,11 @@ RFiMethodTest >> testLiterals [
 RFiMethodTest >> testMarkerOrNil [
 
 	self 
-		assert: ((resources ficusRGEnvironment classNamed: #Boolean) >> #ifTrue:) markerOrNil
+		assert: ((resources ringEnvironment classNamed: #Boolean) >> #ifTrue:) markerOrNil
 		equals: CompiledMethod subclassResponsibilityMarker. 
 		
 	self 
-		assert: ((resources ficusRGEnvironment classNamed: #True) >> #ifTrue:) markerOrNil
+		assert: ((resources ringEnvironment classNamed: #True) >> #ifTrue:) markerOrNil
 		equals: nil
 ]
 
@@ -149,7 +149,7 @@ RFiMethodTest >> testRefersToLiteral [
 		
 	self assert: ((resources ringClassA >> #sum42) refersToLiteral: #sum).
 	self assert: ((resources ringClassB >> #defaultClass) refersToLiteral: 
-		(resources ficusRGEnvironment associationAt: #C)).
+		(resources ringEnvironment associationAt: #C)).
 	self assert: ((resources ringClassC >> #sum) refersToLiteral: 0.0).
 	self assert: ((resources ringClassC >> #string) refersToLiteral: 'a string').
 	self assert: ((resources ringClassC >> #array1) refersToLiteral: #(1 2)).
@@ -157,7 +157,7 @@ RFiMethodTest >> testRefersToLiteral [
 	"These may look weird, but it works like this in reality."	
 	self assert: ((resources ringClassC >> #array1) refersToLiteral: 1).	
 	self deny: ((resources ringClassC >> #array1) refersToLiteral: 
-		(resources ficusRGEnvironment bindingOf: #B)).
+		(resources ringEnvironment bindingOf: #B)).
 
 ]
 

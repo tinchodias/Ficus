@@ -131,23 +131,23 @@ RFiRingTestResources >> packageY [
 { #category : #'resources - ring level' }
 RFiRingTestResources >> ringClassA [
 
-	^ self ficusRGEnvironment classNamed: #A
+	^ self ringEnvironment classNamed: #A
 ]
 
 { #category : #'resources - ring level' }
 RFiRingTestResources >> ringClassB [
 
-	^ self ficusRGEnvironment classNamed: #B
+	^ self ringEnvironment classNamed: #B
 ]
 
 { #category : #'resources - ring level' }
 RFiRingTestResources >> ringClassC [
 
-	^ self ficusRGEnvironment classNamed: #C
+	^ self ringEnvironment classNamed: #C
 ]
 
 { #category : #'resources - ring level' }
 RFiRingTestResources >> ringClassP [
 
-	^ self ficusRGEnvironment classNamed: #P
+	^ self ringEnvironment classNamed: #P
 ]

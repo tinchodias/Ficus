@@ -9,7 +9,7 @@ RFiLintRulesBrowser class >> example1 [
 
 	^ self exampleOn: 
 		(FiRBBrowserEnvironment new 
-			environment: FiFragileBaseClassProblemResources3 new ficusRGEnvironment).
+			environment: RFiFragileBaseClassProblemResources3 new ringEnvironment).
 
 ]
 
@@ -21,7 +21,7 @@ RFiLintRulesBrowser class >> example2 [
 	
 	rbEnvironment := 
 		(FiRBBrowserEnvironment new 
-			environment: (YrPharoMigrator example1readTag: '30014') asFiRGEnvironment) 
+			environment: (YrPharoMigrator example1readTag: '30014') asRFiEnvironment) 
 			forCategories: #('Fuel-Core' 'Fuel-Clusters').
 	
 	^ self exampleOn: rbEnvironment

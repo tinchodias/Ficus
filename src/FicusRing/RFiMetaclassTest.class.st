@@ -35,7 +35,7 @@ RFiMetaclassTest >> testDefinition [
 RFiMetaclassTest >> testEnvironment [
 		
 	| environment |
-	environment := resources ficusRGEnvironment.
+	environment := resources ringEnvironment.
 	
 	self assert: (environment classNamed: #A) theMetaClass environment == environment
 ]

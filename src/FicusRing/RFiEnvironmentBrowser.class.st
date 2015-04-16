@@ -10,7 +10,7 @@ RFiEnvironmentBrowser class >> example1 [
 	self example1
 	"
 	
-	^ self openOn: FiFragileBaseClassProblemResources3 new ficusRGEnvironment
+	^ self openOn: RFiFragileBaseClassProblemResources3 new ringEnvironment
 ]
 
 { #category : #examples }
@@ -19,7 +19,7 @@ RFiEnvironmentBrowser class >> example2 [
 	self example2
 	"
 	
-	^ self openOn: FiFragileBaseClassProblemResources5A new ficusRGEnvironment
+	^ self openOn: RFiFragileBaseClassProblemResources5A new ringEnvironment
 ]
 
 { #category : #examples }
@@ -28,7 +28,7 @@ RFiEnvironmentBrowser class >> example3 [
 	self example3
 	"
 	
-	^ self openOn: FiRingTestWithExtensionsResources new ficusRGEnvironment
+	^ self openOn: RFiRingTestResources new ringEnvironment
 ]
 
 { #category : #examples }
@@ -37,7 +37,7 @@ RFiEnvironmentBrowser class >> example4yrupe [
 	self example4yrupe
 	"
 	
-	^ self openOn: (YrPharoMigrator example1readTag: '30005') asFiRGEnvironment
+	^ self openOn: (YrPharoMigrator example1readTag: '30005') asRFiEnvironment
 ]
 
 { #category : #actions }

@@ -1,7 +1,7 @@
 Extension { #name : #FiSet }
 
 { #category : #'*FicusRing' }
-FiSet >> asFiRGEnvironment [
+FiSet >> asRFiEnvironment [
 
 	^ RFiEnvironment new
 		environmentShot: self;

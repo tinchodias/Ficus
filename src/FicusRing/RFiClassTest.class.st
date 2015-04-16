@@ -205,7 +205,7 @@ Object superclass: nil'.
 RFiClassTest >> testEnvironment [
 		
 	| environment |
-	environment := resources ficusRGEnvironment.
+	environment := resources ringEnvironment.
 	
 	self assert: (environment classNamed: #A) environment == environment
 ]
@@ -213,8 +213,8 @@ RFiClassTest >> testEnvironment [
 { #category : #tests }
 RFiClassTest >> testHasAbstractMethods [
 
-	self deny: (resources ficusRGEnvironment classNamed: #True) hasAbstractMethods.
-	self assert: (resources ficusRGEnvironment classNamed: #Boolean) hasAbstractMethods.
+	self deny: (resources ringEnvironment classNamed: #True) hasAbstractMethods.
+	self assert: (resources ringEnvironment classNamed: #Boolean) hasAbstractMethods.
 
 ]
 

@@ -1,23 +1,23 @@
 Class {
-	#name : #FiRGEnvironmentTest,
-	#superclass : #FiRGObjectTest,
+	#name : #RFiEnvironmentTest,
+	#superclass : #RFiObjectTest,
 	#category : #'FicusRing-Tests'
 }
 
 { #category : #tests }
-FiRGEnvironmentTest >> testAllClasses [
+RFiEnvironmentTest >> testAllClasses [
 
 	self deny: resources ficusRGEnvironment allClasses isEmpty
 ]
 
 { #category : #tests }
-FiRGEnvironmentTest >> testAllClassesAndTraits [
+RFiEnvironmentTest >> testAllClassesAndTraits [
 
 	self deny: resources ficusRGEnvironment allClassesAndTraits isEmpty
 ]
 
 { #category : #tests }
-FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
+RFiEnvironmentTest >> testAllClassesAndTraitsDo [
 
 	| items |
 	items := IdentitySet new.
@@ -28,7 +28,7 @@ FiRGEnvironmentTest >> testAllClassesAndTraitsDo [
 ]
 
 { #category : #tests }
-FiRGEnvironmentTest >> testAllClassesDo [
+RFiEnvironmentTest >> testAllClassesDo [
 
 	| items |
 	items := IdentitySet new.
@@ -39,7 +39,7 @@ FiRGEnvironmentTest >> testAllClassesDo [
 ]
 
 { #category : #tests }
-FiRGEnvironmentTest >> testBindingOf [
+RFiEnvironmentTest >> testBindingOf [
 
 	self 
 		assert: (resources ficusRGEnvironment bindingOf: #A) 
@@ -52,13 +52,13 @@ FiRGEnvironmentTest >> testBindingOf [
 ]
 
 { #category : #tests }
-FiRGEnvironmentTest >> testClassNamed [
+RFiEnvironmentTest >> testClassNamed [
 
 	self assert: (resources ficusRGEnvironment classNamed: #A) name equals: #A 
 ]
 
 { #category : #tests }
-FiRGEnvironmentTest >> testHasBindingThatBeginsWith [
+RFiEnvironmentTest >> testHasBindingThatBeginsWith [
 
 	self assert: (resources ficusRGEnvironment hasBindingThatBeginsWith: #A).
 	self deny: (resources ficusRGEnvironment hasBindingThatBeginsWith: #UnexistentClass).
@@ -66,7 +66,7 @@ FiRGEnvironmentTest >> testHasBindingThatBeginsWith [
 ]
 
 { #category : #'tests-not polymorphic' }
-FiRGEnvironmentTest >> testKnownGlobalNames [
+RFiEnvironmentTest >> testKnownGlobalNames [
 	"Define well-known globals by default."
 
 	self 
@@ -75,7 +75,7 @@ FiRGEnvironmentTest >> testKnownGlobalNames [
 ]
 
 { #category : #tests }
-FiRGEnvironmentTest >> testPackages [
+RFiEnvironmentTest >> testPackages [
 
 	self assert: resources ficusRGEnvironment packages size equals: 3.
 

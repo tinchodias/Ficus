@@ -2,7 +2,7 @@
 I represent a class variable in a FiRGClass.
 "
 Class {
-	#name : #FiRGClassVariable,
-	#superclass : #FiRGVariable,
+	#name : #RFiClassVariable,
+	#superclass : #RFiVariable,
 	#category : #'FicusRing-Core'
 }

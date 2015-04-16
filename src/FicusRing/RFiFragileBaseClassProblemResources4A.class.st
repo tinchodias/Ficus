@@ -2,13 +2,13 @@
 I answer a variant of my superclass which adds the LRULog, with a test.
 "
 Class {
-	#name : #FiFragileBaseClassProblemResources4A,
-	#superclass : #FiFragileBaseClassProblemResources3,
+	#name : #RFiFragileBaseClassProblemResources4A,
+	#superclass : #RFiFragileBaseClassProblemResources3,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseClassProblemResources4A >> classLRULog [
+RFiFragileBaseClassProblemResources4A >> classLRULog [
 
 	^ FiClass builder 
 		name: #LRULog;
@@ -29,7 +29,7 @@ FiFragileBaseClassProblemResources4A >> classLRULog [
 ]
 
 { #category : #resources }
-FiFragileBaseClassProblemResources4A >> classLRULogTest [
+RFiFragileBaseClassProblemResources4A >> classLRULogTest [
 
 	^ FiClass builder 
 		name: #LRULogTest;
@@ -48,7 +48,7 @@ FiFragileBaseClassProblemResources4A >> classLRULogTest [
 ]
 
 { #category : #resources }
-FiFragileBaseClassProblemResources4A >> packageLoggers [
+RFiFragileBaseClassProblemResources4A >> packageLoggers [
 
 	^ FiPackage builder
 		name: #Loggers;

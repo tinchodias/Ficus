@@ -2,8 +2,8 @@
 I am polymorphic with SystemDictionary, fetching everything needed from a Ficus environment.
 "
 Class {
-	#name : #FiRGEnvironment,
-	#superclass : #FiRGObject,
+	#name : #RFiEnvironment,
+	#superclass : #RFiObject,
 	#instVars : [
 		'packagesShot',
 		'allClasses',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #comparing }
-FiRGEnvironment >> = other [
+RFiEnvironment >> = other [
 
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
@@ -26,7 +26,7 @@ FiRGEnvironment >> = other [
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> allClasses [
+RFiEnvironment >> allClasses [
 
 	^ allClasses ifNil: [ 
 		allClasses := self packages 
@@ -34,33 +34,33 @@ FiRGEnvironment >> allClasses [
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> allClassesAndTraits [
+RFiEnvironment >> allClassesAndTraits [
 
 	self flag: #todo. "FIX"
 	^ self allClasses
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> allClassesAndTraitsDo: aBlockClosure [ 
+RFiEnvironment >> allClassesAndTraitsDo: aBlockClosure [ 
 
 	^ self allClassesAndTraits do: aBlockClosure 
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> allClassesDo: aBlockClosure [ 
+RFiEnvironment >> allClassesDo: aBlockClosure [ 
 
 	^ self allClasses do: aBlockClosure 
 ]
 
 { #category : #iterating }
-FiRGEnvironment >> allTraitsDo: aBlockClosure [ 
+RFiEnvironment >> allTraitsDo: aBlockClosure [ 
 	
 	self flag: #todo.
 	^ self
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> associationAt: key [
+RFiEnvironment >> associationAt: key [
 
 	^ self 
 		associationAt: key 
@@ -68,7 +68,7 @@ FiRGEnvironment >> associationAt: key [
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> associationAt: key ifAbsent: aBlock [ 
+RFiEnvironment >> associationAt: key ifAbsent: aBlock [ 
 
 	^ (self 
 		at: key 
@@ -77,7 +77,7 @@ FiRGEnvironment >> associationAt: key ifAbsent: aBlock [
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> at: aName ifAbsent: aBlockClosure [ 
+RFiEnvironment >> at: aName ifAbsent: aBlockClosure [ 
 
 	^ self 
 		at: aName 
@@ -86,7 +86,7 @@ FiRGEnvironment >> at: aName ifAbsent: aBlockClosure [
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
+RFiEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
 
 	^ self globalByName
 		at: aName 
@@ -95,7 +95,7 @@ FiRGEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> bindingOf: aName [
+RFiEnvironment >> bindingOf: aName [
 	
 	^ self 
 		at: aName
@@ -104,32 +104,32 @@ FiRGEnvironment >> bindingOf: aName [
 ]
 
 { #category : #ui }
-FiRGEnvironment >> browse [
+RFiEnvironment >> browse [
 
-	^ FiRGEnvironmentBrowser openOn: self 
+	^ RFiEnvironmentBrowser openOn: self 
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> classNamed: aName [
+RFiEnvironment >> classNamed: aName [
 	
 	self flag: #todo. "What if it's not a class?"
 	^ self at: aName ifAbsent: [ NotFound signalFor: aName in: self ]
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> environmentShot [
+RFiEnvironment >> environmentShot [
 	
 	^ packagesShot
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> environmentShot: anObject [
+RFiEnvironment >> environmentShot: anObject [
 	
 	packagesShot := anObject
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> extensionMethodsByBehaviorName [
+RFiEnvironment >> extensionMethodsByBehaviorName [
 	
 	self flag: #todo. "ugly"
 	
@@ -158,7 +158,7 @@ FiRGEnvironment >> extensionMethodsByBehaviorName [
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> extensionMethodsFor: aBehavior [
+RFiEnvironment >> extensionMethodsFor: aBehavior [
 	
 	^ (self extensionMethodsByBehaviorName
 		at: aBehavior theNonMetaClass name 
@@ -167,26 +167,26 @@ FiRGEnvironment >> extensionMethodsFor: aBehavior [
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> ficusPathToClass: aFiRGClass [ 
+RFiEnvironment >> ficusPathToClass: aFiRGClass [ 
 	
 	^ {aFiRGClass package name. #contents. aFiRGClass name} asFiPath
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> ficusPathToInstanceVariable: aFiRGInstanceVariable [ 
+RFiEnvironment >> ficusPathToInstanceVariable: aFiRGInstanceVariable [ 
 
 	^ aFiRGInstanceVariable definingClass ficusPathFromEnvironment / 
 		#layout / #instanceVariables / aFiRGInstanceVariable name
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> ficusPathToMethod: aFiRGMethod [ 
+RFiEnvironment >> ficusPathToMethod: aFiRGMethod [ 
 
 	^ aFiRGMethod origin ficusPathFromEnvironment / #methods / aFiRGMethod selector
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> ficusRGObjectFromPath: aFiPath [
+RFiEnvironment >> ficusRGObjectFromPath: aFiPath [
 	
 	| steps |
 	self flag: #todo. "FIX..."
@@ -208,7 +208,7 @@ FiRGEnvironment >> ficusRGObjectFromPath: aFiPath [
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> globalByName [
+RFiEnvironment >> globalByName [
 
 	^ globalByName ifNil: [
 		globalByName := Dictionary new.
@@ -227,7 +227,7 @@ FiRGEnvironment >> globalByName [
 ]
 
 { #category : #polymorphism }
-FiRGEnvironment >> hasBindingThatBeginsWith: aString [ 
+RFiEnvironment >> hasBindingThatBeginsWith: aString [ 
 
 	^ (self allClassesAndTraits 
 		anySatisfy: [ :each | each name beginsWith: aString ])
@@ -236,14 +236,14 @@ FiRGEnvironment >> hasBindingThatBeginsWith: aString [
 ]
 
 { #category : #comparing }
-FiRGEnvironment >> hash [
+RFiEnvironment >> hash [
 
 	^ self class hash 
 		bitXor: self environmentShot hash
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> implementorsOf: aSelector [ 
+RFiEnvironment >> implementorsOf: aSelector [ 
 	
 	cachedImplementorsBySelector ifNil: [
 		cachedImplementorsBySelector := Dictionary new.
@@ -265,7 +265,7 @@ FiRGEnvironment >> implementorsOf: aSelector [
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> implementorsOf: aSelector inHierarchyOf: aRingClass [
+RFiEnvironment >> implementorsOf: aSelector inHierarchyOf: aRingClass [
 
 	^ Array streamContents: [ :stream |
 		aRingClass
@@ -286,7 +286,7 @@ FiRGEnvironment >> implementorsOf: aSelector inHierarchyOf: aRingClass [
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [ 
+RFiEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [ 
 
 	^ Array streamContents: [ :stream |
 		aRingClass allSuperclassesDo: [ :aClass |
@@ -297,19 +297,19 @@ FiRGEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> knownGlobalDummyValue [
+RFiEnvironment >> knownGlobalDummyValue [
 
 	^ #dummyValue
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> knownGlobalNames [
+RFiEnvironment >> knownGlobalNames [
 	
 	^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> lookupImplementorOf: aSelector inHierarchyOf: aRingClass ifPresent: presentBlock ifAbsent: absentBlock [
+RFiEnvironment >> lookupImplementorOf: aSelector inHierarchyOf: aRingClass ifPresent: presentBlock ifAbsent: absentBlock [
 
 	aRingClass withAllSuperAndSubclassesDo: [ :aClassOrTrait |
 		aClassOrTrait 
@@ -321,7 +321,7 @@ FiRGEnvironment >> lookupImplementorOf: aSelector inHierarchyOf: aRingClass ifPr
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> lookupImplementorOf: aSelector inSuperclassesOf: aRingClass ifPresent: presentBlock ifAbsent: absentBlock [
+RFiEnvironment >> lookupImplementorOf: aSelector inSuperclassesOf: aRingClass ifPresent: presentBlock ifAbsent: absentBlock [
 
 	aRingClass allSuperclassesDo: [ :aClass |
 		aClass
@@ -333,7 +333,7 @@ FiRGEnvironment >> lookupImplementorOf: aSelector inSuperclassesOf: aRingClass i
 ]
 
 { #category : #lookup }
-FiRGEnvironment >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+RFiEnvironment >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
 	^ self 
 		at: aName 
@@ -342,7 +342,7 @@ FiRGEnvironment >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNot
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> packageByClassName [
+RFiEnvironment >> packageByClassName [
 	
 	^ packageByClassName ifNil: [
 		packageByClassName := Dictionary new.
@@ -357,13 +357,13 @@ FiRGEnvironment >> packageByClassName [
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> packageOfClass: aFiRGClass [ 
+RFiEnvironment >> packageOfClass: aFiRGClass [ 
 
 	^ self packageOfClassNamed: aFiRGClass name
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> packageOfClassNamed: aName [ 
+RFiEnvironment >> packageOfClassNamed: aName [ 
 	
 	^ self packageByClassName 
 		at: aName 
@@ -371,25 +371,25 @@ FiRGEnvironment >> packageOfClassNamed: aName [
 ]
 
 { #category : #accessing }
-FiRGEnvironment >> packages [
+RFiEnvironment >> packages [
 	
 	^ packages ifNil: [
 		packages := packagesShot collect: [ :each | self ringPackageFor: each ] ]
 ]
 
 { #category : #private }
-FiRGEnvironment >> ringClassFor: classShot [
+RFiEnvironment >> ringClassFor: classShot [
 
-	^ FiRGClass new 
+	^ RFiClass new 
 		environment: self; 
 		classShot: classShot;
 		yourself
 ]
 
 { #category : #private }
-FiRGEnvironment >> ringPackageFor: aFiPackage [ 
+RFiEnvironment >> ringPackageFor: aFiPackage [ 
 	
-	^ FiRGPackage new 
+	^ RFiPackage new 
 		environment: self;
 		packageShot: aFiPackage;
 		yourself

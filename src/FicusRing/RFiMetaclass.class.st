@@ -2,8 +2,8 @@
 I am polymorphic with Metaclass, fetching everything needed from a Ficus environment.
 "
 Class {
-	#name : #FiRGMetaclass,
-	#superclass : #FiRGBehavior,
+	#name : #RFiMetaclass,
+	#superclass : #RFiBehavior,
 	#instVars : [
 		'theNonMetaClass'
 	],
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #comparing }
-FiRGMetaclass >> = other [
+RFiMetaclass >> = other [
 
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
@@ -20,19 +20,19 @@ FiRGMetaclass >> = other [
 ]
 
 { #category : #converting }
-FiRGMetaclass >> asString [
+RFiMetaclass >> asString [
 
 	^ self name
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> bindingOf: varName [
+RFiMetaclass >> bindingOf: varName [
 
 	^ self theNonMetaClass classBindingOf: varName
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> definition [
+RFiMetaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
 	^ String streamContents: 
@@ -50,25 +50,25 @@ FiRGMetaclass >> definition [
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> environment [
+RFiMetaclass >> environment [
 
 	^ theNonMetaClass environment
 ]
 
 { #category : #accessing }
-FiRGMetaclass >> ficusPathFromEnvironment [
+RFiMetaclass >> ficusPathFromEnvironment [
 
 	^ theNonMetaClass ficusPathFromEnvironment / #metaclass
 ]
 
 { #category : #comparing }
-FiRGMetaclass >> hash [
+RFiMetaclass >> hash [
 
 	^ self class hash bitXor: self theNonMetaClass hash
 ]
 
 { #category : #lookup }
-FiRGMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+RFiMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
 	(self instVarNames includes: aName)
 		ifTrue: [ ^ presentBlockClosure value: (self ringInstanceVariableNamed: aName) ].
@@ -83,27 +83,27 @@ FiRGMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure if
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> instanceVariables [
+RFiMetaclass >> instanceVariables [
 
 	self flag: #fix.
 	^ theNonMetaClass classShot metaclass layout instanceVariables asArray
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> isMeta [
+RFiMetaclass >> isMeta [
 
 	^ true
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> localMethods [
+RFiMetaclass >> localMethods [
 
 	^ self theNonMetaClass classShot metaclass methods values 
 		collect: [ :aMethodShot | self ringMethodFor: aMethodShot ]
 ]
 
 { #category : #lookup }
-FiRGMetaclass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+RFiMetaclass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 	"Answer the entity that declares a variable. Note this imitates the behavior of #bindingOf:"
 
 	^ self 
@@ -117,25 +117,25 @@ FiRGMetaclass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFo
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> name [
+RFiMetaclass >> name [
 
 	^ theNonMetaClass name, ' class'
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> soleInstance [
+RFiMetaclass >> soleInstance [
 	
 	^ theNonMetaClass
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> subclasses [
+RFiMetaclass >> subclasses [
 	
 	^ self theNonMetaClass subclasses collect: #theMetaClass
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> superclass [
+RFiMetaclass >> superclass [
 	
 	^ theNonMetaClass superclass 
 		ifNil: [ self environment classNamed: #Class ]
@@ -143,16 +143,16 @@ FiRGMetaclass >> superclass [
 ]
 
 { #category : #polymorphism }
-FiRGMetaclass >> theNonMetaClass [
+RFiMetaclass >> theNonMetaClass [
 
 	^ theNonMetaClass
 ]
 
 { #category : #accessing }
-FiRGMetaclass >> theNonMetaClass: aFiRGClass [ 
+RFiMetaclass >> theNonMetaClass: aFiRGClass [ 
 
 	self flag: #todo. "remove debugging code"
-	self assert: (aFiRGClass isKindOf: FiRGClass).
+	self assert: (aFiRGClass isKindOf: RFiClass).
 
 	theNonMetaClass := aFiRGClass
 ]

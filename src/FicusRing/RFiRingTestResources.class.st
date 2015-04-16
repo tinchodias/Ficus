@@ -2,13 +2,13 @@
 Resource with diverse Ficus metalevel objects, intended for tests. 
 "
 Class {
-	#name : #FiRingTestResources,
-	#superclass : #FiBaseResources,
+	#name : #RFiRingTestResources,
+	#superclass : #RFiBaseResources,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiRingTestResources >> classA [
+RFiRingTestResources >> classA [
 
 	^ FiClass builder 
 		name: #A;
@@ -30,7 +30,7 @@ FiRingTestResources >> classA [
 ]
 
 { #category : #resources }
-FiRingTestResources >> classB [
+RFiRingTestResources >> classB [
 
 	^ FiClass builder 
 		name: #B;
@@ -49,7 +49,7 @@ FiRingTestResources >> classB [
 ]
 
 { #category : #resources }
-FiRingTestResources >> classC [
+RFiRingTestResources >> classC [
 
 	^ FiClass builder 
 		name: #C;
@@ -69,7 +69,7 @@ FiRingTestResources >> classC [
 ]
 
 { #category : #resources }
-FiRingTestResources >> classP [
+RFiRingTestResources >> classP [
 
 	^ FiClass builder 
 		name: #P;
@@ -81,7 +81,7 @@ FiRingTestResources >> classP [
 ]
 
 { #category : #resources }
-FiRingTestResources >> extensionMethodsToA [
+RFiRingTestResources >> extensionMethodsToA [
 
 	^ FiExtensionMethods builder
 		hostName: #A;
@@ -93,7 +93,7 @@ FiRingTestResources >> extensionMethodsToA [
 ]
 
 { #category : #resources }
-FiRingTestResources >> extensionMethodsToAclass [
+RFiRingTestResources >> extensionMethodsToAclass [
 
 	^ FiExtensionMethods builder
 		hostName: #A;
@@ -105,13 +105,13 @@ FiRingTestResources >> extensionMethodsToAclass [
 ]
 
 { #category : #private }
-FiRingTestResources >> newFicusEnvironment [
+RFiRingTestResources >> newFicusEnvironment [
 
 	^ { self packageKernel. self packageX. self packageY. } asFiSet
 ]
 
 { #category : #resources }
-FiRingTestResources >> packageX [
+RFiRingTestResources >> packageX [
 	
 	^ FiPackage builder
 		name: #X;
@@ -120,7 +120,7 @@ FiRingTestResources >> packageX [
 ]
 
 { #category : #resources }
-FiRingTestResources >> packageY [
+RFiRingTestResources >> packageY [
 	
 	^ FiPackage builder
 		name: #Y;
@@ -129,25 +129,25 @@ FiRingTestResources >> packageY [
 ]
 
 { #category : #'resources - ring level' }
-FiRingTestResources >> ringClassA [
+RFiRingTestResources >> ringClassA [
 
 	^ self ficusRGEnvironment classNamed: #A
 ]
 
 { #category : #'resources - ring level' }
-FiRingTestResources >> ringClassB [
+RFiRingTestResources >> ringClassB [
 
 	^ self ficusRGEnvironment classNamed: #B
 ]
 
 { #category : #'resources - ring level' }
-FiRingTestResources >> ringClassC [
+RFiRingTestResources >> ringClassC [
 
 	^ self ficusRGEnvironment classNamed: #C
 ]
 
 { #category : #'resources - ring level' }
-FiRingTestResources >> ringClassP [
+RFiRingTestResources >> ringClassP [
 
 	^ self ficusRGEnvironment classNamed: #P
 ]

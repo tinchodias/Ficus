@@ -2,13 +2,13 @@
 I answer a variant of my superclass which improves a test in LRULogTest.
 "
 Class {
-	#name : #FiFragileBaseClassProblemResources5A,
-	#superclass : #FiFragileBaseClassProblemResources4A,
+	#name : #RFiFragileBaseClassProblemResources5A,
+	#superclass : #RFiFragileBaseClassProblemResources4A,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseClassProblemResources5A >> classLRULogTest [
+RFiFragileBaseClassProblemResources5A >> classLRULogTest [
 
 	^ FiClass builder 
 		name: #LRULogTest;

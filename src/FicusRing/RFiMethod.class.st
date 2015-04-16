@@ -2,8 +2,8 @@
 I am polymorphic with CompilerMethod, fetching everything needed from a Ficus environment.
 "
 Class {
-	#name : #FiRGMethod,
-	#superclass : #FiRGObject,
+	#name : #RFiMethod,
+	#superclass : #RFiObject,
 	#instVars : [
 		'methodShot',
 		'methodClass',
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #comparing }
-FiRGMethod >> = other [
+RFiMethod >> = other [
 
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
@@ -23,7 +23,7 @@ FiRGMethod >> = other [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> allLiterals [
+RFiMethod >> allLiterals [
 
 	| allChildren result |
 	allChildren := self ast allChildren.
@@ -49,7 +49,7 @@ FiRGMethod >> allLiterals [
 ]
 
 { #category : #converting }
-FiRGMethod >> asActiveRingDefinition [
+RFiMethod >> asActiveRingDefinition [
 
 	^ RGMethodDefinition new 
 			name: self selector;
@@ -60,14 +60,14 @@ FiRGMethod >> asActiveRingDefinition [
 ]
 
 { #category : #printing }
-FiRGMethod >> asString [
+RFiMethod >> asString [
 	"Same as a CompiledMethod"
 
 	^ self sourceCode
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> ast [
+RFiMethod >> ast [
 	"Answer my AST with semantic analysis. See #parseTree."
 
 	^ cachedAst ifNil: [
@@ -75,26 +75,26 @@ FiRGMethod >> ast [
 ]
 
 { #category : #printing }
-FiRGMethod >> definition [
+RFiMethod >> definition [
 	"Polymorphic to class definition"
 	
 	^ self sourceCode
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> environment [
+RFiMethod >> environment [
 	
 	^ methodClass environment
 ]
 
 { #category : #accessing }
-FiRGMethod >> ficusPathFromEnvironment [
+RFiMethod >> ficusPathFromEnvironment [
 
 	^ self environment ficusPathToMethod: self
 ]
 
 { #category : #comparing }
-FiRGMethod >> hash [
+RFiMethod >> hash [
 
 	^ (self class hash 
 		bitXor: methodClass hash)
@@ -102,54 +102,54 @@ FiRGMethod >> hash [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isCompiledMethod [
+RFiMethod >> isCompiledMethod [
 
 	^ true
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isDisabled: marker [
+RFiMethod >> isDisabled: marker [
 
 	^ marker == CompiledMethod disabledMarker
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isExplicitlyRequired: marker [
+RFiMethod >> isExplicitlyRequired: marker [
 
 	^ marker == CompiledMethod explicitRequirementMarker
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isFromTrait [
+RFiMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
 
 	^ self origin isTrait and: [ self origin ~= self methodClass ]
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isImplicitlyRequired: marker [
+RFiMethod >> isImplicitlyRequired: marker [
 
 	^ marker == CompiledMethod implicitRequirementMarker
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isProvided [
+RFiMethod >> isProvided [
 	^ self isProvided: self markerOrNil
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isProvided: marker [
+RFiMethod >> isProvided: marker [
 	marker ifNil: [^ true].
 	^ (self isRequired: marker) not and: [(self isDisabled: marker) not]
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isRequired [
+RFiMethod >> isRequired [
 	^ self isRequired: self markerOrNil
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isRequired: marker [
+RFiMethod >> isRequired: marker [
 	marker ifNil: [^ false].
 	(self isImplicitlyRequired: marker) ifTrue: [^ true].
 	(self isExplicitlyRequired: marker) ifTrue: [^ true]. 
@@ -158,7 +158,7 @@ FiRGMethod >> isRequired: marker [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isReturnSelf [
+RFiMethod >> isReturnSelf [
 
 	| statements |
 	statements := self parseTree statements.
@@ -170,26 +170,26 @@ FiRGMethod >> isReturnSelf [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> isSubclassResponsibility: marker [
+RFiMethod >> isSubclassResponsibility: marker [
 
 	^ marker == CompiledMethod subclassResponsibilityMarker
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> literals [
+RFiMethod >> literals [
 
 	^ self allLiterals
 ]
 
 { #category : #lookup }
-FiRGMethod >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+RFiMethod >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
 	^ self methodClass 
 		lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure 
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> markerOrNil [
+RFiMethod >> markerOrNil [
 	
 	| statements node |
 	statements := self parseTree statements.
@@ -202,56 +202,56 @@ FiRGMethod >> markerOrNil [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> messages [
+RFiMethod >> messages [
 
 	^ self parseTree sentMessages
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> methodClass [
+RFiMethod >> methodClass [
 	
 	^ methodClass
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> methodClass: anObject [
+RFiMethod >> methodClass: anObject [
 	
 	methodClass := anObject
 ]
 
 { #category : #accessing }
-FiRGMethod >> methodShot [
+RFiMethod >> methodShot [
 	
 	^ methodShot
 ]
 
 { #category : #accessing }
-FiRGMethod >> methodShot: anObject [
+RFiMethod >> methodShot: anObject [
 	
 	methodShot := anObject
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> numArgs [
+RFiMethod >> numArgs [
 	
 	^ self ast numArgs 
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> origin [
+RFiMethod >> origin [
 	
 	self flag: #todo. "Support methods from traits!"
 	^ self methodClass
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> package [
+RFiMethod >> package [
 	
 	^ self origin package
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> parseTree [
+RFiMethod >> parseTree [
 	"Answer my AST, without semantic analysis, unless it's anlready cached. See #ast."
 
 	cachedAst ifNotNil: [ ^ cachedAst ].
@@ -263,13 +263,13 @@ FiRGMethod >> parseTree [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> pragmas [
+RFiMethod >> pragmas [
 
 	^ self parseTree pragmas
 ]
 
 { #category : #printing }
-FiRGMethod >> printOn: aStream [
+RFiMethod >> printOn: aStream [
 
 	super printOn: aStream.
 
@@ -283,19 +283,19 @@ FiRGMethod >> printOn: aStream [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> protocol [
+RFiMethod >> protocol [
 	
 	^ methodShot protocol
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> referredInstVars [
+RFiMethod >> referredInstVars [
 
 	^  self selectAllVariables: [ :each | each isInstance ]
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> refersToLiteral: literal [ 
+RFiMethod >> refersToLiteral: literal [ 
 
 	| allChildren |
 	allChildren := self ast allChildren.
@@ -318,7 +318,7 @@ FiRGMethod >> refersToLiteral: literal [
 ]
 
 { #category : #private }
-FiRGMethod >> selectAllVariables: aBlock [
+RFiMethod >> selectAllVariables: aBlock [
 	
 	^ self ast allChildren
 		select: [:each | each isVariable and: [ aBlock value: each ]]
@@ -326,13 +326,13 @@ FiRGMethod >> selectAllVariables: aBlock [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> selector [
+RFiMethod >> selector [
 
 	^ methodShot selector
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> selfMessages [
+RFiMethod >> selfMessages [
 
 	| selfMessages searcher |
 	selfMessages := Set new.
@@ -347,13 +347,13 @@ FiRGMethod >> selfMessages [
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> sendsSelector: aSymbol [
+RFiMethod >> sendsSelector: aSymbol [
 
 	^ self messages includes: aSymbol
 ]
 
 { #category : #printing }
-FiRGMethod >> shortPrintOn: aStream [
+RFiMethod >> shortPrintOn: aStream [
 
 	aStream 
 		nextPutAll: self methodClass name;
@@ -362,20 +362,20 @@ FiRGMethod >> shortPrintOn: aStream [
 ]
 
 { #category : #printing }
-FiRGMethod >> shortPrintString [
+RFiMethod >> shortPrintString [
 
 	^ String streamContents: [ :stream |
 		self shortPrintOn: stream ]
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> sourceCode [
+RFiMethod >> sourceCode [
 
 	^ methodShot sourceCode
 ]
 
 { #category : #polymorphism }
-FiRGMethod >> superMessages [
+RFiMethod >> superMessages [
 
 	| superMessages searcher |
 	superMessages := Set new.

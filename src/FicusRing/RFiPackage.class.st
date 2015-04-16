@@ -2,8 +2,8 @@
 I am polymorphic with RPackage, fetching everything needed from a Ficus environment.
 "
 Class {
-	#name : #FiRGPackage,
-	#superclass : #FiRGObject,
+	#name : #RFiPackage,
+	#superclass : #RFiObject,
 	#instVars : [
 		'environment',
 		'packageShot',
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : #polymorphism }
-FiRGPackage >> asRingDefinition [
+RFiPackage >> asRingDefinition [
 
 	^ RGPackage named: self name asSymbol
 ]
 
 { #category : #polymorphism }
-FiRGPackage >> definedClasses [
+RFiPackage >> definedClasses [
 
 	^ definedClasses ifNil: [ 
 		definedClasses := packageShot classes 
@@ -27,7 +27,7 @@ FiRGPackage >> definedClasses [
 ]
 
 { #category : #accessing }
-FiRGPackage >> definedMethods [
+RFiPackage >> definedMethods [
 
 	^ Array streamContents: [ :stream |
 		self definedClasses do: [ :each | 
@@ -40,13 +40,13 @@ FiRGPackage >> definedMethods [
 ]
 
 { #category : #accessing }
-FiRGPackage >> environment: aFiRGEnvironment [ 
+RFiPackage >> environment: aFiRGEnvironment [ 
 
 	environment := aFiRGEnvironment
 ]
 
 { #category : #accessing }
-FiRGPackage >> extensionMethods [
+RFiPackage >> extensionMethods [
 
 	self flag: #todo. "delegate this instantiation to behaviors".
 	
@@ -58,32 +58,32 @@ FiRGPackage >> extensionMethods [
 			ringClass := ringClass classSide ].
 
 		ficusExtensionMethods methods collect: [ :ficusMethod |
-			 FiRGMethod new 
+			 RFiMethod new 
 				methodClass: ringClass;
 				methodShot: ficusMethod;
 				yourself ] ]
 ]
 
 { #category : #testing }
-FiRGPackage >> includesClass: aFiRGClass [ 
+RFiPackage >> includesClass: aFiRGClass [ 
 
 	^ self definedClasses includes: aFiRGClass
 ]
 
 { #category : #polymorphism }
-FiRGPackage >> name [
+RFiPackage >> name [
 
 	^ packageShot name
 ]
 
 { #category : #accessing }
-FiRGPackage >> packageShot: aFiPackage [ 
+RFiPackage >> packageShot: aFiPackage [ 
 
 	packageShot := aFiPackage
 ]
 
 { #category : #printing }
-FiRGPackage >> printOn: aStream [
+RFiPackage >> printOn: aStream [
 
 	super printOn: aStream.
 

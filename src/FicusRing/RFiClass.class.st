@@ -2,8 +2,8 @@
 I am polymorphic with Class, fetching everything needed from a Ficus environment.
 "
 Class {
-	#name : #FiRGClass,
-	#superclass : #FiRGBehavior,
+	#name : #RFiClass,
+	#superclass : #RFiBehavior,
 	#instVars : [
 		'classShot',
 		'environment',
@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #comparing }
-FiRGClass >> = other [
+RFiClass >> = other [
 
 	self == other ifTrue: [ ^ true ].
 	self class = other class ifFalse: [ ^ false ].
@@ -27,7 +27,7 @@ FiRGClass >> = other [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> allInstVarNames [
+RFiClass >> allInstVarNames [
 
 	^ classShot hasNullSuperclass
 		ifTrue: [ self instVarNames ]
@@ -36,7 +36,7 @@ FiRGClass >> allInstVarNames [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> allSelectors [
+RFiClass >> allSelectors [
 	"Answer all selectors understood by instances of the receiver"
 
 	| result |
@@ -49,14 +49,14 @@ FiRGClass >> allSelectors [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> allSubclasses [
+RFiClass >> allSubclasses [
 
 	^ Array streamContents: [ :stream |
 		self allSubclassesDo: [ :each | stream nextPut: each ] ]
 ]
 
 { #category : #polymorphism }
-FiRGClass >> allSubclassesDo: aBlock [ 
+RFiClass >> allSubclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's subclasses."
 
 	self subclassesDo: [ :aSubclass | 
@@ -65,14 +65,14 @@ FiRGClass >> allSubclassesDo: aBlock [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> allSuperclasses [
+RFiClass >> allSuperclasses [
 
 	^ Array streamContents: [ :stream |
 		self allSuperclassesDo: [ :each | stream nextPut: each ] ]
 ]
 
 { #category : #polymorphism }
-FiRGClass >> allSuperclassesDo: aBlock [ 
+RFiClass >> allSuperclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
 	classShot hasNullSuperclass ifFalse: [
@@ -81,13 +81,13 @@ FiRGClass >> allSuperclassesDo: aBlock [
 ]
 
 { #category : #converting }
-FiRGClass >> asString [
+RFiClass >> asString [
 
 	^ self name
 ]
 
 { #category : #polymorphism }
-FiRGClass >> binding [
+RFiClass >> binding [
 	"Answer a binding for the receiver, sharing if possible"
 
 	| binding |
@@ -101,7 +101,7 @@ FiRGClass >> binding [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> bindingOf: varName [
+RFiClass >> bindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver, or nil
 	if variable with such name is not defined"
 
@@ -119,7 +119,7 @@ FiRGClass >> bindingOf: varName [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> canUnderstand: aSymbol [
+RFiClass >> canUnderstand: aSymbol [
 
 	self withAllSuperclasses do: [ :aClass |
 		(aClass includesSelector: aSymbol) ifTrue: [ ^ true ] ].
@@ -128,13 +128,13 @@ FiRGClass >> canUnderstand: aSymbol [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> category [
+RFiClass >> category [
 
 	^ classShot category
 ]
 
 { #category : #polymorphism }
-FiRGClass >> classPool [
+RFiClass >> classPool [
 
 	^ classShot classPool 
 		inject: Dictionary new
@@ -145,38 +145,38 @@ FiRGClass >> classPool [
 ]
 
 { #category : #accessing }
-FiRGClass >> classShot [
+RFiClass >> classShot [
 	
 	^ classShot
 ]
 
 { #category : #accessing }
-FiRGClass >> classShot: anObject [
+RFiClass >> classShot: anObject [
 	
 	classShot := anObject
 ]
 
 { #category : #polymorphism }
-FiRGClass >> classVarNames [
+RFiClass >> classVarNames [
 
 	^ classShot classPool values
 ]
 
 { #category : #polymorphism }
-FiRGClass >> classVariableNamed: aString [
+RFiClass >> classVariableNamed: aString [
 	"Copied from TClass"
 
 	^self classPool associationAt: aString asSymbol ifAbsent: [self error: 'no such class var']
 ]
 
 { #category : #polymorphism }
-FiRGClass >> comment [
+RFiClass >> comment [
 
 	^ classShot comment
 ]
 
 { #category : #polymorphism }
-FiRGClass >> definition [
+RFiClass >> definition [
 	"Answer a String that defines the receiver."
 
 	| aStream |
@@ -207,38 +207,38 @@ FiRGClass >> definition [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> environment [
+RFiClass >> environment [
 	
 	^ environment
 ]
 
 { #category : #polymorphism }
-FiRGClass >> environment: anObject [
+RFiClass >> environment: anObject [
 	
 	environment := anObject
 ]
 
 { #category : #accessing }
-FiRGClass >> ficusPathFromEnvironment [
+RFiClass >> ficusPathFromEnvironment [
 	
 	^ environment ficusPathToClass: self
 ]
 
 { #category : #polymorphism }
-FiRGClass >> hasAbstractMethods [
+RFiClass >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 	^ super hasAbstractMethods or: [self class hasAbstractMethods]
 
 ]
 
 { #category : #polymorphism }
-FiRGClass >> hasComment [
+RFiClass >> hasComment [
 	
 	^ classShot comment isNotEmpty
 ]
 
 { #category : #comparing }
-FiRGClass >> hash [
+RFiClass >> hash [
 
 	self flag: #todo. "The ==/identityHash may be a wrong assumption"
 
@@ -248,7 +248,7 @@ FiRGClass >> hash [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> innerBindingOf: aSymbol [
+RFiClass >> innerBindingOf: aSymbol [
 	"Answer the binding of some variable resolved in the scope of the receiver, or one of its superclass
 	but do not look up binding in receiver's environment.
 	Use #bindingOf: for looking up the variable binding in a full scope, including receiver's environment"
@@ -262,7 +262,7 @@ FiRGClass >> innerBindingOf: aSymbol [
 ]
 
 { #category : #lookup }
-FiRGClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+RFiClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
 	(self instVarNames includes: aName)
 		ifTrue: [ ^ presentBlockClosure value: (self ringInstanceVariableNamed: aName) ].
@@ -280,32 +280,32 @@ FiRGClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotF
 ]
 
 { #category : #polymorphism }
-FiRGClass >> instVarNames [
+RFiClass >> instVarNames [
 
 	^ self instanceVariables
 ]
 
 { #category : #polymorphism }
-FiRGClass >> instanceVariables [
+RFiClass >> instanceVariables [
 
 	^ classShot layout instanceVariables asArray
 ]
 
 { #category : #polymorphism }
-FiRGClass >> isMeta [
+RFiClass >> isMeta [
 
 	^ false
 ]
 
 { #category : #polymorphism }
-FiRGClass >> localMethods [
+RFiClass >> localMethods [
 
 	^ classShot methods collect: [ :aMethodShot | 
 		self ringMethodFor: aMethodShot ]
 ]
 
 { #category : #polymorphism }
-FiRGClass >> lookupSelector: selector [
+RFiClass >> lookupSelector: selector [
 
 	| currentClass |
 	currentClass := self.
@@ -321,7 +321,7 @@ FiRGClass >> lookupSelector: selector [
 ]
 
 { #category : #lookup }
-FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+RFiClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 	"Answer the entity that declares a variable. Note this imitates the behavior of #bindingOf:"
 
 	^ self 
@@ -335,13 +335,13 @@ FiRGClass >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound:
 ]
 
 { #category : #polymorphism }
-FiRGClass >> name [
+RFiClass >> name [
 
 	^ classShot name
 ]
 
 { #category : #polymorphism }
-FiRGClass >> parseTreeFor: aSymbol [
+RFiClass >> parseTreeFor: aSymbol [
 
 	^ self 
 		compiledMethodAt: aSymbol 
@@ -350,34 +350,34 @@ FiRGClass >> parseTreeFor: aSymbol [
 ]
 
 { #category : #accessing }
-FiRGClass >> ringClassVariableNamed: aString [
+RFiClass >> ringClassVariableNamed: aString [
 
 	^ self ringClassVariables detect: [ :each | each name = aString ]
 ]
 
 { #category : #accessing }
-FiRGClass >> ringClassVariables [ 
+RFiClass >> ringClassVariables [ 
 
 	^ cachedClassVariables ifNil: [
 		cachedClassVariables := self classVarNames collect: [ :each |
-			FiRGClassVariable definingClass: self name: each ] ]
+			RFiClassVariable definingClass: self name: each ] ]
 ]
 
 { #category : #polymorphism }
-FiRGClass >> sharedPoolNames [
+RFiClass >> sharedPoolNames [
 
 	^ classShot sharedPools values
 ]
 
 { #category : #polymorphism }
-FiRGClass >> sharedPools [
+RFiClass >> sharedPools [
 
 	^ classShot sharedPools asArray sorted
 		collect: [ :name | environment classNamed: name ]
 ]
 
 { #category : #polymorphism }
-FiRGClass >> sharedPoolsString [
+RFiClass >> sharedPoolsString [
 	"Answer a string of my shared pool names separated by spaces."
 
 	^ String streamContents: [ :stream |
@@ -387,7 +387,7 @@ FiRGClass >> sharedPoolsString [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
+RFiClass >> sourceCodeAt: selector ifAbsent: aBlock [
 
 	^ self 
 		compiledMethodAt: selector 
@@ -396,7 +396,7 @@ FiRGClass >> sourceCodeAt: selector ifAbsent: aBlock [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> subclasses [
+RFiClass >> subclasses [
 	
 	^ cachedSubclasses ifNil: [
 		cachedSubclasses := 
@@ -406,14 +406,14 @@ FiRGClass >> subclasses [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> subclassesDo: aBlock [
+RFiClass >> subclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
 
 	^ self subclasses do: aBlock
 ]
 
 { #category : #polymorphism }
-FiRGClass >> superclass [
+RFiClass >> superclass [
 	
 	classShot hasNullSuperclass ifTrue: [ ^ nil ].
 	
@@ -422,22 +422,22 @@ FiRGClass >> superclass [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> theMetaClass [
+RFiClass >> theMetaClass [
 
 	^ cachedMetaClass ifNil: [ 
-		cachedMetaClass := FiRGMetaclass new
+		cachedMetaClass := RFiMetaclass new
 			theNonMetaClass: self;
 			yourself ]
 ]
 
 { #category : #polymorphism }
-FiRGClass >> theNonMetaClass [
+RFiClass >> theNonMetaClass [
 	
 	^ self
 ]
 
 { #category : #polymorphism }
-FiRGClass >> whichClassIncludesSelector: aSymbol [
+RFiClass >> whichClassIncludesSelector: aSymbol [
 
 	^ (self lookupSelector: aSymbol) 
 		ifNil: [ nil ]
@@ -445,7 +445,7 @@ FiRGClass >> whichClassIncludesSelector: aSymbol [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> withAllSubclasses [
+RFiClass >> withAllSubclasses [
 	"Answer a Set of the receiver, the receiver's descendent's, and the  
 	receiver's descendent's subclasses."
 
@@ -453,7 +453,7 @@ FiRGClass >> withAllSubclasses [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> withAllSuperAndSubclassesDo: aBlock [
+RFiClass >> withAllSuperAndSubclassesDo: aBlock [
 
 	self allSuperclassesDo: aBlock.
 	aBlock value: self.
@@ -461,7 +461,7 @@ FiRGClass >> withAllSuperAndSubclassesDo: aBlock [
 ]
 
 { #category : #polymorphism }
-FiRGClass >> withAllSuperclasses [
+RFiClass >> withAllSuperclasses [
 
 	^ { self }, self allSuperclasses
 ]

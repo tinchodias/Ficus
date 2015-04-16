@@ -1,17 +1,17 @@
 Class {
-	#name : #FiMethodsBrowser,
+	#name : #RFiMethodsBrowser,
 	#superclass : #GLMCompositePresentation,
 	#category : #'FicusRing-UI'
 }
 
 { #category : #actions }
-FiMethodsBrowser >> browseDependenciesOf: aFiRGObject [
+RFiMethodsBrowser >> browseDependenciesOf: aFiRGObject [
 
 	(FiDependenciesBrowser openOn: aFiRGObject) extent: 700@600
 ]
 
 { #category : #building }
-FiMethodsBrowser >> compose [
+RFiMethodsBrowser >> compose [
 
 	self title: 'Ficus Methods Browser'.
 
@@ -38,7 +38,7 @@ FiMethodsBrowser >> compose [
 ]
 
 { #category : #private }
-FiMethodsBrowser >> methodDefinitionIn: a [ 
+RFiMethodsBrowser >> methodDefinitionIn: a [ 
 
 	a smalltalkCode
 		smalltalkClass: [ :method | method methodClass ];
@@ -46,7 +46,7 @@ FiMethodsBrowser >> methodDefinitionIn: a [
 ]
 
 { #category : #private }
-FiMethodsBrowser >> methodsIn: a [
+RFiMethodsBrowser >> methodsIn: a [
 
 	a list
 		sorted: [ :x :y | x selector < y selector ];

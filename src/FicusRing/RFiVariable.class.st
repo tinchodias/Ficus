@@ -2,8 +2,8 @@
 I represent a variable in a FiRGBehavior.
 "
 Class {
-	#name : #FiRGVariable,
-	#superclass : #FiRGObject,
+	#name : #RFiVariable,
+	#superclass : #RFiObject,
 	#instVars : [
 		'name',
 		'definingClass'
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiRGVariable class >> definingClass: aFiRGBehavior name: aString [ 
+RFiVariable class >> definingClass: aFiRGBehavior name: aString [ 
 	
 	^ self basicNew
 		initializeWithDefiningClass: aFiRGBehavior name: aString;
@@ -20,19 +20,19 @@ FiRGVariable class >> definingClass: aFiRGBehavior name: aString [
 ]
 
 { #category : #accessing }
-FiRGVariable >> definingClass [
+RFiVariable >> definingClass [
 	
 	^ definingClass
 ]
 
 { #category : #accessing }
-FiRGVariable >> environment [
+RFiVariable >> environment [
 	
 	^ definingClass environment
 ]
 
 { #category : #initialization }
-FiRGVariable >> initializeWithDefiningClass: aFiRGBehavior name: aString [ 
+RFiVariable >> initializeWithDefiningClass: aFiRGBehavior name: aString [ 
 
 	self initialize.
 	
@@ -41,18 +41,18 @@ FiRGVariable >> initializeWithDefiningClass: aFiRGBehavior name: aString [
 ]
 
 { #category : #accessing }
-FiRGVariable >> name [
+RFiVariable >> name [
 	^ name
 ]
 
 { #category : #accessing }
-FiRGVariable >> package [
+RFiVariable >> package [
 	
 	^ definingClass package
 ]
 
 { #category : #printing }
-FiRGVariable >> printOn: aStream [
+RFiVariable >> printOn: aStream [
 
 	super printOn: aStream.
 	

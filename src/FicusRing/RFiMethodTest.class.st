@@ -1,11 +1,11 @@
 Class {
-	#name : #FiRGMethodTest,
-	#superclass : #FiRGObjectTest,
+	#name : #RFiMethodTest,
+	#superclass : #RFiObjectTest,
 	#category : #'FicusRing-Tests'
 }
 
 { #category : #tests }
-FiRGMethodTest >> testAllLiterals [
+RFiMethodTest >> testAllLiterals [
 		
 	self 
 		assert: (resources ringClassC >> #string) allLiterals
@@ -26,7 +26,7 @@ FiRGMethodTest >> testAllLiterals [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testAst [
+RFiMethodTest >> testAst [
 
 	self deny: ((resources ringClassA methods collect: #ast) anySatisfy: #isNil).
 
@@ -36,7 +36,7 @@ FiRGMethodTest >> testAst [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testEnvironment [
+RFiMethodTest >> testEnvironment [
 		
 	| environment |
 	environment := resources ficusRGEnvironment.
@@ -45,7 +45,7 @@ FiRGMethodTest >> testEnvironment [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testIsFromTrait [ 
+RFiMethodTest >> testIsFromTrait [ 
 
 	self flag: #todo. "Support traits"
 			
@@ -54,7 +54,7 @@ FiRGMethodTest >> testIsFromTrait [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testIsProvided [
+RFiMethodTest >> testIsProvided [
 
 	self flag: #todo. "Test with #explicitRequirement, #requirement, etc."
 
@@ -64,7 +64,7 @@ FiRGMethodTest >> testIsProvided [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testIsRequired [
+RFiMethodTest >> testIsRequired [
 
 	self deny: ((resources ficusRGEnvironment classNamed: #True) >> #ifTrue:) isRequired.
 	self assert: ((resources ficusRGEnvironment classNamed: #Boolean) >> #ifTrue:) isRequired.
@@ -72,7 +72,7 @@ FiRGMethodTest >> testIsRequired [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testIsReturnSelf [
+RFiMethodTest >> testIsReturnSelf [
 
 	self assert: (resources ringClassC >> #returnSelf) isReturnSelf.
 	self deny: (resources ringClassC >> #sum) isReturnSelf.
@@ -80,7 +80,7 @@ FiRGMethodTest >> testIsReturnSelf [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testLiterals [
+RFiMethodTest >> testLiterals [
 		
 	self 
 		assert: (resources ringClassC >> #string) literals
@@ -88,7 +88,7 @@ FiRGMethodTest >> testLiterals [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testMarkerOrNil [
+RFiMethodTest >> testMarkerOrNil [
 
 	self 
 		assert: ((resources ficusRGEnvironment classNamed: #Boolean) >> #ifTrue:) markerOrNil
@@ -100,13 +100,13 @@ FiRGMethodTest >> testMarkerOrNil [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testMessages [
+RFiMethodTest >> testMessages [
 		
 	self deny: ((resources ringClassA methods collect: #messages) anySatisfy: #isNil)
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testNumArgs [
+RFiMethodTest >> testNumArgs [
 		
 	self assert: (resources ringClassC >> #sum) numArgs equals: 0.
 	self assert: (resources ringClassC >> #sumAt:) numArgs equals: 1.
@@ -114,7 +114,7 @@ FiRGMethodTest >> testNumArgs [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testPackage [
+RFiMethodTest >> testPackage [
 	
 	self flag: #todo. "Support methods from traits!"
 	
@@ -122,14 +122,14 @@ FiRGMethodTest >> testPackage [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testParseTree [
+RFiMethodTest >> testParseTree [
 
 	self deny: ((resources ringClassA methods collect: #parseTree) anySatisfy: #isNil).
 
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testProtocol [
+RFiMethodTest >> testProtocol [
 		
 	self flag: #todo. "Missing more cases"
 	self assert: (resources ringClassA >> #sum) protocol equals: #'as yet unclassified'.
@@ -137,7 +137,7 @@ FiRGMethodTest >> testProtocol [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testReferredInstVars [
+RFiMethodTest >> testReferredInstVars [
 
 	self flag:#todo. "Test better (it should fail easily)"
 	self assert: (resources ringClassA >> #sum) referredInstVars asSet equals: #(a1 a2) asSet.
@@ -145,7 +145,7 @@ FiRGMethodTest >> testReferredInstVars [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testRefersToLiteral [
+RFiMethodTest >> testRefersToLiteral [
 		
 	self assert: ((resources ringClassA >> #sum42) refersToLiteral: #sum).
 	self assert: ((resources ringClassB >> #defaultClass) refersToLiteral: 
@@ -162,20 +162,20 @@ FiRGMethodTest >> testRefersToLiteral [
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testSelfMessages [
+RFiMethodTest >> testSelfMessages [
 		
 	self assert: (resources ringClassA >> #sum42) selfMessages equals: #(sum) asSet
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testSendsSelector [
+RFiMethodTest >> testSendsSelector [
 		
 	self assert: ((resources ringClassA >> #sum) sendsSelector: #+).
 	self deny: ((resources ringClassA >> #sum) sendsSelector: #/).	
 ]
 
 { #category : #tests }
-FiRGMethodTest >> testSuperMessages [
+RFiMethodTest >> testSuperMessages [
 		
 	self assert: (resources ringClassB >> #sum) superMessages equals: #(sum) asSet
 ]

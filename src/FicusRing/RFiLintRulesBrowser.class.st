@@ -1,11 +1,11 @@
 Class {
-	#name : #FiLintRulesBrowser,
+	#name : #RFiLintRulesBrowser,
 	#superclass : #Object,
 	#category : #'FicusRing-UI'
 }
 
 { #category : #examples }
-FiLintRulesBrowser class >> example1 [
+RFiLintRulesBrowser class >> example1 [
 
 	^ self exampleOn: 
 		(FiRBBrowserEnvironment new 
@@ -14,7 +14,7 @@ FiLintRulesBrowser class >> example1 [
 ]
 
 { #category : #examples }
-FiLintRulesBrowser class >> example2 [
+RFiLintRulesBrowser class >> example2 [
 
 	| rbEnvironment |
 	self flag: #fix. "Shouldn't depend on Yrupe"
@@ -28,7 +28,7 @@ FiLintRulesBrowser class >> example2 [
 ]
 
 { #category : #examples }
-FiLintRulesBrowser class >> exampleOn: rbEnvironment [
+RFiLintRulesBrowser class >> exampleOn: rbEnvironment [
 
 	| compositeRule |
 	compositeRule := FiLintRulesTest new newRule.
@@ -43,7 +43,7 @@ FiLintRulesBrowser class >> exampleOn: rbEnvironment [
 ]
 
 { #category : #'instance creation' }
-FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
+RFiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 
 	| browser |
 	browser := GLMTabulator new
@@ -104,7 +104,7 @@ FiLintRulesBrowser class >> newBrowserOn: rbEnvironment [
 ]
 
 { #category : #convenience }
-FiLintRulesBrowser class >> openOn: rbEnvironment rules: rules [
+RFiLintRulesBrowser class >> openOn: rbEnvironment rules: rules [
 
 	^ (self newBrowserOn: rbEnvironment) openOn: rules
 ]

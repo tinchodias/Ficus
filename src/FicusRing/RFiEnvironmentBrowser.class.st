@@ -1,11 +1,11 @@
 Class {
-	#name : #FiRGEnvironmentBrowser,
+	#name : #RFiEnvironmentBrowser,
 	#superclass : #GLMCompositePresentation,
 	#category : #'FicusRing-UI'
 }
 
 { #category : #examples }
-FiRGEnvironmentBrowser class >> example1 [
+RFiEnvironmentBrowser class >> example1 [
 	"
 	self example1
 	"
@@ -14,7 +14,7 @@ FiRGEnvironmentBrowser class >> example1 [
 ]
 
 { #category : #examples }
-FiRGEnvironmentBrowser class >> example2 [
+RFiEnvironmentBrowser class >> example2 [
 	"
 	self example2
 	"
@@ -23,7 +23,7 @@ FiRGEnvironmentBrowser class >> example2 [
 ]
 
 { #category : #examples }
-FiRGEnvironmentBrowser class >> example3 [
+RFiEnvironmentBrowser class >> example3 [
 	"
 	self example3
 	"
@@ -32,7 +32,7 @@ FiRGEnvironmentBrowser class >> example3 [
 ]
 
 { #category : #examples }
-FiRGEnvironmentBrowser class >> example4yrupe [
+RFiEnvironmentBrowser class >> example4yrupe [
 	"
 	self example4yrupe
 	"
@@ -41,27 +41,27 @@ FiRGEnvironmentBrowser class >> example4yrupe [
 ]
 
 { #category : #actions }
-FiRGEnvironmentBrowser >> browseImplementorsInHierarchyOf: aFiRGMethod [
+RFiEnvironmentBrowser >> browseImplementorsInHierarchyOf: aFiRGMethod [
 
 	| methods |
 	methods := aFiRGMethod environment 
 		implementorsOf: aFiRGMethod selector 
 		inHierarchyOf: aFiRGMethod methodClass.
 
-	FiMethodsBrowser openOn: methods.
+	RFiMethodsBrowser openOn: methods.
 ]
 
 { #category : #actions }
-FiRGEnvironmentBrowser >> browseImplementorsOf: aFiRGMethod [
+RFiEnvironmentBrowser >> browseImplementorsOf: aFiRGMethod [
 
 	| methods |
 	methods := aFiRGMethod environment implementorsOf: aFiRGMethod selector.
 
-	FiMethodsBrowser openOn: methods.
+	RFiMethodsBrowser openOn: methods.
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> classDefinitionIn: a [ 
+RFiEnvironmentBrowser >> classDefinitionIn: a [ 
 
 	a smalltalkCode
 		variableBindings: [ :class | 
@@ -78,7 +78,7 @@ FiRGEnvironmentBrowser >> classDefinitionIn: a [
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> classSideMethodsIn: a [
+RFiEnvironmentBrowser >> classSideMethodsIn: a [
 
 	a list 
 		title: [ :class  | 'Meta (', class classSide methods size asString, ')' ];
@@ -87,7 +87,7 @@ FiRGEnvironmentBrowser >> classSideMethodsIn: a [
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> classesIn: aList [
+RFiEnvironmentBrowser >> classesIn: aList [
 
 	aList
 		display: [ :package | package definedClasses ];
@@ -98,7 +98,7 @@ FiRGEnvironmentBrowser >> classesIn: aList [
 ]
 
 { #category : #building }
-FiRGEnvironmentBrowser >> compose [
+RFiEnvironmentBrowser >> compose [
 
 	self title: 'Ficus Environment Browser'.
 
@@ -148,7 +148,7 @@ FiRGEnvironmentBrowser >> compose [
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> instanceSideMethodsIn: a [
+RFiEnvironmentBrowser >> instanceSideMethodsIn: a [
 
 	a list
 		title: [ :class  | 'Instance (', class methods size asString, ')' ];
@@ -157,7 +157,7 @@ FiRGEnvironmentBrowser >> instanceSideMethodsIn: a [
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> methodDefinitionIn: a [ 
+RFiEnvironmentBrowser >> methodDefinitionIn: a [ 
 
 	a smalltalkCode
 		smalltalkClass: [ :method | method methodClass ];
@@ -165,7 +165,7 @@ FiRGEnvironmentBrowser >> methodDefinitionIn: a [
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> packagesIn: a [ 
+RFiEnvironmentBrowser >> packagesIn: a [ 
 
 	a list 
 		display: [ :e | e packages ];
@@ -175,7 +175,7 @@ FiRGEnvironmentBrowser >> packagesIn: a [
 ]
 
 { #category : #private }
-FiRGEnvironmentBrowser >> sharedSetupForMethodsIn: aList [
+RFiEnvironmentBrowser >> sharedSetupForMethodsIn: aList [
 
 	aList
 		sorted: [ :x :y | x selector < y selector ];

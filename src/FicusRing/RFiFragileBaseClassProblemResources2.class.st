@@ -1,14 +1,16 @@
 "
-I answer a variant of my superclass which modifies Log>>logAll:.
+My difference with my superclas is: 
+* a refactoring to the method Log>>#log: 
+* add a super-send to #initialize
 "
 Class {
-	#name : #FiFragileBaseClassProblemResources4B,
-	#superclass : #FiFragileBaseClassProblemResources3,
+	#name : #RFiFragileBaseClassProblemResources2,
+	#superclass : #RFiFragileBaseClassProblemResources1,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseClassProblemResources4B >> classLog [
+RFiFragileBaseClassProblemResources2 >> classLog [
 
 	^ FiClass builder 
 		name: #Log;
@@ -18,8 +20,6 @@ FiFragileBaseClassProblemResources4B >> classLog [
 		methods: {
 			FiMethod sourceCode: 'log: aMessage  
 	collection add: aMessage'. 
-			FiMethod sourceCode: 'logAll: messages  
-	collection addAll: messages'. 
 			FiMethod sourceCode: 'initialize  
 	super initialize.
 	collection := LinkedList new.'.

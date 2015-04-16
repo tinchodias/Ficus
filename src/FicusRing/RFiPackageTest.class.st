@@ -1,11 +1,11 @@
 Class {
-	#name : #FiRGPackageTest,
-	#superclass : #FiRGObjectTest,
+	#name : #RFiPackageTest,
+	#superclass : #RFiObjectTest,
 	#category : #'FicusRing-Tests'
 }
 
 { #category : #tests }
-FiRGPackageTest >> testDefinedClasses [
+RFiPackageTest >> testDefinedClasses [
 
 	self 
 		assert: (resources ringClassA package definedClasses collect: #name) asSet
@@ -13,10 +13,10 @@ FiRGPackageTest >> testDefinedClasses [
 ]
 
 { #category : #tests }
-FiRGPackageTest >> testDefinedMethods [
+RFiPackageTest >> testDefinedMethods [
 
 	| resources2 package |
-	resources2 := FiRingTestResources new ficusRGEnvironment.
+	resources2 := RFiRingTestResources new ficusRGEnvironment.
 
 	package := resources2 packages detect: [ :each | each name = #X ].
 	self assert: (package definedMethods asSet 
@@ -33,13 +33,13 @@ FiRGPackageTest >> testDefinedMethods [
 ]
 
 { #category : #tests }
-FiRGPackageTest >> testIncludesClass [
+RFiPackageTest >> testIncludesClass [
 
 	self assert: (resources ringClassA package includesClass: resources ringClassA)
 ]
 
 { #category : #tests }
-FiRGPackageTest >> testName [
+RFiPackageTest >> testName [
 
 	self 
 		assert: (resources ficusRGEnvironment packages collect: #name) asSet 

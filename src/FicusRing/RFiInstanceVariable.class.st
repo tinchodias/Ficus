@@ -2,19 +2,19 @@
 I represent an instance variable in a either a class or metaclass.
 "
 Class {
-	#name : #FiRGInstanceVariable,
-	#superclass : #FiRGVariable,
+	#name : #RFiInstanceVariable,
+	#superclass : #RFiVariable,
 	#category : #'FicusRing-Core'
 }
 
 { #category : #accessing }
-FiRGInstanceVariable >> ficusPathFromEnvironment [
+RFiInstanceVariable >> ficusPathFromEnvironment [
 
 	^ definingClass environment ficusPathToInstanceVariable: self
 ]
 
 { #category : #printing }
-FiRGInstanceVariable >> shortPrintString [
+RFiInstanceVariable >> shortPrintString [
 	
 	^ definingClass name, ' instVar: #', name 
 ]

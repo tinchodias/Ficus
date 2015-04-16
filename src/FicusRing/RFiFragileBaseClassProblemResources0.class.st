@@ -2,25 +2,25 @@
 I know how to create set of Ficus Metalevel entities that exemplify the Fragile Base Problem.
 "
 Class {
-	#name : #FiFragileBaseClassProblemResources0,
-	#superclass : #FiBaseResources,
+	#name : #RFiFragileBaseClassProblemResources0,
+	#superclass : #RFiBaseResources,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseClassProblemResources0 >> categoryNameLoggersCore [
+RFiFragileBaseClassProblemResources0 >> categoryNameLoggersCore [
 
 	^ 'Loggers-Core'
 ]
 
 { #category : #resources }
-FiFragileBaseClassProblemResources0 >> categoryNameLoggersTest [
+RFiFragileBaseClassProblemResources0 >> categoryNameLoggersTest [
 
 	^ 'Loggers-Test'
 ]
 
 { #category : #resources }
-FiFragileBaseClassProblemResources0 >> classLog [
+RFiFragileBaseClassProblemResources0 >> classLog [
 
 	^ FiClass builder 
 		name: #Log;
@@ -36,13 +36,13 @@ FiFragileBaseClassProblemResources0 >> classLog [
 ]
 
 { #category : #private }
-FiFragileBaseClassProblemResources0 >> newFicusEnvironment [
+RFiFragileBaseClassProblemResources0 >> newFicusEnvironment [
 
 	^ { self packageKernel. self packageCollections. self packageLoggers. } asFiSet
 ]
 
 { #category : #resources }
-FiFragileBaseClassProblemResources0 >> packageLoggers [
+RFiFragileBaseClassProblemResources0 >> packageLoggers [
 
 	^ FiPackage builder
 		name: #Loggers;

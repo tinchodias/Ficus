@@ -2,8 +2,8 @@
 I am polymorphic with Behavior/ClassDescription.
 "
 Class {
-	#name : #FiRGBehavior,
-	#superclass : #FiRGObject,
+	#name : #RFiBehavior,
+	#superclass : #RFiObject,
 	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:})',
 	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
 	#instVars : [
@@ -14,20 +14,20 @@ Class {
 }
 
 { #category : #ambiguous }
-FiRGBehavior >> allSlots [
+RFiBehavior >> allSlots [
 	
 	^ self allInstVarNames collect: #asSlot
 ]
 
 { #category : #'*FicusRing' }
-FiRGBehavior >> allUnsentMessages [
+RFiBehavior >> allUnsentMessages [
 	"Answer an array of all the messages defined by the receiver that are not sent anywhere in the system."
 
 	^ self systemNavigation allUnsentMessagesIn: self selectors
 ]
 
 { #category : #hacks }
-FiRGBehavior >> basicLocalSelectors [
+RFiBehavior >> basicLocalSelectors [
 	
 	self flag: #fix. "It is not considering Traits"
 	
@@ -35,7 +35,7 @@ FiRGBehavior >> basicLocalSelectors [
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> compiledMethodAt: selector [ 
+RFiBehavior >> compiledMethodAt: selector [ 
 	"Answer the compiled method associated with the argument, selector (a 
 	Symbol), a message selector in the receiver's method dictionary. If the 
 	selector is not in the dictionary, create an error notification."
@@ -44,7 +44,7 @@ FiRGBehavior >> compiledMethodAt: selector [
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> compiledMethodAt: selector ifAbsent: aBlock [
+RFiBehavior >> compiledMethodAt: selector ifAbsent: aBlock [
 
 	^ self 
 		compiledMethodAt: selector
@@ -53,7 +53,7 @@ FiRGBehavior >> compiledMethodAt: selector ifAbsent: aBlock [
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock [
+RFiBehavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock [
 	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
 
 	^ self methods 
@@ -63,7 +63,7 @@ FiRGBehavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBl
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> includesSelector: aSymbol [ 
+RFiBehavior >> includesSelector: aSymbol [ 
 	"Answer whether the message whose selector is the argument is in the 
 	method dictionary of the receiver's class."
 
@@ -74,13 +74,13 @@ FiRGBehavior >> includesSelector: aSymbol [
 ]
 
 { #category : #initialization }
-FiRGBehavior >> initialize [
+RFiBehavior >> initialize [
 	super initialize.
 
 ]
 
 { #category : #testing }
-FiRGBehavior >> instSize [
+RFiBehavior >> instSize [
 	"Answer the number of named instance variables
 	(as opposed to indexed variables) of the receiver."
 	
@@ -88,19 +88,19 @@ FiRGBehavior >> instSize [
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> isBehavior [
+RFiBehavior >> isBehavior [
 
 	^ true
 ]
 
 { #category : #testing }
-FiRGBehavior >> isObsolete [
+RFiBehavior >> isObsolete [
 
 	^ false
 ]
 
 { #category : #'testing class hierarchy' }
-FiRGBehavior >> kindOfSubclass [
+RFiBehavior >> kindOfSubclass [
 	"Answer a String that is the keyword that describes the receiver's kind 
 	of subclass, either a regular subclass, a variableSubclass, a  
 	variableByteSubclass, a variableWordSubclass, or a weakSubclass."
@@ -120,7 +120,7 @@ FiRGBehavior >> kindOfSubclass [
 ]
 
 { #category : #'accessing method dictionary' }
-FiRGBehavior >> methodDict [
+RFiBehavior >> methodDict [
 	
 	^ self methods 
 		inject: Dictionary new
@@ -132,13 +132,13 @@ FiRGBehavior >> methodDict [
 ]
 
 { #category : #'accessing method dictionary' }
-FiRGBehavior >> methodDict: aDictionary [
+RFiBehavior >> methodDict: aDictionary [
 
 	^ self shouldNotImplement 
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> methods [
+RFiBehavior >> methods [
 	
 	^ cachedMethods ifNil: [ 
 		cachedMethods := Array streamContents: [ :stream |
@@ -149,13 +149,13 @@ FiRGBehavior >> methods [
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> package [
+RFiBehavior >> package [
 
 	^ self environment packageOfClass: self theNonMetaClass
 ]
 
 { #category : #printing }
-FiRGBehavior >> printOn: aStream [
+RFiBehavior >> printOn: aStream [
 
 	super printOn: aStream.
 
@@ -166,37 +166,37 @@ FiRGBehavior >> printOn: aStream [
 ]
 
 { #category : #accessing }
-FiRGBehavior >> ringInstanceVariableNamed: aString [
+RFiBehavior >> ringInstanceVariableNamed: aString [
 
 	^ self ringInstanceVariables detect: [ :each | each name = aString ]
 ]
 
 { #category : #accessing }
-FiRGBehavior >> ringInstanceVariables [ 
+RFiBehavior >> ringInstanceVariables [ 
 
 	^ cachedInstanceVariables ifNil: [
 		cachedInstanceVariables := self instVarNames collect: [ :each |
-			FiRGInstanceVariable definingClass: self name: each ] ]
+			RFiInstanceVariable definingClass: self name: each ] ]
 ]
 
 { #category : #private }
-FiRGBehavior >> ringMethodFor: aMethodShot [
+RFiBehavior >> ringMethodFor: aMethodShot [
 	"Not API"
 
-	^ FiRGMethod new 
+	^ RFiMethod new 
 		methodClass: self;
 		methodShot: aMethodShot;
 		yourself
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> selectors [
+RFiBehavior >> selectors [
 
 	^ self methods collect: #selector
 ]
 
 { #category : #polymorphism }
-FiRGBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
+RFiBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 	"Evaluate selectorAndMethodBlock with two arguments for each selector/method pair in my method dictionary."
 
 	^ self methods do: [ :each | 
@@ -204,7 +204,7 @@ FiRGBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 ]
 
 { #category : #'*FicusRing' }
-FiRGBehavior >> systemNavigation [
+RFiBehavior >> systemNavigation [
 
 	^ SystemNavigation new 
 		environment: self environment;
@@ -212,21 +212,21 @@ FiRGBehavior >> systemNavigation [
 ]
 
 { #category : #'testing method dictionary' }
-FiRGBehavior >> thoroughHasSelectorReferringTo: literal special: specialFlag byte: specialByte [
+RFiBehavior >> thoroughHasSelectorReferringTo: literal special: specialFlag byte: specialByte [
 	"Just ignore some arguments. Standard implementation is already thorough :)"
 
 	self notYetImplemented 
 ]
 
 { #category : #'testing method dictionary' }
-FiRGBehavior >> thoroughWhichSelectorsReferTo: literal special: specialFlag byte: specialByte [
+RFiBehavior >> thoroughWhichSelectorsReferTo: literal special: specialFlag byte: specialByte [
 	"Just ignore some arguments. Standard implementation is already thorough :)"
 	
 	^ self whichSelectorsReferTo: literal
 ]
 
 { #category : #traits }
-FiRGBehavior >> traitComposition [
+RFiBehavior >> traitComposition [
 
 	self flag: #todo. 
 
@@ -234,7 +234,7 @@ FiRGBehavior >> traitComposition [
 ]
 
 { #category : #organization }
-FiRGBehavior >> whichCategoryIncludesSelector: aSelector [ 
+RFiBehavior >> whichCategoryIncludesSelector: aSelector [ 
 	"Answer the category of the argument, aSelector, in the organization of 
 	the receiver, or answer nil if the receiver does not inlcude this selector."
 
@@ -245,7 +245,7 @@ FiRGBehavior >> whichCategoryIncludesSelector: aSelector [
 ]
 
 { #category : #queries }
-FiRGBehavior >> whichSelectorsAccess: aString [
+RFiBehavior >> whichSelectorsAccess: aString [
 	
 	^ self methods 
 		select: [:method | 
@@ -256,7 +256,7 @@ FiRGBehavior >> whichSelectorsAccess: aString [
 ]
 
 { #category : #queries }
-FiRGBehavior >> whichSelectorsRead: aString [
+RFiBehavior >> whichSelectorsRead: aString [
 	
 	^ self methods 
 		select: [:method | 
@@ -267,7 +267,7 @@ FiRGBehavior >> whichSelectorsRead: aString [
 ]
 
 { #category : #'testing method dictionary' }
-FiRGBehavior >> whichSelectorsReferTo: literal [ 
+RFiBehavior >> whichSelectorsReferTo: literal [ 
 	"Answer a Set of selectors whose methods access the argument as a
 literal."
 
@@ -277,14 +277,14 @@ literal."
 ]
 
 { #category : #'testing method dictionary' }
-FiRGBehavior >> whichSelectorsReferTo: literal special: specialFlag byte: specialByte [
+RFiBehavior >> whichSelectorsReferTo: literal special: specialFlag byte: specialByte [
 	"Just ignore some arguments"
 	
 	^ self whichSelectorsReferTo: literal
 ]
 
 { #category : #'testing method dictionary' }
-FiRGBehavior >> whichSelectorsStoreInto: instVarName [ 
+RFiBehavior >> whichSelectorsStoreInto: instVarName [ 
 	"Answer a Set of selectors whose methods access the argument, 
 	instVarName, as a named instance variable."
 

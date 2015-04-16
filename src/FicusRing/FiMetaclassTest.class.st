@@ -8,7 +8,7 @@ Class {
 FiMetaclassTest >> testDefinition [
 
 	| resources |
-	resources := FiRingTestResources new.
+	resources := RFiRingTestResources new.
 	
 	self 
 		assert: resources classA metaclass definition 

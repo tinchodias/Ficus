@@ -1,5 +1,5 @@
 Class {
-	#name : #FiRGObjectTest,
+	#name : #RFiObjectTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #running }
-FiRGObjectTest >> setUp [
+RFiObjectTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRingTestResources new
+	resources := RFiRingTestResources new
 ]

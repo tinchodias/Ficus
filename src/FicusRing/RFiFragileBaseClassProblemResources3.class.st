@@ -3,13 +3,13 @@ My difference with my superclas is:
 * add Log>>#logAll: 
 "
 Class {
-	#name : #FiFragileBaseClassProblemResources3,
-	#superclass : #FiFragileBaseClassProblemResources2,
+	#name : #RFiFragileBaseClassProblemResources3,
+	#superclass : #RFiFragileBaseClassProblemResources2,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseClassProblemResources3 >> classLog [
+RFiFragileBaseClassProblemResources3 >> classLog [
 
 	^ FiClass builder 
 		name: #Log;

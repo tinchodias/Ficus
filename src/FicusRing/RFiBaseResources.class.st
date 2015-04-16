@@ -2,7 +2,7 @@
 Resource with diverse Ficus metalevel objects. I answer basic elements like Object, Class and Collection.
 "
 Class {
-	#name : #FiBaseResources,
+	#name : #RFiBaseResources,
 	#superclass : #Object,
 	#instVars : [
 		'cachedFicusEnvironment',
@@ -12,25 +12,25 @@ Class {
 }
 
 { #category : #ui }
-FiBaseResources >> browse [
+RFiBaseResources >> browse [
 
-	^ FiRGEnvironmentBrowser openOn: self ficusRGEnvironment
+	^ RFiEnvironmentBrowser openOn: self ficusRGEnvironment
 ]
 
 { #category : #resources }
-FiBaseResources >> categoryNameCollection [
+RFiBaseResources >> categoryNameCollection [
 
 	^ 'Collection'
 ]
 
 { #category : #resources }
-FiBaseResources >> categoryNameKernel [
+RFiBaseResources >> categoryNameKernel [
 
 	^ 'Kernel'
 ]
 
 { #category : #resources }
-FiBaseResources >> classBlockClosure [
+RFiBaseResources >> classBlockClosure [
 
 	^ FiClass builder 
 		name: #BlockClosure;
@@ -48,7 +48,7 @@ FiBaseResources >> classBlockClosure [
 ]
 
 { #category : #resources }
-FiBaseResources >> classBoolean [
+RFiBaseResources >> classBoolean [
 
 	^ FiClass builder 
 		name: #Boolean;
@@ -65,7 +65,7 @@ FiBaseResources >> classBoolean [
 ]
 
 { #category : #resources }
-FiBaseResources >> classClass [
+RFiBaseResources >> classClass [
 
 	^ FiClass builder 
 		name: #Class;
@@ -77,7 +77,7 @@ FiBaseResources >> classClass [
 ]
 
 { #category : #resources }
-FiBaseResources >> classCollection [
+RFiBaseResources >> classCollection [
 
 	^ FiClass builder 
 		name: #Collection;
@@ -101,7 +101,7 @@ FiBaseResources >> classCollection [
 ]
 
 { #category : #resources }
-FiBaseResources >> classFalse [
+RFiBaseResources >> classFalse [
 
 	^ FiClass builder 
 		name: #False;
@@ -118,7 +118,7 @@ FiBaseResources >> classFalse [
 ]
 
 { #category : #resources }
-FiBaseResources >> classLinkedList [
+RFiBaseResources >> classLinkedList [
 
 	^ FiClass builder 
 		name: #LinkedList;
@@ -154,7 +154,7 @@ FiBaseResources >> classLinkedList [
 ]
 
 { #category : #resources }
-FiBaseResources >> classObject [ 
+RFiBaseResources >> classObject [ 
 
 	^ FiClass builder 
 		name: #Object;
@@ -183,7 +183,7 @@ FiBaseResources >> classObject [
 ]
 
 { #category : #resources }
-FiBaseResources >> classSmallInteger [
+RFiBaseResources >> classSmallInteger [
 
 	^ FiClass builder 
 		name: #SmallInteger;
@@ -200,7 +200,7 @@ FiBaseResources >> classSmallInteger [
 ]
 
 { #category : #resources }
-FiBaseResources >> classTrue [
+RFiBaseResources >> classTrue [
 
 	^ FiClass builder 
 		name: #True;
@@ -217,7 +217,7 @@ FiBaseResources >> classTrue [
 ]
 
 { #category : #resources }
-FiBaseResources >> classValueLink [
+RFiBaseResources >> classValueLink [
 
 	^ FiClass builder 
 		name: #ValueLink;
@@ -238,33 +238,33 @@ FiBaseResources >> classValueLink [
 ]
 
 { #category : #resources }
-FiBaseResources >> ficusEnvironment [
+RFiBaseResources >> ficusEnvironment [
 
 	^ cachedFicusEnvironment ifNil: [
 		cachedFicusEnvironment := self newFicusEnvironment ]
 ]
 
 { #category : #'resources - ring level' }
-FiBaseResources >> ficusRGEnvironment [
+RFiBaseResources >> ficusRGEnvironment [
 
 	^ cachedFicusRGEnvironment ifNil: [
 		cachedFicusRGEnvironment := self ficusEnvironment asFiRGEnvironment ]
 ]
 
 { #category : #private }
-FiBaseResources >> methodsFor: sourceCodes [ 
+RFiBaseResources >> methodsFor: sourceCodes [ 
 			
 	^ (sourceCodes collect: [ :each | FiMethod sourceCode: each ]) asFiSet
 ]
 
 { #category : #private }
-FiBaseResources >> newFicusEnvironment [
+RFiBaseResources >> newFicusEnvironment [
 
 	^ { self packageKernel. self packageCollections. } asFiSet
 ]
 
 { #category : #resources }
-FiBaseResources >> packageCollections [
+RFiBaseResources >> packageCollections [
 
 	^ FiPackage builder
 		name: #Collections;
@@ -273,7 +273,7 @@ FiBaseResources >> packageCollections [
 ]
 
 { #category : #resources }
-FiBaseResources >> packageKernel [
+RFiBaseResources >> packageKernel [
 
 	^ FiPackage builder
 		name: #Kernel;
@@ -282,7 +282,7 @@ FiBaseResources >> packageKernel [
 ]
 
 { #category : #'resources - ring level' }
-FiBaseResources >> ringClassObject [
+RFiBaseResources >> ringClassObject [
 
 	^ self ficusRGEnvironment classNamed: #Object
 ]

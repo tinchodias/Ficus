@@ -1,11 +1,11 @@
 Class {
-	#name : #FiRGMetaclassTest,
-	#superclass : #FiRGBehaviorTest,
+	#name : #RFiMetaclassTest,
+	#superclass : #RFiBehaviorTest,
 	#category : #'FicusRing-Tests'
 }
 
 { #category : #tests }
-FiRGMetaclassTest >> testBinding [
+RFiMetaclassTest >> testBinding [
 
 	self 
 		assert: resources ringClassA classSide binding 
@@ -14,7 +14,7 @@ FiRGMetaclassTest >> testBinding [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testBindingOf [
+RFiMetaclassTest >> testBindingOf [
 
 	self 
 		assert: (resources ringClassA classSide bindingOf: #A) 
@@ -23,7 +23,7 @@ FiRGMetaclassTest >> testBindingOf [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testDefinition [
+RFiMetaclassTest >> testDefinition [
 
 	self 
 		assert: resources ringClassA theMetaClass definition 
@@ -32,7 +32,7 @@ FiRGMetaclassTest >> testDefinition [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testEnvironment [
+RFiMetaclassTest >> testEnvironment [
 		
 	| environment |
 	environment := resources ficusRGEnvironment.
@@ -41,13 +41,13 @@ FiRGMetaclassTest >> testEnvironment [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testHasAbstractMethods [
+RFiMetaclassTest >> testHasAbstractMethods [
 
 	self deny: resources ringClassA classSide hasAbstractMethods.
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testInstanceVariables [
+RFiMetaclassTest >> testInstanceVariables [
 
 	self 
 		assert: resources ringClassA theMetaClass instanceVariables 
@@ -56,7 +56,7 @@ FiRGMetaclassTest >> testInstanceVariables [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testIsBehavior [
+RFiMetaclassTest >> testIsBehavior [
 		
 	self assert: resources ringClassA classSide isBehavior.
 	self assert: resources ringClassB classSide isBehavior.
@@ -64,7 +64,7 @@ FiRGMetaclassTest >> testIsBehavior [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testMethodDict [
+RFiMetaclassTest >> testMethodDict [
 
 	self assert: resources ringClassA theMetaClass methodDict isDictionary.
 	self deny: resources ringClassA theMetaClass methodDict isEmpty.
@@ -74,7 +74,7 @@ FiRGMetaclassTest >> testMethodDict [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testMethods [
+RFiMetaclassTest >> testMethods [
 
 	self deny: resources ringClassA theMetaClass methods isEmpty.
 	self assert: resources ringClassB theMetaClass methods isEmpty.
@@ -82,19 +82,19 @@ FiRGMetaclassTest >> testMethods [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testName [
+RFiMetaclassTest >> testName [
 
 	self assert: resources ringClassA theMetaClass name equals: 'A class'
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testPackage [
+RFiMetaclassTest >> testPackage [
 		
 	self assert: resources ringClassA classSide package name equals: #X.
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testRingInstanceVariableNamed [
+RFiMetaclassTest >> testRingInstanceVariableNamed [
 
 	self deny: (resources ringClassA theMetaClass ringInstanceVariableNamed: 'a3') isNil.
 	self deny: (resources ringClassA theMetaClass ringInstanceVariableNamed: #a3) isNil.
@@ -105,7 +105,7 @@ FiRGMetaclassTest >> testRingInstanceVariableNamed [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testRingInstanceVariables [
+RFiMetaclassTest >> testRingInstanceVariables [
 
 	self 
 		assert: (resources ringClassA theMetaClass ringInstanceVariables collect: #name) asArray
@@ -113,7 +113,7 @@ FiRGMetaclassTest >> testRingInstanceVariables [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testSelectorsAndMethodsDo [
+RFiMetaclassTest >> testSelectorsAndMethodsDo [
 
 	| results |
 	results := OrderedCollection new.
@@ -130,7 +130,7 @@ FiRGMetaclassTest >> testSelectorsAndMethodsDo [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testSoleInstance [
+RFiMetaclassTest >> testSoleInstance [
 
 	| classA |
 	classA := resources ringClassA.
@@ -138,7 +138,7 @@ FiRGMetaclassTest >> testSoleInstance [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testSubclasses [
+RFiMetaclassTest >> testSubclasses [
 
 	self 
 		assert: resources ringClassA theMetaClass subclasses 
@@ -148,13 +148,13 @@ FiRGMetaclassTest >> testSubclasses [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testSuperclass [
+RFiMetaclassTest >> testSuperclass [
 
 	self assert: resources ringClassB theMetaClass superclass name equals: 'A class'.
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testTheNonMetaClass [
+RFiMetaclassTest >> testTheNonMetaClass [
 
 	| classA |
 	classA := resources ringClassA.
@@ -162,7 +162,7 @@ FiRGMetaclassTest >> testTheNonMetaClass [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testWhichSelectorAccess [
+RFiMetaclassTest >> testWhichSelectorAccess [
 		
 	self 
 		assert: (resources ringClassA classSide whichSelectorsAccess: #a3) asSet 
@@ -170,7 +170,7 @@ FiRGMetaclassTest >> testWhichSelectorAccess [
 ]
 
 { #category : #tests }
-FiRGMetaclassTest >> testWhichSelectorsReferTo [
+RFiMetaclassTest >> testWhichSelectorsReferTo [
 	"This was feature has been extracted from a real case in Pharo 4."
 
 	self assert: (resources ringClassA classSide whichSelectorsReferTo: resources ringClassA binding) isNotEmpty.

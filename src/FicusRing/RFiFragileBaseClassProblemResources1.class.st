@@ -2,13 +2,13 @@
 I add the method Log>>#log: to my superclass.
 "
 Class {
-	#name : #FiFragileBaseClassProblemResources1,
-	#superclass : #FiFragileBaseClassProblemResources0,
+	#name : #RFiFragileBaseClassProblemResources1,
+	#superclass : #RFiFragileBaseClassProblemResources0,
 	#category : #'FicusRing-Examples'
 }
 
 { #category : #resources }
-FiFragileBaseClassProblemResources1 >> classLog [
+RFiFragileBaseClassProblemResources1 >> classLog [
 
 	^ FiClass builder 
 		name: #Log;

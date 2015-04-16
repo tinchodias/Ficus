@@ -3,7 +3,7 @@ Extension { #name : #FiSet }
 { #category : #'*FicusRing' }
 FiSet >> asFiRGEnvironment [
 
-	^ FiRGEnvironment new
+	^ RFiEnvironment new
 		environmentShot: self;
 		yourself.
 

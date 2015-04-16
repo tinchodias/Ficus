@@ -100,7 +100,7 @@ FiImpactStoreBrowserPlugin class >> exampleYrupeManyPharos [
 	"
 	
 	| pharos |
-	pharos := (YrPharoMigrator example1tags first: 25) collect: [ :tag |
+	pharos := (YrPharoMigrator example1tags first: 125) collect: [ :tag |
 		(YrPharoMigrator example1readTag: tag) ].
 
 	^ self exampleWith: (FiMemoryStore exampleWithAll: pharos) and: #()

@@ -7,10 +7,10 @@ Class {
 { #category : #public }
 FiClassRequisiteCollector >> requisitesFor: aFiRGClass [ 
 
-	^ aFiRGClass classShot hasNullSuperclass 
+	^ aFiRGClass ficusClass hasNullSuperclass 
 		ifTrue: [ #() ]
 		ifFalse: [ { 
 			FiInheritanceDeclaration builder
-				theClassName: aFiRGClass classShot superclassName;
+				theClassName: aFiRGClass ficusClass superclassName;
 				new } ]
 ]

@@ -26,7 +26,7 @@ FiRequisiteInterpreterTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRingTestResources new
+	resources := RFiRingTestResources new
 ]
 
 { #category : #tests }
@@ -213,7 +213,7 @@ FiRequisiteInterpreterTest >> testClassCUndeclared [
 FiRequisiteInterpreterTest >> testLinkedListAdd [
 
 	| anEnvironment |
-	anEnvironment := FiBaseResources new ficusRGEnvironment.
+	anEnvironment := RFiBaseResources new ficusRGEnvironment.
 	self 
 		assertDependencyOf: (
 			FiMessageSend builder 
@@ -237,7 +237,7 @@ FiRequisiteInterpreterTest >> testLinkedListAdd [
 FiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
 
 	| anEnvironment |
-	anEnvironment := FiBaseResources new ficusRGEnvironment.
+	anEnvironment := RFiBaseResources new ficusRGEnvironment.
 	self 
 		assertDependencyOf: (
 			FiMessageSend builder 

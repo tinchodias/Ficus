@@ -1,13 +1,13 @@
-Extension { #name : #FiRGEnvironment }
+Extension { #name : #RFiEnvironment }
 
 { #category : #'*FicusImpact' }
-FiRGEnvironment >> ficusAllDependencies [
+RFiEnvironment >> ficusAllDependencies [
 	
 	^ super ficusAllDependencies, (self packages flatCollect: #ficusAllDependencies as: OrderedCollection)
 ]
 
 { #category : #'*FicusImpact' }
-FiRGEnvironment >> ficusDependenciesForRedoing: aSimpleEffect [
+RFiEnvironment >> ficusDependenciesForRedoing: aSimpleEffect [
 	
 	| entities |
 	entities := Array streamContents: [ :stream |

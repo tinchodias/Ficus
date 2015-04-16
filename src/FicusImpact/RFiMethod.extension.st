@@ -1,7 +1,7 @@
-Extension { #name : #FiRGMethod }
+Extension { #name : #RFiMethod }
 
 { #category : #'*FicusImpact' }
-FiRGMethod >> ficusRequisites [
+RFiMethod >> ficusRequisites [
 
 	^ FiMethodRequisiteCollector new requisitesFor: self
 ]

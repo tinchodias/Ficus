@@ -1,13 +1,13 @@
-Extension { #name : #FiRGClass }
+Extension { #name : #RFiClass }
 
 { #category : #'*FicusImpact' }
-FiRGClass >> ficusAllDependencies [
+RFiClass >> ficusAllDependencies [
 	
 	^ super ficusAllDependencies, (self methods flatCollect: #ficusAllDependencies)
 ]
 
 { #category : #'*FicusImpact' }
-FiRGClass >> ficusRequisites [
+RFiClass >> ficusRequisites [
 	
 	^ FiClassRequisiteCollector new requisitesFor: self
 ]

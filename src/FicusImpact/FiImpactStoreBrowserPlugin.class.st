@@ -118,7 +118,7 @@ FiImpactStoreBrowserPlugin >> browseCritics [
 
 	self flag: #todo. "Extension methods are not included!"
 
-		FiLintRulesBrowser exampleOn: rbEnvironment.
+		RFiLintRulesBrowser exampleOn: rbEnvironment.
 		]
 ]
 

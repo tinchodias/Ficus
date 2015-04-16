@@ -15,7 +15,7 @@ Class {
 FiLDependencyGraphBuilderTest >> test01 [
 
 	| methods classes |
-	environment := FiFragileBaseClassProblemResources5A new ficusRGEnvironment.
+	environment := RFiFragileBaseClassProblemResources5A new ficusRGEnvironment.
 	graph := FiLDependencyGraphBuilder graphForEnvironment: environment.
 	
 	methods := environment packages flatCollect: #definedMethods.

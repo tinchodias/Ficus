@@ -1,13 +1,13 @@
-Extension { #name : #FiRGPackage }
+Extension { #name : #RFiPackage }
 
 { #category : #'*FicusImpact' }
-FiRGPackage >> ficusAllDependencies [
+RFiPackage >> ficusAllDependencies [
 	
 	^ super ficusAllDependencies, (self definedClasses flatCollect: #ficusAllDependencies as: OrderedCollection)
 ]
 
 { #category : #'*FicusImpact' }
-FiRGPackage >> ficusRequisites [
+RFiPackage >> ficusRequisites [
 
 	^ #()
 ]

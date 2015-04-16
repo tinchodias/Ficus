@@ -20,7 +20,7 @@ FiClassRequisitesTest >> setUp [
 
 	super setUp.
 	
-	resources := FiRingTestResources new
+	resources := RFiRingTestResources new
 ]
 
 { #category : #tests }

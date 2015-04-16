@@ -1,13 +1,13 @@
-Extension { #name : #FiRGObject }
+Extension { #name : #RFiObject }
 
 { #category : #'*FicusImpact' }
-FiRGObject >> ficusAllDependencies [
+RFiObject >> ficusAllDependencies [
 	
 	^ self ficusDependencies
 ]
 
 { #category : #'*FicusImpact' }
-FiRGObject >> ficusDependencies [
+RFiObject >> ficusDependencies [
 	
 	^ self ficusRequisites collect: [ :each |
 		FiRequisiteInterpreter new 
@@ -16,7 +16,7 @@ FiRGObject >> ficusDependencies [
 ]
 
 { #category : #'*FicusImpact' }
-FiRGObject >> ficusInterpretedDependencies [
+RFiObject >> ficusInterpretedDependencies [
 
 	^ (self ficusRequisites collect: [ :each |
 		| dependency objectByName |

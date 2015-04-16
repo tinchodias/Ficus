@@ -1,6 +1,6 @@
 Class {
 	#name : #FiImpactRGEnvironmentBrowser,
-	#superclass : #FiRGEnvironmentBrowser,
+	#superclass : #RFiEnvironmentBrowser,
 	#instVars : [
 		'dependencyGraph'
 	],

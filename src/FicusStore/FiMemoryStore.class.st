@@ -25,10 +25,10 @@ FiMemoryStore class >> exampleFragileBaseProblem: factoryBlock [
 
 	| store snapshots commonPrior |
 	snapshots := { 
-		FiFragileBaseClassProblemResources0.
-		FiFragileBaseClassProblemResources1.
-		FiFragileBaseClassProblemResources2.
-		FiFragileBaseClassProblemResources3.
+		RFiFragileBaseClassProblemResources0.
+		RFiFragileBaseClassProblemResources1.
+		RFiFragileBaseClassProblemResources2.
+		RFiFragileBaseClassProblemResources3.
 	} collect: [ :each | factoryBlock value: each ].
 
 	store := FiMemoryStore new.
@@ -49,15 +49,15 @@ FiMemoryStore class >> exampleFragileBaseProblem: factoryBlock [
 
 	"fork A"
 	store 
-		commitSnapshot: (factoryBlock value: FiFragileBaseClassProblemResources4A)
+		commitSnapshot: (factoryBlock value: RFiFragileBaseClassProblemResources4A)
 		priors: { commonPrior } asFiSet.
 	store 
-		commitSnapshot: (factoryBlock value: FiFragileBaseClassProblemResources5A)
+		commitSnapshot: (factoryBlock value: RFiFragileBaseClassProblemResources5A)
 		priors: { store headHistoryNode } asFiSet.
 
 	"fork B"
 	store 
-		commitSnapshot: (factoryBlock value: FiFragileBaseClassProblemResources4B)
+		commitSnapshot: (factoryBlock value: RFiFragileBaseClassProblemResources4B)
 		priors: { commonPrior } asFiSet.
 
 	store name: 'FragileBaseClassProblem'.

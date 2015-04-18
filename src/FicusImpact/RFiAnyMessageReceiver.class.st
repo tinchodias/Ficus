@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #lookup }
-RFiAnyMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
+RFiAnyMessageReceiver >> implementorsOf: aSelector in: aRFiMethod [
 
-	^ (aFiRGMethod environment implementorsOf: aSelector) "select: [ :each | each isProvided ]"
+	^ (aRFiMethod environment implementorsOf: aSelector) "select: [ :each | each isProvided ]"
 ]
 
 { #category : #printing }

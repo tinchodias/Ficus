@@ -5,13 +5,13 @@ Class {
 }
 
 { #category : #accessing }
-RFiGranularity >> allEntitiesFor: aFiRGEnvironment [ 
+RFiGranularity >> allEntitiesFor: aRFiEnvironment [ 
 	
 	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
-RFiGranularity >> entityFor: aFiRGObject [ 
+RFiGranularity >> entityFor: aRFiObject [ 
 
 	^ self subclassResponsibility 
 ]

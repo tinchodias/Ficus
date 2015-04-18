@@ -5,11 +5,11 @@ Class {
 }
 
 { #category : #lookup }
-RFiSelfMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
+RFiSelfMessageReceiver >> implementorsOf: aSelector in: aRFiMethod [
 
-	^ (aFiRGMethod environment
+	^ (aRFiMethod environment
 		implementorsOf: aSelector 
-		inHierarchyOf: aFiRGMethod methodClass)
+		inHierarchyOf: aRFiMethod methodClass)
 		"select: [ :each | each isProvided ]"
 ]
 

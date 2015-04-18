@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : #private }
-RFiLDependencyInterpreter >> entity: aFiRGObject [
+RFiLDependencyInterpreter >> entity: aRFiObject [
 
-	entity := aFiRGObject
+	entity := aRFiObject
 ]
 
 { #category : #private }

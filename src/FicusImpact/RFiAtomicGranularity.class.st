@@ -5,14 +5,14 @@ Class {
 }
 
 { #category : #accessing }
-RFiAtomicGranularity >> allEntitiesFor: aFiRGEnvironment [ 
+RFiAtomicGranularity >> allEntitiesFor: aRFiEnvironment [ 
 	
-	^ aFiRGEnvironment allClassesAndTraits flatCollect: [ :each |
+	^ aRFiEnvironment allClassesAndTraits flatCollect: [ :each |
 		each methods, each classSide methods ]
 ]
 
 { #category : #accessing }
-RFiAtomicGranularity >> entityFor: aFiRGObject [ 
+RFiAtomicGranularity >> entityFor: aRFiObject [ 
 
-	^ aFiRGObject
+	^ aRFiObject
 ]

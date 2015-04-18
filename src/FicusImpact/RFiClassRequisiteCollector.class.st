@@ -5,12 +5,12 @@ Class {
 }
 
 { #category : #public }
-RFiClassRequisiteCollector >> requisitesFor: aFiRGClass [ 
+RFiClassRequisiteCollector >> requisitesFor: aRFiClass [ 
 
-	^ aFiRGClass ficusClass hasNullSuperclass 
+	^ aRFiClass ficusClass hasNullSuperclass 
 		ifTrue: [ #() ]
 		ifFalse: [ { 
 			RFiInheritanceDeclaration builder
-				theClassName: aFiRGClass ficusClass superclassName;
+				theClassName: aRFiClass ficusClass superclassName;
 				new } ]
 ]

@@ -15,9 +15,9 @@ RFiGraph >> edges [
 ]
 
 { #category : #accessing }
-RFiGraph >> environment: aFiRGEnvironment [ 
+RFiGraph >> environment: aRFiEnvironment [ 
 	
-	environment := aFiRGEnvironment 
+	environment := aRFiEnvironment 
 ]
 
 { #category : #printing }

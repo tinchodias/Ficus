@@ -8,10 +8,10 @@ Class {
 }
 
 { #category : #private }
-RFiClassRequisitesTest >> assertRequisitesOf: aFiRGClass equals: dependencies [
+RFiClassRequisitesTest >> assertRequisitesOf: aRFiClass equals: dependencies [
 	
 	self 
-		assert: aFiRGClass ficusRequisites asSet 
+		assert: aRFiClass ficusRequisites asSet 
 		equals: dependencies asSet
 ]
 

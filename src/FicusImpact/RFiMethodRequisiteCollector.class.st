@@ -20,11 +20,11 @@ RFiMethodRequisiteCollector >> messageReceiverFor: aRBNode [
 ]
 
 { #category : #public }
-RFiMethodRequisiteCollector >> requisitesFor: aFiRGMethod [ 
+RFiMethodRequisiteCollector >> requisitesFor: aRFiMethod [ 
 
 	dependencies := OrderedCollection new.
 	
-	aFiRGMethod parseTree acceptVisitor: self.
+	aRFiMethod parseTree acceptVisitor: self.
 	
 	^ dependencies
 ]

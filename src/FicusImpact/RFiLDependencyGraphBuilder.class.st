@@ -24,10 +24,10 @@ RFiLDependencyGraphBuilder class >> exampleYrupe [
 ]
 
 { #category : #convenience }
-RFiLDependencyGraphBuilder class >> graphForEnvironment: aFiRGEnvironment [
+RFiLDependencyGraphBuilder class >> graphForEnvironment: aRFiEnvironment [
 
 	^ self new
-		environment: aFiRGEnvironment;
+		environment: aRFiEnvironment;
 		newGraph
 ]
 

@@ -5,19 +5,19 @@ Class {
 }
 
 { #category : #accessing }
-RFiClassGranularity >> allEntitiesFor: aFiRGEnvironment [ 
+RFiClassGranularity >> allEntitiesFor: aRFiEnvironment [ 
 	
-	^ aFiRGEnvironment allClassesAndTraits
+	^ aRFiEnvironment allClassesAndTraits
 ]
 
 { #category : #accessing }
-RFiClassGranularity >> entityFor: aFiRGObject [ 
+RFiClassGranularity >> entityFor: aRFiObject [ 
 
-	aFiRGObject isBehavior
-		ifTrue: [ ^ aFiRGObject theNonMetaClass ].
+	aRFiObject isBehavior
+		ifTrue: [ ^ aRFiObject theNonMetaClass ].
 	
-	aFiRGObject isCompiledMethod
-		ifTrue: [ ^ aFiRGObject methodClass theNonMetaClass ].
+	aRFiObject isCompiledMethod
+		ifTrue: [ ^ aRFiObject methodClass theNonMetaClass ].
 		
 	self notYetImplemented
 ]

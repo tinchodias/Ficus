@@ -5,47 +5,47 @@ Class {
 }
 
 { #category : #public }
-RFiRequisiteInterpreter >> dependencyOf: aRequisite in: aFiRGObject [
+RFiRequisiteInterpreter >> dependencyOf: aRequisite in: aRFiObject [
 
 	self flag: #todo.
 	
 	(aRequisite isKindOf: RFiMessageSend) ifTrue: [ 
-		^ self dependencyOfMessageSend: aRequisite in: aFiRGObject ].
+		^ self dependencyOfMessageSend: aRequisite in: aRFiObject ].
 
 	(aRequisite isKindOf: RFiVariableAccess) ifTrue: [	
-		^ self dependencyOfVariableAccess: aRequisite in: aFiRGObject ].
+		^ self dependencyOfVariableAccess: aRequisite in: aRFiObject ].
 
 	(aRequisite isKindOf: RFiInheritanceDeclaration) ifTrue: [	
-		^ self dependencyOfInheritanceDeclaration: aRequisite in: aFiRGObject ].
+		^ self dependencyOfInheritanceDeclaration: aRequisite in: aRFiObject ].
 
 	self shouldBeImplemented.
 ]
 
 { #category : #public }
-RFiRequisiteInterpreter >> dependencyOfInheritanceDeclaration: aRequisite in: aFiRGObject [
+RFiRequisiteInterpreter >> dependencyOfInheritanceDeclaration: aRequisite in: aRFiObject [
 	
-	^ aFiRGObject environment 
+	^ aRFiObject environment 
 		at: aRequisite theClassName
 		ifPresent: [ :foundClass | RFiInheritance builder target: foundClass; new ]
 		ifAbsent: [ RFiInheritance notFound ]
 ]
 
 { #category : #public }
-RFiRequisiteInterpreter >> dependencyOfMessageSend: aRequisite in: aFiRGMethod [
+RFiRequisiteInterpreter >> dependencyOfMessageSend: aRequisite in: aRFiMethod [
 	
 	| possibleInvocations |
 	possibleInvocations := 
 		aRequisite receiver 
 			implementorsOf: aRequisite selector 
-			in: aFiRGMethod.
+			in: aRFiMethod.
 
 	^ RFiPossibleMethodInvocation methods: possibleInvocations
 ]
 
 { #category : #public }
-RFiRequisiteInterpreter >> dependencyOfVariableAccess: aRequisite in: aFiRGObject [
+RFiRequisiteInterpreter >> dependencyOfVariableAccess: aRequisite in: aRFiObject [
 	
-	^ aFiRGObject 
+	^ aRFiObject 
 		lookupVariableNamed: aRequisite variableName 
 		ifFound: [ :variable | 
 			RFiVariableBinding builder 

@@ -36,10 +36,10 @@ RFiDependencyGraphBuilder class >> exampleYrupe [
 ]
 
 { #category : #convenience }
-RFiDependencyGraphBuilder class >> graphForEnvironment: aFiRGEnvironment [
+RFiDependencyGraphBuilder class >> graphForEnvironment: aRFiEnvironment [
 
 	^ self new
-		environment: aFiRGEnvironment;
+		environment: aRFiEnvironment;
 		granularity: RFiAtomicGranularity new;
 		newGraph
 ]

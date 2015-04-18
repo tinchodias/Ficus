@@ -5,13 +5,13 @@ Class {
 }
 
 { #category : #accessing }
-RFiPackageGranularity >> allEntitiesFor: aFiRGEnvironment [ 
+RFiPackageGranularity >> allEntitiesFor: aRFiEnvironment [ 
 	
-	^ aFiRGEnvironment packages
+	^ aRFiEnvironment packages
 ]
 
 { #category : #accessing }
-RFiPackageGranularity >> entityFor: aFiRGObject [ 
+RFiPackageGranularity >> entityFor: aRFiObject [ 
 
-	^ aFiRGObject package
+	^ aRFiObject package
 ]

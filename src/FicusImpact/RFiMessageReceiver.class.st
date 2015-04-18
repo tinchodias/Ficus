@@ -14,7 +14,7 @@ RFiMessageReceiver class >> defaultInstance [
 ]
 
 { #category : #lookup }
-RFiMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
+RFiMessageReceiver >> implementorsOf: aSelector in: aRFiMethod [
 
 	^ self subclassResponsibility 
 ]

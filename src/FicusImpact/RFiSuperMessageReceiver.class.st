@@ -5,11 +5,11 @@ Class {
 }
 
 { #category : #lookup }
-RFiSuperMessageReceiver >> implementorsOf: aSelector in: aFiRGMethod [
+RFiSuperMessageReceiver >> implementorsOf: aSelector in: aRFiMethod [
 
-	^ (aFiRGMethod environment
+	^ (aRFiMethod environment
 		lookupImplementorOf: aSelector 
-		inSuperclassesOf: aFiRGMethod methodClass
+		inSuperclassesOf: aRFiMethod methodClass
 		ifPresent: [ :method | { method } ]
 		ifAbsent: [ #() ])
 		"select: [ :each | each isProvided ]"

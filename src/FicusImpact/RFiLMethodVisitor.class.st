@@ -46,9 +46,9 @@ RFiLMethodVisitor >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #public }
-RFiLMethodVisitor >> visitMethod: aFiRGMethod [ 
+RFiLMethodVisitor >> visitMethod: aRFiMethod [ 
 
-	^ aFiRGMethod parseTree acceptVisitor: self
+	^ aRFiMethod parseTree acceptVisitor: self
 
 ]
 

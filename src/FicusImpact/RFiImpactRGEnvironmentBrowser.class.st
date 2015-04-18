@@ -8,25 +8,25 @@ Class {
 }
 
 { #category : #actions }
-RFiImpactRGEnvironmentBrowser >> browseDependenciesOf: aFiRGObject [
+RFiImpactRGEnvironmentBrowser >> browseDependenciesOf: aRFiObject [
 
 	| node entities |
-	node := self dependencyGraph nodeFor: aFiRGObject.
+	node := self dependencyGraph nodeFor: aRFiObject.
 	entities := (node nodesPointedByMe collect: [:each | each contents ]).
 
 	(RFiDependenciesBrowser openOn: entities)
-		title: 'Dependencies of ', aFiRGObject shortPrintString.
+		title: 'Dependencies of ', aRFiObject shortPrintString.
 ]
 
 { #category : #actions }
-RFiImpactRGEnvironmentBrowser >> browseUsesOf: aFiRGObject [
+RFiImpactRGEnvironmentBrowser >> browseUsesOf: aRFiObject [
 
 	| node entities |
-	node := self dependencyGraph nodeFor: aFiRGObject.
+	node := self dependencyGraph nodeFor: aRFiObject.
 	entities := (node nodesPointingToMe collect: [:each | each contents ]).
 
 	(RFiDependenciesBrowser openOn: entities)
-		title: 'Uses of ', aFiRGObject shortPrintString.
+		title: 'Uses of ', aRFiObject shortPrintString.
 ]
 
 { #category : #private }

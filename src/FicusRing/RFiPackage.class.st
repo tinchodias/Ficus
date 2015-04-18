@@ -67,9 +67,9 @@ RFiPackage >> extensionMethods [
 ]
 
 { #category : #testing }
-RFiPackage >> includesClass: aFiRGClass [ 
+RFiPackage >> includesClass: aRFiClass [ 
 
-	^ self definedClasses includes: aFiRGClass
+	^ self definedClasses includes: aRFiClass
 ]
 
 { #category : #initialization }

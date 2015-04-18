@@ -1,5 +1,5 @@
 "
-I represent a class variable in a FiRGClass.
+I represent a class variable in a RFiClass.
 "
 Class {
 	#name : #RFiClassVariable,

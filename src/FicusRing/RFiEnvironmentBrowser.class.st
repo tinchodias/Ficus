@@ -41,21 +41,21 @@ RFiEnvironmentBrowser class >> example4yrupe [
 ]
 
 { #category : #actions }
-RFiEnvironmentBrowser >> browseImplementorsInHierarchyOf: aFiRGMethod [
+RFiEnvironmentBrowser >> browseImplementorsInHierarchyOf: aRFiMethod [
 
 	| methods |
-	methods := aFiRGMethod environment 
-		implementorsOf: aFiRGMethod selector 
-		inHierarchyOf: aFiRGMethod methodClass.
+	methods := aRFiMethod environment 
+		implementorsOf: aRFiMethod selector 
+		inHierarchyOf: aRFiMethod methodClass.
 
 	RFiMethodsBrowser openOn: methods.
 ]
 
 { #category : #actions }
-RFiEnvironmentBrowser >> browseImplementorsOf: aFiRGMethod [
+RFiEnvironmentBrowser >> browseImplementorsOf: aRFiMethod [
 
 	| methods |
-	methods := aFiRGMethod environment implementorsOf: aFiRGMethod selector.
+	methods := aRFiMethod environment implementorsOf: aRFiMethod selector.
 
 	RFiMethodsBrowser openOn: methods.
 ]

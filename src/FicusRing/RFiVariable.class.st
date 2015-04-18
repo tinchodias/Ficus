@@ -1,5 +1,5 @@
 "
-I represent a variable in a FiRGBehavior.
+I represent a variable in a RFiBehavior.
 "
 Class {
 	#name : #RFiVariable,
@@ -12,10 +12,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-RFiVariable class >> definingClass: aFiRGBehavior name: aString [ 
+RFiVariable class >> definingClass: aRFiBehavior name: aString [ 
 	
 	^ self basicNew
-		initializeWithDefiningClass: aFiRGBehavior name: aString;
+		initializeWithDefiningClass: aRFiBehavior name: aString;
 		yourself
 ]
 
@@ -32,11 +32,11 @@ RFiVariable >> environment [
 ]
 
 { #category : #initialization }
-RFiVariable >> initializeWithDefiningClass: aFiRGBehavior name: aString [ 
+RFiVariable >> initializeWithDefiningClass: aRFiBehavior name: aString [ 
 
 	self initialize.
 	
-	definingClass := aFiRGBehavior.
+	definingClass := aRFiBehavior.
 	name := aString.
 ]
 

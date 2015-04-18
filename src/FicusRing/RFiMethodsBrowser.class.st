@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #actions }
-RFiMethodsBrowser >> browseDependenciesOf: aFiRGObject [
+RFiMethodsBrowser >> browseDependenciesOf: aRFiObject [
 
-	(RFiDependenciesBrowser openOn: aFiRGObject) extent: 700@600
+	(RFiDependenciesBrowser openOn: aRFiObject) extent: 700@600
 ]
 
 { #category : #building }

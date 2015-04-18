@@ -149,10 +149,10 @@ RFiMetaclass >> theNonMetaClass [
 ]
 
 { #category : #accessing }
-RFiMetaclass >> theNonMetaClass: aFiRGClass [ 
+RFiMetaclass >> theNonMetaClass: aRFiClass [ 
 
 	self flag: #todo. "remove debugging code"
-	self assert: (aFiRGClass isKindOf: RFiClass).
+	self assert: (aRFiClass isKindOf: RFiClass).
 
-	theNonMetaClass := aFiRGClass
+	theNonMetaClass := aRFiClass
 ]

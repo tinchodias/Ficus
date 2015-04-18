@@ -169,22 +169,22 @@ RFiEnvironment >> ficusPackages [
 ]
 
 { #category : #accessing }
-RFiEnvironment >> ficusPathToClass: aFiRGClass [ 
+RFiEnvironment >> ficusPathToClass: aRFiClass [ 
 	
-	^ {aFiRGClass package name. #contents. aFiRGClass name} asFiPath
+	^ {aRFiClass package name. #contents. aRFiClass name} asFiPath
 ]
 
 { #category : #accessing }
-RFiEnvironment >> ficusPathToInstanceVariable: aFiRGInstanceVariable [ 
+RFiEnvironment >> ficusPathToInstanceVariable: aRFiInstanceVariable [ 
 
-	^ aFiRGInstanceVariable definingClass ficusPathFromEnvironment / 
-		#layout / #instanceVariables / aFiRGInstanceVariable name
+	^ aRFiInstanceVariable definingClass ficusPathFromEnvironment / 
+		#layout / #instanceVariables / aRFiInstanceVariable name
 ]
 
 { #category : #accessing }
-RFiEnvironment >> ficusPathToMethod: aFiRGMethod [ 
+RFiEnvironment >> ficusPathToMethod: aRFiMethod [ 
 
-	^ aFiRGMethod origin ficusPathFromEnvironment / #methods / aFiRGMethod selector
+	^ aRFiMethod origin ficusPathFromEnvironment / #methods / aRFiMethod selector
 ]
 
 { #category : #accessing }
@@ -367,9 +367,9 @@ RFiEnvironment >> packageByClassName [
 ]
 
 { #category : #accessing }
-RFiEnvironment >> packageOfClass: aFiRGClass [ 
+RFiEnvironment >> packageOfClass: aRFiClass [ 
 
-	^ self packageOfClassNamed: aFiRGClass name
+	^ self packageOfClassNamed: aRFiClass name
 ]
 
 { #category : #accessing }

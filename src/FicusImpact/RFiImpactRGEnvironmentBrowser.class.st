@@ -19,33 +19,24 @@ RFiImpactRGEnvironmentBrowser >> browseDependenciesOf: aFiRGObject [
 ]
 
 { #category : #actions }
-RFiImpactRGEnvironmentBrowser >> browseImpactsOf: aFiRGObject [
+RFiImpactRGEnvironmentBrowser >> browseUsesOf: aFiRGObject [
 
 	| node entities |
 	node := self dependencyGraph nodeFor: aFiRGObject.
 	entities := (node nodesPointingToMe collect: [:each | each contents ]).
 
 	(RFiDependenciesBrowser openOn: entities)
-		title: 'Impacts of ', aFiRGObject shortPrintString.
+		title: 'Uses of ', aFiRGObject shortPrintString.
 ]
 
 { #category : #private }
 RFiImpactRGEnvironmentBrowser >> classesIn: aList [
 
 	super classesIn: aList.
-
-	aList
-		selectionAct: [:each :e | 
-			self browseDependenciesOf: each selection ] 
-			on: $d 
-			entitled: 'Dependencies';
-		selectionAct: [:each :e | 
-			self browseImpactsOf: each selection ] 
-			on: $i 
-			entitled: 'Impacts'.
+	self impactActionsIn: aList.
 ]
 
-{ #category : #actions }
+{ #category : #private }
 RFiImpactRGEnvironmentBrowser >> dependencyGraph [
 
 	^ dependencyGraph ifNil: [
@@ -53,9 +44,7 @@ RFiImpactRGEnvironmentBrowser >> dependencyGraph [
 ]
 
 { #category : #private }
-RFiImpactRGEnvironmentBrowser >> sharedSetupForMethodsIn: aList [
-
-	super sharedSetupForMethodsIn: aList.
+RFiImpactRGEnvironmentBrowser >> impactActionsIn: aList [
 
 	aList
 		selectionAct: [:each :e | 
@@ -63,7 +52,14 @@ RFiImpactRGEnvironmentBrowser >> sharedSetupForMethodsIn: aList [
 			on: $d 
 			entitled: 'Dependencies';
 		selectionAct: [:each :e | 
-			self browseImpactsOf: each selection ] 
-			on: $i 
-			entitled: 'Impacts'.
+			self browseUsesOf: each selection ] 
+			on: $u 
+			entitled: 'Uses'.
+]
+
+{ #category : #private }
+RFiImpactRGEnvironmentBrowser >> sharedSetupForMethodsIn: aList [
+
+	super sharedSetupForMethodsIn: aList.
+	self impactActionsIn: aList.
 ]

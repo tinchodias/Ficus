@@ -8,15 +8,14 @@ Class {
 }
 
 { #category : #private }
-RFiRequisiteInterpreterTest >> assertDependencyOf: aRequisite in: host equals: aDependency [
+RFiRequisiteInterpreterTest >> assertDependencyOf: aRequisite in: host targets: someTargets [
 
-	self 
-		assert: 
-			(RFiRequisiteInterpreter new 
-				dependencyOf: aRequisite 
-				in: host)
-		equals: aDependency.
-		
+	| dependency |
+	dependency := RFiRequisiteInterpreter new dependencyOf: aRequisite in: host.
+
+	self assert: dependency requisite equals: aRequisite.
+	self assert: dependency source equals: host.
+	self assert: dependency targets equals: someTargets asFiSet.	
 	self assert: (host ficusRequisites includes: aRequisite).
 	
 ]
@@ -32,7 +31,7 @@ RFiRequisiteInterpreterTest >> setUp [
 { #category : #tests }
 RFiRequisiteInterpreterTest >> testClassA [
 
-	self flag: #todo "#notFound?".
+	self flag: #todo "test notFound".
 
 	self 
 		assertDependencyOf: (
@@ -40,7 +39,7 @@ RFiRequisiteInterpreterTest >> testClassA [
 				theClassName: #A;
 				new)
 		in: resources ringClassB
-		equals: (RFiInheritance builder target: resources ringClassA; new)
+		targets: { resources ringClassA }
 ]
 
 { #category : #tests }
@@ -52,10 +51,7 @@ RFiRequisiteInterpreterTest >> testClassAInitialize [
 				variableName: #SomeClassVariable;
 				new)
 		in: (resources ringClassA classSide >> #initialize)
-		equals: 
-			(RFiVariableBinding builder
-				target: (resources ringClassA ringClassVariableNamed: #SomeClassVariable);
-				new)
+		targets: {resources ringClassA ringClassVariableNamed: #SomeClassVariable}
 
 ]
 
@@ -69,12 +65,9 @@ RFiRequisiteInterpreterTest >> testClassASum [
 				selector: #+;
 				new)
 		in: (resources ringClassA >> #sum)
-		equals: (
-			RFiPossibleMethodInvocation builder
-				methods: {
-					(resources ringEnvironment classNamed: #SmallInteger) >> #+.
-					} asFiSet;
-				new)
+		targets: 	{
+			(resources ringEnvironment classNamed: #SmallInteger) >> #+.
+			}
 ]
 
 { #category : #tests }
@@ -87,13 +80,10 @@ RFiRequisiteInterpreterTest >> testClassASum42 [
 				selector: #sum;
 				new)
 		in: (resources ringClassA >> #sum42)
-		equals: 
-			(RFiPossibleMethodInvocation builder
-				methods: {
-					resources ringClassA >> #sum.
-					resources ringClassB >> #sum.
-					} asFiSet;
-				new)
+		targets: {
+			resources ringClassA >> #sum.
+			resources ringClassB >> #sum.
+			}
 ]
 
 { #category : #tests }
@@ -105,10 +95,7 @@ RFiRequisiteInterpreterTest >> testClassASumVariableInSelf [
 				variableName: #a1;
 				new)
 		in: (resources ringClassA >> #sum)
-		equals: 
-			(RFiVariableBinding builder
-				target: (resources ringClassA ringInstanceVariableNamed: #a1);
-				new)
+		targets: {resources ringClassA ringInstanceVariableNamed: #a1}
 
 ]
 
@@ -121,10 +108,7 @@ RFiRequisiteInterpreterTest >> testClassBDefaultClass [
 				variableName: #C;
 				new)
 		in: (resources ringClassB >> #defaultClass)
-		equals: 
-			(RFiVariableBinding builder
-				target: resources ringClassC;
-				new)
+		targets: {resources ringClassC}
 ]
 
 { #category : #tests }
@@ -136,10 +120,7 @@ RFiRequisiteInterpreterTest >> testClassBReadSomeClassVariable [
 				variableName: #SomeClassVariable;
 				new)
 		in: (resources ringClassB >> #readSomeClassVariable)
-		equals: 
-			(RFiVariableBinding builder
-				target: (resources ringClassA ringClassVariableNamed: #SomeClassVariable);
-				new)
+		targets: {resources ringClassA ringClassVariableNamed: #SomeClassVariable}
 
 ]
 
@@ -153,12 +134,9 @@ RFiRequisiteInterpreterTest >> testClassBSum [
 				selector: #sum;
 				new)
 		in: (resources ringClassB >> #sum)
-		equals: 
-			(RFiPossibleMethodInvocation builder
-				methods: {
-					resources ringClassA >> #sum.
-					} asFiSet;
-				new)
+		targets: {
+			resources ringClassA >> #sum.
+			}
 ]
 
 { #category : #tests }
@@ -170,10 +148,7 @@ RFiRequisiteInterpreterTest >> testClassBVariableInSuper [
 				variableName: #a1;
 				new)
 		in: (resources ringClassB >> #variableInSuper)
-		equals: 
-			(RFiVariableBinding builder
-				target: (resources ringClassA ringInstanceVariableNamed: #a1);
-				new)
+		targets: {resources ringClassA ringInstanceVariableNamed: #a1}
 
 ]
 
@@ -187,14 +162,11 @@ RFiRequisiteInterpreterTest >> testClassCSumAt [
 				selector: #sum;
 				new)
 		in: (resources ringClassC >> #sumAt:)
-		equals: 
-			(RFiPossibleMethodInvocation builder
-				methods: {
-					resources ringClassA >> #sum.
-					resources ringClassB >> #sum.
-					resources ringClassC >> #sum.
-					} asFiSet;
-				new)
+		targets: {
+			resources ringClassA >> #sum.
+			resources ringClassB >> #sum.
+			resources ringClassC >> #sum.
+			}
 ]
 
 { #category : #tests }
@@ -206,7 +178,7 @@ RFiRequisiteInterpreterTest >> testClassCUndeclared [
 				variableName: #undeclaredVar;
 				new)
 		in: (resources ringClassC >> #undeclared)
-		equals: RFiVariableBinding undeclared
+		targets: #()
 ]
 
 { #category : #tests }
@@ -221,14 +193,11 @@ RFiRequisiteInterpreterTest >> testLinkedListAdd [
 				selector: #ifTrue:ifFalse:;
 				new)
 		in: ((anEnvironment classNamed: #LinkedList) >> #add:)
-		equals: 
-			(RFiPossibleMethodInvocation builder
-				methods: {
-					(anEnvironment classNamed: #True) >> #ifTrue:ifFalse:.
-					(anEnvironment classNamed: #False) >> #ifTrue:ifFalse:.
-					(anEnvironment classNamed: #Boolean) >> #ifTrue:ifFalse:.
-					} asFiSet;
-				new).
+		targets: {
+			(anEnvironment classNamed: #True) >> #ifTrue:ifFalse:.
+			(anEnvironment classNamed: #False) >> #ifTrue:ifFalse:.
+			(anEnvironment classNamed: #Boolean) >> #ifTrue:ifFalse:.
+			}.
 				
 	self flag: #todo. "Shouldn't include the one in Boolean, since #isProvided is false in such case."
 ]
@@ -245,12 +214,9 @@ RFiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
 				selector: #isEmpty;
 				new)
 		in: ((anEnvironment classNamed: #LinkedList) >> #removeFirst)
-		equals: 
-			(RFiPossibleMethodInvocation builder
-				methods: {
-					(anEnvironment classNamed: #Collection) >> #isEmpty.
-					} asFiSet;
-				new)
+		targets: {
+			(anEnvironment classNamed: #Collection) >> #isEmpty.
+			}
 ]
 
 { #category : #tests }
@@ -262,11 +228,8 @@ RFiRequisiteInterpreterTest >> testObjectNew [
 				receiver: RFiSelfMessageReceiver new;
 				selector: #basicNew;
 				new)
-		in: ((resources ringEnvironment classNamed: #Object) classSide >> #new)
-		equals: 
-			(RFiPossibleMethodInvocation builder
-				methods: {
-					(resources ringEnvironment classNamed: #Object) classSide >> #basicNew.
-					} asFiSet;
-				new)
+		in: (resources ringEnvironment classNamed: #Object) classSide >> #new
+		targets: {
+			(resources ringEnvironment classNamed: #Object) classSide >> #basicNew.
+			}
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #RFiClassRequisiteCollector,
 	#superclass : #Object,
-	#category : #'FicusImpact-Requisites'
+	#category : #'FicusImpact-Interpreting'
 }
 
 { #category : #public }

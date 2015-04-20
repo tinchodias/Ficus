@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'theClassName'
 	],
-	#category : #'FicusImpact-Requisites'
+	#category : #'FicusImpact-Model'
 }
 
 { #category : #printing }

@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'defaultInstance'
 	],
-	#category : #'FicusImpact-Requisites'
+	#category : #'FicusImpact-Model'
 }
 
 { #category : #accessing }

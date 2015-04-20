@@ -1,55 +1,57 @@
 Class {
 	#name : #RFiRequisiteInterpreter,
 	#superclass : #Object,
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Interpreting'
 }
 
 { #category : #public }
 RFiRequisiteInterpreter >> dependencyOf: aRequisite in: aRFiObject [
 
+	^ RFiDependency 
+		requisite: aRequisite 
+		source: aRFiObject
+		targets: (self targetsOf: aRequisite in: aRFiObject) asFiSet
+]
+
+{ #category : #public }
+RFiRequisiteInterpreter >> targetsOf: aRequisite in: aRFiObject [
+
 	self flag: #todo.
 	
 	(aRequisite isKindOf: RFiMessageSend) ifTrue: [ 
-		^ self dependencyOfMessageSend: aRequisite in: aRFiObject ].
+		^ self targetsOfMessageSend: aRequisite in: aRFiObject ].
 
 	(aRequisite isKindOf: RFiVariableAccess) ifTrue: [	
-		^ self dependencyOfVariableAccess: aRequisite in: aRFiObject ].
+		^ self targetsOfVariableAccess: aRequisite in: aRFiObject ].
 
 	(aRequisite isKindOf: RFiInheritanceDeclaration) ifTrue: [	
-		^ self dependencyOfInheritanceDeclaration: aRequisite in: aRFiObject ].
+		^ self targetsOfInheritanceDeclaration: aRequisite in: aRFiObject ].
 
 	self shouldBeImplemented.
 ]
 
 { #category : #public }
-RFiRequisiteInterpreter >> dependencyOfInheritanceDeclaration: aRequisite in: aRFiObject [
+RFiRequisiteInterpreter >> targetsOfInheritanceDeclaration: aRequisite in: aRFiObject [
 	
 	^ aRFiObject environment 
 		at: aRequisite theClassName
-		ifPresent: [ :foundClass | RFiInheritance builder target: foundClass; new ]
-		ifAbsent: [ RFiInheritance notFound ]
+		ifPresent: [ :foundClass | { foundClass } ]
+		ifAbsent: [ #() ]
 ]
 
 { #category : #public }
-RFiRequisiteInterpreter >> dependencyOfMessageSend: aRequisite in: aRFiMethod [
+RFiRequisiteInterpreter >> targetsOfMessageSend: aRequisite in: aRFiMethod [
 	
-	| possibleInvocations |
-	possibleInvocations := 
-		aRequisite receiver 
-			implementorsOf: aRequisite selector 
-			in: aRFiMethod.
-
-	^ RFiPossibleMethodInvocation methods: possibleInvocations
+	^ aRequisite receiver 
+		implementorsOf: aRequisite selector 
+		in: aRFiMethod
 ]
 
 { #category : #public }
-RFiRequisiteInterpreter >> dependencyOfVariableAccess: aRequisite in: aRFiObject [
+RFiRequisiteInterpreter >> targetsOfVariableAccess: aRequisite in: aRFiObject [
 	
 	^ aRFiObject 
 		lookupVariableNamed: aRequisite variableName 
-		ifFound: [ :variable | 
-			RFiVariableBinding builder 
-				target: variable;
-				new ]
-		ifNotFound: [ RFiVariableBinding undeclared ]
+		ifFound: [ :variable | { variable } ]
+		ifNotFound: [ #() ]
 ]

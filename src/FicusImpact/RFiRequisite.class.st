@@ -1,7 +1,7 @@
 Class {
 	#name : #RFiRequisite,
 	#superclass : #FiFixedObject,
-	#category : #'FicusImpact-Requisites'
+	#category : #'FicusImpact-Model'
 }
 
 { #category : #accessing }

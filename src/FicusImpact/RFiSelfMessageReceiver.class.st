@@ -1,7 +1,7 @@
 Class {
 	#name : #RFiSelfMessageReceiver,
 	#superclass : #RFiMessageReceiver,
-	#category : #'FicusImpact-Requisites'
+	#category : #'FicusImpact-Model'
 }
 
 { #category : #lookup }

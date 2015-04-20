@@ -5,7 +5,7 @@ Class {
 		'receiver',
 		'selector'
 	],
-	#category : #'FicusImpact-Requisites'
+	#category : #'FicusImpact-Model'
 }
 
 { #category : #printing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'dependencies'
 	],
-	#category : #'FicusImpact-Requisites'
+	#category : #'FicusImpact-Interpreting'
 }
 
 { #category : #public }

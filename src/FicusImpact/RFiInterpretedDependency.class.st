@@ -5,7 +5,7 @@ Class {
 		'requisite',
 		'targets'
 	],
-	#category : #'FicusImpact-Dependencies'
+	#category : #'FicusImpact-Model'
 }
 
 { #category : #examples }

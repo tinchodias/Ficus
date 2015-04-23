@@ -32,9 +32,9 @@ RFiInterpretedDependency class >> example [
 	diff := deps2 differenceFrom: deps1.
 	FiEffectInspector inspect: diff.
 
-	FiInspector inspect: deps1.
+"	FiInspector inspect: deps1.
 	FiInspector inspect: deps2.
-
+"
 ]
 
 { #category : #accessing }

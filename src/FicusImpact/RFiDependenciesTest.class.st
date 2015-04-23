@@ -1,5 +1,5 @@
 Class {
-	#name : #RFiRequisiteInterpreterTest,
+	#name : #RFiDependenciesTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #private }
-RFiRequisiteInterpreterTest >> assertDependencyOf: aRequisite in: host targets: someTargets [
+RFiDependenciesTest >> assertDependencyOf: aRequisite in: host targets: someTargets [
 
 	| dependency |
 	dependency := RFiRequisiteInterpreter new dependencyOf: aRequisite in: host.
@@ -21,7 +21,7 @@ RFiRequisiteInterpreterTest >> assertDependencyOf: aRequisite in: host targets: 
 ]
 
 { #category : #running }
-RFiRequisiteInterpreterTest >> setUp [
+RFiDependenciesTest >> setUp [
 
 	super setUp.
 	
@@ -29,7 +29,7 @@ RFiRequisiteInterpreterTest >> setUp [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassA [
+RFiDependenciesTest >> testClassA [
 
 	self flag: #todo "test notFound".
 
@@ -43,7 +43,7 @@ RFiRequisiteInterpreterTest >> testClassA [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassAInitialize [
+RFiDependenciesTest >> testClassAInitialize [
 
 	self 
 		assertDependencyOf: (
@@ -56,7 +56,7 @@ RFiRequisiteInterpreterTest >> testClassAInitialize [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassASum [
+RFiDependenciesTest >> testClassASum [
 
 	self 
 		assertDependencyOf: (
@@ -71,7 +71,7 @@ RFiRequisiteInterpreterTest >> testClassASum [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassASum42 [
+RFiDependenciesTest >> testClassASum42 [
 
 	self 
 		assertDependencyOf: (
@@ -87,7 +87,7 @@ RFiRequisiteInterpreterTest >> testClassASum42 [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassASumVariableInSelf [
+RFiDependenciesTest >> testClassASumVariableInSelf [
 
 	self 
 		assertDependencyOf: (
@@ -100,7 +100,7 @@ RFiRequisiteInterpreterTest >> testClassASumVariableInSelf [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassBDefaultClass [
+RFiDependenciesTest >> testClassBDefaultClass [
 
 	self 
 		assertDependencyOf: (
@@ -112,7 +112,7 @@ RFiRequisiteInterpreterTest >> testClassBDefaultClass [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassBReadSomeClassVariable [
+RFiDependenciesTest >> testClassBReadSomeClassVariable [
 
 	self 
 		assertDependencyOf: (
@@ -125,7 +125,7 @@ RFiRequisiteInterpreterTest >> testClassBReadSomeClassVariable [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassBSum [
+RFiDependenciesTest >> testClassBSum [
 
 	self 
 		assertDependencyOf: (
@@ -140,7 +140,7 @@ RFiRequisiteInterpreterTest >> testClassBSum [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassBVariableInSuper [
+RFiDependenciesTest >> testClassBVariableInSuper [
 
 	self 
 		assertDependencyOf: (
@@ -153,7 +153,7 @@ RFiRequisiteInterpreterTest >> testClassBVariableInSuper [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassCSumAt [
+RFiDependenciesTest >> testClassCSumAt [
 
 	self 
 		assertDependencyOf: (
@@ -170,7 +170,7 @@ RFiRequisiteInterpreterTest >> testClassCSumAt [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testClassCUndeclared [
+RFiDependenciesTest >> testClassCUndeclared [
 
 	self 
 		assertDependencyOf: (
@@ -182,7 +182,7 @@ RFiRequisiteInterpreterTest >> testClassCUndeclared [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testLinkedListAdd [
+RFiDependenciesTest >> testLinkedListAdd [
 
 	| anEnvironment |
 	anEnvironment := RFiBaseResources new ringEnvironment.
@@ -203,7 +203,7 @@ RFiRequisiteInterpreterTest >> testLinkedListAdd [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
+RFiDependenciesTest >> testLinkedListRemovedFirst [
 
 	| anEnvironment |
 	anEnvironment := RFiBaseResources new ringEnvironment.
@@ -220,7 +220,7 @@ RFiRequisiteInterpreterTest >> testLinkedListRemovedFirst [
 ]
 
 { #category : #tests }
-RFiRequisiteInterpreterTest >> testObjectNew [
+RFiDependenciesTest >> testObjectNew [
 
 	self 
 		assertDependencyOf: (

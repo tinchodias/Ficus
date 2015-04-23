@@ -1,5 +1,5 @@
 Class {
-	#name : #RFiMethodRequisitesTest,
+	#name : #RFiRequisitesTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resources'
@@ -8,23 +8,35 @@ Class {
 }
 
 { #category : #private }
-RFiMethodRequisitesTest >> assertRequisitesOf: aRingMethod equals: dependencies [
+RFiRequisitesTest >> assertRequisitesOf: aRFiObject equals: dependencies [
 	
 	self 
-		assert: aRingMethod ficusRequisites asSet 
+		assert: aRFiObject ficusRequisites asSet 
 		equals: dependencies asSet
 ]
 
 { #category : #running }
-RFiMethodRequisitesTest >> setUp [
+RFiRequisitesTest >> setUp [
 
 	super setUp.
 	
 	resources := RFiRingTestResources new
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassAClassInitialize [
+{ #category : #'tests - class' }
+RFiRequisitesTest >> testClassA [
+
+	self 
+		assertRequisitesOf: resources ringClassA
+		equals: {
+			RFiInheritanceDeclaration builder
+				theClassName: #Object;
+				new
+			}
+]
+
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassAClassInitialize [
 
 	self 
 		assertRequisitesOf: resources ringClassA classSide >> #initialize
@@ -48,8 +60,8 @@ RFiMethodRequisitesTest >> testClassAClassInitialize [
 				}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassASum [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassASum [
 
 	self 
 		assertRequisitesOf: resources ringClassA >> #sum
@@ -67,8 +79,8 @@ RFiMethodRequisitesTest >> testClassASum [
 			}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassASum42 [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassASum42 [
 
 	self 
 		assertRequisitesOf: resources ringClassA >> #sum42
@@ -84,8 +96,20 @@ RFiMethodRequisitesTest >> testClassASum42 [
 			}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassBDefaultClass [
+{ #category : #'tests - class' }
+RFiRequisitesTest >> testClassB [
+
+	self 
+		assertRequisitesOf: resources ringClassB
+		equals: {
+			RFiInheritanceDeclaration builder
+				theClassName: #A;
+				new
+				}
+]
+
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassBDefaultClass [
 
 	self 
 		assertRequisitesOf: resources ringClassB >> #defaultClass
@@ -96,8 +120,8 @@ RFiMethodRequisitesTest >> testClassBDefaultClass [
 			}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassBReadSomeClassVariable [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassBReadSomeClassVariable [
 
 	self 
 		assertRequisitesOf: resources ringClassB >> #readSomeClassVariable
@@ -108,8 +132,8 @@ RFiMethodRequisitesTest >> testClassBReadSomeClassVariable [
 			}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassBSum [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassBSum [
 
 	self 
 		assertRequisitesOf: resources ringClassB >> #sum
@@ -128,8 +152,8 @@ RFiMethodRequisitesTest >> testClassBSum [
 			}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassBVariableInSuper [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassBVariableInSuper [
 
 	self 
 		assertRequisitesOf: resources ringClassB >> #variableInSuper
@@ -140,16 +164,16 @@ RFiMethodRequisitesTest >> testClassBVariableInSuper [
 			}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassCSum [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassCSum [
 
 	self 
 		assertRequisitesOf: resources ringClassC >> #sum
 		equals: {}
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassCSumAt [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassCSumAt [
 
 	self 
 		assertRequisitesOf: resources ringClassC >> #sumAt:
@@ -162,8 +186,8 @@ RFiMethodRequisitesTest >> testClassCSumAt [
 
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassCSumTmp [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassCSumTmp [
 
 	self 
 		assertRequisitesOf: resources ringClassC >> #sumTmp
@@ -180,8 +204,8 @@ RFiMethodRequisitesTest >> testClassCSumTmp [
 
 ]
 
-{ #category : #tests }
-RFiMethodRequisitesTest >> testClassCUndeclared [
+{ #category : #'tests - method' }
+RFiRequisitesTest >> testClassCUndeclared [
 
 	self 
 		assertRequisitesOf: resources ringClassC >> #undeclared
@@ -190,4 +214,13 @@ RFiMethodRequisitesTest >> testClassCUndeclared [
 				variableName: #undeclaredVar;
 				new.
 		}
+]
+
+{ #category : #'tests - class' }
+RFiRequisitesTest >> testClassObject [
+
+	self 
+		assertRequisitesOf: resources ringClassObject
+		equals: {
+			}
 ]

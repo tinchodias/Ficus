@@ -2,13 +2,13 @@
 A FiMessageReceiverBuilderTest is a test class for testing the behavior of FiMessageReceiverBuilder
 "
 Class {
-	#name : #RFiMessageReceiverFactoryTest,
+	#name : #RFiMessageReceiverTest,
 	#superclass : #TestCase,
 	#category : #'FicusImpact-Tests'
 }
 
 { #category : #private }
-RFiMessageReceiverFactoryTest >> assertMessageReceiverOf: sourceCodeFragment equals: aMessageReceiver [
+RFiMessageReceiverTest >> assertMessageReceiverOf: sourceCodeFragment equals: aMessageReceiver [
 	
 	| node |
 	node := self receiverNodeFor: sourceCodeFragment.
@@ -19,13 +19,13 @@ RFiMessageReceiverFactoryTest >> assertMessageReceiverOf: sourceCodeFragment equ
 ]
 
 { #category : #private }
-RFiMessageReceiverFactoryTest >> astOf: sourceCode [
+RFiMessageReceiverTest >> astOf: sourceCode [
 
 	^ RBExplicitVariableParser parseMethod: sourceCode
 ]
 
 { #category : #private }
-RFiMessageReceiverFactoryTest >> receiverNodeFor: sourceCodeFragment [
+RFiMessageReceiverTest >> receiverNodeFor: sourceCodeFragment [
 
 	| ast |
 	ast := self astOf: 'method: arg1 ', sourceCodeFragment.
@@ -38,7 +38,7 @@ RFiMessageReceiverFactoryTest >> receiverNodeFor: sourceCodeFragment [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver1 [
+RFiMessageReceiverTest >> testAnyMessageReceiver1 [
 
 	self 
 		assertMessageReceiverOf: 'a1 hash' 
@@ -48,7 +48,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver1 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver10 [
+RFiMessageReceiverTest >> testAnyMessageReceiver10 [
 
 	self 
 		assertMessageReceiverOf: '(a1 := true) hash' 
@@ -58,7 +58,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver10 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver11 [
+RFiMessageReceiverTest >> testAnyMessageReceiver11 [
 
 	self 
 		assertMessageReceiverOf: 'Object hash' 
@@ -68,7 +68,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver11 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver12 [
+RFiMessageReceiverTest >> testAnyMessageReceiver12 [
 
 	self 
 		assertMessageReceiverOf: 'arg1 hash' 
@@ -78,7 +78,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver12 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver2 [
+RFiMessageReceiverTest >> testAnyMessageReceiver2 [
 
 	self 
 		assertMessageReceiverOf: '1 hash' 
@@ -88,7 +88,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver2 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver3 [
+RFiMessageReceiverTest >> testAnyMessageReceiver3 [
 
 	self 
 		assertMessageReceiverOf: 'thisContext hash' 
@@ -98,7 +98,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver3 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver4 [
+RFiMessageReceiverTest >> testAnyMessageReceiver4 [
 
 	self 
 		assertMessageReceiverOf: '(1 + 2) hash' 
@@ -108,7 +108,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver4 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver5 [
+RFiMessageReceiverTest >> testAnyMessageReceiver5 [
 
 	self 
 		assertMessageReceiverOf: '(Object new; yourself) hash' 
@@ -118,7 +118,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver5 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver6 [
+RFiMessageReceiverTest >> testAnyMessageReceiver6 [
 
 	self 
 		assertMessageReceiverOf: '| tmp | tmp hash' 
@@ -128,7 +128,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver6 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver7 [
+RFiMessageReceiverTest >> testAnyMessageReceiver7 [
 
 	self 
 		assertMessageReceiverOf: '{1. 2.} hash' 
@@ -138,7 +138,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver7 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver8 [
+RFiMessageReceiverTest >> testAnyMessageReceiver8 [
 
 	self 
 		assertMessageReceiverOf: '#(1 2) hash' 
@@ -148,7 +148,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver8 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testAnyMessageReceiver9 [
+RFiMessageReceiverTest >> testAnyMessageReceiver9 [
 
 	self 
 		assertMessageReceiverOf: '#[1 2] hash' 
@@ -158,7 +158,7 @@ RFiMessageReceiverFactoryTest >> testAnyMessageReceiver9 [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testSelfMessageReceiver [
+RFiMessageReceiverTest >> testSelfMessageReceiver [
 
 	self 
 		assertMessageReceiverOf: 'self hash' 
@@ -167,7 +167,7 @@ RFiMessageReceiverFactoryTest >> testSelfMessageReceiver [
 ]
 
 { #category : #tests }
-RFiMessageReceiverFactoryTest >> testSuperMessageReceiver [
+RFiMessageReceiverTest >> testSuperMessageReceiver [
 
 	self 
 		assertMessageReceiverOf: 'super hash' 

@@ -18,21 +18,5 @@ RFiObject >> ficusDependencies [
 { #category : #'*FicusImpact' }
 RFiObject >> ficusInterpretedDependencies [
 
-	^ (self ficusRequisites collect: [ :each |
-		| dependency objectByName |
-		dependency := RFiRequisiteInterpreter new 
-			dependencyOf: each 
-			in: self.
-
-		objectByName := Dictionary new.
-		dependency targets do: [ :target | 
-			objectByName 
-				at: target shortPrintString
-				put: target ficusObject ].
-		
-		RFiInterpretedDependency builder
-			requisite: each;
-			targets: objectByName asFiDictionary;
-			new
-		]) asFiSet
+	^ (self ficusDependencies collect: #asRFiInterpretedDependency) asFiSet
 ]

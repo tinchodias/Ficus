@@ -19,6 +19,22 @@ RFiDependency class >> requisite: aRequisite source: aRFiObject targets: someTar
 		new
 ]
 
+{ #category : #converting }
+RFiDependency >> asRFiInterpretedDependency [
+
+	| objectByName |
+	objectByName := Dictionary new.
+	self targets do: [ :target | 
+		objectByName 
+			at: target shortPrintString
+			put: target ficusObject ].
+	
+	^ RFiInterpretedDependency builder
+		requisite: self requisite;
+		targets: objectByName asFiDictionary;
+		new
+]
+
 { #category : #accessing }
 RFiDependency >> defaultStep [
 

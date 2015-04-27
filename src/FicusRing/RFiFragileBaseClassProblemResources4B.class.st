@@ -16,6 +16,7 @@ RFiFragileBaseClassProblemResources4B >> classLog [
 		layout: (FiFixedLayout withInstanceVariables: #(collection));
 		category: self categoryNameLoggersCore;
 		methods: {
+			FiMethod sourceCode: 'messages  ^collection'. 
 			FiMethod sourceCode: 'log: aMessage  
 	collection add: aMessage'. 
 			FiMethod sourceCode: 'logAll: messages  

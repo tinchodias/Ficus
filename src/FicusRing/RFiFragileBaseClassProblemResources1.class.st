@@ -16,6 +16,7 @@ RFiFragileBaseClassProblemResources1 >> classLog [
 		layout: (FiFixedLayout withInstanceVariables: #(msgs));
 		category: self categoryNameLoggersCore;
 		methods: {
+			FiMethod sourceCode: 'messages  ^msgs'. 
 			FiMethod sourceCode: 'log: msg  
 	msgs add: msg'. 
 			FiMethod sourceCode: 'initialize  

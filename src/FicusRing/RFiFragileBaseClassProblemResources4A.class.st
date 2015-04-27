@@ -1,5 +1,5 @@
 "
-I answer a variant of my superclass which adds the LRULog, with a test.
+I answer a variant of my superclass which adds the FilteredLog, with a test.
 "
 Class {
 	#name : #RFiFragileBaseClassProblemResources4A,
@@ -8,40 +8,46 @@ Class {
 }
 
 { #category : #resources }
-RFiFragileBaseClassProblemResources4A >> classLRULog [
+RFiFragileBaseClassProblemResources4A >> classFilteredLog [
 
 	^ FiClass builder 
-		name: #LRULog;
+		name: #FilteredLog;
 		superclassName: #Log;
-		layout: (FiFixedLayout withInstanceVariables: #(tally));
+		layout: (FiFixedLayout withInstanceVariables: #(filterBlock));
 		category: self categoryNameLoggersCore;
 		methods: {
-			FiMethod sourceCode: 'tally  ^tally'. 
+			FiMethod sourceCode: 'filterBlock  ^filterBlock'.
+			FiMethod sourceCode: 'filterBlock: aBlock  filterBlock := aBlock'.
 			FiMethod sourceCode: 'log: aMessage  
-	tally > 100 ifTrue: [ collection removeFirst ].
-	super log: aMessage.
-	tally := tally + 1.'. 
+	(filterBlock value: aMessage) 
+		ifTrue: [ super log: aMessage ].'. 
 			FiMethod sourceCode: 'initialize  
 	super initialize.
-	tally := 0.'. 
+	filterBlock := [ :each | true ].'. 
 			} asFiSet;
 		new
 ]
 
 { #category : #resources }
-RFiFragileBaseClassProblemResources4A >> classLRULogTest [
+RFiFragileBaseClassProblemResources4A >> classFilteredLogTest [
 
 	^ FiClass builder 
-		name: #LRULogTest;
+		name: #FilteredLogTest;
 		superclassName: #Object;
 		layout: (FiFixedLayout withInstanceVariables: #());
 		category: self categoryNameLoggersTest;
 		methods: {
 			FiMethod sourceCode: 'testLog
 	| log |
-	log := LRULog new.
-	log log: #bonjour.
-	self assert: log tally = 1.'.
+	log := FilteredLog new.
+	log filterBlock: [ :each | each > 0 ].
+
+	log log: -1.
+	self assert: log messages isEmpty.
+
+	log log: 5.
+	self assert: log messages size = 1.
+	'.
 			FiMethod sourceCode: 'testLogAll  "TODO"'.
 			} asFiSet;
 		new
@@ -52,6 +58,6 @@ RFiFragileBaseClassProblemResources4A >> packageLoggers [
 
 	^ FiPackage builder
 		name: #Loggers;
-		contents: { self classLog. self classLRULog. self classLRULogTest. } asFiSet;
+		contents: { self classLog. self classFilteredLog. self classFilteredLogTest. } asFiSet;
 		new
 ]

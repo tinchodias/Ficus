@@ -72,8 +72,8 @@ RFiImpactTest >> test01 [
 	env1 := (RFiBaseResources new ficusEnvironment asArray copyWith: pkg1) asFiSet asRFiEnvironment.
 	env2 := (RFiBaseResources new ficusEnvironment asArray copyWith: pkg2) asFiSet asRFiEnvironment.
 
-	old := (env1 classNamed: #LRULogTest) >> #testLog.
-	new := (env2 classNamed: #LRULogTest) >> #testLog.
+	old := (env1 classNamed: #FilteredLogTest) >> #testLog.
+	new := (env2 classNamed: #FilteredLogTest) >> #testLog.
 	
 	impacts := self 
 		impactsFrom: old

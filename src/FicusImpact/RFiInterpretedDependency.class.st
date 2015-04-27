@@ -26,8 +26,8 @@ RFiInterpretedDependency class >> example [
 	env1 browse.
 	env2 browse.
 	"
-	deps1 := ((env1 classNamed: #LRULogTest) >> #testLog) ficusInterpretedDependencies.
-	deps2 := ((env2 classNamed: #LRULogTest) >> #testLog) ficusInterpretedDependencies.
+	deps1 := ((env1 classNamed: #FilteredLogTest) >> #testLog) ficusInterpretedDependencies.
+	deps2 := ((env2 classNamed: #FilteredLogTest) >> #testLog) ficusInterpretedDependencies.
 
 	diff := deps2 differenceFrom: deps1.
 	FiEffectInspector inspect: diff.

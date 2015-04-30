@@ -26,10 +26,7 @@ RFiLGraph >> nodeFor: anObject [
 	
 	^ nodeByContents 
 		at: anObject 
-		ifAbsentPut: [
-			RFiLNode new
-				contents: anObject;
-				yourself ]
+		ifAbsentPut: [ RFiLNode with: anObject ]
 ]
 
 { #category : #accessing }

@@ -12,7 +12,7 @@ RFiImpactRGEnvironmentBrowser >> browseDependenciesOf: aRFiObject [
 
 	| node entities |
 	node := self dependencyGraph nodeFor: aRFiObject.
-	entities := (node nodesPointedByMe collect: [:each | each contents ]).
+	entities := (node outgoingNodes collect: [:each | each contents ]).
 
 	(RFiDependenciesBrowser openOn: entities)
 		title: 'Dependencies of ', aRFiObject shortPrintString.
@@ -23,7 +23,7 @@ RFiImpactRGEnvironmentBrowser >> browseUsesOf: aRFiObject [
 
 	| node entities |
 	node := self dependencyGraph nodeFor: aRFiObject.
-	entities := (node nodesPointingToMe collect: [:each | each contents ]).
+	entities := (node incomingNodes collect: [:each | each contents ]).
 
 	(RFiDependenciesBrowser openOn: entities)
 		title: 'Uses of ', aRFiObject shortPrintString.

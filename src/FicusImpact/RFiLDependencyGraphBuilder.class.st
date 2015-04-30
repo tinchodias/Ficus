@@ -67,7 +67,8 @@ RFiLDependencyGraphBuilder >> newGraph [
 
 	self entities 
 		do: [ :entity | self processEntity: entity graph: graph ]
-		displayingProgress: [ :entity | 'Calculating dependencies for ', entity shortPrintString ] every: 800.
+		displayingProgress: [ :entity | 'Calculating dependencies for ', entity shortPrintString ] 
+		every: 1000. "one per second"
 	
 	^ graph
 ]

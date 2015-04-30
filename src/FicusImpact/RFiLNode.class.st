@@ -3,11 +3,19 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'contents',
-		'nodesPointingToMe',
-		'nodesPointedByMe'
+		'outgoingNodes',
+		'incomingNodes'
 	],
 	#category : #'FicusImpact-LGraph'
 }
+
+{ #category : #'instance creation' }
+RFiLNode class >> with: anObject [
+
+	^ self basicNew
+		initializeWith: anObject;
+		yourself
+]
 
 { #category : #comparing }
 RFiLNode >> = other [
@@ -19,8 +27,8 @@ RFiLNode >> = other [
 { #category : #'optimizing space' }
 RFiLNode >> compact [
 	
-	nodesPointedByMe := nodesPointedByMe asArray.
-	nodesPointingToMe := nodesPointingToMe asArray.
+	outgoingNodes := outgoingNodes asArray.
+	incomingNodes := incomingNodes asArray.
 ]
 
 { #category : #accessing }
@@ -30,16 +38,10 @@ RFiLNode >> contents [
 ]
 
 { #category : #accessing }
-RFiLNode >> contents: anObject [
-	
-	contents := anObject
-]
-
-{ #category : #accessing }
 RFiLNode >> ensurePointTo: targetNode [
 	"Outer edges are owned by self, unlike inner edges."
 	
-	nodesPointedByMe add: targetNode.	
+	outgoingNodes add: targetNode.	
 	targetNode ensurePointedFrom: self.
 ]
 
@@ -47,7 +49,7 @@ RFiLNode >> ensurePointTo: targetNode [
 RFiLNode >> ensurePointedFrom: aNode [
 	"Inner edges are owned by the source node, unlike outer edges."
 
-	nodesPointingToMe add: aNode
+	incomingNodes add: aNode
 ]
 
 { #category : #comparing }
@@ -56,25 +58,26 @@ RFiLNode >> hash [
 	^ self class hash bitXor: self contents hash
 ]
 
+{ #category : #accessing }
+RFiLNode >> incomingNodes [
+	
+	^ incomingNodes asArray
+]
+
 { #category : #initialization }
-RFiLNode >> initialize [
-
-	super initialize.
+RFiLNode >> initializeWith: anObject [
 	
-	nodesPointedByMe := IdentitySet new: 1.
-	nodesPointingToMe := IdentitySet new: 1.
+	self initialize.
+	
+	contents := anObject.
+	outgoingNodes := IdentitySet new: 1.
+	incomingNodes := IdentitySet new: 1.
 ]
 
 { #category : #accessing }
-RFiLNode >> nodesPointedByMe [
+RFiLNode >> outgoingNodes [
 	
-	^ nodesPointedByMe asArray
-]
-
-{ #category : #accessing }
-RFiLNode >> nodesPointingToMe [
-	
-	^ nodesPointingToMe asArray
+	^ outgoingNodes asArray
 ]
 
 { #category : #printing }

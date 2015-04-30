@@ -20,6 +20,8 @@ RFiLMethodVisitor >> collector: anObject [
 { #category : #public }
 RFiLMethodVisitor >> messageReceiverFor: aRBNode [ 
 
+	self flag: #todo. "Remove IFs"
+
 	aRBNode isSelf ifTrue: [ 
 		^ RFiSelfMessageReceiver defaultInstance ].
 

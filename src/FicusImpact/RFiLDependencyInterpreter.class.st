@@ -15,6 +15,14 @@ RFiLDependencyInterpreter >> entity: aRFiObject [
 	entity := aRFiObject
 ]
 
+{ #category : #initialization }
+RFiLDependencyInterpreter >> initialize [
+
+	super initialize.
+	
+	methodVisitor := RFiLMethodVisitor new.
+]
+
 { #category : #private }
 RFiLDependencyInterpreter >> messageSendTo: aReceiver of: aSelector [
 
@@ -24,27 +32,31 @@ RFiLDependencyInterpreter >> messageSendTo: aReceiver of: aSelector [
 		do: targetsCallback
 ]
 
-{ #category : #private }
-RFiLDependencyInterpreter >> methodVisitor [
-	
-	^ methodVisitor ifNil: [ methodVisitor := RFiLMethodVisitor new ]
-]
-
 { #category : #public }
 RFiLDependencyInterpreter >> run [
 	
-	self flag: #todo. "fix"
+	self flag: #todo. "fix ifs..."
 	
 	entity isCompiledMethod
 		ifTrue: [ ^ self runOnMethod ].
+
+	(entity isBehavior and: [ entity isInstanceSide ])
+		ifTrue: [ ^ self runOnClass ].
 		
 	self notYetImplemented 
 ]
 
 { #category : #private }
+RFiLDependencyInterpreter >> runOnClass [
+	
+	targetsCallback value: entity superclass.
+	self flag: #todo. "value trait composition too"
+]
+
+{ #category : #private }
 RFiLDependencyInterpreter >> runOnMethod [
 
-	self methodVisitor
+	methodVisitor
 		collector: self;
 		visitMethod: entity.
 ]

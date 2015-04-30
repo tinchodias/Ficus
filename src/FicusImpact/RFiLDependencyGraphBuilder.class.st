@@ -34,9 +34,13 @@ RFiLDependencyGraphBuilder class >> graphForEnvironment: aRFiEnvironment [
 { #category : #building }
 RFiLDependencyGraphBuilder >> entities [
 
+	self flag: #todo.
+
 	^ Array streamContents: [ :stream |
 		environment allClassesAndTraitsDo: [ :class |
 			stream 
+				nextPut: class;
+				"nextPut: class classSide; TODO: collector class-traits of the traitComposition" 
 				nextPutAll: class methods;
 				nextPutAll: class classSide methods ]]
 ]

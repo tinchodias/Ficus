@@ -175,6 +175,13 @@ RFiEnvironment >> ficusPathToClass: aRFiClass [
 ]
 
 { #category : #accessing }
+RFiEnvironment >> ficusPathToClassVariable: aRFiClassVariable [ 
+	
+	^ aRFiClassVariable definingClass ficusPathFromEnvironment / 
+		#classPool / aRFiClassVariable name
+]
+
+{ #category : #accessing }
 RFiEnvironment >> ficusPathToInstanceVariable: aRFiInstanceVariable [ 
 
 	^ aRFiInstanceVariable definingClass ficusPathFromEnvironment / 
@@ -223,7 +230,7 @@ RFiEnvironment >> globalByName [
 		self knownGlobalNames do: [ :aGlobalName |
 			globalByName 
 				at: aGlobalName
-				put: self knownGlobalDummyValue ].
+				put: (self ringGlobalVariableNamed: aGlobalName) ].
 			
 		globalByName ]
 ]
@@ -393,6 +400,13 @@ RFiEnvironment >> ringClassFor: aFiClass [
 	^ RFiClass
 		environment: self
 		ficusClass: aFiClass
+]
+
+{ #category : #accessing }
+RFiEnvironment >> ringGlobalVariableNamed: aGlobalName [
+
+	^ RFiGlobalVariable newWithEnvironment: self name: aGlobalName
+
 ]
 
 { #category : #private }

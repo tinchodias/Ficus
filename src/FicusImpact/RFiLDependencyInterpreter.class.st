@@ -49,6 +49,8 @@ RFiLDependencyInterpreter >> run [
 { #category : #private }
 RFiLDependencyInterpreter >> runOnClass [
 	
+	entity superclass ifNil: [ ^ self ].
+	
 	targetsCallback value: entity superclass.
 	self flag: #todo. "value trait composition too"
 ]

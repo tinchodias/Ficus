@@ -12,11 +12,11 @@ Class {
 { #category : #'instance creation' }
 RFiDependency class >> requisite: aRequisite source: aRFiObject targets: someTargets [
 
-	^ self builder
-		requisite: aRequisite;
-		source: aRFiObject;
+	^ self basicNew 
+		initializeWithRequisite: aRequisite
+		source: aRFiObject
 		targets: someTargets;
-		new
+		yourself
 ]
 
 { #category : #converting }
@@ -39,6 +39,16 @@ RFiDependency >> asRFiInterpretedDependency [
 RFiDependency >> defaultStep [
 
 	^ requisite shortPrintString
+]
+
+{ #category : #'as yet unclassified' }
+RFiDependency >> initializeWithRequisite: req source: src targets: tg [ 
+	
+	super initialize.
+	
+	requisite := req.
+	source := src.
+	targets := tg.
 ]
 
 { #category : #accessing }

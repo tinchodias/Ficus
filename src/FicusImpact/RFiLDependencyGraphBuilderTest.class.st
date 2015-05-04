@@ -23,5 +23,5 @@ RFiLDependencyGraphBuilderTest >> test01 [
 
 	self assert: (graph nodes collect: #contents as: Set) isNotEmpty.
 
-	self assert: graph size <= (methods size + classes size).
+	self assert: graph size equals: 68.
 ]

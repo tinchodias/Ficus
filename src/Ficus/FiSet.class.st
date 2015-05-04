@@ -145,7 +145,7 @@ FiSet >> editFromSimpleEffect: aSimpleEffect [
 		ifEmpty: [ self editInclude: aSimpleEffect newValue ]
 		ifNotEmpty: [ :children | 
 			self 
-				editAt: aSimpleEffect path step
+				editAtPath: FiPath root / aSimpleEffect path step
 				do: [ :oneStepForward |
 					self editAll: (children collect: [ :each | 
 						oneStepForward editFromSimpleEffect: each ]) ]].

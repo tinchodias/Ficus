@@ -66,6 +66,12 @@ FiShot >> editAll: aCollectionOfEdits [
 ]
 
 { #category : #edits }
+FiShot >> editAt: step do: aBlockClosure [ 
+
+	^ self subclassResponsibility
+]
+
+{ #category : #edits }
 FiShot >> editAtPath: aPath do: aBlockClosure [
 
 	| target edit |
@@ -311,7 +317,7 @@ FiShot >> values [
 
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 FiShot >> valuesDo: elementBlock [
 	"Evaluates the block on each value of this object"
 	

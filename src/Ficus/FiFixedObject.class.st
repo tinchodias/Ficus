@@ -128,15 +128,13 @@ FiFixedObject >> gtInspectorItemsIn: composite [
 { #category : #initialization }
 FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 
-	| availableSteps |
-	availableSteps := self class steps.
 	self initialize.
 	
 	aDictionary keysAndValuesDo: [ :slotName :value |
 		[ self instVarNamed: slotName put: value ]
 			on: Error 
 			do: [ :e | 
-				self error: slotName asString, ' not found in ', availableSteps asString ] ]
+				self error: slotName asString, ' not found in ', self asString ] ]
 ]
 
 { #category : #accessing }
@@ -151,24 +149,24 @@ FiFixedObject >> resultOfAcceptSlot: anAcceptSlot [
 	^ self copy
 		resetCachedHash;
 		instVarNamed: anAcceptSlot slotName
-		put: ((self instVarNamed: anAcceptSlot slotName) resultOf: anAcceptSlot edit);
+		put: ((self valueAt: anAcceptSlot slotName) resultOf: anAcceptSlot edit);
 		yourself
 
 ]
 
 { #category : #accessing }
-FiFixedObject >> stepCount [
+FiFixedObject >> steps [
 	
-	^ self class steps size
+	^ self class steps
 ]
 
 { #category : #enumerating }
 FiFixedObject >> stepsAndValuesDo: aBlockClosure [ 
 
-	^ self class steps do: [ :name |
+	^ self steps do: [ :name |
 		aBlockClosure 
 			value: name 
-			value: (self instVarNamed: name) ]
+			value: (self valueAt: name) ]
 
 ]
 

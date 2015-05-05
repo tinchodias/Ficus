@@ -270,7 +270,7 @@ FiSet >> select: aBlockClosure [
 
 ]
 
-{ #category : #enumerating }
+{ #category : #accessing }
 FiSet >> stepCount [
 	
 	^ self size

@@ -2,8 +2,7 @@ Class {
 	#name : #FiEditorTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'aShot',
-		'anotherShot'
+		'aShot'
 	],
 	#category : #'Ficus-Tests-Editors'
 }

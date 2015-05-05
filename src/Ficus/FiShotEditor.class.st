@@ -8,6 +8,12 @@ Class {
 	#category : #'Ficus-Model-Editors'
 }
 
+{ #category : #accessing }
+FiShotEditor >> base [
+
+	^ base
+]
+
 { #category : #initialization }
 FiShotEditor >> initializeForBase: aShot [ 
 	

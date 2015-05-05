@@ -42,7 +42,7 @@ FiChef >> defaultStep [
 	^ nickname asSymbol
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 FiChef >> initialize [
 
 	super initialize.

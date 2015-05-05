@@ -28,6 +28,12 @@ FiEffect >> asSimpleEffects [
 	^ self asSimpleEffectsAt: FiPath root
 ]
 
+{ #category : #converting }
+FiEffect >> asSimpleEffectsAt: aBasePath [
+
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 FiEffect >> edit [
 

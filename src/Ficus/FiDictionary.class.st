@@ -166,7 +166,7 @@ FiDictionary >> resultOfExcludeKey: anExcludeKey [
 				yourself)
 ]
 
-{ #category : #enumerating }
+{ #category : #accessing }
 FiDictionary >> stepCount [
 	
 	^ valueByKey size

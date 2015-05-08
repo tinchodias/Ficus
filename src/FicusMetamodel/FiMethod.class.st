@@ -38,7 +38,7 @@ FiMethod class >> sourceCode: aSourceCode protocol: aProtocol [
 { #category : #accessing }
 FiMethod >> defaultStep [
 
-	^ self selector asSymbol
+	^ self selector
 ]
 
 { #category : #initialization }
@@ -62,6 +62,12 @@ FiMethod >> printOn: aStream [
 ]
 
 { #category : #accessing }
+FiMethod >> privateSourceCode [
+	
+	^ sourceCode
+]
+
+{ #category : #accessing }
 FiMethod >> protocol [
 	
 	^ protocol
@@ -73,7 +79,7 @@ FiMethod >> selector [
 	self flag: #fix. "Horrible! Keep as a step instead of calculating it?"
 
 	^ selector ifNil: [
-		selector := [ RBParser parseMethodPattern: sourceCode ]
+		selector := [ RBParser parseMethodPattern: self sourceCode ]
 			on: SyntaxErrorNotification 
 			do: [ :error | ('_unparsed_selector_', self hash printStringHex) asSymbol ].
 		]
@@ -82,5 +88,15 @@ FiMethod >> selector [
 { #category : #accessing }
 FiMethod >> sourceCode [
 	
-	^ sourceCode
+	^ sourceCode asString
+]
+
+{ #category : #accessing }
+FiMethod >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+	"Optimization since I'm intensively used."
+
+	step == #sourceCode ifTrue: [ ^ self sourceCode ].
+	step == #protocol ifTrue: [ ^ self protocol ].
+	
+	^ super valueAt: step ifPresent: presentBlock ifAbsent: absentBlock
 ]

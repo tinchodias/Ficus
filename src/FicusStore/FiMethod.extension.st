@@ -3,7 +3,7 @@ Extension { #name : #FiMethod }
 { #category : #'*FicusStore' }
 FiMethod >> ficusInspectorDefinitionString [
 
-	^ '"', protocol, '"', String cr, sourceCode 
+	^ '"', self protocol, '"', String cr, self sourceCode 
 ]
 
 { #category : #'*FicusStore' }

@@ -85,10 +85,10 @@ FiMonticelloDefinitionVisitor >> ficusMetaclassMethodsFor: aMCClassDefinition [
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusMethodFor: aMCMethodDefinition [ 
 	
-	^ FiMethod builder 
-		protocol: aMCMethodDefinition category;
-		sourceCode: aMCMethodDefinition source;
-		new
+	^ FiMethod
+		sourceCode: aMCMethodDefinition ficusSource
+		protocol: aMCMethodDefinition category
+
 ]
 
 { #category : #private }

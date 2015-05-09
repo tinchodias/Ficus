@@ -26,12 +26,7 @@ FiRemoteString >> = other [
 FiRemoteString >> asString [
 	
 	^ (self at: 1) ifNil: [
-		| fileIndex filePosition string |
-		fileIndex := SourceFiles fileIndexFromSourcePointer: sourcePointer.
-		filePosition := SourceFiles filePositionFromSourcePointer: sourcePointer.
-		string := (RemoteString newFileNumber: fileIndex position: filePosition) string.
-
-		self at: 1 put: string ]
+		self at: 1 put: self uncachedAsString ]
 ]
 
 { #category : #comparing }
@@ -46,4 +41,14 @@ FiRemoteString >> initializeFromSourcePointer: aSourcePointer [
 	self initialize.
 	
 	sourcePointer := aSourcePointer.
+]
+
+{ #category : #converting }
+FiRemoteString >> uncachedAsString [
+	
+	| fileIndex filePosition |
+	fileIndex := SourceFiles fileIndexFromSourcePointer: sourcePointer.
+	filePosition := SourceFiles filePositionFromSourcePointer: sourcePointer.
+
+	^ (RemoteString newFileNumber: fileIndex position: filePosition) string
 ]

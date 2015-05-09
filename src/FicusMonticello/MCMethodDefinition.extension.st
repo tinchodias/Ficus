@@ -15,13 +15,13 @@ MCMethodDefinition >> actualClassIfAbsent: absentBlock [
 { #category : #'*FicusMonticello' }
 MCMethodDefinition >> ficusSource [
 
-	| actualClass actualMethod remoteString actualSource |
-	actualClass := self actualClassIfAbsent: [ ^ self source ].
-	actualMethod := actualClass compiledMethodAt: self selector ifAbsent: [ ^ self source ].
-	remoteString := actualMethod remoteStringIfAbsent: [ ^ self source ].
-	actualSource := self source.
+	| actualClass actualMethod remoteString mcSource |
+	mcSource := self source.
+	actualClass := self actualClassIfAbsent: [ ^ mcSource ].
+	actualMethod := actualClass compiledMethodAt: self selector ifAbsent: [ ^ mcSource ].
+	remoteString := actualMethod remoteStringIfAbsent: [ ^ mcSource ].
 
-	^ remoteString string = actualSource
+	^ remoteString string = mcSource
 		ifTrue: [ remoteString asFiRemoteString ]
-		ifFalse: [ actualSource ]
+		ifFalse: [ mcSource ]
 ]

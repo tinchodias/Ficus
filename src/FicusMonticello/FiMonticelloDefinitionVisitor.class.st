@@ -25,7 +25,7 @@ FiMonticelloDefinitionVisitor >> ficusClassFor: aMCClassDefinition [
 		category: aMCClassDefinition category;
 		classPool: (self ficusClassPoolFor: aMCClassDefinition);
 		sharedPools: (self ficusSharedPoolsFor: aMCClassDefinition);
-		comment: aMCClassDefinition comment;
+		comment: aMCClassDefinition ficusComment;
 		new
 ]
 

@@ -93,7 +93,7 @@ FiMethod >> sourceCode [
 
 { #category : #accessing }
 FiMethod >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
-	"Optimization since I'm intensively used."
+	"I'm needed because the slot 'sourceCode' can hold a FiRemoteString, thus the accessor has to be used."
 
 	step == #sourceCode ifTrue: [ ^ self sourceCode ].
 	step == #protocol ifTrue: [ ^ self protocol ].

@@ -52,7 +52,7 @@ FiClass >> classVariablesString [
 { #category : #accessing }
 FiClass >> comment [
 
-	^ comment
+	^ comment asString
 ]
 
 { #category : #accessing }
@@ -175,6 +175,12 @@ FiClass >> printOn: aStream [
 ]
 
 { #category : #accessing }
+FiClass >> privateComment [
+
+	^ comment
+]
+
+{ #category : #accessing }
 FiClass >> sharedPools [
 	
 	^ sharedPools
@@ -197,4 +203,13 @@ FiClass >> superclassName [
 FiClass >> traitComposition [
 	
 	^ traitComposition
+]
+
+{ #category : #accessing }
+FiClass >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+	"I'm needed because the slot 'comment' can hold a FiRemoteString, thus the accessor has to be used."
+
+	step == #comment ifTrue: [ ^ self comment ].
+	
+	^ super valueAt: step ifPresent: presentBlock ifAbsent: absentBlock
 ]

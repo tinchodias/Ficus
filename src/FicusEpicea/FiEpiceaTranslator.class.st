@@ -35,10 +35,9 @@ FiEpiceaTranslator >> editForMethodEqual: aRingMethod [
 		path: path
 		edit: 
 			(FiInclude value: 
-				(FiMethod builder
-					protocol: aRingMethod protocol asSymbol;
-					sourceCode: aRingMethod sourceCode asString;
-					new))
+				(FiMethod
+					sourceCode: aRingMethod sourceCode asString
+					protocol: aRingMethod protocol asSymbol))
 ]
 
 { #category : #private }
@@ -59,16 +58,16 @@ FiEpiceaTranslator >> ficusClassFor: aRGClassDefinition [
 ]
 
 { #category : #private }
-FiEpiceaTranslator >> ficusClassPoolFor: aMCClassDefinition [ 
+FiEpiceaTranslator >> ficusClassPoolFor: aRGClassDefinition [ 
 
-	^ self ficusSymbolSetFor: aMCClassDefinition classVarNames 
+	^ self ficusSymbolSetFor: aRGClassDefinition classVarNames 
 ]
 
 { #category : #private }
-FiEpiceaTranslator >> ficusLayoutFor: aMCClassDefinition [
+FiEpiceaTranslator >> ficusLayoutFor: aRGClassDefinition [
 			
 	^ FiFixedLayout builder 
-		instanceVariables: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
+		instanceVariables: (self ficusSymbolSetFor: aRGClassDefinition instVarNames);
 		new
 ]
 

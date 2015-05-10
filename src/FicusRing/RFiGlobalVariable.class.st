@@ -1,3 +1,6 @@
+"
+I represent a global variable defined in the environment.
+"
 Class {
 	#name : #RFiGlobalVariable,
 	#superclass : #RFiObject,

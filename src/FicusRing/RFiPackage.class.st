@@ -48,6 +48,12 @@ RFiPackage >> definedMethods [
 		]
 ]
 
+{ #category : #'as yet unclassified' }
+RFiPackage >> environment [
+
+	^ environment
+]
+
 { #category : #accessing }
 RFiPackage >> extensionMethods [
 

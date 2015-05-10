@@ -202,14 +202,6 @@ RFiBehavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 		selectorAndMethodBlock value: each selector value: each ]
 ]
 
-{ #category : #'*FicusRing' }
-RFiBehavior >> systemNavigation [
-
-	^ SystemNavigation new 
-		environment: self environment;
-		yourself
-]
-
 { #category : #'testing method dictionary' }
 RFiBehavior >> thoroughHasSelectorReferringTo: literal special: specialFlag byte: specialByte [
 	"Just ignore some arguments. Standard implementation is already thorough :)"

@@ -7,6 +7,12 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #'as yet unclassified' }
+RFiObject >> environment [
+
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 RFiObject >> ficusObject [
 
@@ -23,4 +29,12 @@ RFiObject >> ficusPathFromEnvironment [
 RFiObject >> shortPrintString [
 
 	^ self name
+]
+
+{ #category : #'as yet unclassified' }
+RFiObject >> systemNavigation [
+
+	^ SystemNavigation new 
+		environment: self environment;
+		yourself
 ]

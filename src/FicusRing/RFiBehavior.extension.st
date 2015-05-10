@@ -6,11 +6,3 @@ RFiBehavior >> allUnsentMessages [
 
 	^ self systemNavigation allUnsentMessagesIn: self selectors
 ]
-
-{ #category : #'*FicusRing' }
-RFiBehavior >> systemNavigation [
-
-	^ SystemNavigation new 
-		environment: self environment;
-		yourself
-]

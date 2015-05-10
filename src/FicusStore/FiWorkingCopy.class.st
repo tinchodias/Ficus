@@ -52,6 +52,22 @@ FiWorkingCopy >> commit: aString [
 ]
 
 { #category : #operations }
+FiWorkingCopy >> commitEdit: anEdit [
+
+	| newNode |
+	self assert: priors size = 1.
+
+	newNode := store 
+		commitEdit: anEdit
+		prior: priors anyOne.
+	
+	priors := { newNode } asFiSet.
+	snapshot := snapshot resultOf: anEdit.
+	
+	self announceRefreshed.
+]
+
+{ #category : #operations }
 FiWorkingCopy >> delta [
 
 	priors size = 1 ifFalse: [ self notYetImplemented ].

@@ -134,6 +134,17 @@ FiMemoryStore >> closestCommonHistoryNodeFor: aCollection [
 ]
 
 { #category : #accessing }
+FiMemoryStore >> commitEdit: anEdit prior: priorHistoryNode [
+	
+	^ historyNodes add: 
+		(FiDeltaHistoryNode builder
+			origin: (FiSingleOrigin withReference: (self name, '.', historyNodes size asString));
+			edit: anEdit;
+			prior: priorHistoryNode;
+			new)
+]
+
+{ #category : #accessing }
 FiMemoryStore >> commitSnapshot: aSnapshot priors: priors [
 	
 	^ historyNodes add: 

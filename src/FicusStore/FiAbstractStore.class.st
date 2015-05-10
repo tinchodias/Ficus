@@ -17,6 +17,14 @@ FiAbstractStore >> announcer [
 ]
 
 { #category : #accessing }
+FiAbstractStore >> commitEdit: anEdit prior: priorHistoryNode [
+
+	^ self 
+		commitSnapshot: (self headSnapshot resultOf: anEdit) 
+		priors: { priorHistoryNode } asFiSet
+]
+
+{ #category : #accessing }
 FiAbstractStore >> commitSnapshot: aSnapshot priors: priors [
 	"Perform a commit"
 	

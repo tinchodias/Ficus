@@ -22,6 +22,40 @@ FiHistoryNode >> deltas [
 	^ self shouldBeImplemented 
 ]
 
+{ #category : #printing }
+FiHistoryNode >> ficusInspectorDefinitionString [
+
+	^ self printString
+]
+
+{ #category : #printing }
+FiHistoryNode >> gtInspectorDeltasIn: composite [
+	<gtInspectorPresentationOrder: 26> 
+
+	composite morph
+		title: [ 'Deltas' ];
+		display: [:shot | 
+			(FiDeltasInspector new 
+				plugin: FiNullStoreBrowserPlugin new;
+				deltas: self deltas;
+				buildWithSpec;
+				yourself) widget widget ]
+]
+
+{ #category : #printing }
+FiHistoryNode >> gtInspectorSnapshotIn: composite [
+	<gtInspectorPresentationOrder: 25> 
+
+	composite morph
+		title: [ 'Snapshot' ];
+		display: [:shot | 
+			(FiInspector new 
+"				plugin: FiNullStoreBrowserPlugin new;"
+				rootShot: self snapshot;
+				buildWithSpec;
+				yourself) widget widget ]
+]
+
 { #category : #testing }
 FiHistoryNode >> isWorkingCopy [
 

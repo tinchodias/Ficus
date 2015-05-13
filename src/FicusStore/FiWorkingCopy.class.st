@@ -57,12 +57,13 @@ FiWorkingCopy >> commitEdit: anEdit [
 	| newNode |
 	self assert: priors size = 1.
 
+	snapshot := snapshot resultOf: anEdit. "Do it before committing, mostly for debugging reasons."
+
 	newNode := store 
 		commitEdit: anEdit
 		prior: priors anyOne.
 	
 	priors := { newNode } asFiSet.
-	snapshot := snapshot resultOf: anEdit.
 	
 	self announceRefreshed.
 ]

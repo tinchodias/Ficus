@@ -93,7 +93,7 @@ FiHistoryNodesBrowser >> initializeHiedraController [
 	
 	hiedraRulerController rulerBuilder nodeBuilder
 		width: 5.15;
-		color: Color black.
+		color: Smalltalk ui theme textColor.
 	
 	hiedraRulerController rulerBuilder addLinkBuilder: [ :linkBuilder |
 		linkBuilder 

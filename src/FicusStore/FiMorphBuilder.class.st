@@ -83,9 +83,9 @@ FiMorphBuilder >> rowMorphWithAll: someMophs [
 { #category : #building }
 FiMorphBuilder >> stringMorphWith: aString [
 
-	^ self 
-		stringMorphWith: aString 
-		color: Color black
+	^ aString asMorph
+		lock: true;
+		yourself
 ]
 
 { #category : #building }

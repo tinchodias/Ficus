@@ -205,6 +205,12 @@ FiSet >> indexOf: step ifPresent: presentBlock ifAbsent: absentBlock [
 ]
 
 { #category : #initialization }
+FiSet >> initializeFromStepsAndValues: aDictionary [
+
+	self shouldNotImplement "Use initializeWithValues:"
+]
+
+{ #category : #initialization }
 FiSet >> initializeWithValues: aCollection [ 
 
 	| index |	

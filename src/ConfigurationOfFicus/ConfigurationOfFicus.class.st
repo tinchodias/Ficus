@@ -129,6 +129,8 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #Hiedra with: [ 
 				spec repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ];
 			package: #Ficus;
+			package: #FicusExtras with: [
+				spec requires: #(#Ficus) ];
 			package: #FicusMetamodel with: [
 				spec requires: #(#Ficus) ];
 			package: #FicusRing with: [
@@ -140,7 +142,7 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #FicusMonticello with: [
 				spec requires: #(#FicusMetamodel #FicusStore) ];
 			package: #FicusMonticelloYrupe with: [
-				spec requires: #(#FicusMonticello #Yrupe) ];
+				spec requires: #(#FicusMonticello #Yrupe #FicusExtras) ]; "FicusExtras: only because of FiDictionary, which is used in tests."
 			package: #FicusEpicea with: [
 				spec requires: #(#FicusMetamodel #FicusMonticello #Epicea) ].
 		spec

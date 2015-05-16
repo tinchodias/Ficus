@@ -3,7 +3,7 @@ I represent a set. TODO
 "
 Class {
 	#name : #FiSet,
-	#superclass : #FiShot,
+	#superclass : #FiObject,
 	#type : #variable,
 	#category : #'Ficus-Model-Core'
 }

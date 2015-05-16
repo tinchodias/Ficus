@@ -27,6 +27,18 @@ FiRelativePath >> = another [
 		and: [ self step = another step ]
 ]
 
+{ #category : #converting }
+FiRelativePath >> asPathOn: anObject [
+
+	^ (basePath asPathOn: anObject) / step
+]
+
+{ #category : #printing }
+FiRelativePath >> asShortPrintStrings [
+
+	^ basePath asShortPrintStrings copyWith: step
+]
+
 { #category : #accessing }
 FiRelativePath >> basePath [
 

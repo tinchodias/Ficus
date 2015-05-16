@@ -72,7 +72,7 @@ Object >> ficusDeepDo: aBlock basePath: aPath [
 ]
 
 { #category : #'*Ficus' }
-Object >> isShot [
+Object >> isFiObject [
 
 	^ false
 ]

@@ -20,6 +20,18 @@ FiEdit class >> fromAll: edits [
 				ifFalse: [ FiCompositeEdit withAll: edits ] ]
 ]
 
+{ #category : #convenience }
+FiEdit class >> fromAllAssociations: associations [
+
+	| edits |
+	edits := associations collect: [ :each |
+		FiSubEdit 
+			path: each key asFiPath 
+			equal: each value ].
+
+	^ self fromAll: edits
+]
+
 { #category : #testing }
 FiEdit >> affects: aPath [ 
 	

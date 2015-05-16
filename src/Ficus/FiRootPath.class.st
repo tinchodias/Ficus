@@ -21,6 +21,18 @@ FiRootPath >> = another [
 	^ self class = another class
 ]
 
+{ #category : #converting }
+FiRootPath >> asPathOn: anObject [
+
+	^ self
+]
+
+{ #category : #printing }
+FiRootPath >> asShortPrintStrings [
+
+	^ #()
+]
+
 { #category : #comparing }
 FiRootPath >> hash [
 

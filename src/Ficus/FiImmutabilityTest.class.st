@@ -47,6 +47,6 @@ FiImmutabilityTest >> assertHasNotSetters: shotClass instanceVariableName: insta
 { #category : #tests }
 FiImmutabilityTest >> testImmutable [
 
-	FiShot withAllSubclasses do: [ :shotClass |
+	FiObject withAllSubclasses do: [ :shotClass |
 		self assertHasNotSetters: shotClass ]
 ]

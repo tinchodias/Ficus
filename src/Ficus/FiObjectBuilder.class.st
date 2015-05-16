@@ -11,7 +11,7 @@ FiMethod builder
 Will answer an instance of FiMethod where the protocol and the selector have the specified values. 
 "
 Class {
-	#name : #FiShotBuilder,
+	#name : #FiObjectBuilder,
 	#superclass : #Object,
 	#instVars : [
 		'theClass',
@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiShotBuilder class >> forClass: aClass [ 
+FiObjectBuilder class >> forClass: aClass [ 
 
 	^ self basicNew
 		initializeForClass: aClass;
@@ -30,7 +30,7 @@ FiShotBuilder class >> forClass: aClass [
 ]
 
 { #category : #'reflective operations' }
-FiShotBuilder >> doesNotUnderstand: aMessage [ 
+FiObjectBuilder >> doesNotUnderstand: aMessage [ 
 
 	aMessage arguments size = 1 
 		ifFalse: [ ^ super doesNotUnderstand: aMessage ].
@@ -41,17 +41,17 @@ FiShotBuilder >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #initialization }
-FiShotBuilder >> initializeForClass: aClass [
+FiObjectBuilder >> initializeForClass: aClass [
 
 	super initialize.
 
 	theClass := aClass.	
 	stepsAndValues := Dictionary new.
-	cache := FiShotCache default.
+	cache := FiObjectCache default.
 ]
 
 { #category : #building }
-FiShotBuilder >> new [
+FiObjectBuilder >> new [
 
 	| newInstance |
 	newInstance := theClass newFromStepsAndValues: stepsAndValues.

@@ -3,7 +3,7 @@ I represent a fixed object. This means that I have named slots.
 "
 Class {
 	#name : #FiFixedObject,
-	#superclass : #FiShot,
+	#superclass : #FiObject,
 	#category : #'Ficus-Model-Core'
 }
 

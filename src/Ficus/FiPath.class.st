@@ -1,9 +1,9 @@
 "
-I represent a path in a shot. See my concrete subclasses.
+I represent a path in a FiObject. See my concrete subclasses.
 "
 Class {
 	#name : #FiPath,
-	#superclass : #Object,
+	#superclass : #FiSpot,
 	#category : #'Ficus-Model-Paths'
 }
 
@@ -55,14 +55,6 @@ FiPath class >> stonName [
 	"Encode my instances using a different class name."
 
 	^ FiPath name
-]
-
-{ #category : #accessing }
-FiPath >> / anObject [
-	
-	^ FiRelativePath 
-		on: self 
-		step: anObject
 ]
 
 { #category : #testing }

@@ -2,7 +2,7 @@
 I implement a cache for FiShot instances.
 "
 Class {
-	#name : #FiShotCache,
+	#name : #FiObjectCache,
 	#superclass : #Object,
 	#instVars : [
 		'cacheByClass'
@@ -14,20 +14,20 @@ Class {
 }
 
 { #category : #accessing }
-FiShotCache class >> default [
+FiObjectCache class >> default [
 	
 	^ defaultInstance ifNil: [ defaultInstance := self new ]
 ]
 
 { #category : #accessing }
-FiShotCache class >> reset [
+FiObjectCache class >> reset [
 	"self reset"
 	
 	^ defaultInstance := nil
 ]
 
 { #category : #initialization }
-FiShotCache >> initialize [
+FiObjectCache >> initialize [
 
 	super initialize.
 	
@@ -35,23 +35,23 @@ FiShotCache >> initialize [
 ]
 
 { #category : #accessing }
-FiShotCache >> like: aShot [
+FiObjectCache >> like: anObject [
 
 	| aWeakSet |
 	aWeakSet := 
 		cacheByClass 
-			at: aShot class
+			at: anObject class
 			ifAbsentPut: [ WeakSet new ].
 
 	^ aWeakSet 
-		like: aShot 
+		like: anObject 
 		ifAbsent: [ 
-			aWeakSet add: aShot.
-			aShot ]
+			aWeakSet add: anObject.
+			anObject ]
 ]
 
 { #category : #accessing }
-FiShotCache >> size [
+FiObjectCache >> size [
 	
 	^ cacheByClass inject: 0 into: [ :sum :aWeakSet | sum + aWeakSet slowSize ]
 ]

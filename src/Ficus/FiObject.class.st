@@ -1,5 +1,5 @@
 "
-I represent an immutable object which must not form cycles with other FiShots (i.e. a Directed Acyclic Graph). 
+I represent an immutable object which must not form cycles (i.e. a Directed Acyclic Graph). 
 
 A shot has #steps, which are Symbol names which can be used to access corresponding #values.
 
@@ -12,7 +12,7 @@ Then, an edit can be used to calculate either:
 
 "
 Class {
-	#name : #FiShot,
+	#name : #FiObject,
 	#superclass : #Object,
 	#instVars : [
 		'cachedHash'
@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-FiShot class >> newFromStepsAndValues: aCollection [ 
+FiObject class >> newFromStepsAndValues: aCollection [ 
 	
 	^ self basicNew
 		initializeFromStepsAndValues: aCollection;
@@ -29,14 +29,14 @@ FiShot class >> newFromStepsAndValues: aCollection [
 ]
 
 { #category : #accessing }
-FiShot class >> steps [
+FiObject class >> steps [
 	"Answer the collection of steps that all of my instances must have."
 	
 	^ #()
 ]
 
 { #category : #comparing }
-FiShot >> = another [
+FiObject >> = another [
 	
 	self == another ifTrue: [ ^ true ].
 	self class = another class ifFalse: [ ^ false ].
@@ -54,25 +54,25 @@ FiShot >> = another [
 ]
 
 { #category : #differencing }
-FiShot >> differenceFrom: other [
+FiObject >> differenceFrom: other [
 
 	^ self subclassResponsibility 
 ]
 
 { #category : #edits }
-FiShot >> editAll: aCollectionOfEdits [
+FiObject >> editAll: aCollectionOfEdits [
 	
 	^ FiEdit fromAll: aCollectionOfEdits
 ]
 
 { #category : #edits }
-FiShot >> editAt: step do: aBlockClosure [ 
+FiObject >> editAt: step do: aBlockClosure [ 
 
 	^ self subclassResponsibility
 ]
 
 { #category : #edits }
-FiShot >> editAtPath: aPath do: aBlockClosure [
+FiObject >> editAtPath: aPath do: aBlockClosure [
 
 	| target edit |
 	target := aPath resolvedOn: self.
@@ -84,7 +84,7 @@ FiShot >> editAtPath: aPath do: aBlockClosure [
 ]
 
 { #category : #edits }
-FiShot >> editFromSimpleEffects: simpleEffects [
+FiObject >> editFromSimpleEffects: simpleEffects [
 	"Convert as edit, assuming the FiSimpleEffect applies to myself *as root*."
 
 	^ self editAll: (simpleEffects collect: [ :each | 
@@ -94,13 +94,13 @@ FiShot >> editFromSimpleEffects: simpleEffects [
 ]
 
 { #category : #effects }
-FiShot >> effectOf: anEdit [ 
+FiObject >> effectOf: anEdit [ 
 
 	^ anEdit effectOn: self
 ]
 
 { #category : #effects }
-FiShot >> effectOfCompositeEdit: aCompositeEdit [ 
+FiObject >> effectOfCompositeEdit: aCompositeEdit [ 
 
 	^ FiCompositeEffect builder
 		children: (aCompositeEdit children values collect: [ :anEdit | anEdit effectOn: self ]) asFiSet;
@@ -108,7 +108,7 @@ FiShot >> effectOfCompositeEdit: aCompositeEdit [
 ]
 
 { #category : #effects }
-FiShot >> effectOfSubEdit: aSubEdit [ 
+FiObject >> effectOfSubEdit: aSubEdit [ 
 
 	self flag: #fix. "inefficient".
 	
@@ -116,7 +116,7 @@ FiShot >> effectOfSubEdit: aSubEdit [
 ]
 
 { #category : #enumerating }
-FiShot >> ficusDeepCollect: aBlock basePath: aPath [
+FiObject >> ficusDeepCollect: aBlock basePath: aPath [
 
 	| collectionFromChildren |
 	collectionFromChildren := 
@@ -131,7 +131,7 @@ FiShot >> ficusDeepCollect: aBlock basePath: aPath [
 ]
 
 { #category : #enumerating }
-FiShot >> ficusDeepDo: aBlock [
+FiObject >> ficusDeepDo: aBlock [
 
 	self stepsAndValuesDo: [ :step :value |
 		value ficusDeepDo: aBlock ].
@@ -140,7 +140,7 @@ FiShot >> ficusDeepDo: aBlock [
 ]
 
 { #category : #enumerating }
-FiShot >> ficusDeepDo: aBlock basePath: aPath [
+FiObject >> ficusDeepDo: aBlock basePath: aPath [
 
 	self stepsAndValuesDo: [ :step :value |
 		value ficusDeepDo: aBlock basePath: (aPath / step) ].
@@ -151,31 +151,31 @@ FiShot >> ficusDeepDo: aBlock basePath: aPath [
 ]
 
 { #category : #comparing }
-FiShot >> hash [
+FiObject >> hash [
 	
 	^ cachedHash ifNil: [ cachedHash := self uncachedHash ]
 ]
 
 { #category : #initialization }
-FiShot >> initializeFromStepsAndValues: aDictionary [
+FiObject >> initializeFromStepsAndValues: aDictionary [
 
 	self subclassResponsibility 
 ]
 
 { #category : #testing }
-FiShot >> isShot [
+FiObject >> isFiObject [
 	
 	^ true
 ]
 
 { #category : #accessing }
-FiShot >> resetCachedHash [
+FiObject >> resetCachedHash [
 
 	cachedHash := nil
 ]
 
 { #category : #results }
-FiShot >> resultOfCompositeEdit: aCompositeEdit [ 
+FiObject >> resultOfCompositeEdit: aCompositeEdit [ 
 
 	^ aCompositeEdit children values
 		inject: self
@@ -183,37 +183,39 @@ FiShot >> resultOfCompositeEdit: aCompositeEdit [
 ]
 
 { #category : #results }
-FiShot >> resultOfSubEdit: aSubEdit [ 
+FiObject >> resultOfSubEdit: aSubEdit [ 
 	
-	^ self resultOfSubEdit: aSubEdit steps: aSubEdit path steps
+	^ self 
+		resultOfSubEdit: aSubEdit
+		steps: (aSubEdit path asPathOn: self) steps
 ]
 
 { #category : #results }
-FiShot >> resultOfSubEdit: aSubEdit steps: anArrayOfSteps [
+FiObject >> resultOfSubEdit: aSubEdit steps: anArrayOfSteps [
 	
-	^ anArrayOfSteps 
-		ifEmpty: [ self resultOf: aSubEdit edit ]
+	| anEdit |
+	anEdit := anArrayOfSteps 
+		ifEmpty: [ aSubEdit edit ]
 		ifNotEmpty: [ 
-			| anEdit |
-			anEdit := 
-				self 
-					editAt: anArrayOfSteps first
-					do: [ :aValue | 
-						FiEqual value: 
-							(aValue 
-								resultOfSubEdit: aSubEdit 
-								steps: anArrayOfSteps allButFirst) ].
-			self resultOf: anEdit ]
+			self 
+				editAt: anArrayOfSteps first
+				do: [ :aValue | 
+					FiEqual value: 
+						(aValue 
+							resultOfSubEdit: aSubEdit 
+							steps: anArrayOfSteps allButFirst) ] ].
+					
+	^ self resultOf: anEdit
 ]
 
 { #category : #accessing }
-FiShot >> stepCount [
+FiObject >> stepCount [
 	
 	^ self steps size
 ]
 
 { #category : #accessing }
-FiShot >> steps [
+FiObject >> steps [
 
 	| result |
 	result := Set new.
@@ -225,7 +227,7 @@ FiShot >> steps [
 ]
 
 { #category : #enumerating }
-FiShot >> stepsAndValues [
+FiObject >> stepsAndValues [
 
 	| result |
 	result := Set new.
@@ -237,13 +239,13 @@ FiShot >> stepsAndValues [
 ]
 
 { #category : #enumerating }
-FiShot >> stepsAndValuesDo: aBlockClosure [ 
+FiObject >> stepsAndValuesDo: aBlockClosure [ 
 
 	^ self subclassResponsibility 
 ]
 
 { #category : #printing }
-FiShot >> stonOn: stonWriter [
+FiObject >> stonOn: stonWriter [
 
 	stonWriter 
 		writeObject: self 
@@ -253,25 +255,25 @@ FiShot >> stonOn: stonWriter [
 ]
 
 { #category : #printing }
-FiShot >> stonString [
+FiObject >> stonString [
 
 	^ STON toStringPretty: self
 ]
 
 { #category : #printing }
-FiShot >> storeOn: aStream [
+FiObject >> storeOn: aStream [
 
 	self storeOn: aStream indent: 1
 ]
 
 { #category : #printing }
-FiShot >> storeOn: aStream indent: level [
+FiObject >> storeOn: aStream indent: level [
 
 	self subclassResponsibility 
 ]
 
 { #category : #comparing }
-FiShot >> uncachedHash [
+FiObject >> uncachedHash [
 	
 	| hash |
 	hash := self class hash.
@@ -283,22 +285,22 @@ FiShot >> uncachedHash [
 ]
 
 { #category : #accessing }
-FiShot >> valueAt: step [
+FiObject >> valueAt: step [
 
 	^ self 
 		valueAt: step 
 		ifPresent: [ :shot | shot ]
-		ifAbsent: [ NotFound signalFor: step in: self ]
+		ifAbsent: [ StepNotFound signalFor: step in: self ]
 ]
 
 { #category : #accessing }
-FiShot >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
+FiObject >> valueAt: step ifPresent: presentBlock ifAbsent: absentBlock [
 
 	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
-FiShot >> values [
+FiObject >> values [
 	
 	^ Array streamContents: [ :stream |
 		self valuesDo: [ :each | stream nextPut: each ] ]
@@ -306,7 +308,7 @@ FiShot >> values [
 ]
 
 { #category : #enumerating }
-FiShot >> valuesDo: elementBlock [
+FiObject >> valuesDo: elementBlock [
 	"Evaluates the block on each value of this object"
 	
 	^ self stepsAndValuesDo: [ :step :value | elementBlock value: value ]

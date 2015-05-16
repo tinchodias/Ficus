@@ -97,12 +97,6 @@ FiFixedObject >> editFromSimpleEffect: aSimpleEffect [
 						oneStepForward editFromSimpleEffect: each ]) ]].
 ]
 
-{ #category : #convenience }
-FiFixedObject >> editor [
-	
-	^ FiFixedObjectEditor for: self
-]
-
 { #category : #effects }
 FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
 
@@ -135,12 +129,6 @@ FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 			on: Error 
 			do: [ :e | 
 				self error: slotName asString, ' not found in ', self asString ] ]
-]
-
-{ #category : #accessing }
-FiFixedObject >> resetCachedHash [
-
-	cachedHash := nil
 ]
 
 { #category : #results }

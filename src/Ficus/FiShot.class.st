@@ -93,13 +93,6 @@ FiShot >> editFromSimpleEffects: simpleEffects [
 			do: [ :target | target editFromSimpleEffect: each ]])
 ]
 
-{ #category : #convenience }
-FiShot >> editor [
-	"Answer a FiShotEditor associated with this instance."
-	
-	^ self subclassResponsibility
-]
-
 { #category : #effects }
 FiShot >> effectOf: anEdit [ 
 
@@ -157,17 +150,6 @@ FiShot >> ficusDeepDo: aBlock basePath: aPath [
 		value: aPath
 ]
 
-{ #category : #converting }
-FiShot >> flattened [
-	
-	^ (Array streamContents: [ :stream |
-		self 
-			ficusDeepDo: [ :value :path | stream nextPut: path -> value ]
-			basePath: FiPath root ])
-		reversed
-
-]
-
 { #category : #comparing }
 FiShot >> hash [
 	
@@ -184,6 +166,12 @@ FiShot >> initializeFromStepsAndValues: aDictionary [
 FiShot >> isShot [
 	
 	^ true
+]
+
+{ #category : #accessing }
+FiShot >> resetCachedHash [
+
+	cachedHash := nil
 ]
 
 { #category : #results }

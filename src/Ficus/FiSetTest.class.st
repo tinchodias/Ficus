@@ -4,7 +4,7 @@ A FiSetTest is a test class for testing the behavior of FiSet
 Class {
 	#name : #FiSetTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core-Edits'
+	#category : #'Ficus-Tests-Core'
 }
 
 { #category : #tests }

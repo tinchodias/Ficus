@@ -1,11 +1,11 @@
 Class {
-	#name : #FiShotPrintingTest,
+	#name : #FiPrintingTest,
 	#superclass : #TestCase,
 	#category : #'Ficus-Tests-Core'
 }
 
 { #category : #tests }
-FiShotPrintingTest >> testStoreString [
+FiPrintingTest >> testStoreString [
 
 	| shot otherShot edit source intermediate effect result |
 	source := FiSet new.

@@ -1,7 +1,7 @@
 Class {
 	#name : #FiFixedObjectEffectsTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core-Effects'
+	#category : #'Ficus-Tests-Core'
 }
 
 { #category : #tests }

@@ -1,7 +1,7 @@
 Class {
 	#name : #FiFixedObjectDifferencesTest,
 	#superclass : #TestCase,
-	#category : #'Ficus-Tests-Core-Differences'
+	#category : #'Ficus-Tests-Core'
 }
 
 { #category : #tests }

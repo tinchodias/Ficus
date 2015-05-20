@@ -255,12 +255,6 @@ FiObject >> stonOn: stonWriter [
 ]
 
 { #category : #printing }
-FiObject >> stonString [
-
-	^ STON toStringPretty: self
-]
-
-{ #category : #printing }
 FiObject >> storeOn: aStream [
 
 	self storeOn: aStream indent: 1

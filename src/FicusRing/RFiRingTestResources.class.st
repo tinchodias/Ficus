@@ -4,7 +4,7 @@ Resource with diverse Ficus metalevel objects, intended for tests.
 Class {
 	#name : #RFiRingTestResources,
 	#superclass : #RFiBaseResources,
-	#category : #'FicusRing-Examples'
+	#category : #'FicusRing-Tests'
 }
 
 { #category : #resources }

@@ -31,15 +31,6 @@ RFiEnvironmentBrowser class >> example3 [
 	^ self openOn: RFiRingTestResources new ringEnvironment
 ]
 
-{ #category : #examples }
-RFiEnvironmentBrowser class >> example4yrupe [
-	"
-	self example4yrupe
-	"
-	
-	^ self openOn: (YrPharoMigrator example1readTag: '30005') asRFiEnvironment
-]
-
 { #category : #actions }
 RFiEnvironmentBrowser >> browseImplementorsInHierarchyOf: aRFiMethod [
 

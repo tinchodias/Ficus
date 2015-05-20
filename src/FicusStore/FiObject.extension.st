@@ -1,7 +1,7 @@
-Extension { #name : #FiShot }
+Extension { #name : #FiObject }
 
 { #category : #'*FicusStore' }
-FiShot >> gtInspectorTreeIn: composite [
+FiObject >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 35> 
 
 	composite morph

@@ -59,7 +59,7 @@ FiMorphBuilder >> pathMorphWith: aPath [
 	
 	^ (separator join: (aPath steps collect: [ :each | 
 			each asString asText 
-				addAttribute: (TextColor color: Color darkGray); 
+				addAttribute: (TextColor color: Smalltalk ui theme caretColor); 
 				addAttribute: (TextFontChange fontNumber: 2); 
 				yourself ])) 
 		asMorph
@@ -77,6 +77,26 @@ FiMorphBuilder >> rowMorphWithAll: someMophs [
 		listDirection: #leftToRight;
 		cellInset: 3;
 		addAllMorphs: someMophs;
+		yourself
+]
+
+{ #category : #building }
+FiMorphBuilder >> spotMorphWith: aSpot [
+
+	| separator |
+	separator := 
+		'  /  ' asText 
+			addAttribute: (TextColor color: Color lightGray); 
+			addAttribute: (TextFontChange fontNumber: 1); 
+			yourself. 
+	
+	^ (separator join: (aSpot asShortPrintStrings collect: [ :each | 
+			each asString asText 
+				addAttribute: (TextColor color: Smalltalk ui theme caretColor); 
+				addAttribute: (TextFontChange fontNumber: 2); 
+				yourself ])) 
+		asMorph
+		lock: true;
 		yourself
 ]
 

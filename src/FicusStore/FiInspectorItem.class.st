@@ -14,7 +14,7 @@ Class {
 { #category : #accessing }
 FiInspectorItem >> children [
 
-	content isShot ifFalse: [ ^ #() ].
+	content isFiObject ifFalse: [ ^ #() ].
 	
 	^ (content stepsAndValues sorted: [ :a :b | a key < b key ]) 
 			collect: [ :stepAndValue |

@@ -6,7 +6,6 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'treeModel',
-		'iconByClassName',
 		'diffModel',
 		'currentSelection',
 		'plugin'

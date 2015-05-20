@@ -7,5 +7,5 @@ Class {
 	#instVars : [
 		'isWords'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }

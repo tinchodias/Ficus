@@ -9,7 +9,7 @@ Class {
 		'sourceCode',
 		'selector'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }
 
 { #category : #accessing }

@@ -4,5 +4,5 @@ I represent an FiBehavior's layout with both named slots and *strong* indexed sl
 Class {
 	#name : #FiVariableLayout,
 	#superclass : #FiPointerLayout,
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }

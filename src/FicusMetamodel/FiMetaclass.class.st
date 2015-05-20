@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'traitComposition'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }
 
 { #category : #'instance creation' }

@@ -11,7 +11,7 @@ Class {
 		'traitComposition',
 		'name'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }
 
 { #category : #'instance creation' }

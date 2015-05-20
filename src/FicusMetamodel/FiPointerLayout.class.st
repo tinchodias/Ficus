@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'instanceVariables'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }
 
 { #category : #initialization }

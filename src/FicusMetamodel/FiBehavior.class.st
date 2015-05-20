@@ -8,7 +8,7 @@ Class {
 		'layout',
 		'methods'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }
 
 { #category : #initialization }

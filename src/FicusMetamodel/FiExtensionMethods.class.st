@@ -9,7 +9,7 @@ Class {
 		'methods',
 		'isMetaSide'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }
 
 { #category : #accessing }

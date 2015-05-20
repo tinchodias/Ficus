@@ -8,7 +8,7 @@ Class {
 		'contents',
 		'name'
 	],
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }
 
 { #category : #accessing }

@@ -216,3 +216,31 @@ ConfigurationOfFicus >> version01: spec [
 			package: #FicusEpicea with: #FicusEpicea. ].
 
 ]
+
+{ #category : #versions }
+ConfigurationOfFicus >> version02: spec [
+	<version: '0.2' imports: #('0.2-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.2.
+		Added metacello writer and tests'.
+		spec author: 'GuillermoPolito'.
+		spec timestamp: '5/20/2015 14:24'.
+		spec 
+			project: #Epicea with: '4.8-baseline';
+			project: #Yrupe with: '0.1-baseline'.
+		spec 
+			package: #Hiedra with: #Hiedra;
+			package: #Ficus with: 'Ficus-GuillermoPolito.182';
+			package: #FicusExtras with: #FicusExtras;
+			package: #FicusMetamodel with: 'FicusMetamodel-MartinDias.14';
+			package: #FicusRing with: 'FicusRing-GuillermoPolito.117';
+			package: #FicusImpact with: #FicusImpact;
+			package: #FicusStore with: #FicusStore;
+			package: #FicusMonticello with: 'FicusMonticello-GuillermoPolito.62';
+			package: #FicusMonticelloStore with: #FicusMonticelloStore;
+			package: #FicusMonticelloYrupe with: #FicusMonticelloYrupe;
+			package: #FicusEpicea with: #FicusEpicea. ].
+
+]

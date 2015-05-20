@@ -305,12 +305,27 @@ RFiEnvironment >> implementorsOf: aSelector inSuperclassesOf: aRingClass [
 				ifAbsent: [ ] ] ]
 ]
 
+{ #category : #testing }
+RFiEnvironment >> includesClassNamed: aName [ 
+	
+	^ self
+		at: aName
+		ifPresent: [ :element | true ]
+		ifAbsent: [ false ]
+]
+
 { #category : #initialization }
 RFiEnvironment >> initializeWithFicusPackages: aFiSet [
 
 	self initialize.
 	
 	ficusPackages := aFiSet.
+]
+
+{ #category : #testing }
+RFiEnvironment >> isEmpty [
+	
+	^ ficusPackages isEmpty
 ]
 
 { #category : #accessing }

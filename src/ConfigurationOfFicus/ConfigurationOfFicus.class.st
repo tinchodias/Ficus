@@ -140,13 +140,16 @@ ConfigurationOfFicus >> baseline01: spec [
 			package: #FicusStore with: [
 				spec requires: #(#FicusMetamodel #Hiedra) ];
 			package: #FicusMonticello with: [
-				spec requires: #(#FicusMetamodel #FicusStore) ];
+				spec requires: #(#FicusMetamodel) ];
+			package: #FicusMonticelloStore with: [
+				spec requires: #(#FicusMonticello #FicusStore) ];
 			package: #FicusMonticelloYrupe with: [
 				spec requires: #(#FicusMonticello #Yrupe #FicusExtras) ]; "FicusExtras: only because of FiDictionary, which is used in tests."
 			package: #FicusEpicea with: [
-				spec requires: #(#FicusMetamodel #FicusMonticello #Epicea) ].
+				spec requires: #(#FicusMetamodel #FicusMonticelloStore #Epicea) ].
 		spec
-			group: 'default' with: #('Ficus' 'FicusEpicea' 'FicusStore' 'FicusImpact' 'FicusMonticelloYrupe') ].
+			group: 'default' with: #('Ficus' 'FicusEpicea' 'FicusStore' 'FicusImpact' 'FicusMonticelloYrupe');
+			group: 'mini' with: #('FicusRing' 'FicusMonticello') ].
 
 ]
 

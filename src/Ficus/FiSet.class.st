@@ -72,6 +72,13 @@ FiSet >> collect: aBlockClosure [
 	^ newSet
 ]
 
+{ #category : #enumerating }
+FiSet >> detect: aBlockClosure [ 
+	
+	self do: [ :each | (aBlockClosure value: each) ifTrue: [ ^ true ] ].
+	NotFound signalFor: aBlockClosure.
+]
+
 { #category : #differencing }
 FiSet >> differenceFrom: other [
 

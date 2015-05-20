@@ -1,14 +1,14 @@
-Extension { #name : #FiShot }
+Extension { #name : #FiObject }
 
 { #category : #'*FicusExtras' }
-FiShot >> editor [
+FiObject >> editor [
 	"Answer a FiShotEditor associated with this instance."
 	
 	^ self subclassResponsibility
 ]
 
 { #category : #'*FicusExtras' }
-FiShot >> flattened [
+FiObject >> flattened [
 	
 	^ (Array streamContents: [ :stream |
 		self 

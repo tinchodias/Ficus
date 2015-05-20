@@ -181,3 +181,38 @@ ConfigurationOfFicus >> project [
 		project loadType: #linear. "change to #atomic if desired"
 		project ]
 ]
+
+{ #category : #'symbolic versions' }
+ConfigurationOfFicus >> stable: spec [
+	<symbolicVersion: #'stable'>
+
+	spec for: #'common' version: '0.1'.
+
+]
+
+{ #category : #versions }
+ConfigurationOfFicus >> version01: spec [
+	<version: '0.1' imports: #('0.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.1'.
+		spec author: 'MartinDias'.
+		spec timestamp: '5/20/2015 12:14'.
+		spec 
+			project: #Epicea with: '4.8-baseline';
+			project: #Yrupe with: '0.1-baseline'.
+		spec 
+			package: #Hiedra with: #Hiedra;
+			package: #Ficus with: 'Ficus-MartinDias.181';
+			package: #FicusExtras with: #FicusExtras;
+			package: #FicusMetamodel with: 'FicusMetamodel-MartinDias.14';
+			package: #FicusRing with: 'FicusRing-MartinDias.116';
+			package: #FicusImpact with: #FicusImpact;
+			package: #FicusStore with: #FicusStore;
+			package: #FicusMonticello with: 'FicusMonticello-MartinDias.61';
+			package: #FicusMonticelloStore with: #FicusMonticelloStore;
+			package: #FicusMonticelloYrupe with: #FicusMonticelloYrupe;
+			package: #FicusEpicea with: #FicusEpicea. ].
+
+]

@@ -49,7 +49,7 @@ FiTrait >> initialize [
 	category := nil.
 	comment := ''.
 	traitComposition := '{}'.
-	methods := FiDictionary new.
+	methods := FiSet new.
 ]
 
 { #category : #testing }

@@ -7,7 +7,8 @@ Class {
 { #category : #actions }
 RFiMethodsBrowser >> browseDependenciesOf: aRFiObject [
 
-	(RFiDependenciesBrowser openOn: aRFiObject) extent: 700@600
+	self flag: #todo.
+	(#RFiDependenciesBrowser asClass openOn: aRFiObject) extent: 700@600
 ]
 
 { #category : #building }

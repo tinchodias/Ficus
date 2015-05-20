@@ -16,7 +16,7 @@ Class {
 { #category : #private }
 YrPharoMigrator class >> example1directory [
 	
-	^ FileSystem workingDirectory / 'yrupe-p-3'
+	^ FileSystem workingDirectory / 'yrupe-p-7f'
 ]
 
 { #category : #private }

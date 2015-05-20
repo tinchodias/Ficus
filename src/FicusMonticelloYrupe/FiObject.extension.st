@@ -1,25 +1,25 @@
-Extension { #name : #FiShot }
+Extension { #name : #FiObject }
 
 { #category : #'*FicusMonticelloYrupe' }
-FiShot >> yrupeDefaultEncoder [ 
+FiObject >> yrupeDefaultEncoder [ 
 
 	^ YrTreeEncoding new
 ]
 
 { #category : #'*FicusMonticelloYrupe' }
-FiShot >> yrupeEncoderFor: step [
+FiObject >> yrupeEncoderFor: step [
 	
 	^ (self valueAt: step) yrupeDefaultEncoder
 ]
 
 { #category : #'*FicusMonticelloYrupe' }
-FiShot >> yrupeKeysAndValuesDo: aBlockClosure [ 
+FiObject >> yrupeKeysAndValuesDo: aBlockClosure [ 
 
 	^ self stepsAndValuesDo: aBlockClosure 
 ]
 
 { #category : #'*FicusMonticelloYrupe' }
-FiShot classSide >> yrupeNewFromKeysAndValues: aDictionary [
+FiObject classSide >> yrupeNewFromKeysAndValues: aDictionary [
 
 	^ self newFromStepsAndValues: aDictionary
 ]

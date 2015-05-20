@@ -7,7 +7,7 @@ Class {
 { #category : #utilities }
 FiImmutabilityTest class >> candidatesForRemoval [
 
-	^ FiShot withAllSubclasses collect: [ :aClass |
+	^ FiObject withAllSubclasses collect: [ :aClass |
 		aClass -> (aClass allInstVarNames flatCollect: [ :instanceVariableName |
 			((aClass whichSelectorsStoreInto: instanceVariableName) reject: [ :selector | selector beginsWith: #init ]) ]) ]
 ]

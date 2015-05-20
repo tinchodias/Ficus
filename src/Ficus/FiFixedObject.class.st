@@ -10,7 +10,7 @@ Class {
 { #category : #'instance creation' }
 FiFixedObject class >> builder [
 	
-	^ FiShotBuilder forClass: self
+	^ FiObjectBuilder forClass: self
 ]
 
 { #category : #accessing }

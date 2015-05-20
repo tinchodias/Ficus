@@ -1,5 +1,5 @@
 "
-I implement a cache for FiShot instances.
+I implement a cache for FiObject instances.
 "
 Class {
 	#name : #FiObjectCache,

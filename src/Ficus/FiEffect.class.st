@@ -1,7 +1,7 @@
 "
 I represent an abstract edit effect on a shot. FiEdits know how to create effects.
 
-See class comment of FiShot.
+See class comment of FiObject.
 "
 Class {
 	#name : #FiEffect,

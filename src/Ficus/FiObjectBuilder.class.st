@@ -1,5 +1,5 @@
 "
-I help on building FiShot subclasses. 
+I help on building FiObject subclasses. 
 
 Example:
 

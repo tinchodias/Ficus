@@ -1,7 +1,7 @@
 "
 I represent an abstract edit on a shot. 
 
-See the class comment in FiShot.
+See the class comment in FiObject.
 "
 Class {
 	#name : #FiEdit,

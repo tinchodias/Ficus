@@ -7,8 +7,8 @@ Class {
 		'versionNamesByTag',
 		'packageShotByVersionName',
 		'packageShotsByTag',
-		'shaByTag',
-		'versionNamesNotFound'
+		'versionNamesNotFound',
+		'pharoMiner'
 	],
 	#category : #'FicusMonticelloYrupe-Migration'
 }
@@ -16,7 +16,7 @@ Class {
 { #category : #private }
 YrPharoMigrator class >> example1directory [
 	
-	^ FileSystem workingDirectory / 'yrupe-p-7f'
+	^ FileSystem workingDirectory / 'yrupe-pharo-migrator'
 ]
 
 { #category : #private }
@@ -42,75 +42,7 @@ YrPharoMigrator class >> example1packHead [
 	self newOpenGitRepository packHead.
 ]
 
-{ #category : #examples }
-YrPharoMigrator class >> example1read2 [
-
-	"
-	self example1read2.
-	"
-
-	| gitRepository head contents aPackage reader |
-	gitRepository := self newOpenGitRepository.
-
-	head := gitRepository head object.
-	contents := (head tree entries detect: [ :each | each filename = 'contents' ]) object.
-	aPackage := (contents entries detect: [ :each | each filename = 'FuelTests' ]) object.
-
-	reader := YrReader new
-		repository: gitRepository;
-		yourself.
-
-	^ reader read: aPackage.
-]
-
-{ #category : #examples }
-YrPharoMigrator class >> example1read3 [
-
-	"
-	self example1read3.
-	"
-
-	| gitRepository head contents aPackage aClass reader |
-	gitRepository := self newOpenGitRepository.
-
-	head := gitRepository head object.
-	contents := (head tree entries detect: [ :each | each filename = 'contents' ]) object.
-	aPackage := (contents entries detect: [ :each | each filename = 'FuelTests' ]) object.
-	contents := (aPackage entries detect: [ :each | each filename = 'contents' ]) object.
-	aClass := (contents entries detect: [ :each | each filename = 'FLSignatureTest' ]) object.
-
-	reader := YrReader new
-		repository: gitRepository;
-		yourself.
-
-	^ reader read: aClass.
-]
-
-{ #category : #examples }
-YrPharoMigrator class >> example1read4 [
-
-	"
-	self example1read4.
-	"
-
-	| gitRepository head contents aPackage aClass reader |
-	gitRepository := self newOpenGitRepository.
-
-	head := gitRepository head object.
-	contents := (head tree entries detect: [ :each | each filename = 'contents' ]) object.
-	aPackage := (contents entries detect: [ :each | each filename = 'FuelTests' ]) object.
-	contents := (aPackage entries detect: [ :each | each filename = 'contents' ]) object.
-	aClass := (contents entries detect: [ :each | each filename = 'FLPair' ]) object.
-	contents := (aClass entries detect: [ :each | each filename = 'comment' ]) object.
-
-	reader := YrReader new
-		repository: gitRepository;
-		yourself.
-
-	^ reader read: contents
-]
-
-{ #category : #examples }
+{ #category : #'examples - reading' }
 YrPharoMigrator class >> example1readHead [
 
 	"
@@ -129,7 +61,7 @@ YrPharoMigrator class >> example1readHead [
 	^ reader readFromCommit: head.
 ]
 
-{ #category : #examples }
+{ #category : #'examples - reading' }
 YrPharoMigrator class >> example1readSHA [
 	"
 	[ self example1readSHA ] timeToRun.
@@ -140,7 +72,7 @@ YrPharoMigrator class >> example1readSHA [
 		readFromCommitSHA: '665b434569674e5c9a2f5604decfa31557eb0162'.
 ]
 
-{ #category : #examples }
+{ #category : #'examples - reading' }
 YrPharoMigrator class >> example1readTag [
 	"
 	self example1readTag.
@@ -149,7 +81,7 @@ YrPharoMigrator class >> example1readTag [
 	^ self example1readTag: '30022'.
 ]
 
-{ #category : #examples }
+{ #category : #'examples - reading' }
 YrPharoMigrator class >> example1readTag: pharoTag [
 	"
 	self example1readTag: '30465'
@@ -160,7 +92,7 @@ YrPharoMigrator class >> example1readTag: pharoTag [
 		readFromCommitTaggedAs: pharoTag
 ]
 
-{ #category : #examples }
+{ #category : #'examples - reading' }
 YrPharoMigrator class >> example1readTagMC [
 
 	"
@@ -170,7 +102,7 @@ YrPharoMigrator class >> example1readTagMC [
 	^ self example1readTagMC: '30122'
 ]
 
-{ #category : #examples }
+{ #category : #'examples - reading' }
 YrPharoMigrator class >> example1readTagMC: pharoTagName [
 
 	"
@@ -192,7 +124,7 @@ YrPharoMigrator class >> example1readTagMC: pharoTagName [
 
 ]
 
-{ #category : #examples }
+{ #category : #'examples - reading' }
 YrPharoMigrator class >> example1readTagMCs [
 
 	"
@@ -219,117 +151,60 @@ YrPharoMigrator class >> example1readTagMCs [
 	^ packageShotsByTag 
 ]
 
-{ #category : #private }
+{ #category : #examples }
 YrPharoMigrator class >> example1tags [
 
 	^ self newOpenGitRepository tags
 ]
 
-{ #category : #examples }
+{ #category : #'examples - writing' }
 YrPharoMigrator class >> example1writeNew [
-
 	"
 	self example1writeNew.
 	"
 
-	"git repository"
-	| directory gitRepository |
-	directory := self example1directory.
-	self assert: directory exists not.
-	
-	gitRepository := LGitRepository on: directory.
-	gitRepository
-		create;
-		init.
-
-	^ self new
-		gitRepository: gitRepository;
-		versionNamesByTag: self versionNamesByTag;
-		monticelloRepository: MCCacheRepository uniqueInstance;
-		migrate.
+	^ self 
+		example1writeTagsFrom: self pharoMiner
+		onRepository: self newFreshGitRepository
 ]
 
-{ #category : #examples }
-YrPharoMigrator class >> example1writeNewFlushing [
-
-	"
-	self example1writeNewFlushing.
-	"
-
-	self example1ensureNewRepoInitialized.
-	self example1writeOpenFlushingAfter: self versionNamesByTag keys sorted first.
-]
-
-{ #category : #examples }
+{ #category : #'examples - writing' }
 YrPharoMigrator class >> example1writeOpen [
 	"
 	self example1writeOpen.
 	"
 
-	^ self new
-		gitRepository: self newOpenGitRepository;
-		versionNamesByTag: self versionNamesByTag;
-		monticelloRepository: MCCacheRepository uniqueInstance;
-		migrate
+	^ self 
+		example1writeTagsFrom: self pharoMiner
+		onRepository: self newOpenGitRepository
 ]
 
-{ #category : #examples }
-YrPharoMigrator class >> example1writeOpen: versionNamesByTag [
+{ #category : #'examples - writing' }
+YrPharoMigrator class >> example1writeOpenAfter: aTag [
+	"
+	self example1writeOpenAfter: '30130'.
+	"
+
+	^ self 
+		example1writeTagsFrom: (self pharoMinerWithTagsAfter: aTag)
+		onRepository: self newOpenGitRepository.
+]
+
+{ #category : #private }
+YrPharoMigrator class >> example1writeTagsFrom: aPharoMiner onRepository: aLGitRepository [
 
 	^ self new
-		gitRepository: self newOpenGitRepository;
-		versionNamesByTag: versionNamesByTag;
+		gitRepository: aLGitRepository;
+		pharoMiner: aPharoMiner;
 		monticelloRepository: MCCacheRepository uniqueInstance;
 		migrate.	
-]
-
-{ #category : #examples }
-YrPharoMigrator class >> example1writeOpenAfter: aTag [
-
-	"
-	self example1writeOpenAfter: '30623'.
-	"
-
-	^ self new
-		gitRepository: self newOpenGitRepository;
-		versionNamesByTag: (self versionNamesByTagAfter: aTag);
-		monticelloRepository: MCCacheRepository uniqueInstance;
-		migrate.
-]
-
-{ #category : #examples }
-YrPharoMigrator class >> example1writeOpenFlushingAfter: initialTag [
-
-	"
-	self example1writeOpenFlushingAfter: '30125'.
-	"
-
-	| versionNamesByTag intervalSize currentTag |
-	intervalSize := 15.
-	currentTag := initialTag.
-
-	[ 	versionNamesByTag := self versionNamesByTagAfter: currentTag first: intervalSize.
-		versionNamesByTag isEmpty ] whileFalse: [ 
-	
-		self example1writeOpen: versionNamesByTag.
-		
-		self flushAllCaches.
-		
-		FileStream stdout
-			nextPutAll: 'packHead: ';
-			print: [ self newOpenGitRepository packHead ] timeToRun;
-			lf.
-		
-		currentTag := versionNamesByTag keys sorted last.
-		].
-
 ]
 
 { #category : #private }
 YrPharoMigrator class >> flushAllCaches [
 
 	MCWorkingCopyBrowser basicNew flushAllCaches.
-	FiShotCache reset.
+	FiObjectCache reset.
 	MCMethodDefinition cleanUp.
 
 	3 timesRepeat: [  Smalltalk garbageCollect ].
@@ -351,6 +226,19 @@ YrPharoMigrator class >> generateVersionNamesByTagZippedSTONString [
 ]
 
 { #category : #private }
+YrPharoMigrator class >> newFreshGitRepository [
+
+	| directory |
+	directory := self example1directory.
+	self assert: directory exists not.
+	
+	^ (LGitRepository on: directory)
+		create;
+		init;
+		yourself
+]
+
+{ #category : #private }
 YrPharoMigrator class >> newOpenGitRepository [
 
 	| directory gitRepository |
@@ -362,6 +250,12 @@ YrPharoMigrator class >> newOpenGitRepository [
 	self assert: gitRepository isInitialized.
 
 	^ gitRepository
+]
+
+{ #category : #private }
+YrPharoMigrator class >> pharoMiner [
+
+	^ PharoVersionsMiner forPharo30
 ]
 
 { #category : #private }
@@ -440,9 +334,15 @@ YrPharoMigrator class >> versionNamesByTagZippedSTONString [
 { #category : #private }
 YrPharoMigrator >> commitWithTag: pharoTagName packageShots: packagesShot [
 
+	| parents |
+	parents := (self parentsFor: pharoTagName).
+	parents do: [: each | self assert: each class = LGitCommit ].
+
 	^ YrCommitWriter new
 		repository: gitRepository;
 		reference: gitRepository master;
+		parents: parents;
+		signatureDateAndTime: (self dateAndTimeFor: pharoTagName);
 		userName: 'Yrupe';
 		userEmail: 'yrupe@gotham.com';
 		message: (self messageForCommitWithTag: pharoTagName);
@@ -460,9 +360,13 @@ YrPharoMigrator >> commitWithTag: pharoTagName versionNames: aCollection [
 	commit := self commitWithTag: pharoTagName packageShots: packageShots.
 	self tag: commit as: pharoTagName.
 	
-	shaByTag at: pharoTagName put: commit id hexString.
-	
 	^ commit
+]
+
+{ #category : #private }
+YrPharoMigrator >> dateAndTimeFor: pharoTagName [
+		
+	^ pharoMiner timestampByTag at: pharoTagName
 ]
 
 { #category : #private }
@@ -502,7 +406,6 @@ YrPharoMigrator >> initialize [
 
 	super initialize.
 
-	shaByTag := SmallDictionary new.
 	packageShotsByTag := SmallDictionary new.
 	packageShotByVersionName := SmallDictionary new.
 
@@ -518,7 +421,7 @@ YrPharoMigrator >> messageForCommitWithTag: pharoTagName [
 			nextPutAll: 'Pharo ';
 			print: pharoTagName; cr; cr;
 			nextPutAll: 'MC versions:'; cr;
-			print: (versionNamesByTag at: pharoTagName); cr;
+			print: (self versionNamesByTag at: pharoTagName); cr;
 			nextPutAll: 'MC versions not found:'; cr;
 			print: versionNamesNotFound; cr.
 		].
@@ -528,10 +431,9 @@ YrPharoMigrator >> messageForCommitWithTag: pharoTagName [
 { #category : #migrating }
 YrPharoMigrator >> migrate [
 
-	| commit | 
-	versionNamesByTag associations
+	self versionNamesByTag associations
 		do: [ :association |
-			| duration |
+			| duration commit | 
 			duration := [
 				commit := self 
 					commitWithTag: association key 
@@ -566,6 +468,32 @@ YrPharoMigrator >> monticelloSnapshotFor: aVersionName [
 ]
 
 { #category : #private }
+YrPharoMigrator >> parentsFor: pharoTagName [
+	
+	| parentTags |
+	parentTags := pharoMiner parentTagsForTag: pharoTagName.
+	
+	^ [parentTags collect: [ :parentTag | 
+		(gitRepository lookup: 'refs/tags/', parentTag) object ]
+]
+			on: Error 
+			do: [ :e | 
+				YRUPE_TAGS_WITH_PARENTS_NOT_FOUND ifNil: [ YRUPE_TAGS_WITH_PARENTS_NOT_FOUND := OrderedCollection new ].
+				YRUPE_TAGS_WITH_PARENTS_NOT_FOUND add: pharoTagName.
+								
+								
+				[{gitRepository head} ]
+				on: Error 
+			do: [ :error | #() ]  ]
+]
+
+{ #category : #accessing }
+YrPharoMigrator >> pharoMiner: aPharoMiner [
+
+	pharoMiner := aPharoMiner
+]
+
+{ #category : #private }
 YrPharoMigrator >> pointMasterTo: aLGitCommit [
 
 	gitRepository master
@@ -584,6 +512,22 @@ YrPharoMigrator >> resetVersionNamesNotFound [
 YrPharoMigrator >> tag: commit as: pharoTagName [
 	
 	gitRepository createTag: pharoTagName targetId: commit id force: true
+]
+
+{ #category : #accessing }
+YrPharoMigrator >> versionNamesByTag [
+	
+	| original subset |
+	original := pharoMiner versionNamesByTag.
+	
+	subset := original keys sorted.
+	
+	^ subset 
+		inject: SmallDictionary new 
+		into: [ :dictionary :each |
+			dictionary
+				at: each put: (original at: each);
+				yourself ]
 ]
 
 { #category : #accessing }

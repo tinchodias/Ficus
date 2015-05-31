@@ -7,7 +7,7 @@ Class {
 		'ancestors',
 		'children'
 	],
-	#category : #'FicusMonticelloYrupe-Migration-Graph'
+	#category : #'FicusMonticelloYrupe-Migration-Old-Graph'
 }
 
 { #category : #'instance creation' }

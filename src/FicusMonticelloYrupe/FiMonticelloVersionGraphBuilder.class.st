@@ -6,7 +6,7 @@ Class {
 		'packageName',
 		'nodeByVersionName'
 	],
-	#category : #'FicusMonticelloYrupe-Migration-Graph'
+	#category : #'FicusMonticelloYrupe-Migration-Old-Graph'
 }
 
 { #category : #examples }

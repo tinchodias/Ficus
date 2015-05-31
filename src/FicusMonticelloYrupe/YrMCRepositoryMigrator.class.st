@@ -8,7 +8,7 @@ Class {
 		'packageName',
 		'commitByVersionNode'
 	],
-	#category : #'FicusMonticelloYrupe-Migration'
+	#category : #'FicusMonticelloYrupe-Migration-Old'
 }
 
 { #category : #examples }

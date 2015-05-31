@@ -5,29 +5,17 @@ Class {
 	#name : #FiWorkingCopyRefreshed,
 	#superclass : #Announcement,
 	#instVars : [
-		'target'
+		'workingCopy'
 	],
 	#category : #'FicusStore-WorkingCopies'
 }
 
-{ #category : #'instance creation' }
-FiWorkingCopyRefreshed class >> target: aWorkingCopy [ 
-
-	^ self basicNew
-		initializeWithTarget: aWorkingCopy;
-		yourself
-]
-
-{ #category : #initialization }
-FiWorkingCopyRefreshed >> initializeWithTarget: aWorkingCopy [
-
-	self initialize.
-	
-	target := aWorkingCopy
+{ #category : #accessing }
+FiWorkingCopyRefreshed >> workingCopy [
+	^ workingCopy
 ]
 
 { #category : #accessing }
-FiWorkingCopyRefreshed >> target [
-
-	^ target
+FiWorkingCopyRefreshed >> workingCopy: anObject [
+	workingCopy := anObject
 ]

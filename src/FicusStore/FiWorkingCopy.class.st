@@ -16,16 +16,22 @@ Class {
 	#category : #'FicusStore-WorkingCopies'
 }
 
-{ #category : #accessing }
-FiWorkingCopy >> announceRefreshed [
-
-	self announcer announce: (FiWorkingCopyRefreshed target: self)
-]
-
 { #category : #refreshing }
 FiWorkingCopy >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #operations }
+FiWorkingCopy >> applyEdit: anEdit [
+
+	snapshot := (snapshot resultOf: anEdit).
+
+	self announcer announce: 
+		(FiWorkingCopyEdited new
+			workingCopy: self;
+			edit: anEdit;
+			yourself)
 ]
 
 { #category : #converting }
@@ -48,24 +54,10 @@ FiWorkingCopy >> commit: aString [
 	
 	priors := { newNode } asFiSet.
 		
-	self announceRefreshed.
-]
-
-{ #category : #operations }
-FiWorkingCopy >> commitEdit: anEdit [
-
-	| newNode |
-	self assert: priors size = 1.
-
-	snapshot := snapshot resultOf: anEdit. "Do it before committing, mostly for debugging reasons."
-
-	newNode := store 
-		commitEdit: anEdit
-		prior: priors anyOne.
-	
-	priors := { newNode } asFiSet.
-	
-	self announceRefreshed.
+	self announcer announce: 
+		(FiWorkingCopyCommitted new
+			workingCopy: self;
+			yourself)
 ]
 
 { #category : #operations }
@@ -146,7 +138,10 @@ FiWorkingCopy >> snapshot: anObject [
 	
 	snapshot := anObject.
 	
-	self announceRefreshed.
+	self announcer announce: 
+		(FiWorkingCopySettedSnapshot new
+			workingCopy: self;
+			yourself)
 ]
 
 { #category : #accessing }

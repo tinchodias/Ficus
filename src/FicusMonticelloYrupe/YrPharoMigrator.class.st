@@ -346,7 +346,7 @@ YrPharoMigrator >> commitWithTag: pharoTagName packageShots: packagesShot [
 		userName: 'Yrupe';
 		userEmail: 'yrupe@gotham.com';
 		message: (self messageForCommitWithTag: pharoTagName);
-		commit: packagesShot
+		commit: (FiEnvironment withAll: packagesShot)
 ]
 
 { #category : #private }
@@ -482,7 +482,7 @@ YrPharoMigrator >> parentsFor: pharoTagName [
 				YRUPE_TAGS_WITH_PARENTS_NOT_FOUND add: pharoTagName.
 								
 								
-				[{gitRepository head} ]
+				[{gitRepository head object} ]
 				on: Error 
 			do: [ :error | #() ]  ]
 ]

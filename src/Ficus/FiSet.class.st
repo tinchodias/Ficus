@@ -63,6 +63,12 @@ FiSet >> asDictionary [
 	^ result
 ]
 
+{ #category : #converting }
+FiSet >> asFiSet [
+	
+	^ self
+]
+
 { #category : #enumerating }
 FiSet >> collect: aBlockClosure [ 
 	

@@ -202,10 +202,15 @@ YrPharoMigrator class >> example1writeTagsFrom: aPharoMiner onRepository: aLGitR
 
 { #category : #private }
 YrPharoMigrator class >> flushAllCaches [
+	"
+	self flushAllCaches
+	"
 
 	MCWorkingCopyBrowser basicNew flushAllCaches.
 	FiObjectCache reset.
 	MCMethodDefinition cleanUp.
+	YrWriteCache reset.
+	YrReadCache reset.
 
 	3 timesRepeat: [  Smalltalk garbageCollect ].
 ]
@@ -255,7 +260,7 @@ YrPharoMigrator class >> newOpenGitRepository [
 { #category : #private }
 YrPharoMigrator class >> pharoMiner [
 
-	^ PharoVersionsMiner forPharo30
+	^ PharoVersionsMiner forPharo50
 ]
 
 { #category : #private }
@@ -337,6 +342,9 @@ YrPharoMigrator >> commitWithTag: pharoTagName packageShots: packagesShot [
 	| parents |
 	parents := (self parentsFor: pharoTagName).
 	parents do: [: each | self assert: each class = LGitCommit ].
+
+	parents ifNotEmpty: [ 
+		self pointMasterTo: parents first ].
 
 	^ YrCommitWriter new
 		repository: gitRepository;

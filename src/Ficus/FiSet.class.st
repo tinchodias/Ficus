@@ -81,7 +81,7 @@ FiSet >> collect: aBlockClosure [
 { #category : #enumerating }
 FiSet >> detect: aBlockClosure [ 
 	
-	self do: [ :each | (aBlockClosure value: each) ifTrue: [ ^ true ] ].
+	self do: [ :each | (aBlockClosure value: each) ifTrue: [ ^ each ] ].
 	NotFound signalFor: aBlockClosure.
 ]
 

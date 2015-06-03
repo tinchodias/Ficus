@@ -123,7 +123,7 @@ FiSetSimpleEffectsTest >> testRemoval [
 
 { #category : #tests }
 FiSetSimpleEffectsTest >> testUpdate [
-
+	<expectedFailure>
 	| shot otherShot edit source intermediate effect simpleEffects |
 	source := FiSet new.
 	shot := FiChef nickname: #A.

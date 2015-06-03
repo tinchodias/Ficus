@@ -13,6 +13,14 @@ Class {
 }
 
 { #category : #private }
+FiMonticelloDefinitionVisitor >> ficusBytesLayoutFor: aMCClassDefinition [
+			
+	^ FiBitsLayout builder 
+		isWords: false;
+		new
+]
+
+{ #category : #private }
 FiMonticelloDefinitionVisitor >> ficusClassFor: aMCClassDefinition [ 
 
 	^ FiClass builder
@@ -36,6 +44,31 @@ FiMonticelloDefinitionVisitor >> ficusClassPoolFor: aMCClassDefinition [
 ]
 
 { #category : #private }
+FiMonticelloDefinitionVisitor >> ficusClassTraitFor: aMCTraitDefinition [ 
+
+	^ FiClassTrait builder
+		methods: (self ficusClassTraitMethodsFor: aMCTraitDefinition);
+		traitComposition: aMCTraitDefinition classTraitCompositionString;
+		new
+]
+
+{ #category : #private }
+FiMonticelloDefinitionVisitor >> ficusClassTraitMethodsFor: aMCTraitDefinition [
+
+	^ self ficusMethodsForAll: 
+		(monticelloMetaclassMethodsByHostName 
+			at: aMCTraitDefinition className
+			ifAbsent: [ #() ]).
+
+]
+
+{ #category : #private }
+FiMonticelloDefinitionVisitor >> ficusCompiledMethodLayoutFor: aMCClassDefinition [
+			
+	^ FiCompiledMethodLayout new
+]
+
+{ #category : #private }
 FiMonticelloDefinitionVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions isMetaSide: aBoolean [
 	
 	^ FiExtensionMethods builder
@@ -46,11 +79,35 @@ FiMonticelloDefinitionVisitor >> ficusExtensionMethodsForHostName: hostName meth
 ]
 
 { #category : #private }
-FiMonticelloDefinitionVisitor >> ficusLayoutFor: aMCClassDefinition [
+FiMonticelloDefinitionVisitor >> ficusFixedLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout builder 
-		instanceVariables: (self ficusSymbolSetFor: aMCClassDefinition instVarNames);
+		instanceVariables: (self ficusInstanceVariableSetFor: aMCClassDefinition instVarNames);
 		new
+]
+
+{ #category : #private }
+FiMonticelloDefinitionVisitor >> ficusInstanceVariableSetFor: aCollection [
+
+	^ ((aCollection collectWithIndex: [ :each :index |
+			FiInstanceVariable builder
+				index: index;
+				name: each asSymbol;
+				new ]) as: Set) asFiSet
+]
+
+{ #category : #private }
+FiMonticelloDefinitionVisitor >> ficusLayoutFor: aMCClassDefinition [
+			
+	| type |
+	type := aMCClassDefinition type.
+	type = #normal ifTrue: [^ self ficusFixedLayoutFor: aMCClassDefinition ].
+	type = #words ifTrue: [^ self ficusWordsLayoutFor: aMCClassDefinition ].
+	type = #variable ifTrue: [^ self ficusVariableLayoutFor: aMCClassDefinition ].
+	type = #bytes ifTrue: [^ self ficusBytesLayoutFor: aMCClassDefinition ].
+	type = #weak ifTrue: [^ self ficusWeakLayoutFor: aMCClassDefinition ].
+	type = #compiledMethod ifTrue: [^ self ficusCompiledMethodLayoutFor: aMCClassDefinition ].
+	Error signal: ('Unrecognized class type: {1}' format: {type})
 ]
 
 { #category : #private }
@@ -67,7 +124,7 @@ FiMonticelloDefinitionVisitor >> ficusMetaclassFor: aMCClassDefinition [
 FiMonticelloDefinitionVisitor >> ficusMetaclassLayoutFor: aMCClassDefinition [
 			
 	^ FiFixedLayout builder 
-		instanceVariables: (self ficusSymbolSetFor: aMCClassDefinition classInstVarNames);
+		instanceVariables: (self ficusInstanceVariableSetFor: aMCClassDefinition classInstVarNames);
 		new
 		
 ]
@@ -148,9 +205,34 @@ FiMonticelloDefinitionVisitor >> ficusTraitFor: aMCTraitDefinition [
 	^ FiTrait builder
 		name: aMCTraitDefinition className;
 		methods: (self ficusMethodsFor: aMCTraitDefinition);
+		classTrait: (self ficusClassTraitFor: aMCTraitDefinition);
 		traitComposition: aMCTraitDefinition traitCompositionString;
 		category: aMCTraitDefinition category;
 		comment: aMCTraitDefinition comment;
+		new
+]
+
+{ #category : #private }
+FiMonticelloDefinitionVisitor >> ficusVariableLayoutFor: aMCClassDefinition [
+			
+	^ FiVariableLayout builder 
+		instanceVariables: (self ficusInstanceVariableSetFor: aMCClassDefinition instVarNames);
+		new
+]
+
+{ #category : #private }
+FiMonticelloDefinitionVisitor >> ficusWeakLayoutFor: aMCClassDefinition [
+			
+	^ FiWeakVariableLayout builder 
+		instanceVariables: (self ficusInstanceVariableSetFor: aMCClassDefinition instVarNames);
+		new
+]
+
+{ #category : #private }
+FiMonticelloDefinitionVisitor >> ficusWordsLayoutFor: aMCClassDefinition [
+			
+	^ FiBitsLayout builder 
+		isWords: true;
 		new
 ]
 

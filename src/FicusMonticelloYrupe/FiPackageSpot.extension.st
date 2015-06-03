@@ -5,6 +5,9 @@ FiPackageSpot >> asYrupeFilePath [
 
 	^ String streamContents: [ :aStream |
 		aStream
-			nextPutAll: 'contents.tree/';
+			nextPutAll: FiEnvironmentSpot new asYrupeFilePath;
+			nextPut: $/;
+			nextPutAll: (FiSet new yrupeDefaultEncoder filenameFor: 'packages');
+			nextPut: $/;
 			nextPutAll: (FiPackage new yrupeDefaultEncoder filenameFor: packageName) ]
 ]

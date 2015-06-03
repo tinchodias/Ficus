@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'environment',
 		'definedClasses',
-		'ficusPackage'
+		'ficusPackage',
+		'definedTraits'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -46,6 +47,14 @@ RFiPackage >> definedMethods [
 
 		stream nextPutAll: self extensionMethods 
 		]
+]
+
+{ #category : #polymorphism }
+RFiPackage >> definedTraits [
+
+	^ definedTraits ifNil: [ 
+		definedTraits := ficusPackage traits 
+			collect: [ :traitShot | environment ringTraitFor: traitShot ] ]
 ]
 
 { #category : #'as yet unclassified' }

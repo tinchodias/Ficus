@@ -15,8 +15,11 @@ Class {
 
 { #category : #ambiguous }
 RFiBehavior >> allSlots [
-	
-	^ self allInstVarNames collect: #asSlot
+
+	^ self allInstVarNames withIndexCollect: [ :each :index |
+		(InstanceVariableSlot named: each name)
+			index: index;
+			yourself ]
 ]
 
 { #category : #'*FicusRing' }
@@ -29,9 +32,7 @@ RFiBehavior >> allUnsentMessages [
 { #category : #hacks }
 RFiBehavior >> basicLocalSelectors [
 	
-	self flag: #fix. "It is not considering Traits"
-	
-	^ self selectors
+	^ self localMethods collect: #selector
 ]
 
 { #category : #polymorphism }
@@ -87,6 +88,16 @@ RFiBehavior >> instSize [
 	^ self allInstVarNames size
 ]
 
+{ #category : #printing }
+RFiBehavior >> instanceVariablesString [
+	"Answer a string of my instance variable names separated by spaces."
+
+	^String streamContents: [ :stream |
+		self instVarNames 
+			do: [ :each | stream nextPutAll: each name ]
+			separatedBy: [ stream space ] ]
+]
+
 { #category : #polymorphism }
 RFiBehavior >> isBehavior [
 
@@ -94,9 +105,36 @@ RFiBehavior >> isBehavior [
 ]
 
 { #category : #testing }
+RFiBehavior >> isBits [
+	"Answer whether the receiver contains just bits (not pointers)."
+
+	^ self ficusClass layout isBitsLayout
+]
+
+{ #category : #testing }
 RFiBehavior >> isObsolete [
 
 	^ false
+]
+
+{ #category : #testing }
+RFiBehavior >> isVariable [
+	"Answer whether the receiver has indexable variables."
+
+	^ self ficusClass layout isVariableLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isWeak [
+	"Answer whether the receiver has contains weak references."
+	^ self ficusClass layout isWeakLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isWords [
+	"Answer true if the receiver is made of 32-bit instance variables."
+
+	^ self ficusClass layout isWordsLayout
 ]
 
 { #category : #'testing class hierarchy' }
@@ -140,12 +178,15 @@ RFiBehavior >> methodDict: aDictionary [
 { #category : #polymorphism }
 RFiBehavior >> methods [
 	
-	^ cachedMethods ifNil: [ 
-		cachedMethods := Array streamContents: [ :stream |
-			stream 
-				nextPutAll: (self environment extensionMethodsFor: self); 
-				nextPutAll: self localMethods 
-			] ]
+	^ cachedMethods ifNil: [ | methods |
+		methods := Dictionary new.
+		self traitProvidedMethods
+			do: [ :each | methods at: each selector put: (self ringMethodFor: each) ].
+		(self environment extensionMethodsFor: self)
+			do: [ :each | methods at: each selector put: each ].
+		self localMethods
+			do: [ :each | methods at: each selector put: each ].
+		cachedMethods := methods values ]
 ]
 
 { #category : #polymorphism }
@@ -216,12 +257,34 @@ RFiBehavior >> thoroughWhichSelectorsReferTo: literal special: specialFlag byte:
 	^ self whichSelectorsReferTo: literal
 ]
 
-{ #category : #traits }
+{ #category : #polymorphism }
 RFiBehavior >> traitComposition [
 
-	self flag: #todo. 
+	| traitCompositionAST |
+	traitCompositionAST := RBParser parseExpression: self ficusClass traitComposition.
+	^ (traitCompositionAST acceptVisitor: (RFiTraitCompositionAssembler on: self environment)) asTraitComposition
+]
 
-	^ TraitComposition new
+{ #category : #traits }
+RFiBehavior >> traitCompositionString [
+	^ self ficusClass traitComposition
+]
+
+{ #category : #polymorphism }
+RFiBehavior >> traitProvidedMethods [
+	| providedMethods |
+	providedMethods := Set new.
+	self traitComposition transformations do: [ :t |
+		t allSelectors do: [ :selector | | methodDescription |
+			methodDescription := TraitMethodDescription selector: selector.
+			t collectMethodsFor: selector into: methodDescription.
+			methodDescription methodsDo: [ :m |
+				((providedMethods anySatisfy: [ :provided | provided selector = m selector ]) or: [ self includesLocalSelector: m selector])
+					ifFalse: [ providedMethods add: m ].
+			].
+		].
+	].
+	^providedMethods
 ]
 
 { #category : #organization }

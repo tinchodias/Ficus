@@ -11,7 +11,8 @@ Class {
 		'extensionMethodsByBehaviorName',
 		'globalByName',
 		'cachedImplementorsBySelector',
-		'cachedPackages'
+		'cachedPackages',
+		'allTraits'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -44,8 +45,7 @@ RFiEnvironment >> allClasses [
 { #category : #polymorphism }
 RFiEnvironment >> allClassesAndTraits [
 
-	self flag: #todo. "FIX"
-	^ self allClasses
+	^ self allClasses , self allTraits
 ]
 
 { #category : #polymorphism }
@@ -60,11 +60,18 @@ RFiEnvironment >> allClassesDo: aBlockClosure [
 	^ self allClasses do: aBlockClosure 
 ]
 
+{ #category : #polymorphism }
+RFiEnvironment >> allTraits [
+
+	^ allTraits ifNil: [ 
+		allTraits := self packages 
+			flatCollect: [ :package | package definedTraits ] ]
+]
+
 { #category : #iterating }
 RFiEnvironment >> allTraitsDo: aBlockClosure [ 
 	
-	self flag: #todo.
-	^ self
+	^ self allTraits do: aBlockClosure
 ]
 
 { #category : #polymorphism }
@@ -430,4 +437,12 @@ RFiEnvironment >> ringPackageFor: aFiPackage [
 	^ RFiPackage 
 		environment: self
 		ficusPackage: aFiPackage
+]
+
+{ #category : #private }
+RFiEnvironment >> ringTraitFor: aFiTrait [ 
+	
+	^ RFiTrait
+		environment: self
+		ficusTrait: aFiTrait
 ]

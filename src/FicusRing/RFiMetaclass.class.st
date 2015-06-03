@@ -19,6 +19,18 @@ RFiMetaclass >> = other [
 	^ self theNonMetaClass = other theNonMetaClass
 ]
 
+{ #category : #polymorphism }
+RFiMetaclass >> allClassVarNames [
+
+	^ self theNonMetaClass allClassVarNames
+]
+
+{ #category : #accessing }
+RFiMetaclass >> allSharedPools [
+	"Answer an ordered collection  of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
+	^ theNonMetaClass allSharedPools
+]
+
 { #category : #converting }
 RFiMetaclass >> asString [
 
@@ -53,6 +65,12 @@ RFiMetaclass >> definition [
 RFiMetaclass >> environment [
 
 	^ theNonMetaClass environment
+]
+
+{ #category : #accessing }
+RFiMetaclass >> ficusClass [
+
+	^ self theNonMetaClass ficusClass metaclass
 ]
 
 { #category : #accessing }
@@ -98,7 +116,7 @@ RFiMetaclass >> isMeta [
 { #category : #polymorphism }
 RFiMetaclass >> localMethods [
 
-	^ self theNonMetaClass ficusClass metaclass methods values 
+	^ self ficusClass methods values 
 		collect: [ :aMethodShot | self ringMethodFor: aMethodShot ]
 ]
 

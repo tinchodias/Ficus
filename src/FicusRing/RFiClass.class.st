@@ -36,6 +36,15 @@ RFiClass >> = other [
 ]
 
 { #category : #polymorphism }
+RFiClass >> allClassVarNames [
+
+	^ ficusClass hasNullSuperclass
+		ifTrue: [ self classVarNames ]
+		ifFalse: [ self superclass allClassVarNames, self classVarNames ].
+
+]
+
+{ #category : #polymorphism }
 RFiClass >> allInstVarNames [
 
 	^ ficusClass hasNullSuperclass
@@ -55,6 +64,13 @@ RFiClass >> allSelectors [
 		result addAll: aClass selectors ].
 
 	^ result
+]
+
+{ #category : #polymorphism }
+RFiClass >> allSharedPools [
+	"Answer an ordered collection  of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
+	self superclass == nil ifTrue: [ ^ self sharedPools ].
+	^ self sharedPools , self superclass allSharedPools
 ]
 
 { #category : #polymorphism }
@@ -303,6 +319,12 @@ RFiClass >> instanceVariables [
 	^ ficusClass layout instanceVariables asArray
 ]
 
+{ #category : #testing }
+RFiClass >> isCompiledMethod [
+
+	^ self ficusClass layout isCompiledMethodLayout
+]
+
 { #category : #polymorphism }
 RFiClass >> isMeta [
 
@@ -379,6 +401,19 @@ RFiClass >> ringClassVariables [
 RFiClass >> sharedPoolNames [
 
 	^ ficusClass sharedPools values
+]
+
+{ #category : #polymorphism }
+RFiClass >> sharedPoolOfVarNamed: aString [
+	"Returns the SharedPool or nil from which the pool variable named aString is coming from."
+	
+	 ^ self sharedPools 
+			detect: [:each | each allClassVarNames includes: aString ]
+			ifNone: [
+						self superclass == nil
+							ifTrue: [nil]
+							ifFalse: [self superclass sharedPoolOfVarNamed: aString]
+						]
 ]
 
 { #category : #polymorphism }

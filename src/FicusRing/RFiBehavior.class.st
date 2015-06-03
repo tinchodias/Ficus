@@ -100,7 +100,7 @@ RFiBehavior >> instanceVariablesString [
 
 	^String streamContents: [ :stream |
 		self instVarNames 
-			do: [ :each | stream nextPutAll: each name ]
+			do: [ :each | stream nextPutAll: each ]
 			separatedBy: [ stream space ] ]
 ]
 

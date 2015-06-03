@@ -12,17 +12,24 @@ Class {
 		'globalByName',
 		'cachedImplementorsBySelector',
 		'cachedPackages',
-		'allTraits'
+		'allTraits',
+		'ficusEnvironment'
 	],
 	#category : #'FicusRing-Core'
 }
 
 { #category : #'instance creation' }
-RFiEnvironment class >> ficusPackages: aFiSet [
+RFiEnvironment class >> ficusEnvironment: aFiEnvironment [
 
 	^ self basicNew
-		initializeWithFicusPackages: aFiSet;
+		initializeWithFicusEnvironment: aFiEnvironment;
 		yourself
+]
+
+{ #category : #'instance creation' }
+RFiEnvironment class >> ficusPackages: aFiSet [
+
+	^ self ficusEnvironment: (FiEnvironment withAll: aFiSet)
 ]
 
 { #category : #comparing }
@@ -139,7 +146,7 @@ RFiEnvironment >> extensionMethodsByBehaviorName [
 	extensionMethodsByBehaviorName ifNil: [
 		extensionMethodsByBehaviorName := Dictionary new.
 
-		ficusPackages do: [ :aPackageShot |
+		self ficusPackages do: [ :aPackageShot |
 			aPackageShot extensionMethods do: [ :anExtensionMethodsShot |
 				anExtensionMethodsShot methods collect: [ :aMethodShot | 
 					self 
@@ -172,7 +179,7 @@ RFiEnvironment >> extensionMethodsFor: aBehavior [
 { #category : #accessing }
 RFiEnvironment >> ficusPackages [
 	
-	^ ficusPackages
+	^ ficusEnvironment packages
 ]
 
 { #category : #accessing }
@@ -322,17 +329,17 @@ RFiEnvironment >> includesClassNamed: aName [
 ]
 
 { #category : #initialization }
-RFiEnvironment >> initializeWithFicusPackages: aFiSet [
+RFiEnvironment >> initializeWithFicusEnvironment: anEnvironment [
 
 	self initialize.
 	
-	ficusPackages := aFiSet.
+	ficusEnvironment := anEnvironment
 ]
 
 { #category : #testing }
 RFiEnvironment >> isEmpty [
 	
-	^ ficusPackages isEmpty
+	^ self ficusPackages isEmpty
 ]
 
 { #category : #accessing }
@@ -413,7 +420,7 @@ RFiEnvironment >> packageOfClassNamed: aName [
 RFiEnvironment >> packages [
 	
 	^ cachedPackages ifNil: [
-		cachedPackages := ficusPackages collect: [ :each | self ringPackageFor: each ] ]
+		cachedPackages := self ficusPackages collect: [ :each | self ringPackageFor: each ] ]
 ]
 
 { #category : #private }

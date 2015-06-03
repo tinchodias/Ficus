@@ -11,14 +11,27 @@ Class {
 	#category : #'FicusMetamodel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiInstanceVariable >> index [
 
 	^ index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiInstanceVariable >> name [
 
 	^ name
+]
+
+{ #category : #printing }
+FiInstanceVariable >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream nextPut: $(.
+	name printOn: aStream.
+	aStream nextPut: $@.
+	index printOn: aStream.
+	aStream nextPut: $).
+
 ]

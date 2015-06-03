@@ -106,6 +106,8 @@ RFiAbstractTrait >> methods [
 		methods := Dictionary new.
 		self traitProvidedMethods
 			do: [ :each | methods at: each selector put: (self ringMethodFor: each) ].
+		(self environment extensionMethodsFor: self)
+			do: [ :each | methods at: each selector put: each ].
 		self localMethods
 			do: [ :each | methods at: each selector put: each ].
 		cachedMethods := methods values ]

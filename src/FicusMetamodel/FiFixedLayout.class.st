@@ -14,3 +14,9 @@ FiFixedLayout class >> withInstanceVariables: names [
 		instanceVariables: names asFiSet;
 		new
 ]
+
+{ #category : #testing }
+FiFixedLayout >> isFixedLayout [
+
+	^ true
+]

@@ -3,13 +3,12 @@ I represent a trait.
 "
 Class {
 	#name : #FiTrait,
-	#superclass : #FiFixedObject,
+	#superclass : #FiAbstractTrait,
 	#instVars : [
-		'methods',
 		'category',
 		'comment',
-		'traitComposition',
-		'name'
+		'name',
+		'classTrait'
 	],
 	#category : #'FicusMetamodel-Core'
 }
@@ -26,6 +25,12 @@ FiTrait class >> named: aString [
 FiTrait >> category [
 
 	^ category
+]
+
+{ #category : #accessing }
+FiTrait >> classTrait [
+
+	^ classTrait
 ]
 
 { #category : #accessing }
@@ -48,32 +53,6 @@ FiTrait >> initialize [
 	name := nil.
 	category := nil.
 	comment := ''.
-	traitComposition := '{}'.
-	methods := FiSet new.
-]
-
-{ #category : #testing }
-FiTrait >> isFicusClass [
-
-	^ false
-]
-
-{ #category : #testing }
-FiTrait >> isFicusExtensionMethods [
-
-	^ false
-]
-
-{ #category : #testing }
-FiTrait >> isFicusTrait [
-
-	^ true
-]
-
-{ #category : #accessing }
-FiTrait >> methods [
-	
-	^ methods
 ]
 
 { #category : #accessing }
@@ -88,13 +67,7 @@ FiTrait >> printOn: aStream [
 	super printOn: aStream.
 
 	aStream nextPut: $(.
-	name printOn: aStream.
+	self name printOn: aStream.
 	aStream nextPut: $).
 	
-]
-
-{ #category : #accessing }
-FiTrait >> traitComposition [
-	
-	^ traitComposition
 ]

@@ -21,13 +21,13 @@ FiPointerLayout >> initialize [
 { #category : #printing }
 FiPointerLayout >> instanceVariableNames [
 	
-	^ instanceVariables asArray
+	^ self instanceVariables collect: #name
 ]
 
 { #category : #accessing }
 FiPointerLayout >> instanceVariables [
 	
-	^ instanceVariables
+	^ instanceVariables asArray sorted: [ :a :b | a index < b index ]
 ]
 
 { #category : #printing }

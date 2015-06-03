@@ -6,3 +6,9 @@ Class {
 	#superclass : #FiPointerLayout,
 	#category : #'FicusMetamodel-Core'
 }
+
+{ #category : #testing }
+FiVariableLayout >> isVariableLayout [
+	
+	^ true
+]

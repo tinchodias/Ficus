@@ -13,7 +13,7 @@ RFiRingTestResources >> classA [
 	^ FiClass builder 
 		name: #A;
 		superclassName: #Object;
-		layout: (FiFixedLayout withInstanceVariables: #(#a1 #a2));
+		layout: (FiFixedLayout withInstanceVariableNames: #(#a1 #a2));
 		classPool: #(SomeClassVariable) asFiSet;
 		sharedPools: #(P) asFiSet;
 		methods: { 
@@ -21,7 +21,7 @@ RFiRingTestResources >> classA [
 			FiMethod sourceCode: 'sum42  ^ self sum + 42'. } asFiSet;
 		metaclass: 
 			(FiMetaclass builder
-				layout: (FiFixedLayout withInstanceVariables: #(#a3));
+				layout: (FiFixedLayout withInstanceVariableNames: #(#a3));
 				methods: {
 					FiMethod sourceCode: 'initialize  SomeSharedPoolVariable := SomeClassVariable := a3 := A new'.  
 				} asFiSet;
@@ -35,7 +35,7 @@ RFiRingTestResources >> classB [
 	^ FiClass builder 
 		name: #B;
 		superclassName: #A;
-		layout: (FiFixedLayout withInstanceVariables: #(b1));
+		layout: (FiFixedLayout withInstanceVariableNames: #(b1));
 		methods: { 
 			FiMethod sourceCode: 'initialize  b1 := 0'.
 			FiMethod sourceCode: 'resetAll  b1 := a1 := a2 := 0'.

@@ -101,13 +101,6 @@ RFiMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifN
 ]
 
 { #category : #polymorphism }
-RFiMetaclass >> instanceVariables [
-
-	self flag: #fix.
-	^ theNonMetaClass ficusClass metaclass layout instanceVariables asArray
-]
-
-{ #category : #polymorphism }
 RFiMetaclass >> isMeta [
 
 	^ true

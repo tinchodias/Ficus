@@ -17,7 +17,7 @@ Class {
 RFiBehavior >> allSlots [
 
 	^ self allInstVarNames withIndexCollect: [ :each :index |
-		(InstanceVariableSlot named: each name)
+		(InstanceVariableSlot named: each)
 			index: index;
 			yourself ]
 ]
@@ -86,6 +86,12 @@ RFiBehavior >> instSize [
 	(as opposed to indexed variables) of the receiver."
 	
 	^ self allInstVarNames size
+]
+
+{ #category : #polymorphism }
+RFiBehavior >> instanceVariables [
+
+	^ (self ficusClass layout instanceVariables collect: #name) asArray
 ]
 
 { #category : #printing }

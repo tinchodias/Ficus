@@ -21,7 +21,7 @@ RFiAbstractTrait >> >> aSelector [
 	^ self methods detect: [ :each | each selector = aSelector ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RFiAbstractTrait >> addCompositionOnLeft: aTraitComposition [
 	^aTraitComposition add: self.
 ]

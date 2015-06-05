@@ -19,7 +19,7 @@ MCMethodDefinition >> ficusSource [
 	mcSource := self source.
 	actualClass := self actualClassIfAbsent: [ ^ mcSource ].
 	actualMethod := actualClass compiledMethodAt: self selector ifAbsent: [ ^ mcSource ].
-	remoteString := actualMethod remoteStringIfAbsent: [ ^ mcSource ].
+	remoteString := actualMethod sourcesRemoteStringIfAbsent: [ ^ mcSource ].
 
 	^ remoteString string = mcSource
 		ifTrue: [ remoteString asFiRemoteString ]

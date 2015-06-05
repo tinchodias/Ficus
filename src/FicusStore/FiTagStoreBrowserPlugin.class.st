@@ -10,14 +10,10 @@ Class {
 
 { #category : #example }
 FiTagStoreBrowserPlugin class >> example [
-	"
-	Gofer new package: #ErgoPlayground; load.
-	self example.
-	"
 
 	| store pluginStore |
-	store := FiMonticelloStore forPackageNamed: #ErgoPlayground.
-	pluginStore := FiTag exampleStoreFor: store.
+	store := FiMemoryStore exampleFragileBaseProblem.
+	pluginStore := self exampleStoreFor: store.
 
 	FiStoreBrowser new
 		store: store;
@@ -30,6 +26,39 @@ FiTagStoreBrowserPlugin class >> example [
 		plugin: FiNullStoreBrowserPlugin new;
 		refresh;
 		openWithSpec.
+]
+
+{ #category : #example }
+FiTagStoreBrowserPlugin class >> exampleStoreFor: store [
+
+	| delta1 delta2 tags tagsStore |
+	delta1 := store historyNodes second deltas anyOne.
+	delta2 := store historyNodes third deltas anyOne.
+	
+	tags := { 
+		FiTag builder 
+			origin: store historyNodes second origin;
+			priorDefaultStep: delta1 key defaultStep;
+			path: delta1 value asSimpleEffects anyOne path; 
+			contents: 'Reformatting code';
+			new.
+		FiTag builder 
+			origin: store historyNodes third origin;
+			priorDefaultStep: delta2 key defaultStep;
+			path: delta1 value asSimpleEffects anyOne path;
+			contents: 'Refactoring A->B';
+			new.
+	 }.
+
+	tagsStore := FiMemoryStore new.
+	tagsStore commitSnapshot: FiSet new priors: FiSet new.
+
+	1 to: tags size do: [ :index |
+		tagsStore 
+			commitSnapshot: (tags first: index) asFiSet 
+			priors: {tagsStore headHistoryNode} asFiSet ].
+
+	^ tagsStore
 ]
 
 { #category : #'instance creation' }

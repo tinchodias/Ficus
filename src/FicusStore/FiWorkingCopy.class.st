@@ -77,7 +77,11 @@ FiWorkingCopy >> description [
 { #category : #testing }
 FiWorkingCopy >> isDirty [
 
-	^ snapshot ~= store headHistoryNode snapshot
+	self flag: #todo "first?".
+
+	^ priors isEmpty
+		ifTrue: [ true ]
+		ifFalse: [ snapshot ~= priors anyOne snapshot ]
 ]
 
 { #category : #accessing }

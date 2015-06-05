@@ -150,6 +150,15 @@ FiObject >> ficusDeepDo: aBlock basePath: aPath [
 		value: aPath
 ]
 
+{ #category : #testing }
+FiObject >> hasValueAt: step [
+
+	^ self 
+		valueAt: step 
+		ifPresent: [ :v | true ]
+		ifAbsent: [ false ]
+]
+
 { #category : #comparing }
 FiObject >> hash [
 	

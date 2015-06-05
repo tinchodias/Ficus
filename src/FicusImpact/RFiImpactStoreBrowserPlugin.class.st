@@ -182,7 +182,7 @@ RFiImpactStoreBrowserPlugin >> refresh [
 
 	dependencies do: [ :dep |
 		| pathsToDependencies |
-		pathsToDependencies := dep targets collect: #ficusPathFromEnvironment.
+		pathsToDependencies := dep targets collect: #asMetamodelSpot.
 			
 		pathsToDependencies do: [ :path | 
 			(dependenciesByHistoryNode 

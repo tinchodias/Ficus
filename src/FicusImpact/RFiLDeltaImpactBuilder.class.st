@@ -126,5 +126,5 @@ RFiLDeltaImpactBuilder >> origin: aRFiEnvironment [
 RFiLDeltaImpactBuilder >> subjectIncludes: anEntity [
 	
 	^ deltaSimpleEffectsArray anySatisfy: [ :simpleEffect | 
-		simpleEffect hasEffectAt: anEntity ficusPathFromEnvironment ]
+		simpleEffect hasEffectAt: anEntity asMetamodelSpot ]
 ]

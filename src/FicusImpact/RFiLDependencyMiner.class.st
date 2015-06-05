@@ -102,7 +102,7 @@ RFiLDependencyMiner >> initialize [
 { #category : #private }
 RFiLDependencyMiner >> newDependencyFrom: sourceEntity to: targetEntity [
 	
-	^ sourceEntity ficusPathFromEnvironment asString -> targetEntity ficusPathFromEnvironment asString
+	^ sourceEntity asMetamodelSpot asString -> targetEntity asMetamodelSpot asString
 	"RFiLDependency from: sourceEntity to: targetEntity"
 ]
 

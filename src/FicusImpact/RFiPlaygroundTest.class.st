@@ -37,33 +37,56 @@ RFiPlaygroundTest >> test01ficusPathFromEnvironment [
 	aMethod := aClass >> #log:.
 
 	self 
-		assert: aClass ficusPathFromEnvironment 
-		equals: #(Loggers contents Log) asFiPath.
+		assert: aClass asMetamodelSpot 
+		equals: (FiBehaviorSpot
+			name: #Log
+			isMetaSide: false 
+			packageName: #Loggers).
 
 	self 
-		assert: aClass theMetaClass ficusPathFromEnvironment 
-		equals: #(Loggers contents Log metaclass) asFiPath.
+		assert: aClass theMetaClass asMetamodelSpot 
+		equals: (FiBehaviorSpot
+			name: #Log
+			isMetaSide: true
+			packageName: #Loggers).
 
 	self 
-		assert: aMethod ficusPathFromEnvironment 
-		equals: #(Loggers contents Log methods log:) asFiPath.
+		assert: aMethod asMetamodelSpot 
+		equals: (FiMethodSpot
+			selector: #log:
+			behaviorName: #Log
+			isMetaSide: false
+			packageName: #Loggers).
 
 	self 
-		assert: ((envB classNamed: #Object) classSide >> #new) ficusPathFromEnvironment 
-		equals: #(Kernel contents Object metaclass methods new) asFiPath.
+		assert: ((envB classNamed: #Object) classSide >> #new) asMetamodelSpot 
+		equals: (FiMethodSpot
+			selector: #new
+			behaviorName: #Object
+			isMetaSide: true
+			packageName: #Kernel).
 
 ]
 
 { #category : #tests }
 RFiPlaygroundTest >> test02mostRecentHistoryNodeChanging [
 
-	| aClass aMethod |
+	| aClass aMethod otherMethod |
 	aClass := envB classNamed: #Log.
 	aMethod := aClass >> #log:.
+	otherMethod := aClass >> #logAll:.
 
-	self assert: (node4B mostRecentHistoryNodeChanging: aClass ficusPathFromEnvironment) = node4B.
-	self assert: (node4B mostRecentHistoryNodeChanging: aMethod ficusPathFromEnvironment) = node2.
-	self assert: (node4B mostRecentHistoryNodeChanging: (aClass >> #logAll:) ficusPathFromEnvironment) = node4B.
+	self flag: #todo. "Remove the fucking 'asPathOn: envB ficusEnvironment'"
+
+	self 
+		assert: (node4B mostRecentHistoryNodeChanging: (aClass asMetamodelSpot asPathOn: envB ficusEnvironment)) 
+		equals: node4B.
+	self 
+		assert: (node4B mostRecentHistoryNodeChanging: (aMethod asMetamodelSpot asPathOn: envB ficusEnvironment)) 
+		equals: node2.
+	self 
+		assert: (node4B mostRecentHistoryNodeChanging: (otherMethod asMetamodelSpot asPathOn: envB ficusEnvironment)) 
+		equals: node4B.
 ]
 
 { #category : #tests }
@@ -78,12 +101,19 @@ RFiPlaygroundTest >> test03ChangeDependencies [
 
 	self assert: dependencies isNotEmpty.
 	pathsToDependencies := dependencies asSet flatCollect: [ :dep | 
-		dep targets collect: #ficusPathFromEnvironment ].
+		dep targets collect: #asMetamodelSpot ].
 
 	self 
 		assert: pathsToDependencies 
 		equals: {
-			FiPath root / #Collections / #contents / #Collection / #methods / #addAll:. 
-			FiPath root / #Loggers / #contents / #Log / #layout/ #instanceVariables / #collection
+			(FiMethodSpot 
+				selector: #addAll: 
+				behaviorName: #Collection 
+				isMetaSide: false 
+				packageName: #Collections).
+			(FiBehaviorSpot 
+				name: #Log 
+				isMetaSide: false
+				packageName: #Loggers) / #layout/ #instanceVariables / #collection.
 			} asSet
 ]

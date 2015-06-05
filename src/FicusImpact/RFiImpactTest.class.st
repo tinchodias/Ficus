@@ -69,8 +69,8 @@ RFiImpactTest >> test01 [
 				equal: 'log: aMessage  
 		collection addFirst: aMessage').
 
-	env1 := (RFiBaseResources new ficusEnvironment asArray copyWith: pkg1) asFiSet asRFiEnvironment.
-	env2 := (RFiBaseResources new ficusEnvironment asArray copyWith: pkg2) asFiSet asRFiEnvironment.
+	env1 := (RFiBaseResources new ficusEnvironment packages copyWith: pkg1) asRFiEnvironment.
+	env2 := (RFiBaseResources new ficusEnvironment packages copyWith: pkg2) asRFiEnvironment.
 
 	old := (env1 classNamed: #FilteredLogTest) >> #testLog.
 	new := (env2 classNamed: #FilteredLogTest) >> #testLog.
@@ -81,5 +81,5 @@ RFiImpactTest >> test01 [
 	
 	self deny: impacts isEmpty.
 	
-	impacts inspect.
+"	impacts inspect."
 ]

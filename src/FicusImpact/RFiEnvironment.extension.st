@@ -23,3 +23,25 @@ RFiEnvironment >> ficusDependenciesForRedoing: aSimpleEffect [
 	^ entities flatCollect: #ficusDependencies
 
 ]
+
+{ #category : #'*FicusImpact' }
+RFiEnvironment >> ficusRGObjectFromPath: aFiPath [
+	
+	| steps |
+	self flag: #todo. "FIX..."
+	
+	steps := aFiPath steps.
+	
+	steps size < 5 ifTrue: [ self notYetImplemented  ].
+	
+	steps fifth = #methods ifTrue: [ 
+		^ (self classNamed: steps fourth) >> steps sixth ].
+
+	steps fifth = #layout ifTrue: [ 
+		^ self classNamed: steps fourth ].
+
+	steps fifth = #metaclass ifTrue: [ 
+		^ (self classNamed: steps fourth) theMetaClass ].
+	
+	self notYetImplemented 
+]

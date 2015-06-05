@@ -31,6 +31,15 @@ RFiMetaclass >> allSharedPools [
 	^ theNonMetaClass allSharedPools
 ]
 
+{ #category : #accessing }
+RFiMetaclass >> asMetamodelSpot [
+	
+	^ FiBehaviorSpot 
+		name: self theNonMetaClass name
+		isMetaSide: true
+		packageName: self package name
+]
+
 { #category : #converting }
 RFiMetaclass >> asString [
 
@@ -71,12 +80,6 @@ RFiMetaclass >> environment [
 RFiMetaclass >> ficusClass [
 
 	^ self theNonMetaClass ficusClass metaclass
-]
-
-{ #category : #accessing }
-RFiMetaclass >> ficusPathFromEnvironment [
-
-	^ theNonMetaClass ficusPathFromEnvironment / #metaclass
 ]
 
 { #category : #comparing }

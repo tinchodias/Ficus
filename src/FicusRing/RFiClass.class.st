@@ -105,6 +105,15 @@ RFiClass >> allSuperclassesDo: aBlock [
 		self superclass allSuperclassesDo: aBlock ]
 ]
 
+{ #category : #accessing }
+RFiClass >> asMetamodelSpot [
+	
+	^ FiBehaviorSpot 
+		name: self name
+		isMetaSide: false
+		packageName: self package name
+]
+
 { #category : #converting }
 RFiClass >> asString [
 
@@ -235,12 +244,6 @@ RFiClass >> environment: anObject [
 RFiClass >> ficusClass [
 	
 	^ ficusClass
-]
-
-{ #category : #accessing }
-RFiClass >> ficusPathFromEnvironment [
-	
-	^ environment ficusPathToClass: self
 ]
 
 { #category : #polymorphism }

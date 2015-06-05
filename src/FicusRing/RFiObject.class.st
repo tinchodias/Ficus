@@ -7,6 +7,12 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #accessing }
+RFiObject >> asMetamodelSpot [
+
+	^ self subclassResponsibility
+]
+
 { #category : #'as yet unclassified' }
 RFiObject >> environment [
 
@@ -16,13 +22,7 @@ RFiObject >> environment [
 { #category : #accessing }
 RFiObject >> ficusObject [
 
-	^ self ficusPathFromEnvironment resolvedOn: self environment ficusPackages 
-]
-
-{ #category : #accessing }
-RFiObject >> ficusPathFromEnvironment [
-
-	^ self subclassResponsibility
+	^ self asMetamodelSpot resolvedOn: self environment ficusEnvironment
 ]
 
 { #category : #printing }

@@ -107,7 +107,7 @@ RFiRingTestResources >> extensionMethodsToAclass [
 { #category : #private }
 RFiRingTestResources >> newFicusEnvironment [
 
-	^ { self packageKernel. self packageX. self packageY. } asFiSet
+	^ FiEnvironment withAll: { self packageKernel. self packageX. self packageY }
 ]
 
 { #category : #resources }

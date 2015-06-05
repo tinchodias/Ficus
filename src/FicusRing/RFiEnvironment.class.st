@@ -177,57 +177,15 @@ RFiEnvironment >> extensionMethodsFor: aBehavior [
 ]
 
 { #category : #accessing }
+RFiEnvironment >> ficusEnvironment [
+	
+	^ ficusEnvironment
+]
+
+{ #category : #accessing }
 RFiEnvironment >> ficusPackages [
 	
 	^ ficusEnvironment packages
-]
-
-{ #category : #accessing }
-RFiEnvironment >> ficusPathToClass: aRFiClass [ 
-	
-	^ {aRFiClass package name. #contents. aRFiClass name} asFiPath
-]
-
-{ #category : #accessing }
-RFiEnvironment >> ficusPathToClassVariable: aRFiClassVariable [ 
-	
-	^ aRFiClassVariable definingClass ficusPathFromEnvironment / 
-		#classPool / aRFiClassVariable name
-]
-
-{ #category : #accessing }
-RFiEnvironment >> ficusPathToInstanceVariable: aRFiInstanceVariable [ 
-
-	^ aRFiInstanceVariable definingClass ficusPathFromEnvironment / 
-		#layout / #instanceVariables / aRFiInstanceVariable name
-]
-
-{ #category : #accessing }
-RFiEnvironment >> ficusPathToMethod: aRFiMethod [ 
-
-	^ aRFiMethod origin ficusPathFromEnvironment / #methods / aRFiMethod selector
-]
-
-{ #category : #accessing }
-RFiEnvironment >> ficusRGObjectFromPath: aFiPath [
-	
-	| steps |
-	self flag: #todo. "FIX..."
-	
-	steps := aFiPath steps.
-	
-	steps size < 4 ifTrue: [ self notYetImplemented  ].
-	
-	steps fourth = #methods ifTrue: [ 
-		^ (self classNamed: steps third) >> steps fifth ].
-
-	steps fourth = #layout ifTrue: [ 
-		^ self classNamed: steps third ].
-
-	steps fourth = #metaclass ifTrue: [ 
-		^ (self classNamed: steps third) theMetaClass ].
-	
-	self notYetImplemented 
 ]
 
 { #category : #accessing }

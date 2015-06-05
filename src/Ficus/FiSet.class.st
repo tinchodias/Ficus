@@ -78,6 +78,12 @@ FiSet >> collect: aBlockClosure [
 	^ newSet
 ]
 
+{ #category : #'as yet unclassified' }
+FiSet >> copyWith: anElement [
+
+	^ self resultOf: (FiInclude value: anElement)
+]
+
 { #category : #enumerating }
 FiSet >> detect: aBlockClosure [ 
 	

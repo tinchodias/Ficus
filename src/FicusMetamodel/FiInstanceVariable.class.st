@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : #accessing }
+FiInstanceVariable >> defaultStep [
+
+	^ name asSymbol
+]
+
+{ #category : #accessing }
 FiInstanceVariable >> index [
 
 	^ index

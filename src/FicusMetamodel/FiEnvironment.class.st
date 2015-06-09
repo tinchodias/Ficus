@@ -59,3 +59,15 @@ FiEnvironment >> pathOfPackageSpot: aFiPackageSpot [
 
 	^ FiPath root / #packages / aFiPackageSpot packageName
 ]
+
+{ #category : #printing }
+FiEnvironment >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		print: packages size;
+		nextPut: $).
+	
+]

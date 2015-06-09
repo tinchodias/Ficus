@@ -1,6 +1,6 @@
 Extension { #name : #RBClassNotReferencedRule }
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBClassNotReferencedRule >> checkClass: aClass [ 
 	(aClass isMeta or: [  aClass subclasses notEmpty or: [ aClass inheritsFrom: TestCase ] ] )
 		ifTrue: [ ^ self ].

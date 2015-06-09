@@ -1,6 +1,6 @@
 Extension { #name : #RBRefersToClassRule }
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBRefersToClassRule >> checkClass: aClass [ 
 	| sels className |
 	className := aClass theNonMetaClass name.

@@ -1,6 +1,6 @@
 Extension { #name : #RBUnclassifiedMethodsRule }
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBUnclassifiedMethodsRule >> checkMethod: aMethod [ 
 
 	aMethod protocol = Protocol unclassified 

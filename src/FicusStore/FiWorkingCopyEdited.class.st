@@ -16,3 +16,14 @@ FiWorkingCopyEdited >> edit [
 FiWorkingCopyEdited >> edit: anObject [
 	edit := anObject
 ]
+
+{ #category : #printing }
+FiWorkingCopyEdited >> printOn: aStream [
+
+	super printOn: aStream.
+	
+	aStream
+		nextPut: $(;
+		print: edit;
+		nextPut: $).
+]

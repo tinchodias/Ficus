@@ -3,7 +3,7 @@ I am polymorphic with Metaclass, fetching everything needed from a Ficus environ
 "
 Class {
 	#name : #RFiMetaclass,
-	#superclass : #RFiBehavior,
+	#superclass : #RFiAbstractClass,
 	#instVars : [
 		'theNonMetaClass'
 	],

@@ -13,7 +13,7 @@ RFiObject >> asMetamodelSpot [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 RFiObject >> environment [
 
 	^ self subclassResponsibility
@@ -25,13 +25,27 @@ RFiObject >> ficusObject [
 	^ self asMetamodelSpot resolvedOn: self environment ficusEnvironment
 ]
 
+{ #category : #polymorphism }
+RFiObject >> properties [
+
+	^ nil
+]
+
+{ #category : #caching }
+RFiObject >> resetCaches [
+	
+	self class allInstVarNames 
+		select: [ :each | each beginsWith: 'cached' ] 
+		thenDo: [ :each | self instVarNamed: each put: nil ]
+]
+
 { #category : #printing }
 RFiObject >> shortPrintString [
 
 	^ self name
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #polymorphism }
 RFiObject >> systemNavigation [
 
 	^ SystemNavigation new 

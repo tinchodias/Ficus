@@ -3,7 +3,7 @@ I am polymorphic with Class, fetching everything needed from a Ficus environment
 "
 Class {
 	#name : #RFiClass,
-	#superclass : #RFiBehavior,
+	#superclass : #RFiAbstractClass,
 	#instVars : [
 		'environment',
 		'cachedSuperclass',

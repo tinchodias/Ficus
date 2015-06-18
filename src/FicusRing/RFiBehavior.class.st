@@ -7,7 +7,8 @@ Class {
 	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:. #zapOrganization. #zapAllMethods})',
 	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
 	#instVars : [
-		'cachedMethods'
+		'cachedMethods',
+		'basicLocalSelectors'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -31,7 +32,9 @@ RFiBehavior >> allUnsentMessages [
 { #category : #hacks }
 RFiBehavior >> basicLocalSelectors [
 	
-	^ self localMethods collect: #selector
+	^ basicLocalSelectors ifNil: [
+		basicLocalSelectors := 
+			(self localMethods collect: #selector as: OrderedCollection) asArray ]
 ]
 
 { #category : #polymorphism }

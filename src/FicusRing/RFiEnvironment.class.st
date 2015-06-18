@@ -381,6 +381,13 @@ RFiEnvironment >> packages [
 		cachedPackages := self ficusPackages collect: [ :each | self ringPackageFor: each ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+RFiEnvironment >> resetCaches [
+
+	#(allClasses packageByClassName extensionMethodsByBehaviorName globalByName cachedImplementorsBySelector cachedPackages allTraits) 
+	do: [ :each | self instVarNamed: each put: nil ]
+]
+
 { #category : #private }
 RFiEnvironment >> ringClassFor: aFiClass [
 

@@ -72,10 +72,18 @@ FiSet >> asFiSet [
 { #category : #enumerating }
 FiSet >> collect: aBlockClosure [ 
 	
-	| newSet |
-	newSet := Set new: self size.
-	self valuesDo: [ :each | newSet add: (aBlockClosure value: each) ].
-	^ newSet
+	^ self collect: aBlockClosure as: Set
+]
+
+{ #category : #enumerating }
+FiSet >> collect: aBlockClosure as: aClass [
+	"Evaluate aBlock with each of the receiver's elements as the argument.  
+	Collect the resulting values into an instance of aClass. Answer the resulting collection."
+
+	| newCollection |
+	newCollection := aClass new: self size.
+	self valuesDo: [ :each | newCollection add: (aBlockClosure value: each) ].
+	^ newCollection
 ]
 
 { #category : #'as yet unclassified' }

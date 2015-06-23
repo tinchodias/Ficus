@@ -76,12 +76,12 @@ FiStoreBrowser >> initialExtent [
 ]
 
 { #category : #initialization }
-FiStoreBrowser >> initializeDragAndDropOfSimpleEffects [
+FiStoreBrowser >> initializeDragAndDropOfSimpleChanges [
 	
-	deltasModel dragWith: [ :passenger :source :simpleEffects | 
+	deltasModel dragWith: [ :passenger :source :simpleChanges | 
 		| draggedEdit priorSnapshot |
 		priorSnapshot := historyBrowserModel historyTreeModel selectedItem content snapshot.
-		draggedEdit := priorSnapshot editFromSimpleEffects: simpleEffects.
+		draggedEdit := priorSnapshot editFromSimpleChanges: simpleChanges.
 
 		(TransferMorph 
 			withPassenger: passenger
@@ -102,7 +102,7 @@ FiStoreBrowser >> initializePresenter [
 	self initializeTabs. 
 	
 	self initializeTransmitionOfHistoryNodesSelection.
-	self initializeDragAndDropOfSimpleEffects.
+	self initializeDragAndDropOfSimpleChanges.
 ]
 
 { #category : #initialization }

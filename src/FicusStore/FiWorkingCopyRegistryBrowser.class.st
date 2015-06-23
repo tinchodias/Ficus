@@ -70,7 +70,7 @@ FiWorkingCopyRegistryBrowser >> actionCommit [
 FiWorkingCopyRegistryBrowser >> actionDelta [
 
 	workingCopiesModel selectedItems do: [ :each |
-		FiEffectInspector inspect: each content delta ]
+		FiChangeInspector inspect: each content delta ]
 ]
 
 { #category : #private }

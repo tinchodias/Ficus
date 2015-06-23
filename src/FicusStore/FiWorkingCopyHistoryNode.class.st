@@ -14,7 +14,7 @@ Class {
 FiWorkingCopyHistoryNode >> deltas [
 
 	^ workingCopy priors asArray collect: [ :aPrior |
-		aPrior -> (workingCopy snapshot differenceFrom: aPrior snapshot) ]
+		aPrior -> (workingCopy snapshot changeFrom: aPrior snapshot) ]
 ]
 
 { #category : #testing }

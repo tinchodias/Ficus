@@ -26,7 +26,7 @@ FiSnapshotHistoryNode >> = other [
 FiSnapshotHistoryNode >> deltas [
 
 	^ priors asArray collect: [ :aPrior |
-		aPrior -> (snapshot differenceFrom: aPrior snapshot) ]
+		aPrior -> (snapshot changeFrom: aPrior snapshot) ]
 ]
 
 { #category : #comparing }

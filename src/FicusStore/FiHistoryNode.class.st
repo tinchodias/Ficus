@@ -66,8 +66,8 @@ FiHistoryNode >> isWorkingCopy [
 FiHistoryNode >> mostRecentHistoryNodeChanging: aPath [ 
 	
 	(self deltas anySatisfy: [ :delta | 
-		delta value asSimpleEffects asArray anySatisfy: [ :simpleEffect |
-			simpleEffect hasEffectAt: aPath ] ])
+		delta value asSimpleChanges asArray anySatisfy: [ :simpleChange |
+			simpleChange hasChangeAt: aPath ] ])
 			ifTrue: [ ^ self ].
 
 	^ self mostRecentPriorHistoryNodeChanging: aPath
@@ -85,7 +85,7 @@ FiHistoryNode >> mostRecentPriorHistoryNodeChanging: aPath [
 				(priorHistoryNode mostRecentHistoryNodeChanging: aPath)
 					ifNotNil: [ :result | ^ result ] ] ]
 		ifEmpty: [ 
-			"Workaround? because the first node has no delta, i.e., no addition effects"
+			"Workaround? because the first node has no delta, i.e., no addition changes"
 			(aPath canBeResolvedOn: self snapshot) ifTrue: [ ^ self ] ].
 	
 	^ nil

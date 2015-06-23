@@ -39,13 +39,13 @@ FiTagStoreBrowserPlugin class >> exampleStoreFor: store [
 		FiTag builder 
 			origin: store historyNodes second origin;
 			priorDefaultStep: delta1 key defaultStep;
-			path: delta1 value asSimpleEffects anyOne path; 
+			path: delta1 value asSimpleChanges anyOne path; 
 			contents: 'Reformatting code';
 			new.
 		FiTag builder 
 			origin: store historyNodes third origin;
 			priorDefaultStep: delta2 key defaultStep;
-			path: delta1 value asSimpleEffects anyOne path;
+			path: delta1 value asSimpleChanges anyOne path;
 			contents: 'Refactoring A->B';
 			new.
 	 }.
@@ -70,12 +70,12 @@ FiTagStoreBrowserPlugin class >> forStore: aFiStore [
 ]
 
 { #category : #accessing }
-FiTagStoreBrowserPlugin >> prepareEffectDescriptionMorphs: morphs for: aSimpleEffect [
+FiTagStoreBrowserPlugin >> prepareChangeDescriptionMorphs: morphs for: aSimpleChange [
 
 	selectedHistoryNode ifNil: [ ^ self ].
 
 	(self 
-		tagsFor: aSimpleEffect 
+		tagsFor: aSimpleChange 
 		origin: selectedHistoryNode origin 
 		prior: selectedHistoryNode priors asArray first "FIX") ifNotEmpty: [ :tags | 
 			tags do: [ :each | morphs add: 
@@ -107,11 +107,11 @@ FiTagStoreBrowserPlugin >> tags [
 ]
 
 { #category : #private }
-FiTagStoreBrowserPlugin >> tagsFor: aSimpleEffect origin: anOrigin prior: aPrior [
+FiTagStoreBrowserPlugin >> tagsFor: aSimpleChange origin: anOrigin prior: aPrior [
 
 	^ self tags asArray select: [ :each | 
 		each 
 			appliesToOrigin: anOrigin
 			prior: aPrior defaultStep "aHistoryNode priors asArray first" "FIX: should be the selected one"
-			path: aSimpleEffect path ]
+			path: aSimpleChange path ]
 ]

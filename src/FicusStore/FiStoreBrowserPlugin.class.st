@@ -23,12 +23,11 @@ FiStoreBrowserPlugin >> announcer [
 ]
 
 { #category : #accessing }
-FiStoreBrowserPlugin >> prepareEffectDescriptionMorphs: morphs for: aSimpleEffect [
-
+FiStoreBrowserPlugin >> prepareChangeDescriptionMorphs: morphs for: aSimpleChange [
 ]
 
 { #category : #accessing }
-FiStoreBrowserPlugin >> prepareEffectMenu: aMenuModel [
+FiStoreBrowserPlugin >> prepareChangeMenu: aMenuModel [
 
 ]
 
@@ -43,7 +42,7 @@ FiStoreBrowserPlugin >> prepareHistoryNodeMenu: aMenuModel [
 ]
 
 { #category : #accessing }
-FiStoreBrowserPlugin >> selectedEffect: aSimpleEffectOrNil [
+FiStoreBrowserPlugin >> selectedChange: aSimpleChangeOrNil [
 ]
 
 { #category : #accessing }

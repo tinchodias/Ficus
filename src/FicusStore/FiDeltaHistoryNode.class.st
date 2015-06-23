@@ -8,8 +8,8 @@ Class {
 		'prior',
 		'edit',
 		'cachedSnapshot',
-		'cachedEffect',
-		'cachedPriors'
+		'cachedPriors',
+		'cachedChange'
 	],
 	#category : #'FicusStore-Models'
 }
@@ -17,26 +17,26 @@ Class {
 { #category : #accessing }
 FiDeltaHistoryNode class >> excludedInstanceVariableNamesForSteps [
 
-	^ super excludedInstanceVariableNamesForSteps, #(cachedSnapshot cachedEffect cachedPriors)
+	^ super excludedInstanceVariableNamesForSteps, #(cachedSnapshot cachedChange cachedPriors)
+]
+
+{ #category : #accessing }
+FiDeltaHistoryNode >> change [
+
+	^ cachedChange ifNil: [ 
+		cachedChange := prior snapshot changeOf: edit ]
 ]
 
 { #category : #accessing }
 FiDeltaHistoryNode >> deltas [
 
-	^ { prior -> self effect }
+	^ { prior -> self change }
 ]
 
 { #category : #accessing }
 FiDeltaHistoryNode >> edit [
 
 	^ edit
-]
-
-{ #category : #accessing }
-FiDeltaHistoryNode >> effect [
-
-	^ cachedEffect ifNil: [ 
-		cachedEffect := prior snapshot effectOf: edit ]
 ]
 
 { #category : #accessing }

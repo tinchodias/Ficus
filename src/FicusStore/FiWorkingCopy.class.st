@@ -65,7 +65,7 @@ FiWorkingCopy >> delta [
 
 	priors size = 1 ifFalse: [ self notYetImplemented ].
 
-	^ snapshot differenceFrom: priors anyOne snapshot
+	^ snapshot changeFrom: priors anyOne snapshot
 ]
 
 { #category : #printing }

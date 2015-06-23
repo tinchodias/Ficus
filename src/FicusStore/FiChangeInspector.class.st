@@ -1,8 +1,8 @@
 "
-I am an inspector for instances of FiEffect.
+I am an inspector for instances of FiChange.
 "
 Class {
-	#name : #FiEffectInspector,
+	#name : #FiChangeInspector,
 	#superclass : #ComposableModel,
 	#instVars : [
 		'treeModel',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #specs }
-FiEffectInspector class >> defaultSpec [
+FiChangeInspector class >> defaultSpec [
 	<spec>
 	
 	^ SpecLayout composed
@@ -28,7 +28,7 @@ FiEffectInspector class >> defaultSpec [
 ]
 
 { #category : #specs }
-FiEffectInspector class >> defaultSpecAsRow [
+FiChangeInspector class >> defaultSpecAsRow [
 	<spec>
 	
 	^ SpecLayout composed
@@ -42,66 +42,66 @@ FiEffectInspector class >> defaultSpecAsRow [
 ]
 
 { #category : #inspecting }
-FiEffectInspector class >> inspect: rootEffect [
+FiChangeInspector class >> inspect: aChange [
 
-	^ (self newWith: rootEffect) 
+	^ (self newWith: aChange) 
 		open; 
 		yourself
 ]
 
 { #category : #inspecting }
-FiEffectInspector class >> newWith: aRootEffect [
+FiChangeInspector class >> newWith: aChange [
 
 	^ self new
 		plugin: FiNullStoreBrowserPlugin new;
-		rootEffect: aRootEffect;
+		rootChange: aChange;
 		yourself
 ]
 
 { #category : #private }
-FiEffectInspector >> diffChunkMorphFor: aSimpleEffect [
+FiChangeInspector >> diffChunkMorphFor: aSimpleChange [
 
 	| morphBuilder |
 	morphBuilder := FiMorphBuilder default.
 
 	^ morphBuilder columnMorphWithAll: { 
-		morphBuilder pathMorphWith: aSimpleEffect path.
-		morphBuilder diffMorphFrom: aSimpleEffect oldValueString to: aSimpleEffect newValueString }
+		morphBuilder pathMorphWith: aSimpleChange path.
+		morphBuilder diffMorphFrom: aSimpleChange oldValueString to: aSimpleChange newValueString }
 ]
 
 { #category : #private }
-FiEffectInspector >> diffChunkMorphsFor: aSimpleEffect [
+FiChangeInspector >> diffChunkMorphsFor: aSimpleChange [
 
 	^ Array
 		streamContents: [ :stream |
-			aSimpleEffect relevantSimpleEffectsDo: [ :each | 
+			aSimpleChange relevantSimpleChangesDo: [ :each | 
 				stream nextPut: (self diffChunkMorphFor: each) ] ] 
 		limitedTo: 15
 ]
 
 { #category : #accessing }
-FiEffectInspector >> diffModel [
+FiChangeInspector >> diffModel [
 
 	^ diffModel
 ]
 
 { #category : #private }
-FiEffectInspector >> displayMorphFor: aSimpleEffect [
+FiChangeInspector >> displayMorphFor: aSimpleChange [
 		
 	| morphs |
 	morphs := OrderedCollection new.
 
-	morphs add: aSimpleEffect path step asMorph.
+	morphs add: aSimpleChange path step asMorph.
 	
 	self plugin 
-		prepareEffectDescriptionMorphs: morphs 
-		for: aSimpleEffect.
+		prepareChangeDescriptionMorphs: morphs 
+		for: aSimpleChange.
 	
 	^ FiMorphBuilder default rowMorphWithAll: morphs
 ]
 
 { #category : #initialization }
-FiEffectInspector >> dragWith: aBlock [
+FiChangeInspector >> dragWith: aBlock [
 	"Enable drag of selected items using the block to create the transport morph. 
 	Follow my senders."
 	
@@ -117,13 +117,13 @@ FiEffectInspector >> dragWith: aBlock [
 ]
 
 { #category : #initialization }
-FiEffectInspector >> initializePresenter [
+FiChangeInspector >> initializePresenter [
 	
 	super initializePresenter.
 	
 	self 
 		windowIcon: Smalltalk ui icons smallInspectItIcon;
-		title: 'Ficus Effects Inspector'.
+		title: 'Ficus Change Inspector'.
  
 	self initializePresenterTreeModel.
 
@@ -132,20 +132,20 @@ FiEffectInspector >> initializePresenter [
 ]
 
 { #category : #initialization }
-FiEffectInspector >> initializePresenterTreeModel [
+FiChangeInspector >> initializePresenterTreeModel [
 	
 	treeModel
 		evenRowColor: treeModel oddRowColor;
-		displayBlock: [ :aSimpleEffect | self displayMorphFor: aSimpleEffect ];
-		childrenBlock: [ :aSimpleEffect | aSimpleEffect children asArray ];
-		iconBlock: [ :aSimpleEffect | aSimpleEffect ficusInspectorIcon ];
-		whenSelectedItemChanged: [ :aSimpleEffectOrNil | 
-			self selected: aSimpleEffectOrNil value ];
+		displayBlock: [ :aSimpleChange | self displayMorphFor: aSimpleChange ];
+		childrenBlock: [ :aSimpleChange | aSimpleChange children asArray ];
+		iconBlock: [ :aSimpleChange | aSimpleChange ficusInspectorIcon ];
+		whenSelectedItemChanged: [ :aSimpleChangeOrNil | 
+			self selected: aSimpleChangeOrNil value ];
 		menu: [ :aMenu | self prepareMenu: aMenu ].
 ]
 
 { #category : #initialization }
-FiEffectInspector >> initializeWidgets [ 
+FiChangeInspector >> initializeWidgets [ 
 
 	self instantiateModels: #(
 		treeModel TreeModel
@@ -153,7 +153,7 @@ FiEffectInspector >> initializeWidgets [
 ]
 
 { #category : #opening }
-FiEffectInspector >> open [
+FiChangeInspector >> open [
 
 	self
 		extent: 800@600;
@@ -165,13 +165,13 @@ FiEffectInspector >> open [
 ]
 
 { #category : #accessing }
-FiEffectInspector >> plugin [
+FiChangeInspector >> plugin [
 
 	^ plugin
 ]
 
 { #category : #accessing }
-FiEffectInspector >> plugin: aPlugin [
+FiChangeInspector >> plugin: aPlugin [
 
 	plugin := aPlugin.
 	
@@ -182,53 +182,53 @@ FiEffectInspector >> plugin: aPlugin [
 ]
 
 { #category : #accessing }
-FiEffectInspector >> pluginRefreshed [
+FiChangeInspector >> pluginRefreshed [
 	
 	treeModel updateTree
 ]
 
 { #category : #private }
-FiEffectInspector >> prepareMenu: aMenu [
+FiChangeInspector >> prepareMenu: aMenu [
 
 	treeModel selectedItems ifNotEmpty: [ 
-		self plugin prepareEffectMenu: aMenu ]
+		self plugin prepareChangeMenu: aMenu ]
 ]
 
 { #category : #opening }
-FiEffectInspector >> rootEffect: anEffect [
+FiChangeInspector >> rootChange: anChange [
 
 	treeModel deselectAll.
-	treeModel roots: (self treeRootsFor: anEffect).
+	treeModel roots: (self treeRootsFor: anChange).
 
 	"treeModel expandRoots."
 ]
 
 { #category : #private }
-FiEffectInspector >> selected: anEffectOrNil [ 
+FiChangeInspector >> selected: aChangeOrNil [ 
 
 	self flag: #fix. "Workaround: Spec in Pharo3 triggers several times the same event."
-	currentSelection = anEffectOrNil ifTrue: [ ^ self ].
-	currentSelection := anEffectOrNil.
+	currentSelection = aChangeOrNil ifTrue: [ ^ self ].
+	currentSelection := aChangeOrNil.
 
 	"Transmit to plugin"
-	self plugin selectedEffect: anEffectOrNil. 
+	self plugin selectedChange: aChangeOrNil. 
 	self flag: #todo. "fix?"
 	
 	diffModel roots: 
-		(anEffectOrNil 
+		(aChangeOrNil 
 			ifNil: [ #() ]
-			ifNotNil: [ self diffChunkMorphsFor: anEffectOrNil ])
+			ifNotNil: [ self diffChunkMorphsFor: aChangeOrNil ])
 ]
 
 { #category : #accessing }
-FiEffectInspector >> treeModel [
+FiChangeInspector >> treeModel [
 
 	^ treeModel
 ]
 
 { #category : #private }
-FiEffectInspector >> treeRootsFor: anEffect [
+FiChangeInspector >> treeRootsFor: aChange [
 
-	^ anEffect asSimpleEffects asArray
+	^ aChange asSimpleChanges asArray
 	
 ]

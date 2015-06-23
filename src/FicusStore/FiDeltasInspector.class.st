@@ -6,7 +6,7 @@ Class {
 	#superclass : #ComposableModel,
 	#instVars : [
 		'deltasDropListModel',
-		'effectInspector'
+		'changeInspector'
 	],
 	#category : #'FicusStore-UI-Widgets'
 }
@@ -19,8 +19,14 @@ FiDeltasInspector class >> defaultSpec [
 		newColumn: [ :column | 
 			column
 				add: #deltasDropListModel height: self buttonHeight;
-				add: #effectInspector ];
+				add: #changeInspector ];
 		yourself
+]
+
+{ #category : #accessing }
+FiDeltasInspector >> changeInspector [ 
+
+	^ changeInspector
 ]
 
 { #category : #accessing }
@@ -28,7 +34,7 @@ FiDeltasInspector >> deltas: aCollectionOfAssociations [
 
 	deltasDropListModel items: 
 		(aCollectionOfAssociations
-			ifEmpty: [ { 'No priors' -> FiNoEffect new } ]
+			ifEmpty: [ { 'No priors' -> FiNoChange new } ]
 			ifNotEmpty: [ 
 				aCollectionOfAssociations collect: [ :each | 
 					'Prior: ', each key origin shortDescription -> each value ] ])
@@ -45,13 +51,7 @@ FiDeltasInspector >> dragWith: aBlock [
 	"Enable drag of selected items using the block to create the transport morph. 
 	Follow my senders."
 	
-	effectInspector dragWith: aBlock
-]
-
-{ #category : #accessing }
-FiDeltasInspector >> effectInspector [ 
-
-	^ effectInspector
+	changeInspector dragWith: aBlock
 ]
 
 { #category : #initialization }
@@ -63,7 +63,7 @@ FiDeltasInspector >> initializePresenter [
 		displayBlock: [ :association | association key ];
 		whenSelectedItemChanged: [ :association | 
 			association ifNotNil: [
-				effectInspector rootEffect: association value ] ]
+				changeInspector rootChange: association value ] ]
 ]
 
 { #category : #initialization }
@@ -71,12 +71,12 @@ FiDeltasInspector >> initializeWidgets [
 
 	self instantiateModels: #(
 		deltasDropListModel DropListModel
-		effectInspector FiEffectInspector).
+		#changeInspector #FiChangeInspector).
 
 ]
 
 { #category : #accessing }
 FiDeltasInspector >> plugin: aPlugin [
 
-	effectInspector plugin: aPlugin
+	changeInspector plugin: aPlugin
 ]

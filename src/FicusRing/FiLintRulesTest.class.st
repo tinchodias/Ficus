@@ -47,5 +47,5 @@ FiLintRulesTest >> testRunRule [
 		onEnvironment: (FiRBBrowserEnvironment new environment: RFiFragileBaseClassProblemResources3 new ringEnvironment).
 		
 	self flag: #fix.
-	self assert: rule problemCount equals: 65.
+	self assert: rule problemCount equals: 67.
 ]

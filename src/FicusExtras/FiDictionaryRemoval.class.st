@@ -1,14 +1,14 @@
 Class {
 	#name : #FiDictionaryRemoval,
-	#superclass : #FiDictionaryEffect,
+	#superclass : #FiDictionaryChange,
 	#instVars : [
 		'oldValue'
 	],
-	#category : #'FicusExtras-Model-Core-Effects'
+	#category : #'FicusExtras-Model-Core-Changes'
 }
 
 { #category : #converting }
-FiDictionaryRemoval >> asSimpleEffectsAt: aBasePath [
+FiDictionaryRemoval >> asSimpleChangesAt: aBasePath [
 	
 	^ { oldValue 
 			ficusDeepCollect: [ :shot :path :collectionFromChildren | 

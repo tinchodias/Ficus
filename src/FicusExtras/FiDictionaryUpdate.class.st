@@ -1,23 +1,29 @@
 Class {
 	#name : #FiDictionaryUpdate,
-	#superclass : #FiDictionaryEffect,
+	#superclass : #FiDictionaryChange,
 	#instVars : [
 		'newValue',
 		'oldValue',
-		'subEffect'
+		'child'
 	],
-	#category : #'FicusExtras-Model-Core-Effects'
+	#category : #'FicusExtras-Model-Core-Changes'
 }
 
 { #category : #converting }
-FiDictionaryUpdate >> asSimpleEffectsAt: aBasePath [
+FiDictionaryUpdate >> asSimpleChangesAt: aBasePath [
 
 	^ { FiUpdate builder 
 			path: aBasePath / key;
 			oldValue: oldValue; 
 			newValue: newValue; 
-			children: (subEffect asSimpleEffectsAt: aBasePath / key);
+			children: (child asSimpleChangesAt: aBasePath / key);
 			new } asFiSet
+]
+
+{ #category : #accessing }
+FiDictionaryUpdate >> child [
+
+	^ child
 ]
 
 { #category : #accessing }
@@ -46,10 +52,4 @@ FiDictionaryUpdate >> newValue [
 FiDictionaryUpdate >> oldValue [
 
 	^ oldValue
-]
-
-{ #category : #accessing }
-FiDictionaryUpdate >> subEffect [
-
-	^ subEffect
 ]

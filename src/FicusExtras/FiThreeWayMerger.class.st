@@ -40,8 +40,8 @@ FiThreeWayMerger >> initializeWithBase: aBaseShot target: aTargetShot ancestor: 
 FiThreeWayMerger >> result [
 	
 	| baseDiff targetDiff targetPlusBase basePlusTarget |
-	baseDiff := base differenceFrom: ancestor.
-	targetDiff := target differenceFrom: ancestor.
+	baseDiff := base changeFrom: ancestor.
+	targetDiff := target changeFrom: ancestor.
 	
 	targetPlusBase := target resultOf: baseDiff edit.
 	basePlusTarget := base resultOf: targetDiff edit.

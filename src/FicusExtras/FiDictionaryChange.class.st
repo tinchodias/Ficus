@@ -1,14 +1,14 @@
 Class {
-	#name : #FiDictionaryEffect,
-	#superclass : #FiEffect,
+	#name : #FiDictionaryChange,
+	#superclass : #FiChange,
 	#instVars : [
 		'key'
 	],
-	#category : #'FicusExtras-Model-Core-Effects'
+	#category : #'FicusExtras-Model-Core-Changes'
 }
 
 { #category : #printing }
-FiDictionaryEffect >> printOn: aStream [
+FiDictionaryChange >> printOn: aStream [
 
 	super printOn: aStream.
 	

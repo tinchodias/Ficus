@@ -1,32 +1,32 @@
 Class {
-	#name : #FiDictionaryEffectsTest,
+	#name : #FiDictionaryChangesTest,
 	#superclass : #TestCase,
 	#category : #'FicusExtras-Tests-Core'
 }
 
 { #category : #tests }
-FiDictionaryEffectsTest >> testAddition [
+FiDictionaryChangesTest >> testAddition [
 
-	| shot edit source result effect |
+	| shot edit source result change |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
 	edit := source editAt: #A equal: shot.
-	effect := source effectOf: edit.
+	change := source changeOf: edit.
 	result := source resultOf: edit.
 
-	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (source editExclude: #A).
+	self assert: change edit equals: edit.
+	self assert: change inverse equals: (source editExclude: #A).
 	
 	self assert: source values isEmpty.
 	self assert: result values asSet equals: { shot } asSet.
-	self assert: (result resultOf: effect inverse) values isEmpty.
+	self assert: (result resultOf: change inverse) values isEmpty.
 ]
 
 { #category : #tests }
-FiDictionaryEffectsTest >> testNoEffect [
+FiDictionaryChangesTest >> testNoChange [
 
-	| shot edit source result intermediate effect |
+	| shot edit source result intermediate change |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -34,11 +34,11 @@ FiDictionaryEffectsTest >> testNoEffect [
 	intermediate := source resultOf: edit.
 
 	edit := intermediate editAt: #A equal: shot.
-	effect := intermediate effectOf: edit.
+	change := intermediate changeOf: edit.
 	result := intermediate resultOf: edit.
 
-	self assert: effect edit equals: FiNoEdit new.
-	self assert: effect inverse equals: FiNoEdit new.
+	self assert: change edit equals: FiNoEdit new.
+	self assert: change inverse equals: FiNoEdit new.
 	
 	self assert: source values isEmpty.
 	self assert: intermediate values asSet equals: { shot } asSet.
@@ -46,9 +46,9 @@ FiDictionaryEffectsTest >> testNoEffect [
 ]
 
 { #category : #tests }
-FiDictionaryEffectsTest >> testRemoval [
+FiDictionaryChangesTest >> testRemoval [
 
-	| edit source result shot intermediate reverted effect |
+	| edit source result shot intermediate reverted change |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -56,13 +56,13 @@ FiDictionaryEffectsTest >> testRemoval [
 	intermediate := source resultOf: edit.
 
 	edit := intermediate editExclude: shot nickname.
-	effect := intermediate effectOf: edit.
+	change := intermediate changeOf: edit.
 	result := intermediate resultOf: edit.
 
-	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (result editAt: #A equal: shot).
+	self assert: change edit equals: edit.
+	self assert: change inverse equals: (result editAt: #A equal: shot).
 
-	reverted := result resultOf: effect inverse.
+	reverted := result resultOf: change inverse.
 		
 	self assert: source values isEmpty.
 	self assert: intermediate values asSet equals: { shot } asSet.
@@ -71,9 +71,9 @@ FiDictionaryEffectsTest >> testRemoval [
 ]
 
 { #category : #tests }
-FiDictionaryEffectsTest >> testUpdate [
+FiDictionaryChangesTest >> testUpdate [
 
-	| shot otherShot edit source result intermediate effect reverted |
+	| shot otherShot edit source result intermediate change reverted |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
@@ -82,13 +82,13 @@ FiDictionaryEffectsTest >> testUpdate [
 	intermediate := source resultOf: edit.
 
 	edit := intermediate editAt: #A equal: otherShot.
-	effect := intermediate effectOf: edit.
+	change := intermediate changeOf: edit.
 	result := intermediate resultOf: edit.
 
-	self assert: effect edit equals: edit.
-	self assert: effect inverse equals: (result editAt: #A equal: shot).
+	self assert: change edit equals: edit.
+	self assert: change inverse equals: (result editAt: #A equal: shot).
 
-	reverted := result resultOf: effect inverse.
+	reverted := result resultOf: change inverse.
 	
 	self assert: source values isEmpty.
 	self assert: intermediate values asSet equals: { shot } asSet.

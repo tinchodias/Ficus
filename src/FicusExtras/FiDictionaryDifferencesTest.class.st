@@ -18,10 +18,10 @@ FiDictionaryDifferencesTest >> testAddition [
 	edit := source editAt: #A equal: shot.
 	result := source resultOf: edit.
 
-	self assert: (source differenceFrom: source) isNoEffect.
-	self assert: (result differenceFrom: result) isNoEffect.
-	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
-	self assert: (source differenceFrom: result) equals: (result effectOf: (result editExclude: #A)).
+	self assert: (source changeFrom: source) isNoChange.
+	self assert: (result changeFrom: result) isNoChange.
+	self assert: (result changeFrom: source) equals: (source changeOf: edit).
+	self assert: (source changeFrom: result) equals: (result changeOf: (result editExclude: #A)).
 ]
 
 { #category : #tests }
@@ -45,7 +45,7 @@ FiDictionaryDifferencesTest >> testAdditionAndUpdate [
 	
 	result := source resultOf: edit.
 
-	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (result changeFrom: source) equals: (source changeOf: edit).
 
 ]
 
@@ -62,10 +62,10 @@ FiDictionaryDifferencesTest >> testNoEdit [
 	edit := source editAt: #A equal: shot.
 	result := source resultOf: edit.
 	
-	self assert: (source differenceFrom: source) isNoEffect.
-	self assert: (result differenceFrom: result) isNoEffect.
-	self assert: (result differenceFrom: source) isNoEffect.
-	self assert: (source differenceFrom: result) isNoEffect.
+	self assert: (source changeFrom: source) isNoChange.
+	self assert: (result changeFrom: result) isNoChange.
+	self assert: (result changeFrom: source) isNoChange.
+	self assert: (source changeFrom: result) isNoChange.
 ]
 
 { #category : #tests }
@@ -81,10 +81,10 @@ FiDictionaryDifferencesTest >> testRemoval [
 	edit := source editExclude: shot nickname.
 	result := source resultOf: edit.
 	
-	self assert: (source differenceFrom: source) isNoEffect.
-	self assert: (result differenceFrom: result) isNoEffect.
-	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
-	self assert: (source differenceFrom: result) equals: (result effectOf: (result editAt: #A equal: shot)).
+	self assert: (source changeFrom: source) isNoChange.
+	self assert: (result changeFrom: result) isNoChange.
+	self assert: (result changeFrom: source) equals: (source changeOf: edit).
+	self assert: (source changeFrom: result) equals: (result changeOf: (result editAt: #A equal: shot)).
 ]
 
 { #category : #tests }
@@ -95,8 +95,8 @@ FiDictionaryDifferencesTest >> testReplacement [
 	source := 42.
 
 	self 
-		assert: (result differenceFrom: source) 
-		equals: (source effectOfReplaceBy: result).
+		assert: (result changeFrom: source) 
+		equals: (source changeOfReplaceBy: result).
 
 ]
 
@@ -116,10 +116,10 @@ FiDictionaryDifferencesTest >> testTwoAdditions [
 		result editExclude: #A.
 		result editExclude: #B }.
 
-	self assert: (source differenceFrom: source) isNoEffect.
-	self assert: (result differenceFrom: result) isNoEffect.
-	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
-	self assert: (source differenceFrom: result) equals: (result effectOf: inverseEdit).
+	self assert: (source changeFrom: source) isNoChange.
+	self assert: (result changeFrom: result) isNoChange.
+	self assert: (result changeFrom: source) equals: (source changeOf: edit).
+	self assert: (source changeFrom: result) equals: (result changeOf: inverseEdit).
 ]
 
 { #category : #tests }
@@ -142,8 +142,8 @@ FiDictionaryDifferencesTest >> testUpdate [
 			do: [ :class | 
 				class editAt: #shortBio equal: '42' ].		
 	
-	self assert: (source differenceFrom: source) isNoEffect.
-	self assert: (result differenceFrom: result) isNoEffect.
-	self assert: (result differenceFrom: source) equals: (source effectOf: expectedDifference).
+	self assert: (source changeFrom: source) isNoChange.
+	self assert: (result changeFrom: result) isNoChange.
+	self assert: (result changeFrom: source) equals: (source changeOf: expectedDifference).
 
 ]

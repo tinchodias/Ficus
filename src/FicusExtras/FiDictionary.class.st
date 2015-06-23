@@ -17,31 +17,31 @@ FiDictionary class >> new [
 ]
 
 { #category : #differencing }
-FiDictionary >> differenceFrom: other [
+FiDictionary >> changeFrom: other [
 
-	| subEffects |	
-	self == other ifTrue: [ ^ FiNoEffect new ].
-	self class == other class ifFalse: [ ^ other effectOfReplaceBy: self ].
+	| changes |	
+	self == other ifTrue: [ ^ FiNoChange new ].
+	self class == other class ifFalse: [ ^ other changeOfReplaceBy: self ].
 
-	subEffects := Set new.
+	changes := Set new.
 	
 	other stepsAndValuesDo: [ :key :otherValue | 
 		self
 			valueAt: key
 			ifPresent: [ :value | 
 				| subDifference |
-				subDifference := value differenceFrom: otherValue.
+				subDifference := value changeFrom: otherValue.
 				
-				subDifference isNoEffect ifFalse: [
-					subEffects add: 
+				subDifference isNoChange ifFalse: [
+					changes add: 
 						(FiDictionaryUpdate builder
 							key: key;
 							newValue: value;
 							oldValue: otherValue;
-							subEffect: subDifference;
+							child: subDifference;
 							new) ] ]
 			ifAbsent: [ 
-				subEffects add: 
+				changes add: 
 					(FiDictionaryRemoval builder
 						key: key;
 						oldValue: otherValue;
@@ -49,13 +49,34 @@ FiDictionary >> differenceFrom: other [
 
 	self stepsAndValuesDo: [ :key :value |
 		(other steps includes: key) ifFalse: [ 
-			subEffects add: 
+			changes add: 
 				(FiDictionaryAddition builder
 					key: key;
 					newValue: value;
 					new) ] ].
 	
-	^ FiEffect fromAll: subEffects
+	^ FiChange fromAll: changes
+]
+
+{ #category : #changes }
+FiDictionary >> changeOfAcceptKey: anAcceptKey [ 
+
+	^ self 
+		valueAt: anAcceptKey key
+		ifPresent: [ :aValue | 
+			aValue = (anAcceptKey edit resultOn: aValue)
+				ifTrue: [ anAcceptKey changeNothing ]
+				ifFalse: [ anAcceptKey changeUpdate: aValue ] ] 
+		ifAbsent: [ anAcceptKey changeAdd ].
+]
+
+{ #category : #changes }
+FiDictionary >> changeOfExcludeKey: anExcludeKey [
+
+	^ self 
+		valueAt: anExcludeKey key
+		ifPresent: [ :aValue | anExcludeKey changeRemove: aValue ]
+		ifAbsent: [ anExcludeKey changeNothing ]
 ]
 
 { #category : #edits }
@@ -81,43 +102,22 @@ FiDictionary >> editExclude: key [
 ]
 
 { #category : #edits }
-FiDictionary >> editFromSimpleEffect: aSimpleEffect [
-	"Convert as edit, assuming the FiSimpleEffect applies to myself."
+FiDictionary >> editFromSimpleChange: aSimpleChange [
+	"Convert as edit, assuming the FiSimpleChange applies to myself."
 	
-	aSimpleEffect
-		ifAdd: [ ^ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ] 
-		ifRemove: [ ^ self editExclude: aSimpleEffect path step ] 
+	aSimpleChange
+		ifAdd: [ ^ self editAt: aSimpleChange path step equal: aSimpleChange newValue ] 
+		ifRemove: [ ^ self editExclude: aSimpleChange path step ] 
 		ifUpdate: [ ].
 	
-	^ aSimpleEffect children asArray
-		ifEmpty: [ self editAt: aSimpleEffect path step equal: aSimpleEffect newValue ]
+	^ aSimpleChange children asArray
+		ifEmpty: [ self editAt: aSimpleChange path step equal: aSimpleChange newValue ]
 		ifNotEmpty: [ :children | 
 			self 
-				editAt: aSimpleEffect path step
+				editAt: aSimpleChange path step
 				do: [ :oneStepForward |
 					self editAll: (children collect: [ :each | 
-						oneStepForward editFromSimpleEffect: each ]) ]].
-]
-
-{ #category : #effects }
-FiDictionary >> effectOfAcceptKey: anAcceptKey [ 
-
-	^ self 
-		valueAt: anAcceptKey key
-		ifPresent: [ :aValue | 
-			aValue = (anAcceptKey edit resultOn: aValue)
-				ifTrue: [ anAcceptKey effectNothing ]
-				ifFalse: [ anAcceptKey effectUpdate: aValue ] ] 
-		ifAbsent: [ anAcceptKey effectAdd ].
-]
-
-{ #category : #effects }
-FiDictionary >> effectOfExcludeKey: anExcludeKey [
-
-	^ self 
-		valueAt: anExcludeKey key
-		ifPresent: [ :aValue | anExcludeKey effectRemove: aValue ]
-		ifAbsent: [ anExcludeKey effectNothing ]
+						oneStepForward editFromSimpleChange: each ]) ]].
 ]
 
 { #category : #initialization }

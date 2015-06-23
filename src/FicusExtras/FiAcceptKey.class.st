@@ -16,14 +16,8 @@ FiAcceptKey class >> key: aKey edit: anEdit [
 		new
 ]
 
-{ #category : #accessing }
-FiAcceptKey >> edit [
-	
-	^ edit
-]
-
-{ #category : #effects }
-FiAcceptKey >> effectAdd [
+{ #category : #changes }
+FiAcceptKey >> changeAdd [
 
 	^ FiDictionaryAddition builder
 		key: key;
@@ -31,21 +25,27 @@ FiAcceptKey >> effectAdd [
 		new
 ]
 
-{ #category : #effects }
-FiAcceptKey >> effectOn: aValue [
+{ #category : #changes }
+FiAcceptKey >> changeOn: aValue [
 
-	^ aValue effectOfAcceptKey: self
+	^ aValue changeOfAcceptKey: self
 ]
 
-{ #category : #effects }
-FiAcceptKey >> effectUpdate: oldValue [
+{ #category : #changes }
+FiAcceptKey >> changeUpdate: oldValue [
 
 	^ FiDictionaryUpdate builder
 		key: key;
 		oldValue: oldValue;
 		newValue: (edit resultOn: oldValue);
-		subEffect: (edit effectOn: oldValue);
+		child: (edit changeOn: oldValue);
 		new
+]
+
+{ #category : #accessing }
+FiAcceptKey >> edit [
+	
+	^ edit
 ]
 
 { #category : #printing }

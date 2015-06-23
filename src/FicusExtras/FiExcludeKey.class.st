@@ -12,15 +12,15 @@ FiExcludeKey class >> key: aKey [
 		new
 ]
 
-{ #category : #effects }
-FiExcludeKey >> effectOn: aValue [
+{ #category : #changes }
+FiExcludeKey >> changeOn: aValue [
 
-	^ aValue effectOfExcludeKey: self
+	^ aValue changeOfExcludeKey: self
 	
 ]
 
-{ #category : #effects }
-FiExcludeKey >> effectRemove: oldValue [
+{ #category : #changes }
+FiExcludeKey >> changeRemove: oldValue [
 
 	^ FiDictionaryRemoval builder
 		key: key;

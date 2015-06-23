@@ -1,28 +1,28 @@
 Class {
-	#name : #FiDictionarySimpleEffectsTest,
+	#name : #FiDictionarySimpleChangesTest,
 	#superclass : #TestCase,
 	#category : #'FicusExtras-Tests-Core'
 }
 
 { #category : #tests }
-FiDictionarySimpleEffectsTest >> testAddition [
+FiDictionarySimpleChangesTest >> testAddition [
 
-	| shot edit source effect simpleEffects |
+	| shot edit source change simpleChanges |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
 	edit := source editAt: #A equal: shot.
-	effect := source effectOf: edit.
+	change := source changeOf: edit.
 
-	simpleEffects := effect asSimpleEffects.
+	simpleChanges := change asSimpleChanges.
 
-	simpleEffects := effect asSimpleEffects.
+	simpleChanges := change asSimpleChanges.
 
 	self 
-		assert: (source editFromSimpleEffects: simpleEffects) 
-		equals: effect edit.
+		assert: (source editFromSimpleChanges: simpleChanges) 
+		equals: change edit.
 			
-	self assert: simpleEffects equals: 
+	self assert: simpleChanges equals: 
 		((FiSet withValues: {
 			(FiAddition builder
 				path: FiPath root / #A;
@@ -54,9 +54,9 @@ FiDictionarySimpleEffectsTest >> testAddition [
 ]
 
 { #category : #tests }
-FiDictionarySimpleEffectsTest >> testNoEffect [
+FiDictionarySimpleChangesTest >> testNoChange [
 
-	| shot edit source intermediate effect |
+	| shot edit source intermediate change |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -64,20 +64,20 @@ FiDictionarySimpleEffectsTest >> testNoEffect [
 	intermediate := source resultOf: edit.
 
 	edit := intermediate editAt: #A equal: shot.
-	effect := intermediate effectOf: edit.
+	change := intermediate changeOf: edit.
 
-	self assert: effect asSimpleEffects isEmpty.
+	self assert: change asSimpleChanges isEmpty.
 	
 	self 
-		assert: (intermediate editFromSimpleEffects: effect asSimpleEffects) 
-		equals: effect edit.
+		assert: (intermediate editFromSimpleChanges: change asSimpleChanges) 
+		equals: change edit.
 
 ]
 
 { #category : #tests }
-FiDictionarySimpleEffectsTest >> testRemoval [
+FiDictionarySimpleChangesTest >> testRemoval [
 
-	| edit source shot intermediate effect simpleEffects |
+	| edit source shot intermediate change simpleChanges |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 
@@ -85,15 +85,15 @@ FiDictionarySimpleEffectsTest >> testRemoval [
 	intermediate := source resultOf: edit.
 
 	edit := intermediate editExclude: shot nickname.
-	effect := intermediate effectOf: edit.
+	change := intermediate changeOf: edit.
 
-	simpleEffects := effect asSimpleEffects.
+	simpleChanges := change asSimpleChanges.
 
 	self 
-		assert: (intermediate editFromSimpleEffects: simpleEffects) 
-		equals: effect edit.
+		assert: (intermediate editFromSimpleChanges: simpleChanges) 
+		equals: change edit.
 		
-	self assert: simpleEffects equals: 
+	self assert: simpleChanges equals: 
 		(FiSet withValues: {
 			(FiRemoval builder
 				path: FiPath root / #A;
@@ -125,9 +125,9 @@ FiDictionarySimpleEffectsTest >> testRemoval [
 ]
 
 { #category : #tests }
-FiDictionarySimpleEffectsTest >> testUpdate [
+FiDictionarySimpleChangesTest >> testUpdate [
 
-	| shot otherShot edit source intermediate effect simpleEffects |
+	| shot otherShot edit source intermediate change simpleChanges |
 	source := FiDictionary new.
 	shot := FiChef nickname: #A.
 	otherShot := shot resultOf: (shot editAt: #shortBio equal: '42').
@@ -136,15 +136,15 @@ FiDictionarySimpleEffectsTest >> testUpdate [
 	intermediate := source resultOf: edit.
 
 	edit := intermediate editAt: #A equal: otherShot.
-	effect := intermediate effectOf: edit.
+	change := intermediate changeOf: edit.
 
-	simpleEffects := effect asSimpleEffects.
+	simpleChanges := change asSimpleChanges.
 
 	self 
-		assert: (intermediate editFromSimpleEffects: simpleEffects) 
-		equals: effect edit.
+		assert: (intermediate editFromSimpleChanges: simpleChanges) 
+		equals: change edit.
 
-	self assert: simpleEffects equals: 
+	self assert: simpleChanges equals: 
 		(FiSet withValues: {
 			(FiUpdate builder
 				path: FiPath root / #A;

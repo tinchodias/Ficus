@@ -1,27 +1,27 @@
 Class {
 	#name : #EFiInspector,
-	#superclass : #FiEffectInspector,
+	#superclass : #FiChangeInspector,
 	#category : #'EpiceaFicus-UI'
 }
 
 { #category : #'as yet unclassified' }
-EFiInspector >> diffChunkMorphsFor: aSimpleEffect [
+EFiInspector >> diffChunkMorphsFor: aSimpleChange [
 
-	^ {self diffChunkMorphFor: aSimpleEffect}
+	^ {self diffChunkMorphFor: aSimpleChange}
 ]
 
 { #category : #'as yet unclassified' }
-EFiInspector >> displayMorphFor: aSimpleEffect [
+EFiInspector >> displayMorphFor: aSimpleChange [
 		
 	| morphs builder |
 	builder := FiMorphBuilder default.
 	morphs := OrderedCollection new.
 
-	morphs add: (builder spotMorphWith: aSimpleEffect path asMetamodelSpot).
+	morphs add: (builder spotMorphWith: aSimpleChange path asMetamodelSpot).
 	
 	self plugin 
-		prepareEffectDescriptionMorphs: morphs 
-		for: aSimpleEffect.
+		prepareChangeDescriptionMorphs: morphs 
+		for: aSimpleChange.
 	
 	^ builder rowMorphWithAll: morphs
 ]
@@ -32,12 +32,12 @@ EFiInspector >> initializePresenterTreeModel [
 	super initializePresenterTreeModel.
 	
 	treeModel
-		childrenBlock: [ :aSimpleEffect | #() ]
+		childrenBlock: [ :aSimpleChange | #() ]
 ]
 
 { #category : #'as yet unclassified' }
-EFiInspector >> treeRootsFor: anEffect [
+EFiInspector >> treeRootsFor: anChange [
 
-	^ anEffect asSimpleEffects asArray flatCollect: [ :each | each relevantSimpleEffects ]
+	^ anChange asSimpleChanges asArray flatCollect: [ :each | each relevantSimpleChanges ]
 	
 ]

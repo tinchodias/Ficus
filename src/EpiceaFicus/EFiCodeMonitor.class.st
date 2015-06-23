@@ -22,7 +22,7 @@ Smalltalk garbageCollect.
 EFiCodeMonitor current workingCopy store historyNodes.
 
 EFiInspector inspect: 
-	(FiEffect fromAll: 
+	(FiChange fromAll: 
 		(EFiCodeMonitor current workingCopy store historyNodes 
 			flatCollect: [ :each | each deltas collect: #value ])).
 
@@ -31,7 +31,7 @@ Object subclass: #Ah5
 	instanceVariableNames: 'a b'
 	classVariableNames: ''
 	category: 'Ah'.
-Ah5 compile: 'm1 ^42' classified: #accessing. 
+#Ah5 asClass compile: 'm1 ^42' classified: #accessing. 
 ]
 
 { #category : #'instance creation' }

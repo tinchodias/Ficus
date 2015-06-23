@@ -3,18 +3,25 @@ Class {
 	#superclass : #EFiRevision,
 	#instVars : [
 		'edit',
-		'cachedEffect',
 		'cachedSnapshot',
 		'cachedPrior',
-		'priorName'
+		'priorName',
+		'cachedChange'
 	],
 	#category : #'EpiceaFicus-Repositories'
 }
 
 { #category : #accessing }
+EFiEpiceaRevision >> change [
+
+	^ cachedChange ifNil: [ 
+		cachedChange := self prior snapshot changeOf: edit ]
+]
+
+{ #category : #accessing }
 EFiEpiceaRevision >> deltas [
 
-	^ { self prior -> self effect }
+	^ { self prior -> self change }
 ]
 
 { #category : #accessing }
@@ -26,13 +33,6 @@ EFiEpiceaRevision >> edit [
 { #category : #accessing }
 EFiEpiceaRevision >> edit: anObject [
 	edit := anObject
-]
-
-{ #category : #accessing }
-EFiEpiceaRevision >> effect [
-
-	^ cachedEffect ifNil: [ 
-		cachedEffect := self prior snapshot effectOf: edit ]
 ]
 
 { #category : #accessing }

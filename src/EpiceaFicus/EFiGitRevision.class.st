@@ -12,7 +12,7 @@ Class {
 EFiGitRevision >> deltas [
 
 	^ self priors collect: [ :aPrior |
-		aPrior -> (snapshot differenceFrom: aPrior snapshot) ]
+		aPrior -> (snapshot changeFrom: aPrior snapshot) ]
 ]
 
 { #category : #accessing }

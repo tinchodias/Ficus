@@ -96,8 +96,8 @@ RFiPlaygroundTest >> test03ChangeDependencies [
 	aClass := envB classNamed: #Log.
 	aMethod := aClass >> #log:.
 
-	aFiDelta := node4B snapshot differenceFrom: node3 snapshot.
-	dependencies := envB ficusDependenciesForRedoing: aFiDelta asSimpleEffects anyOne.
+	aFiDelta := node4B snapshot changeFrom: node3 snapshot.
+	dependencies := envB ficusDependenciesForRedoing: aFiDelta asSimpleChanges anyOne.
 
 	self assert: dependencies isNotEmpty.
 	pathsToDependencies := dependencies asSet flatCollect: [ :dep | 

@@ -7,11 +7,11 @@ RFiEnvironment >> ficusAllDependencies [
 ]
 
 { #category : #'*FicusImpact' }
-RFiEnvironment >> ficusDependenciesForRedoing: aSimpleEffect [
+RFiEnvironment >> ficusDependenciesForRedoing: aSimpleChange [
 	
 	| entities |
 	entities := Array streamContents: [ :stream |
-		aSimpleEffect relevantSimpleEffectsDo: [ :child |
+		aSimpleChange relevantSimpleChangesDo: [ :child |
 			| block |
 			block := [ 
 				stream nextPut: (self ficusRGObjectFromPath: child path) ].

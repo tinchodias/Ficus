@@ -15,10 +15,10 @@ RFiImpactTest >> impacts2From: oldRFiObject to: newRFiObject [
 	newDependencies := newRFiObject ficusDependencies.
 
 	diff := (newDependencies collect: #asRFiInterpretedDependency) asFiSet
-		differenceFrom: (oldDependencies collect: #asRFiInterpretedDependency) asFiSet.
+		changeFrom: (oldDependencies collect: #asRFiInterpretedDependency) asFiSet.
 
-	^ diff asSimpleEffects collect: [ :aSimpleEffect |
-		self impactOf: aSimpleEffect from: oldDependencies to: newDependencies.
+	^ diff asSimpleChanges collect: [ :aSimpleChange |
+		self impactOf: aSimpleChange from: oldDependencies to: newDependencies.
 		 ]
 ]
 
@@ -50,10 +50,10 @@ RFiImpactTest >> requisitesWithImpactFrom: oldDependencies to: newDependencies [
 
 	| diff |
 	diff := (newDependencies collect: #asRFiInterpretedDependency) asFiSet
-		differenceFrom: (oldDependencies collect: #asRFiInterpretedDependency) asFiSet.
+		changeFrom: (oldDependencies collect: #asRFiInterpretedDependency) asFiSet.
 
-	^ diff asSimpleEffects collect: [ :aSimpleEffect |
-		aSimpleEffect oldValue requisite ].
+	^ diff asSimpleChanges collect: [ :aSimpleChange |
+		aSimpleChange oldValue requisite ].
 
 ]
 

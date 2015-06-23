@@ -5,12 +5,12 @@ Class {
 	#name : #RFiImpactStoreBrowserPlugin,
 	#superclass : #FiStoreBrowserPlugin,
 	#instVars : [
-		'selectedEffect',
 		'selectedHistoryNode',
 		'dependenciesByHistoryNode',
 		'backgroundExecutor',
 		'environmentalPackages',
-		'environmentByHistoryNode'
+		'environmentByHistoryNode',
+		'selectedChange'
 	],
 	#category : #'FicusImpact-UI'
 }
@@ -178,7 +178,7 @@ RFiImpactStoreBrowserPlugin >> refresh [
 
 	env := selectedHistoryNode snapshot asRFiEnvironment.
 
-	dependencies := env ficusDependenciesForRedoing: selectedEffect.
+	dependencies := env ficusDependenciesForRedoing: selectedChange.
 
 	dependencies do: [ :dep |
 		| pathsToDependencies |

@@ -6,7 +6,7 @@ Class {
 		'destination',
 		'delta',
 		'impactInOrigin',
-		'deltaSimpleEffectsArray'
+		'deltaSimpleChangesArray'
 	],
 	#category : #'FicusImpact-LDependency'
 }
@@ -31,7 +31,7 @@ RFiLDeltaImpactBuilder class >> exampleFragileBaseProblemWithBaseEnvironment: ba
 	envA := (baseEnvironment ficusPackages asArray copyWith: packageA) asFiSet asRFiEnvironment.
 	envA2:= (baseEnvironment ficusPackages asArray copyWith: packageA2) asFiSet asRFiEnvironment.
 	envB := (baseEnvironment ficusPackages asArray copyWith: packageB) asFiSet asRFiEnvironment.
-	delta := envA2 ficusPackages differenceFrom: envA ficusPackages.
+	delta := envA2 ficusPackages changeFrom: envA ficusPackages.
 	
 	builder := RFiLDeltaImpactBuilder new.
 	builder origin: envA.
@@ -56,19 +56,19 @@ RFiLDeltaImpactBuilder class >> exampleYrupe [
 ]
 
 { #category : #API }
-RFiLDeltaImpactBuilder >> delta: aFiEffect [
+RFiLDeltaImpactBuilder >> delta: aFiChange [
 
 	self flag: #todo. "Wrong!"
 	
-	delta := aFiEffect.
-	deltaSimpleEffectsArray := delta asSimpleEffects asArray.
+	delta := aFiChange.
+	deltaSimpleChangesArray := delta asSimpleChanges asArray.
 ]
 
 { #category : #private }
 RFiLDeltaImpactBuilder >> deltaEdit [
 
 	self flag: #todo. "ARGH... this seems to be the most precise way to get an edit from a delta"
-	^ origin ficusPackages editFromSimpleEffects: delta asSimpleEffects
+	^ origin ficusPackages editFromSimpleChanges: delta asSimpleChanges
 ]
 
 { #category : #API }
@@ -125,6 +125,6 @@ RFiLDeltaImpactBuilder >> origin: aRFiEnvironment [
 { #category : #private }
 RFiLDeltaImpactBuilder >> subjectIncludes: anEntity [
 	
-	^ deltaSimpleEffectsArray anySatisfy: [ :simpleEffect | 
-		simpleEffect hasEffectAt: anEntity asMetamodelSpot ]
+	^ deltaSimpleChangesArray anySatisfy: [ :simpleChange | 
+		simpleChange hasChangeAt: anEntity asMetamodelSpot ]
 ]

@@ -30,7 +30,7 @@ FiOmbuStore >> commitSnapshot: aSnapshot priors: priors [
 	| newEntry delta thePrior |
 	priors size = 1 ifFalse: [ self notYetImplemented ].
 	thePrior := priors anyOne.
-	delta := aSnapshot differenceFrom: thePrior snapshot.
+	delta := aSnapshot changeFrom: thePrior snapshot.
 	
 	newEntry := OmEntry content: delta.
 

@@ -158,6 +158,31 @@ YrPharoMigrator class >> example1tags [
 ]
 
 { #category : #'examples - writing' }
+YrPharoMigrator class >> example1writeAll [
+	"master script"
+	
+	| duration exportPath |
+	duration := [ 		
+		exportPath := 'yrupe-pharo-migrator.mc-packages'.	
+		self assert: exportPath asFileReference exists.
+		MCCacheRepository cacheDirectory:	exportPath.
+
+		"Fetch from MC: all mcz files should be downloaded, else empty packages are exported"
+		3 timesRepeat: [
+			FiMCDownloader downloadToCacheAllRepositories].
+		
+		self flushAllCaches.
+		
+		self 
+			example1writeTagsFrom: PharoVersionsMiner forAllPharos
+			onRepository: self newFreshGitRepository.
+			
+		self flushAllCaches ] timeToRun.
+
+	FileStream stdout << 'TOTAL DURATION: ' << duration asString.
+]
+
+{ #category : #'examples - writing' }
 YrPharoMigrator class >> example1writeNew [
 	"
 	self example1writeNew.
@@ -182,7 +207,7 @@ YrPharoMigrator class >> example1writeOpen [
 { #category : #'examples - writing' }
 YrPharoMigrator class >> example1writeOpenAfter: aTag [
 	"
-	self example1writeOpenAfter: '30130'.
+	self example1writeOpenAfter: '30801'.
 	"
 
 	^ self 
@@ -260,7 +285,13 @@ YrPharoMigrator class >> newOpenGitRepository [
 { #category : #private }
 YrPharoMigrator class >> pharoMiner [
 
-	^ PharoVersionsMiner forPharo50
+	^ PharoVersionsMiner forAllPharos
+]
+
+{ #category : #private }
+YrPharoMigrator class >> pharoMinerWithTagsAfter: aTag [
+	
+	^ PharoVersionsMiner forPharoTagsSatisfying: [ :each | each > aTag ]
 ]
 
 { #category : #private }

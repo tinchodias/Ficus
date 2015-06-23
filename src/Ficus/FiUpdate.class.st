@@ -1,11 +1,11 @@
 Class {
 	#name : #FiUpdate,
-	#superclass : #FiSimpleEffect,
+	#superclass : #FiSimpleChange,
 	#instVars : [
 		'newValue',
 		'oldValue'
 	],
-	#category : #'Ficus-Model-Core-SimpleEffects'
+	#category : #'Ficus-Model-Core-SimpleChanges'
 }
 
 { #category : #testing }
@@ -27,9 +27,9 @@ FiUpdate >> oldValue [
 ]
 
 { #category : #enumerating }
-FiUpdate >> relevantSimpleEffectsDo: aBlockClosure [
+FiUpdate >> relevantSimpleChangesDo: aBlockClosure [
 
 	^ children values
 		ifEmpty: [ aBlockClosure value: self ]
-		ifNotEmpty: [ children do: [ :each | each relevantSimpleEffectsDo: aBlockClosure ] ]
+		ifNotEmpty: [ children do: [ :each | each relevantSimpleChangesDo: aBlockClosure ] ]
 ]

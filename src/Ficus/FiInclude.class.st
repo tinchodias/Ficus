@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #effects }
-FiInclude >> effectAdd [
+FiInclude >> changeAdd [
 
 	^ FiSetAddition builder
 		newValue: theValue;
@@ -13,18 +13,18 @@ FiInclude >> effectAdd [
 ]
 
 { #category : #effects }
-FiInclude >> effectOn: aSet [
+FiInclude >> changeOn: aSet [
 
-	^ aSet effectOfInclude: self
+	^ aSet changeOfInclude: self
 ]
 
 { #category : #effects }
-FiInclude >> effectUpdate: oldValue [
+FiInclude >> changeUpdate: oldValue [
 
 	^ FiSetUpdate builder
 		newValue: theValue;
 		oldValue: oldValue;
-		subEffect: (oldValue effectOfReplaceBy: theValue);
+		child: (oldValue changeOfReplaceBy: theValue);
 		new
 ]
 

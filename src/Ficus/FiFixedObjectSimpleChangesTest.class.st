@@ -1,13 +1,13 @@
 Class {
-	#name : #FiFixedObjectSimpleEffectsTest,
+	#name : #FiFixedObjectSimpleChangesTest,
 	#superclass : #TestCase,
 	#category : #'Ficus-Tests-Core'
 }
 
 { #category : #tests }
-FiFixedObjectSimpleEffectsTest >> testHasEffectAt [
+FiFixedObjectSimpleChangesTest >> testHasChangeAt [
 
-	| source editAdmiredChefs effect simpleEffects |
+	| source editAdmiredChefs change simpleChanges |
 	source := FiChef nickname: #A.
 
 	editAdmiredChefs := 
@@ -15,44 +15,44 @@ FiFixedObjectSimpleEffectsTest >> testHasEffectAt [
 			editAt: #admiredChefs
 			do: [ :admiredChefs | admiredChefs editInclude: #X ].
 
-	effect := source effectOf: editAdmiredChefs.
-	simpleEffects := effect asSimpleEffects.
+	change := source changeOf: editAdmiredChefs.
+	simpleChanges := change asSimpleChanges.
 
-	self assert: (simpleEffects asArray first hasEffectAt: FiPath root / #admiredChefs / #X).
-	self deny: (simpleEffects asArray first hasEffectAt: FiPath root / #admiredChefs / #Y).
+	self assert: (simpleChanges asArray first hasChangeAt: FiPath root / #admiredChefs / #X).
+	self deny: (simpleChanges asArray first hasChangeAt: FiPath root / #admiredChefs / #Y).
 ]
 
 { #category : #tests }
-FiFixedObjectSimpleEffectsTest >> testNoEffect [
+FiFixedObjectSimpleChangesTest >> testNoChange [
 
-	| edit effect source |
+	| edit change source |
 	source := FiChef nickname: #A.
 
 	edit :=  source editAt: #nickname equal: #A.
-	effect := source effectOf: edit.
+	change := source changeOf: edit.
 	
 	self 
-		assert: (source editFromSimpleEffects: effect asSimpleEffects) 
-		equals: effect edit.
+		assert: (source editFromSimpleChanges: change asSimpleChanges) 
+		equals: change edit.
 
 ]
 
 { #category : #tests }
-FiFixedObjectSimpleEffectsTest >> testUpdate [
+FiFixedObjectSimpleChangesTest >> testUpdate [
 
-	| edit effect source simpleEffects |
+	| edit change source simpleChanges |
 	source := FiChef nickname: #A.
 
 	edit :=  source editAt: #shortBio equal: '42'.
-	effect := source effectOf: edit.
+	change := source changeOf: edit.
 
-	simpleEffects := effect asSimpleEffects.
+	simpleChanges := change asSimpleChanges.
 
 	self 
-		assert: (source editFromSimpleEffects: simpleEffects) 
-		equals: effect edit.
+		assert: (source editFromSimpleChanges: simpleChanges) 
+		equals: change edit.
 	
-	self assert: simpleEffects equals: 
+	self assert: simpleChanges equals: 
 		(FiSet withValues: {
 			(FiUpdate builder
 				path: FiPath root / #shortBio;
@@ -65,9 +65,9 @@ FiFixedObjectSimpleEffectsTest >> testUpdate [
 ]
 
 { #category : #tests }
-FiFixedObjectSimpleEffectsTest >> testUpdateAndSubAddition [
+FiFixedObjectSimpleChangesTest >> testUpdateAndSubAddition [
 
-	| source editAdmiredChefs editShortBio edit effect result simpleEffects |
+	| source editAdmiredChefs editShortBio edit change result simpleChanges |
 	source := FiChef nickname: #A.
 
 	editAdmiredChefs := 
@@ -80,16 +80,16 @@ FiFixedObjectSimpleEffectsTest >> testUpdateAndSubAddition [
 			equal: '42'.
 
 	edit := source editAll: { editAdmiredChefs. editShortBio }.			
-	effect := source effectOf: edit.
+	change := source changeOf: edit.
 	result := source resultOf: edit.
 
-	simpleEffects := effect asSimpleEffects.
+	simpleChanges := change asSimpleChanges.
 
 	self 
-		assert: (source editFromSimpleEffects: simpleEffects) 
-		equals: effect edit.
+		assert: (source editFromSimpleChanges: simpleChanges) 
+		equals: change edit.
 
-	self assert: simpleEffects equals: 
+	self assert: simpleChanges equals: 
 		(FiSet withValues: {
 			(FiUpdate builder
 				path: FiPath root / #admiredChefs;

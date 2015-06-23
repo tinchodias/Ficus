@@ -12,8 +12,8 @@ FiFixedObjectDifferencesTest >> testReplacement [
 	source := 42.
 
 	self 
-		assert: (result differenceFrom: source) 
-		equals: (source effectOfReplaceBy: result).
+		assert: (result changeFrom: source) 
+		equals: (source changeOfReplaceBy: result).
 
 ]
 
@@ -25,8 +25,8 @@ FiFixedObjectDifferencesTest >> testReplacement2 [
 	source := 42.
 
 	self 
-		assert: (result differenceFrom: source) 
-		equals: (source effectOfReplaceBy: result).
+		assert: (result changeFrom: source) 
+		equals: (source changeOfReplaceBy: result).
 
 ]
 
@@ -34,7 +34,7 @@ FiFixedObjectDifferencesTest >> testReplacement2 [
 FiFixedObjectDifferencesTest >> testSubAddition [
 	"Test difference with a sub edit."
 
-	| edit inverseEdit source result effect inverseEffect |
+	| edit inverseEdit source result change inverseChange |
 	source := FiChef nickname: #A.
 
 	edit := source 
@@ -42,15 +42,15 @@ FiFixedObjectDifferencesTest >> testSubAddition [
 		do: [ :admiredChefs | admiredChefs editInclude: #X ].
 	
 	result := source resultOf: edit.
-	effect := source effectOf: edit.
+	change := source changeOf: edit.
 
 	inverseEdit := result 
 		editAt: #admiredChefs
 		do: [ :admiredChefs | admiredChefs editExclude: #X ].
-	inverseEffect := result effectOf: inverseEdit.
+	inverseChange := result changeOf: inverseEdit.
 
-	self assert: (result differenceFrom: source) equals: effect.
-	self assert: (source differenceFrom: result) equals: inverseEffect.
+	self assert: (result changeFrom: source) equals: change.
+	self assert: (source changeFrom: result) equals: inverseChange.
 ]
 
 { #category : #tests }
@@ -79,6 +79,6 @@ FiFixedObjectDifferencesTest >> testUpdateAndSubAddition [
 			equal: ''.
 		}.
 
-	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
-	self assert: (source differenceFrom: result) equals: (result effectOf: inverseEdit).
+	self assert: (result changeFrom: source) equals: (source changeOf: edit).
+	self assert: (source changeFrom: result) equals: (result changeOf: inverseEdit).
 ]

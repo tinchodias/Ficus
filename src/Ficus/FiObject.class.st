@@ -6,8 +6,8 @@ A shot has #steps, which are Symbol names which can be used to access correspond
 Each shot provides an #edits protocol that builds ""edits"", i.e. instances of a class in the hierarchy of FiEdit.
 
 Then, an edit can be used to calculate either:
-- the result of the application of the edit, with: aShot resultOf: anEdit.
-- the effect of the application of the edit, with: aShot effectOf: anEdit.
+- the result of the application of the edit, with: aFiObject resultOf: anEdit.
+- the change produced by the edit, with: aFiObject changeOf: anEdit.
 
 
 "
@@ -54,9 +54,31 @@ FiObject >> = another [
 ]
 
 { #category : #differencing }
-FiObject >> differenceFrom: other [
+FiObject >> changeFrom: other [
 
 	^ self subclassResponsibility 
+]
+
+{ #category : #changes }
+FiObject >> changeOf: anEdit [ 
+
+	^ anEdit changeOn: self
+]
+
+{ #category : #changes }
+FiObject >> changeOfCompositeEdit: aCompositeEdit [ 
+
+	^ FiCompositeChange builder
+		children: (aCompositeEdit children values collect: [ :anEdit | anEdit changeOn: self ]) asFiSet;
+		new
+]
+
+{ #category : #changes }
+FiObject >> changeOfSubEdit: aSubEdit [ 
+
+	self flag: #fix. "inefficient".
+	
+	^ (self resultOf: aSubEdit) changeFrom: self
 ]
 
 { #category : #edits }
@@ -84,35 +106,13 @@ FiObject >> editAtPath: aPath do: aBlockClosure [
 ]
 
 { #category : #edits }
-FiObject >> editFromSimpleEffects: simpleEffects [
-	"Convert as edit, assuming the FiSimpleEffect applies to myself *as root*."
+FiObject >> editFromSimpleChanges: simpleChanges [
+	"Convert as edit, assuming the FiSimpleChange applies to myself *as root*."
 
-	^ self editAll: (simpleEffects collect: [ :each | 
+	^ self editAll: (simpleChanges collect: [ :each | 
 		self 
-			editAtPath: each path basePath "skip the last step of the path of the simple effect"
-			do: [ :target | target editFromSimpleEffect: each ]])
-]
-
-{ #category : #effects }
-FiObject >> effectOf: anEdit [ 
-
-	^ anEdit effectOn: self
-]
-
-{ #category : #effects }
-FiObject >> effectOfCompositeEdit: aCompositeEdit [ 
-
-	^ FiCompositeEffect builder
-		children: (aCompositeEdit children values collect: [ :anEdit | anEdit effectOn: self ]) asFiSet;
-		new
-]
-
-{ #category : #effects }
-FiObject >> effectOfSubEdit: aSubEdit [ 
-
-	self flag: #fix. "inefficient".
-	
-	^ (self resultOf: aSubEdit) differenceFrom: self
+			editAtPath: each path basePath "skip the last step of the path of the simple change"
+			do: [ :target | target editFromSimpleChange: each ]])
 ]
 
 { #category : #enumerating }

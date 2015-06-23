@@ -1,39 +1,39 @@
 Class {
-	#name : #FiCompositeEffect,
-	#superclass : #FiEffect,
+	#name : #FiCompositeChange,
+	#superclass : #FiChange,
 	#instVars : [
 		'children'
 	],
-	#category : #'Ficus-Model-Core-Effects'
+	#category : #'Ficus-Model-Core-Changes'
 }
 
 { #category : #converting }
-FiCompositeEffect >> asSimpleEffectsAt: aBasePath [
+FiCompositeChange >> asSimpleChangesAt: aBasePath [
 
 	^ (children values flatCollect: [ :each |
-		each asSimpleEffectsAt: aBasePath ]) asFiSet
+		each asSimpleChangesAt: aBasePath ]) asFiSet
 ]
 
 { #category : #accessing }
-FiCompositeEffect >> children [
+FiCompositeChange >> children [
 	
 	^ children
 ]
 
 { #category : #accessing }
-FiCompositeEffect >> edit [
+FiCompositeChange >> edit [
 	
 	^ self editAll: (children values collect: #edit)
 ]
 
 { #category : #accessing }
-FiCompositeEffect >> inverse [
+FiCompositeChange >> inverse [
 	
 	^ self editAll: (children values collect: #inverse)
 ]
 
 { #category : #printing }
-FiCompositeEffect >> printOn: aStream [
+FiCompositeChange >> printOn: aStream [
 
 	| delimitingBlock |
 	super printOn: aStream.

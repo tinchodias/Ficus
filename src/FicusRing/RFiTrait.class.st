@@ -22,15 +22,6 @@ RFiTrait class >> environment: aRFiEnvironment ficusTrait: aFiTrait [
 ]
 
 { #category : #polymorphism }
-RFiTrait >> classSide [
-
-	^ cachedClassTrait ifNil: [ 
-		cachedClassTrait := RFiClassTrait new
-			instanceSide: self;
-			yourself ]
-]
-
-{ #category : #polymorphism }
 RFiTrait >> classTrait [
 	
 	^ self classSide
@@ -92,6 +83,15 @@ RFiTrait >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: self name;
 		nextPut: $)
+]
+
+{ #category : #polymorphism }
+RFiTrait >> theMetaClass [
+
+	^ cachedClassTrait ifNil: [ 
+		cachedClassTrait := RFiClassTrait new
+			instanceSide: self;
+			yourself ]
 ]
 
 { #category : #polymorphism }

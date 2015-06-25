@@ -7,8 +7,8 @@ FiStoreBrowser classSide >> exampleFicusMonticelloYrupe [
 	"
 	
 	| pharos |
-	pharos := (YrPharoMigrator allTags first: 15) collect: [ :tag |
-		"tag -> "(YrPharoMigrator example1readTag: tag) ].
+	pharos := (YrGitPharoExporter allTags first: 15) collect: [ :tag |
+		"tag -> "(YrGitPharoExporter example1readTag: tag) ].
 
 	^ self exampleWithStore: (FiMemoryStore exampleWithAll: pharos)
 ]

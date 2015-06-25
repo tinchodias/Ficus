@@ -6,5 +6,5 @@ RFiEnvironmentBrowser classSide >> example4yrupe [
 	self example4yrupe
 	"
 	
-	^ self openOn: (YrPharoMigrator example1readTag: '30005') asRFiEnvironment
+	^ self openOn: (YrGitPharoExporter example1readTag: '30005') asRFiEnvironment
 ]

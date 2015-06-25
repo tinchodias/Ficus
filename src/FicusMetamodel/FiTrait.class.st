@@ -45,6 +45,27 @@ FiTrait >> defaultStep [
 	^ name asSymbol
 ]
 
+{ #category : #printing }
+FiTrait >> definition [
+	"Answer a String that defines the receiver"
+
+	^ String
+		streamContents: [ :stream | 
+			stream
+				nextPutAll: 'Trait named: ';
+				store: name.
+			stream
+				cr;
+				tab;
+				nextPutAll: 'uses: ';
+				nextPutAll: traitComposition.
+			stream
+				cr;
+				tab;
+				nextPutAll: 'category: ';
+				store: category ]
+]
+
 { #category : #initialize }
 FiTrait >> initialize [
 

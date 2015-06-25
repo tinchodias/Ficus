@@ -20,7 +20,7 @@ RFiLDependencyGraphBuilder class >> exampleYrupe [
 	[self exampleYrupe] timeToRun
 	"
 
-	^ self graphForEnvironment: (YrPharoMigrator example1readTag: '30014') asRFiEnvironment
+	^ self graphForEnvironment: (YrGitPharoExporter example1readTag: '30014') asRFiEnvironment
 ]
 
 { #category : #convenience }

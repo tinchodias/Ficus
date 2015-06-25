@@ -34,7 +34,7 @@ RFiLDependencyMiner class >> exampleYrupe [
 	[self exampleYrupe inspect ] timeToRun
 	"
 
-	^ self dependenciesForEnvironment: (YrPharoMigrator example1readTag: '30014') asRFiEnvironment
+	^ self dependenciesForEnvironment: (YrGitPharoExporter example1readTag: '30014') asRFiEnvironment
 ]
 
 { #category : #convenience }

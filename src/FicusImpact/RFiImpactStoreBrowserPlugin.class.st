@@ -60,7 +60,7 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupe [
 	self exampleYrupe.
 	"
 
-	self exampleFragileBaseProblemWith: (YrPharoMigrator example1readTag: '30014') asArray
+	self exampleFragileBaseProblemWith: (YrGitPharoExporter example1readTag: '30014') asArray
 ]
 
 { #category : #examples }
@@ -70,8 +70,8 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupeAllPharos [
 	"
 	
 	| pharos |
-	pharos := YrPharoMigrator allTags collect: [ :tag |
-		(YrPharoMigrator example1readTag: tag) ].
+	pharos := YrGitPharoExporter allTags collect: [ :tag |
+		(YrGitPharoExporter example1readTag: tag) ].
 
 	^ self exampleWith: (FiMemoryStore exampleWithAll: pharos) and: #()
 ]
@@ -80,7 +80,7 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupeAllPharos [
 RFiImpactStoreBrowserPlugin class >> exampleYrupeChoosing [
 
 	| tags result env |
-	tags := YrPharoMigrator allTags.
+	tags := YrGitPharoExporter allTags.
 
 	result := UIManager default
 		chooseFrom: tags 
@@ -88,7 +88,7 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupeChoosing [
 		
 	result isZero ifTrue: [ ^ self ].
 
-	env := YrPharoMigrator example1readTag: (tags at: result).
+	env := YrGitPharoExporter example1readTag: (tags at: result).
 
 	^ self exampleFragileBaseProblemWith: env asArray
 ]
@@ -100,8 +100,8 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupeManyPharos [
 	"
 	
 	| pharos |
-	pharos := (YrPharoMigrator allTags first: 125) collect: [ :tag |
-		(YrPharoMigrator example1readTag: tag) ].
+	pharos := (YrGitPharoExporter allTags first: 125) collect: [ :tag |
+		(YrGitPharoExporter example1readTag: tag) ].
 
 	^ self exampleWith: (FiMemoryStore exampleWithAll: pharos) and: #()
 ]

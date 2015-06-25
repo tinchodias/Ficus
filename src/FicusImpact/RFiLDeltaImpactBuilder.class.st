@@ -52,7 +52,7 @@ RFiLDeltaImpactBuilder class >> exampleYrupe [
 	self exampleYrupe
 	"
 
-	self exampleFragileBaseProblemWithBaseEnvironment: (YrPharoMigrator example1readTag: '30014') asRFiEnvironment
+	self exampleFragileBaseProblemWithBaseEnvironment: (YrGitPharoExporter example1readTag: '30014') asRFiEnvironment
 ]
 
 { #category : #API }

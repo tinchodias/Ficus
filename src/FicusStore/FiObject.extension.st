@@ -5,7 +5,7 @@ FiObject >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 35> 
 
 	composite morph
-		title: [ 'Tree' ];
+		title: 'Ficus tree';
 		display: [:shot | 
 			(FiInspector new 
 				rootShot: shot;

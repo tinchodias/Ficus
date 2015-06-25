@@ -70,7 +70,7 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupeAllPharos [
 	"
 	
 	| pharos |
-	pharos := YrPharoMigrator example1tags collect: [ :tag |
+	pharos := YrPharoMigrator allTags collect: [ :tag |
 		(YrPharoMigrator example1readTag: tag) ].
 
 	^ self exampleWith: (FiMemoryStore exampleWithAll: pharos) and: #()
@@ -80,7 +80,7 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupeAllPharos [
 RFiImpactStoreBrowserPlugin class >> exampleYrupeChoosing [
 
 	| tags result env |
-	tags := YrPharoMigrator example1tags.
+	tags := YrPharoMigrator allTags.
 
 	result := UIManager default
 		chooseFrom: tags 
@@ -100,7 +100,7 @@ RFiImpactStoreBrowserPlugin class >> exampleYrupeManyPharos [
 	"
 	
 	| pharos |
-	pharos := (YrPharoMigrator example1tags first: 125) collect: [ :tag |
+	pharos := (YrPharoMigrator allTags first: 125) collect: [ :tag |
 		(YrPharoMigrator example1readTag: tag) ].
 
 	^ self exampleWith: (FiMemoryStore exampleWithAll: pharos) and: #()

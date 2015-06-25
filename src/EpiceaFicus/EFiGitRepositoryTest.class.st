@@ -41,7 +41,7 @@ EFiGitRepositoryTest >> testAtClassMethodSpot [
 			isMetaSide: true
 			packageName: 'Athens-Core').
 			
-	self assert: nodes size equals: 3.
+	self assert: nodes size equals: 4.
 ]
 
 { #category : #tests }
@@ -54,7 +54,7 @@ EFiGitRepositoryTest >> testAtClassSpot [
 			isMetaSide: false 
 			packageName: 'Athens-Core').
 	
-	self assert: nodes size equals: 3.
+	self assert: nodes size equals: 4.
 ]
 
 { #category : #tests }
@@ -68,7 +68,7 @@ EFiGitRepositoryTest >> testAtInstanceMethodSpot [
 			isMetaSide: false
 			packageName: 'Athens-Core').
 	
-	self assert: nodes size equals: 3.
+	self assert: nodes size equals: 4.
 ]
 
 { #category : #tests }
@@ -81,7 +81,7 @@ EFiGitRepositoryTest >> testAtMetaclassSpot [
 			isMetaSide: true 
 			packageName: 'Athens-Core').
 	
-	self assert: nodes size equals: 3.
+	self assert: nodes size equals: 4.
 ]
 
 { #category : #tests }
@@ -90,5 +90,5 @@ EFiGitRepositoryTest >> testAtPackageSpot [
 	| nodes |
 	nodes := store revisionsLogAtSpot: (FiPackageSpot named: 'Athens-Core').
 	
-	self assert: nodes size equals: 5.
+	self assert: nodes size equals: 18.
 ]

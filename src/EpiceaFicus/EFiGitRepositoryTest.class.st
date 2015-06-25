@@ -14,12 +14,8 @@ Class {
 EFiGitRepositoryTest >> newStore [
 
 	| directory |
-	directory := FileSystem workingDirectory / 'yrupe-test-pharo'.
-	
-	directory exists ifFalse: [ 
-		EFiGitRepository 
-			cloneWithoutCheckout: EFiEpiceaInstaller pharoMetamodelGitUrl
-			in: directory ].
+	directory := FileSystem workingDirectory / 'yrupe-test-pharo'.	
+	EFiEpiceaInstaller ensurePharoGitRepositoryUpToDateAt: directory.
 	
 	^ EFiGitRepository new
 		repositoryFileReference: directory;

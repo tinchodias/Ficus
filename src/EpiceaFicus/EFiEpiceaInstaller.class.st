@@ -13,13 +13,29 @@ Class {
 	#category : #'EpiceaFicus-Repositories'
 }
 
-{ #category : #'as yet unclassified' }
-EFiEpiceaInstaller class >> pharoMetamodelGitUrl [
-		
-	^ 'https://github.com/tinchodias/pharo-core-yrupe-2' 
+{ #category : #convenience }
+EFiEpiceaInstaller class >> ensurePharoGitRepositoryUpToDateAt: directory [
+	
+	directory exists
+		ifTrue: [ 
+			(LGitRemote
+				of: (LGitRepository on: directory) open
+				named: 'origin'
+				url: self pharoMetamodelGitUrl
+				fetchSpec: '+refs/heads/*:refs/remotes/origin/*') pull ]
+		ifFalse: [ 
+			EFiGitRepository 
+				cloneWithoutCheckout: self pharoMetamodelGitUrl
+				in: directory ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+EFiEpiceaInstaller class >> pharoMetamodelGitUrl [
+		
+	^ 'https://github.com/tinchodias/pharo-core-yrupe-3' 
+]
+
+{ #category : #convenience }
 EFiEpiceaInstaller class >> syncMCWorkingCopiesWith: workingCopy [
 	
 	| edits |
@@ -96,20 +112,9 @@ EFiEpiceaInstaller >> newPharoGitRepository [
 	
 	| directory |
 	directory := FileSystem workingDirectory / 'yrupe-dev-pharo'.
-	
-	directory exists
-		ifTrue: [ 
-			(LGitRemote
-				of: (LGitRepository on: directory) open
-				named: 'origin'
-				url: self class pharoMetamodelGitUrl
-				fetchSpec: '+refs/heads/*:refs/remotes/origin/*') pull ]
-		ifFalse: [ 
-			EFiGitRepository 
-				cloneWithoutCheckout: self class pharoMetamodelGitUrl
-				in: directory ].
+	self class ensurePharoGitRepositoryUpToDateAt: directory.	
 	
 	^ EFiGitRepository new
 		repositoryFileReference: directory;
-		yourself.
+		yourself
 ]

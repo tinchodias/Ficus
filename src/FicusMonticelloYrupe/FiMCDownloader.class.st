@@ -20,6 +20,17 @@ FiMCDownloader class >> athensRepository [
 		password: ''
 ]
 
+{ #category : #repositories }
+FiMCDownloader class >> catalogBrowserRepository [
+	"Used in Pharo 50"
+
+	^ MCSmalltalkhubRepository
+			owner: 'PharoExtras'
+			project: 'CatalogBrowser'
+			user: ''
+			password: ''
+]
+
 { #category : #utility }
 FiMCDownloader class >> downloadToCache: aPackageName from: anMCHttpRepository [
 	"
@@ -130,15 +141,6 @@ FiMCDownloader class >> pharo20Repository [
 
 	^ MCHttpRepository
 		location: 'http://smalltalkhub.com/mc/Pharo/Pharo20/main'
-		user: ''
-		password: ''
-]
-
-{ #category : #repositories }
-FiMCDownloader class >> pharo30InboxRepository [
-
-	^ MCHttpRepository
-		location: 'http://smalltalkhub.com/mc/Pharo/Pharo30Inbox/main'
 		user: ''
 		password: ''
 ]

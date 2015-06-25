@@ -14,28 +14,60 @@ Class {
 }
 
 { #category : #private }
-YrPharoMigrator class >> example1directory [
-	
-	^ FileSystem workingDirectory / 'yrupe-pharo-migrator'
+YrPharoMigrator class >> allTags [
+
+	^ self newOpenGitRepository tags
 ]
 
-{ #category : #private }
-YrPharoMigrator class >> example1ensureNewRepoInitialized [
-
-	| directory |
-	directory := self example1directory.
-	self assert: directory exists not.
+{ #category : #'examples - writing' }
+YrPharoMigrator class >> example1execute: aBlock [
+	"Script template. 
 	
-	^ (LGitRepository on: directory)
-		create;
-		init;
-		yourself
+	Notes: 
+	* pharo-core is pulled.
+	* new Mcz files are fetched.
+	* exported git commits are local (not pushed!)"
+	
+	| duration exportPath originalPath |
+	duration := [ 		
+		originalPath := MCCacheRepository cacheDirectory.
+		exportPath := 'yrupe-pharo-migrator.mc-packages'.	
+		exportPath asFileReference ensureCreateDirectory.
+		MCCacheRepository cacheDirectory:	exportPath.
+
+		"Fetch from MC: all mcz files should be downloaded, else empty packages are exported"
+		3 timesRepeat: [
+			FiMCDownloader downloadToCacheAllRepositories].
+		
+		self flushAllCaches.
+		
+		aBlock value.
+			
+		self flushAllCaches.
+		
+		MCCacheRepository cacheDirectory:	originalPath. ] timeToRun.
+
+	FileStream stdout << 'TOTAL DURATION: ' << duration asString.
+]
+
+{ #category : #'examples - writing' }
+YrPharoMigrator class >> example1executeNew [
+	"master script for exporting from scratch"
+	
+	self example1execute: [ self example1writeNew ]
+]
+
+{ #category : #'examples - writing' }
+YrPharoMigrator class >> example1executeUpdate [
+	"master script for exporting from last tag exported"
+	
+	self example1execute: [ self example1writeUpdate ]
 ]
 
 { #category : #examples }
 YrPharoMigrator class >> example1packHead [
-
-	"
+	"Equivalent to 'git gc' (note: memory leaks in LibGit).
+	
 	[ self example1packHead ] timeToRun.
 	"
 
@@ -151,37 +183,6 @@ YrPharoMigrator class >> example1readTagMCs [
 	^ packageShotsByTag 
 ]
 
-{ #category : #examples }
-YrPharoMigrator class >> example1tags [
-
-	^ self newOpenGitRepository tags
-]
-
-{ #category : #'examples - writing' }
-YrPharoMigrator class >> example1writeAll [
-	"master script"
-	
-	| duration exportPath |
-	duration := [ 		
-		exportPath := 'yrupe-pharo-migrator.mc-packages'.	
-		self assert: exportPath asFileReference exists.
-		MCCacheRepository cacheDirectory:	exportPath.
-
-		"Fetch from MC: all mcz files should be downloaded, else empty packages are exported"
-		3 timesRepeat: [
-			FiMCDownloader downloadToCacheAllRepositories].
-		
-		self flushAllCaches.
-		
-		self 
-			example1writeTagsFrom: PharoVersionsMiner forAllPharos
-			onRepository: self newFreshGitRepository.
-			
-		self flushAllCaches ] timeToRun.
-
-	FileStream stdout << 'TOTAL DURATION: ' << duration asString.
-]
-
 { #category : #'examples - writing' }
 YrPharoMigrator class >> example1writeNew [
 	"
@@ -193,18 +194,7 @@ YrPharoMigrator class >> example1writeNew [
 		onRepository: self newFreshGitRepository
 ]
 
-{ #category : #'examples - writing' }
-YrPharoMigrator class >> example1writeOpen [
-	"
-	self example1writeOpen.
-	"
-
-	^ self 
-		example1writeTagsFrom: self pharoMiner
-		onRepository: self newOpenGitRepository
-]
-
-{ #category : #'examples - writing' }
+{ #category : #private }
 YrPharoMigrator class >> example1writeOpenAfter: aTag [
 	"
 	self example1writeOpenAfter: '30801'.
@@ -223,6 +213,21 @@ YrPharoMigrator class >> example1writeTagsFrom: aPharoMiner onRepository: aLGitR
 		pharoMiner: aPharoMiner;
 		monticelloRepository: MCCacheRepository uniqueInstance;
 		migrate.	
+]
+
+{ #category : #'examples - writing' }
+YrPharoMigrator class >> example1writeUpdate [
+	"
+	self example1writeUpdate.
+	"
+
+	^ 	self example1writeOpenAfter: self lastTag
+]
+
+{ #category : #private }
+YrPharoMigrator class >> exportDirectory [
+	
+	^ FileSystem workingDirectory / 'yrupe-pharo-migrator'
 ]
 
 { #category : #private }
@@ -256,10 +261,19 @@ YrPharoMigrator class >> generateVersionNamesByTagZippedSTONString [
 ]
 
 { #category : #private }
+YrPharoMigrator class >> lastTag [
+	"
+	self lastTag
+	"
+
+	^ self newOpenGitRepository tags sorted last
+]
+
+{ #category : #private }
 YrPharoMigrator class >> newFreshGitRepository [
 
 	| directory |
-	directory := self example1directory.
+	directory := self exportDirectory.
 	self assert: directory exists not.
 	
 	^ (LGitRepository on: directory)
@@ -272,7 +286,7 @@ YrPharoMigrator class >> newFreshGitRepository [
 YrPharoMigrator class >> newOpenGitRepository [
 
 	| directory gitRepository |
-	directory := self example1directory.
+	directory := self exportDirectory.
 	self assert: directory exists.
 	
 	gitRepository := LGitRepository on: directory.

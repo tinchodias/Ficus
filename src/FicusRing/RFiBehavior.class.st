@@ -65,6 +65,12 @@ RFiBehavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlo
 		ifNone: aBlock
 ]
 
+{ #category : #polymorphism }
+RFiBehavior >> critics [
+
+	^ #()
+]
+
 { #category : #'accessing-properties' }
 RFiBehavior >> ensureProperties [
 

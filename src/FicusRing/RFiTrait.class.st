@@ -21,6 +21,15 @@ RFiTrait class >> environment: aRFiEnvironment ficusTrait: aFiTrait [
 		yourself
 ]
 
+{ #category : #accessing }
+RFiTrait >> asMetamodelSpot [
+	
+	^ FiBehaviorSpot 
+		name: self name
+		isMetaSide: false
+		packageName: self package name
+]
+
 { #category : #polymorphism }
 RFiTrait >> classTrait [
 	
@@ -74,15 +83,10 @@ RFiTrait >> name [
 	^ self ficusTrait name
 ]
 
-{ #category : #printing }
-RFiTrait >> printOn: aStream [
-
-	super printOn: aStream.
-
-	aStream 
-		nextPut: $(;
-		nextPutAll: self name;
-		nextPut: $)
+{ #category : #polymorphism }
+RFiTrait >> subclasses [
+	
+	^ #()
 ]
 
 { #category : #polymorphism }

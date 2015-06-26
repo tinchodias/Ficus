@@ -46,7 +46,7 @@ RFiEnvironment >> allClasses [
 
 	^ allClasses ifNil: [ 
 		allClasses := self packages 
-			flatCollect: [ :package | package definedClasses ] ]
+			flatCollect: [ :package | package definedClasses reject: #isTrait ] ]
 ]
 
 { #category : #polymorphism }
@@ -136,6 +136,12 @@ RFiEnvironment >> classNamed: aName [
 	
 	self flag: #todo. "What if it's not a class?"
 	^ self at: aName ifAbsent: [ NotFound signalFor: aName in: self ]
+]
+
+{ #category : #polymorphism }
+RFiEnvironment >> environment [
+	
+	^ self
 ]
 
 { #category : #lookup }
@@ -381,7 +387,7 @@ RFiEnvironment >> packages [
 		cachedPackages := self ficusPackages collect: [ :each | self ringPackageFor: each ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RFiEnvironment >> resetCaches [
 
 	#(allClasses packageByClassName extensionMethodsByBehaviorName globalByName cachedImplementorsBySelector cachedPackages allTraits) 

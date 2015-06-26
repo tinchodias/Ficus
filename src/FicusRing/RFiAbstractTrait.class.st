@@ -45,6 +45,12 @@ RFiAbstractTrait >> includesLocalSelector: aString [
 	^ self localSelectors includes: aString
 ]
 
+{ #category : #testing }
+RFiAbstractTrait >> isTrait [
+
+	^ true
+]
+
 { #category : #methods }
 RFiAbstractTrait >> localMethods [
 	
@@ -56,6 +62,16 @@ RFiAbstractTrait >> localMethods [
 RFiAbstractTrait >> localSelectors [
 	
 	^ self localMethods collect: #selector
+]
+
+{ #category : #lookup }
+RFiAbstractTrait >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+	"Answer the entity that declares a variable. Note this imitates the behavior of #bindingOf:"
+
+	^ self environment  
+		lookupVariableNamed: aName 
+		ifFound: presentBlockClosure 
+		ifNotFound: absentBlockClosure
 ]
 
 { #category : #methods }

@@ -115,7 +115,7 @@ RFiRingTestResources >> packageX [
 	
 	^ FiPackage builder
 		name: #X;
-		contents: { self classA. self classB. self classC. self classP } asFiSet;
+		contents: { self classA. self classB. self classC. self classP. self traitT1 } asFiSet;
 		new
 ]
 
@@ -150,4 +150,21 @@ RFiRingTestResources >> ringClassC [
 RFiRingTestResources >> ringClassP [
 
 	^ self ringEnvironment classNamed: #P
+]
+
+{ #category : #'resources - ring level' }
+RFiRingTestResources >> ringTraitT1 [
+
+	^ self ringEnvironment classNamed: #T1
+]
+
+{ #category : #resources }
+RFiRingTestResources >> traitT1 [
+
+	^ FiTrait builder
+		name: #T1;
+		methods: { 
+			FiMethod sourceCode: 'sum  ^ 123'. } asFiSet;
+		traitComposition: '{}';
+		new
 ]

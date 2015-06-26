@@ -7,7 +7,9 @@ Class {
 { #category : #tests }
 RFiEnvironmentTest >> testAllClasses [
 
-	self deny: resources ringEnvironment allClasses isEmpty
+	self 
+		assert: (resources ringEnvironment allClasses collect: #name) asSet
+		equals: #(#Object #Boolean #Class #SmallInteger #A #True #B #False #C #P #BlockClosure) asSet
 ]
 
 { #category : #tests }

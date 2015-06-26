@@ -36,6 +36,12 @@ RFiAbstractClass >> isBits [
 ]
 
 { #category : #testing }
+RFiAbstractClass >> isClass [
+
+	^ true
+]
+
+{ #category : #testing }
 RFiAbstractClass >> isVariable [
 	"Answer whether the receiver has indexable variables."
 

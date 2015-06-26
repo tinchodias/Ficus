@@ -259,10 +259,22 @@ RFiClassTest >> testIsBehavior [
 ]
 
 { #category : #tests }
+RFiClassTest >> testIsClass [
+
+	self assert: resources ringClassA isClass
+]
+
+{ #category : #tests }
 RFiClassTest >> testIsObsolete [
 
 	self deny: resources ringClassA isObsolete.
 
+]
+
+{ #category : #tests }
+RFiClassTest >> testIsTrait [
+
+	self deny: resources ringClassA isTrait
 ]
 
 { #category : #tests }

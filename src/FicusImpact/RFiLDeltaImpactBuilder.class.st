@@ -126,5 +126,5 @@ RFiLDeltaImpactBuilder >> origin: aRFiEnvironment [
 RFiLDeltaImpactBuilder >> subjectIncludes: anEntity [
 	
 	^ deltaSimpleChangesArray anySatisfy: [ :simpleChange | 
-		simpleChange hasChangeAt: anEntity asMetamodelSpot ]
+		simpleChange hasChangeAt: (anEntity asMetamodelSpot asPathOn: origin ficusEnvironment) ]
 ]

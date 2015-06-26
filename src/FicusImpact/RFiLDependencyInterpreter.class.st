@@ -43,16 +43,18 @@ RFiLDependencyInterpreter >> run [
 	(entity isBehavior and: [ entity isInstanceSide ])
 		ifTrue: [ ^ self runOnClass ].
 		
-	self notYetImplemented 
+	(entity isTrait and: [ entity isInstanceSide ])
+		ifTrue: [ ^ self runOnTrait ].
+
 ]
 
 { #category : #private }
 RFiLDependencyInterpreter >> runOnClass [
-	
+
+	entity traits do: targetsCallback.
+		
 	entity superclass ifNil: [ ^ self ].
-	
 	targetsCallback value: entity superclass.
-	self flag: #todo. "value trait composition too"
 ]
 
 { #category : #private }
@@ -61,6 +63,12 @@ RFiLDependencyInterpreter >> runOnMethod [
 	methodVisitor
 		collector: self;
 		visitMethod: entity.
+]
+
+{ #category : #'as yet unclassified' }
+RFiLDependencyInterpreter >> runOnTrait [
+	
+	entity traits do: targetsCallback.
 ]
 
 { #category : #private }

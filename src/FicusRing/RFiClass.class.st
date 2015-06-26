@@ -316,12 +316,6 @@ RFiClass >> instVarNames [
 	^ self instanceVariables
 ]
 
-{ #category : #testing }
-RFiClass >> isCompiledMethod [
-
-	^ self ficusClass layout isCompiledMethodLayout
-]
-
 { #category : #polymorphism }
 RFiClass >> isMeta [
 

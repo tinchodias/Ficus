@@ -71,9 +71,11 @@ FiTrait >> initialize [
 
 	super initialize.
 
-	name := nil.
-	category := nil.
+	name := #NoName.
+	category := #NoCategory.
 	comment := ''.
+	classTrait := FiClassTrait new.
+	traitComposition := '{}'.
 ]
 
 { #category : #accessing }

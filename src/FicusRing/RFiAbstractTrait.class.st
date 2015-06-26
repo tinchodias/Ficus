@@ -46,12 +46,6 @@ RFiAbstractTrait >> includesLocalSelector: aString [
 ]
 
 { #category : #testing }
-RFiAbstractTrait >> isClass [
-
-	^ true
-]
-
-{ #category : #testing }
 RFiAbstractTrait >> isTrait [
 
 	^ true

@@ -4,9 +4,8 @@ Class {
 	#instVars : [
 		'origin',
 		'destination',
-		'delta',
 		'impactInOrigin',
-		'deltaSimpleChangesArray'
+		'deltaSimpleChanges'
 	],
 	#category : #'FicusImpact-LDependency'
 }
@@ -17,32 +16,31 @@ RFiLDeltaImpactBuilder class >> example1 [
 	self example1
 	"
 
-	self exampleFragileBaseProblemWithBaseEnvironment: RFiBaseResources new ringEnvironment
+	^ self exampleFragileBaseProblemWithBaseEnvironment: RFiBaseResources new ringEnvironment
 ]
 
 { #category : #examples }
 RFiLDeltaImpactBuilder class >> exampleFragileBaseProblemWithBaseEnvironment: baseEnvironment [
 
-	| builder envA envA2 envB delta packageA packageA2 packageB deltaImpacts time |
+	| builder envA envA2 envB delta packageA packageA2 packageB deltaImpacts  |
 	packageA := RFiFragileBaseClassProblemResources3 new packageLoggers.
 	packageA2 := RFiFragileBaseClassProblemResources4A new packageLoggers.
 	packageB := RFiFragileBaseClassProblemResources4B new packageLoggers.
 	
-	envA := (baseEnvironment ficusPackages asArray copyWith: packageA) asFiSet asRFiEnvironment.
-	envA2:= (baseEnvironment ficusPackages asArray copyWith: packageA2) asFiSet asRFiEnvironment.
-	envB := (baseEnvironment ficusPackages asArray copyWith: packageB) asFiSet asRFiEnvironment.
-	delta := envA2 ficusPackages changeFrom: envA ficusPackages.
-	
+	envA := (baseEnvironment ficusPackages copyWith: packageA) asRFiEnvironment.
+	envA2:= (baseEnvironment ficusPackages copyWith: packageA2) asRFiEnvironment.
+	envB := (baseEnvironment ficusPackages copyWith: packageB) asRFiEnvironment.
+	delta := (envA2 ficusEnvironment changeFrom: envA ficusEnvironment) asSimpleChanges asArray.
+
 	builder := RFiLDeltaImpactBuilder new.
 	builder origin: envA.
 	builder destination: envB.
 	builder delta: delta.
 	
-	time := [deltaImpacts := builder deltaImpacts] timeToRun.
+	FileStream stdout 
+		print: [deltaImpacts := builder deltaImpacts] timeToRun.
 	
-	deltaImpacts inspect.	
-	time inspect.
-	
+	^ deltaImpacts
 
 ]
 
@@ -56,19 +54,16 @@ RFiLDeltaImpactBuilder class >> exampleYrupe [
 ]
 
 { #category : #API }
-RFiLDeltaImpactBuilder >> delta: aFiChange [
+RFiLDeltaImpactBuilder >> delta: aFiSimpleChange [
 
-	self flag: #todo. "Wrong!"
-	
-	delta := aFiChange.
-	deltaSimpleChangesArray := delta asSimpleChanges asArray.
+	deltaSimpleChanges := aFiSimpleChange
 ]
 
 { #category : #private }
 RFiLDeltaImpactBuilder >> deltaEdit [
 
 	self flag: #todo. "ARGH... this seems to be the most precise way to get an edit from a delta"
-	^ origin ficusPackages editFromSimpleChanges: delta asSimpleChanges
+	^ origin ficusEnvironment editFromSimpleChanges: deltaSimpleChanges
 ]
 
 { #category : #API }
@@ -89,7 +84,7 @@ RFiLDeltaImpactBuilder >> dependenciesForEnvironment: anEnvironment [
 
 	^ RFiLDependencyMiner new
 		environment: anEnvironment;
-		dependencyFilter: [ :source :target | 
+		dependencyFilter: [ :source :target |
 			(self subjectIncludes: source) or: [ self subjectIncludes: target ] ];
 		run;
 		dependencySet.
@@ -105,7 +100,7 @@ RFiLDeltaImpactBuilder >> destination: aRFiEnvironment [
 RFiLDeltaImpactBuilder >> impactOn: anEnvironment [ 
 
 	| anEnvironmentPlusDelta dependenciesBefore dependenciesAfter dependenciesIntroduced dependenciesRemoved |
-	anEnvironmentPlusDelta := (anEnvironment ficusPackages resultOf: self deltaEdit) asRFiEnvironment.
+	anEnvironmentPlusDelta := (anEnvironment ficusEnvironment resultOf: self deltaEdit) asRFiEnvironment.
 	
 	dependenciesBefore := self dependenciesForEnvironment: anEnvironment.
 	dependenciesAfter := self dependenciesForEnvironment: anEnvironmentPlusDelta.
@@ -125,6 +120,6 @@ RFiLDeltaImpactBuilder >> origin: aRFiEnvironment [
 { #category : #private }
 RFiLDeltaImpactBuilder >> subjectIncludes: anEntity [
 	
-	^ deltaSimpleChangesArray anySatisfy: [ :simpleChange | 
+	^ deltaSimpleChanges anySatisfy: [ :simpleChange | 
 		simpleChange hasChangeAt: (anEntity asMetamodelSpot asPathOn: origin ficusEnvironment) ]
 ]

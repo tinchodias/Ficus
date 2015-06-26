@@ -166,6 +166,7 @@ RFiDependenciesTest >> testClassCSumAt [
 			resources ringClassA >> #sum.
 			resources ringClassB >> #sum.
 			resources ringClassC >> #sum.
+			resources ringTraitT1 >> #sum.
 			}
 ]
 

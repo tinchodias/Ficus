@@ -238,7 +238,7 @@ ConfigurationOfFicus >> project [
 ConfigurationOfFicus >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '0.5'.
+	spec for: #'common' version: '0.6'.
 
 ]
 
@@ -377,6 +377,34 @@ ConfigurationOfFicus >> version05: spec [
 			package: #FicusMonticello with: 'FicusMonticello-MartinDias.66';
 			package: #FicusMonticelloStore with: 'FicusMonticelloStore-MartinDias.4';
 			package: #FicusMonticelloYrupe with: 'FicusMonticelloYrupe-MartinDias.18';
+			package: #FicusEpicea with: 'FicusEpicea-MartinDias.34'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfFicus >> version06: spec [
+	<version: '0.6' imports: #('0.3-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.6'.
+		spec author: 'MartinDias'.
+		spec timestamp: '6/26/2015 15:33'.
+		spec 
+			project: #Epicea with: '5.0-baseline';
+			project: #Yrupe with: '0.2-baseline';
+			project: #PharoVersionsMiner with: '0.1-baseline'.
+		spec 
+			package: #Hiedra with: 'Hiedra-MartinDias.135';
+			package: #Ficus with: 'Ficus-MartinDias.189';
+			package: #FicusExtras with: 'FicusExtras-MartinDias.6';
+			package: #FicusMetamodel with: 'FicusMetamodel-MartinDias.22';
+			package: #FicusRing with: 'FicusRing-MartinDias.131';
+			package: #FicusImpact with: 'FicusImpact-MartinDias.87';
+			package: #FicusStore with: 'FicusStore-MartinDias.106';
+			package: #FicusMonticello with: 'FicusMonticello-MartinDias.67';
+			package: #FicusMonticelloStore with: 'FicusMonticelloStore-MartinDias.4';
+			package: #FicusMonticelloYrupe with: 'FicusMonticelloYrupe-MartinDias.20';
 			package: #FicusEpicea with: 'FicusEpicea-MartinDias.34'. ].
 
 ]

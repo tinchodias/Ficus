@@ -4,10 +4,40 @@ Class {
 	#category : #'FicusMonticelloYrupe-Migration'
 }
 
+{ #category : #repositories }
+FiMCDownloader class >> GTToolsIntegrationRepository [
+
+	^ MCSmalltalkhubRepository
+			owner: 'PharoExtras'
+			project: 'GTToolsIntegration'
+			user: ''
+			password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> GToolkitRepository [
+
+	^ MCSmalltalkhubRepository
+		owner: 'Moose'
+		project: 'GToolkit'
+		user: ''
+		password: ''
+]
+
 { #category : #utility }
 FiMCDownloader class >> allRepositorySelectors [
 
 	^ self classSide selectors select: [ :each | each endsWith: 'Repository' ]
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> asmJitRepository [
+
+	^ MCSmalltalkhubRepository
+		owner: 'Pharo'
+		project: 'AsmJit'
+		user: ''
+		password: ''
 ]
 
 { #category : #repositories }
@@ -110,6 +140,36 @@ FiMCDownloader class >> glamourRepository [
 ]
 
 { #category : #repositories }
+FiMCDownloader class >> nativeBoostRepository [
+
+	^ MCSmalltalkhubRepository
+			owner: 'Pharo'
+			project: 'NativeBoost'
+			user: ''
+			password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> oSWindowRepository [
+
+	^ MCSmalltalkhubRepository
+		owner: 'Pharo'
+		project: 'OSWindow'
+		user: ''
+		password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> opalRepository [
+
+	^ MCSmalltalkhubRepository
+		owner: 'Pharo'
+		project: 'Opal'
+		user: ''
+		password: ''
+]
+
+{ #category : #repositories }
 FiMCDownloader class >> pharo10Repository [
 
 	^ MCHttpRepository
@@ -176,7 +236,7 @@ FiMCDownloader class >> pharo50Repository [
 FiMCDownloader class >> rubricRepository [
 
 	^ MCSmalltalkhubRepository
-		owner: 'AlainPlantec'
+		owner: 'Pharo'
 		project: 'Rubric'
 		user: ''
 		password: ''

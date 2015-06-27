@@ -7,7 +7,6 @@ Class {
 		'versionNamesByTag',
 		'packageShotByVersionName',
 		'packageShotsByTag',
-		'versionNamesNotFound',
 		'pharoMiner'
 	],
 	#category : #'FicusMonticelloYrupe-Migration'
@@ -461,8 +460,6 @@ YrGitPharoExporter >> initialize [
 
 	packageShotsByTag := SmallDictionary new.
 	packageShotByVersionName := SmallDictionary new.
-
-	self resetVersionNamesNotFound.
 ]
 
 { #category : #private }
@@ -474,9 +471,7 @@ YrGitPharoExporter >> messageForCommitWithTag: pharoTagName [
 			nextPutAll: 'Pharo ';
 			print: pharoTagName; cr; cr;
 			nextPutAll: 'MC versions:'; cr;
-			print: (self versionNamesByTag at: pharoTagName); cr;
-			nextPutAll: 'MC versions not found:'; cr;
-			print: versionNamesNotFound; cr.
+			print: (self versionNamesByTag at: pharoTagName); cr.
 		].
 	^ message withUnixLineEndings
 ]
@@ -497,7 +492,6 @@ YrGitPharoExporter >> migrate [
 				print: duration; lf.
 
 			self pointMasterTo: commit. "FIX: This shouldn't be necessary."
-			self resetVersionNamesNotFound.
 			]
 		displayingProgress: [ :association | association key ].
 		
@@ -515,7 +509,7 @@ YrGitPharoExporter >> monticelloSnapshotFor: aVersionName [
 		
 	^ ([ monticelloRepository versionFromFileNamed: (aVersionName, '.mcz') ]
 			on: FileDoesNotExist
-			do: [ :error | versionNamesNotFound add: aVersionName. nil ])
+			do: [ :error | NotFound signalFor: aVersionName. nil ])
 		ifNil: [ MCSnapshot empty ]
 		ifNotNil: [ :version | version snapshot ]
 ]
@@ -553,12 +547,6 @@ YrGitPharoExporter >> pointMasterTo: aLGitCommit [
 		createDirect: 'refs/heads/master'
 		target: aLGitCommit id
 		force: true
-]
-
-{ #category : #private }
-YrGitPharoExporter >> resetVersionNamesNotFound [
-
-	versionNamesNotFound := OrderedCollection new
 ]
 
 { #category : #private }

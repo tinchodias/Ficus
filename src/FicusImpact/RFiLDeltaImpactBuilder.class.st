@@ -45,6 +45,39 @@ RFiLDeltaImpactBuilder class >> exampleFragileBaseProblemWithBaseEnvironment: ba
 ]
 
 { #category : #examples }
+RFiLDeltaImpactBuilder class >> exampleSlice [
+	"
+	https://pharo.fogbugz.com/f/cases/15764/Clean-up-discouraged-uses-of-SourceFiles-and-friends-1
+	=> integrated in Pharo 50112.
+	Would it have the same impact in Pharo 40?
+	
+	self exampleSlice inspect.
+	"
+
+	| slicePackages  builder envA envA2 envB delta deltaImpacts |
+	slicePackages := FiSliceWriter example15764.
+
+	envA := (YrGitPharoExporter example1readTag: '50111') asRFiEnvironment.
+	envA2:= (envA ficusPackages copyWithAll: slicePackages) asRFiEnvironment.
+	delta := (envA2 ficusEnvironment changeFrom: envA ficusEnvironment) asSimpleChanges asArray.
+
+	"FiChangeInspector inspect: (envA2 ficusEnvironment changeFrom: envA ficusEnvironment)."
+	
+	envB := (YrGitPharoExporter example1readTag: '40614') asRFiEnvironment.
+
+	builder := RFiLDeltaImpactBuilder new.
+	builder origin: envA.
+	builder destination: envB.
+	builder delta: delta.
+	
+	FileStream stdout 
+		print: [deltaImpacts := builder deltaImpacts] timeToRun.
+	
+	^ deltaImpacts
+
+]
+
+{ #category : #examples }
 RFiLDeltaImpactBuilder class >> exampleYrupe [
 	"
 	self exampleYrupe

@@ -154,10 +154,20 @@ FiSet >> collect: aBlockClosure as: aClass [
 	^ newCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #copying }
 FiSet >> copyWith: anElement [
 
 	^ self resultOf: (FiInclude value: anElement)
+]
+
+{ #category : #copying }
+FiSet >> copyWithAll: elements [
+
+	| edit |
+	edit := FiEdit fromAll: (elements collect: [ :anElement | 
+		FiInclude value: anElement]).
+
+	^ self resultOf: edit
 ]
 
 { #category : #enumerating }

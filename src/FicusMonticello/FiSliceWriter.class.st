@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #example }
-FiSliceWriter class >> example [ 
+FiSliceWriter class >> example15764 [
 	"
 	https://pharo.fogbugz.com/f/cases/15764/Clean-up-discouraged-uses-of-SourceFiles-and-friends-1
 	=> integrated in Pharo 50112.
@@ -21,10 +21,10 @@ FiSliceWriter class >> example [
 	repository := self pharo50InboxRepository.
 	slice := repository versionFromFileNamed: 'SLICE-Issue-15764-Clean-up-discouraged-uses-of-SourceFiles-and-friends-1-MartinDias.1.mcz'.
 
-	(self new 
+	^ (self new 
 		repository: repository;
 		slice: slice;
-		run) ficusPackages inspect
+		run) ficusPackages
 ]
 
 { #category : #example }

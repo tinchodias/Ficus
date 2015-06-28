@@ -90,6 +90,12 @@ RFiAbstractTrait >> methods [
 		cachedMethods := methods values ]
 ]
 
+{ #category : #'as yet unclassified' }
+RFiAbstractTrait >> subclasses [
+	
+	^ #()
+]
+
 { #category : #polymorphism }
 RFiAbstractTrait >> superclass [
 	"For compatibility with classes"

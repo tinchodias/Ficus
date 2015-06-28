@@ -84,12 +84,6 @@ RFiTrait >> name [
 ]
 
 { #category : #polymorphism }
-RFiTrait >> subclasses [
-	
-	^ #()
-]
-
-{ #category : #polymorphism }
 RFiTrait >> theMetaClass [
 
 	^ cachedClassTrait ifNil: [ 

@@ -5,6 +5,26 @@ Class {
 }
 
 { #category : #repositories }
+FiMCDownloader class >> CodeImporterRepository [
+
+	^ MCSmalltalkhubRepository
+		owner: 'Pharo'
+		project: 'CodeImporter'
+		user: ''
+		password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> FastTableRepository [
+
+	^ MCSmalltalkhubRepository
+		owner: 'estebanlm'
+		project: 'FastTable'
+		user: ''
+		password: ''
+]
+
+{ #category : #repositories }
 FiMCDownloader class >> GTToolsIntegrationRepository [
 
 	^ MCSmalltalkhubRepository
@@ -20,6 +40,44 @@ FiMCDownloader class >> GToolkitRepository [
 	^ MCSmalltalkhubRepository
 		owner: 'Moose'
 		project: 'GToolkit'
+		user: ''
+		password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> ShoreLineRepository [
+
+	^ MCSmalltalkhubRepository
+			owner: 'dalsat'
+			project: 'ShoreLine-Reporter'
+			user: ''
+			password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> StonRepository [
+
+	^ MCGemstoneRepository
+		location: 'http://ss3.gemstone.com/ss/STON'
+		user: ''
+		password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> VersionnerPharoExtrasRepository [
+
+	^ MCSmalltalkhubRepository
+		owner: 'PharoExtras'
+		project: 'Versionner'
+		user: ''
+		password: ''
+]
+
+{ #category : #repositories }
+FiMCDownloader class >> ZodiacRepository [
+
+	^ MCHttpRepository
+		location: 'http://mc.stfx.eu/Zodiac'
 		user: ''
 		password: ''
 ]
@@ -82,7 +140,7 @@ FiMCDownloader class >> downloadToCache: aPackageName from: anMCHttpRepository [
 { #category : #utility }
 FiMCDownloader class >> downloadToCacheAllFrom: anMCHttpRepository [
 	"
-	self downloadToCacheAllFrom: (MCHttpRepository location: 'http://smalltalkhub.com/mc/maxi/Chalten/main')
+	self downloadToCacheAllFrom: self FastTableRepository
 	"
 
 	| versionNames |

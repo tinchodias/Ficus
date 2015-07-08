@@ -32,7 +32,7 @@ EFiEpiceaInstaller class >> ensurePharoGitRepositoryUpToDateAt: directory [
 { #category : #accessing }
 EFiEpiceaInstaller class >> pharoMetamodelGitUrl [
 		
-	^ 'https://github.com/tinchodias/pharo-core-yrupe-3' 
+	^ 'https://github.com/tinchodias/pharo-core-yrupe-4' 
 ]
 
 { #category : #convenience }

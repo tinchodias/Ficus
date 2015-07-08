@@ -133,9 +133,8 @@ FiHistoryNodesBrowser >> initializePresenterHistoryTreeModel [
 	historyTreeModel
 		rowInset: 0;
 		columns: { 
-			TreeColumnModel new	
-				displayBlock: [ :item | hiedraRulerController rowMorphFor: item content ];
-				yourself.
+		
+			hiedraRulerController newTreeColumnModel.
 				
 			TreeColumnModel new
 				displayBlock: [ :item | self descriptionMorphFor: item content ];

@@ -60,7 +60,7 @@ RFiLDeltaImpactBuilder class >> exampleSlice [
 	envA := (YrGitPharoExporter example1readTag: '50111') asRFiEnvironment.
 	envA2:= (envA ficusPackages copyWithAll: slicePackages) asRFiEnvironment.
 	delta := (envA2 ficusEnvironment changeFrom: envA ficusEnvironment) asSimpleChanges asArray.
-
+1halt.
 	"FiChangeInspector inspect: (envA2 ficusEnvironment changeFrom: envA ficusEnvironment)."
 	
 	envB := (YrGitPharoExporter example1readTag: '40614') asRFiEnvironment.
@@ -83,7 +83,7 @@ RFiLDeltaImpactBuilder class >> exampleYrupe [
 	self exampleYrupe
 	"
 
-	self exampleFragileBaseProblemWithBaseEnvironment: (YrGitPharoExporter example1readTag: '30014') asRFiEnvironment
+	^ self exampleFragileBaseProblemWithBaseEnvironment: (YrGitPharoExporter example1readTag: '30014') asRFiEnvironment
 ]
 
 { #category : #API }

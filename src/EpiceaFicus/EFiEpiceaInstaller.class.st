@@ -18,11 +18,13 @@ EFiEpiceaInstaller class >> ensurePharoGitRepositoryUpToDateAt: directory [
 	
 	directory exists
 		ifTrue: [ 
-			(LGitRemote
+			[(LGitRemote
 				of: (LGitRepository on: directory) open
 				named: 'origin'
 				url: self pharoMetamodelGitUrl
-				fetchSpec: '+refs/heads/*:refs/remotes/origin/*') pull ]
+				fetchSpec: '+refs/heads/*:refs/remotes/origin/*') pull]
+					on: LGit_GIT_ERROR
+					do: [ :error | self inform: 'Could not pull' "tolerate no internet access" ]  ]
 		ifFalse: [ 
 			EFiGitRepository 
 				cloneWithoutCheckout: self pharoMetamodelGitUrl

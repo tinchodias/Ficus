@@ -13,9 +13,9 @@ FiSetDifferencesTest >> testAddition [
 	edit := source editInclude: #A.
 	result := source resultOf: edit.
 	
-	self assert: (source changeFrom: source) isNoChange.
-	self assert: (result changeFrom: result) isNoChange.
-	self assert: (result changeFrom: source) equals: (source changeOf: edit).
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
 
 ]
 
@@ -32,10 +32,10 @@ FiSetDifferencesTest >> testRemoval [
 	edit := source editExclude: shot.
 	result := source resultOf: edit.
 	
-	self assert: (source changeFrom: source) isNoChange.
-	self assert: (result changeFrom: result) isNoChange.
-	self assert: (result changeFrom: source) equals: (source changeOf: edit).
-	self assert: (source changeFrom: result) equals: (result changeOf: (result editInclude: shot)).
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: edit).
+	self assert: (source differenceFrom: result) equals: (result effectOf: (result editInclude: shot)).
 ]
 
 { #category : #tests }
@@ -46,8 +46,8 @@ FiSetDifferencesTest >> testReplacement [
 	source := 42.
 
 	self 
-		assert: (result changeFrom: source) 
-		equals: (source changeOfReplaceBy: result).
+		assert: (result differenceFrom: source) 
+		equals: (source effectOfReplaceBy: result).
 
 ]
 
@@ -71,8 +71,8 @@ FiSetDifferencesTest >> testUpdate [
 			do: [ :class | 
 				class editAt: #shortBio equal: '42' ].		
 	
-	self assert: (source changeFrom: source) isNoChange.
-	self assert: (result changeFrom: result) isNoChange.
-	self assert: (result changeFrom: source) equals: (source changeOf: expectedDifference).
+	self assert: (source differenceFrom: source) isNoEffect.
+	self assert: (result differenceFrom: result) isNoEffect.
+	self assert: (result differenceFrom: source) equals: (source effectOf: expectedDifference).
 
 ]

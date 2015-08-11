@@ -1,15 +1,21 @@
 Class {
-	#name : #FiSimpleChange,
+	#name : #FiSimpleEffect,
 	#superclass : #FiFixedObject,
 	#instVars : [
 		'path',
 		'children'
 	],
-	#category : #'Ficus-Model-Core-SimpleChanges'
+	#category : #'Ficus-Model-Core-SimpleEffects'
 }
 
 { #category : #accessing }
-FiSimpleChange >> changeAt: aPath ifAbsent: absentBlockClosure [ 
+FiSimpleEffect >> children [
+
+	^ children
+]
+
+{ #category : #accessing }
+FiSimpleEffect >> effectAt: aPath ifAbsent: absentBlockClosure [ 
 
 	path = aPath
 		ifTrue: [ ^ self ].
@@ -19,37 +25,31 @@ FiSimpleChange >> changeAt: aPath ifAbsent: absentBlockClosure [
 	
 	children do: [ :child |
 		(child
-			changeAt: aPath 
+			effectAt: aPath 
 			ifAbsent: [ nil ])
-			ifNotNil: [ :change | ^ change ] ].
+			ifNotNil: [ :effect | ^ effect ] ].
 	
 	^ absentBlockClosure value
 ]
 
-{ #category : #accessing }
-FiSimpleChange >> children [
-
-	^ children
-]
-
 { #category : #testing }
-FiSimpleChange >> hasChangeAt: aPath [
+FiSimpleEffect >> hasEffectAt: aPath [
 
 	self
-		changeAt: aPath 
+		effectAt: aPath 
 		ifAbsent: [ ^ false ].
 	
 	^ true
 ]
 
 { #category : #testing }
-FiSimpleChange >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
+FiSimpleEffect >> ifAdd: addBlock ifRemove: removeBlock ifUpdate: updateBlock [
 	
 	^ self subclassResponsibility 
 ]
 
 { #category : #enumerating }
-FiSimpleChange >> leavesDo: aBlockClosure [
+FiSimpleEffect >> leavesDo: aBlockClosure [
 	
 	^ children values
 		ifEmpty: [ aBlockClosure value: self ]
@@ -57,13 +57,13 @@ FiSimpleChange >> leavesDo: aBlockClosure [
 ]
 
 { #category : #accessing }
-FiSimpleChange >> path [
+FiSimpleEffect >> path [
 	
 	^ path
 ]
 
 { #category : #printing }
-FiSimpleChange >> printOn: aStream [
+FiSimpleEffect >> printOn: aStream [
 
 	super printOn: aStream.
 	
@@ -74,14 +74,14 @@ FiSimpleChange >> printOn: aStream [
 ]
 
 { #category : #accessing }
-FiSimpleChange >> relevantSimpleChanges [
+FiSimpleEffect >> relevantSimpleEffects [
 	
 	^ Array streamContents: [ :stream |
-		self relevantSimpleChangesDo: [ :each | stream nextPut: each ] ]
+		self relevantSimpleEffectsDo: [ :each | stream nextPut: each ] ]
 ]
 
 { #category : #enumerating }
-FiSimpleChange >> relevantSimpleChangesDo: aBlockClosure [
+FiSimpleEffect >> relevantSimpleEffectsDo: aBlockClosure [
 	
 	^ aBlockClosure value: self
 ]

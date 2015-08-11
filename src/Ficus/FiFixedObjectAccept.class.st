@@ -17,27 +17,27 @@ FiFixedObjectAccept class >> slotName: aSlotName edit: aEdit [
 		new
 ]
 
-{ #category : #effects }
-FiFixedObjectAccept >> changeOn: aValue [
+{ #category : #accessing }
+FiFixedObjectAccept >> edit [
 
-	^ aValue changeOfAcceptSlot: self
+	^ edit
 ]
 
 { #category : #effects }
-FiFixedObjectAccept >> changeUpdate: oldValue [
+FiFixedObjectAccept >> effectOn: aValue [
+
+	^ aValue effectOfAcceptSlot: self
+]
+
+{ #category : #effects }
+FiFixedObjectAccept >> effectUpdate: oldValue [
 
 	^ FiFixedObjectUpdate builder
 		slotName: slotName;
 		oldValue: oldValue;
 		newValue: (edit resultOn: oldValue);
-		child: (edit changeOn: oldValue);
+		subEffect: (edit effectOn: oldValue);
 		new
-]
-
-{ #category : #accessing }
-FiFixedObjectAccept >> edit [
-
-	^ edit
 ]
 
 { #category : #printing }

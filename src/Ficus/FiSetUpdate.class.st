@@ -1,35 +1,29 @@
 Class {
 	#name : #FiSetUpdate,
-	#superclass : #FiSetChange,
+	#superclass : #FiSetEffect,
 	#instVars : [
 		'newValue',
 		'oldValue',
-		'child'
+		'subEffect'
 	],
-	#category : #'Ficus-Model-Core-Changes'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #converting }
-FiSetUpdate >> asSimpleChangesAt: aBasePath [
+FiSetUpdate >> asSimpleEffectsAt: aBasePath [
 
 	^ { FiUpdate builder 
 			path: aBasePath / newValue defaultStep;
 			oldValue: oldValue; 
 			newValue: newValue; 
-			children: (child asSimpleChangesAt: aBasePath / newValue defaultStep);
+			children: (subEffect asSimpleEffectsAt: aBasePath / newValue defaultStep);
 			new } asFiSet
-]
-
-{ #category : #accessing }
-FiSetUpdate >> child [
-
-	^ child
 ]
 
 { #category : #accessing }
 FiSetUpdate >> edit [
 	
-	self flag: #todo. "Answer a SubEdit when there is a child like FiFixedObjectUpdate"
+	self flag: #todo. "Answer a SubEdit when there is a subEffect like FiFixedObjectUpdate"
 	^ FiInclude value: newValue
 ]
 
@@ -58,6 +52,12 @@ FiSetUpdate >> printOn: aStream [
 	
 	aStream 
 		nextPut: $(;
-		nextPutAll: (child printStringLimitedTo: 30);
+		nextPutAll: (subEffect printStringLimitedTo: 30);
 		nextPut: $).
+]
+
+{ #category : #accessing }
+FiSetUpdate >> subEffect [
+
+	^ subEffect
 ]

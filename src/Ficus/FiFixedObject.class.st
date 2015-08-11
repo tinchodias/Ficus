@@ -41,40 +41,29 @@ FiFixedObject >> = another [
 ]
 
 { #category : #differencing }
-FiFixedObject >> changeFrom: other [
+FiFixedObject >> differenceFrom: other [
 
-	| changes |	
-	self == other ifTrue: [ ^ FiNoChange new ].
-	self class == other class ifFalse: [ ^ other changeOfReplaceBy: self ].
+	| subEffects |	
+	self == other ifTrue: [ ^ FiNoEffect new ].
+	self class == other class ifFalse: [ ^ other effectOfReplaceBy: self ].
 
-	changes := Set new.
+	subEffects := Set new.
 	
 	other stepsAndValuesDo: [ :step :otherValue | 
 		| value subDifference |
 		value := self valueAt: step.
-		subDifference := value changeFrom: otherValue.
+		subDifference := value differenceFrom: otherValue.
 		
-		subDifference isNoChange ifFalse: [
-			changes add: 
+		subDifference isNoEffect ifFalse: [
+			subEffects add: 
 				(FiFixedObjectUpdate builder
 					slotName: step;
 					oldValue: otherValue;
 					newValue: value;
-					child: subDifference;
+					subEffect: subDifference;
 					new) ] ].
 
-	^ FiChange fromAll: changes
-]
-
-{ #category : #changes }
-FiFixedObject >> changeOfAcceptSlot: anAcceptSlot [
-
-	| oldValue |
-	oldValue := self valueAt: anAcceptSlot slotName.
-
-	^ oldValue = (oldValue resultOf: anAcceptSlot edit)
-		ifTrue: [ anAcceptSlot changeNothing ]
-		ifFalse: [ anAcceptSlot changeUpdate: oldValue ]
+	^ FiEffect fromAll: subEffects
 ]
 
 { #category : #edits }
@@ -94,18 +83,29 @@ FiFixedObject >> editAt: step equal: value [
 ]
 
 { #category : #edits }
-FiFixedObject >> editFromSimpleChange: aSimpleChange [
-	"Convert as edit, assuming the FiSimpleChange applies to myself."
+FiFixedObject >> editFromSimpleEffect: aSimpleEffect [
+	"Convert as edit, assuming the FiSimpleEffect applies to myself."
 	
 	^ self 
-		editAt: aSimpleChange path step
+		editAt: aSimpleEffect path step
 		do: [ :oneStepForward |
-			aSimpleChange children asArray
+			aSimpleEffect children asArray
 				ifEmpty: [ 
-					oneStepForward editReplaceBy: aSimpleChange newValue ]
+					oneStepForward editReplaceBy: aSimpleEffect newValue ]
 				ifNotEmpty: [ :children | 
 					self editAll: (children collect: [ :each | 
-						oneStepForward editFromSimpleChange: each ]) ]].
+						oneStepForward editFromSimpleEffect: each ]) ]].
+]
+
+{ #category : #effects }
+FiFixedObject >> effectOfAcceptSlot: anAcceptSlot [
+
+	| oldValue |
+	oldValue := self valueAt: anAcceptSlot slotName.
+
+	^ oldValue = (oldValue resultOf: anAcceptSlot edit)
+		ifTrue: [ anAcceptSlot effectNothing ]
+		ifFalse: [ anAcceptSlot effectUpdate: oldValue ]
 ]
 
 { #category : #printing }

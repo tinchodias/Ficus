@@ -1,10 +1,10 @@
 Class {
 	#name : #FiRemoval,
-	#superclass : #FiSimpleChange,
+	#superclass : #FiSimpleEffect,
 	#instVars : [
 		'oldValue'
 	],
-	#category : #'Ficus-Model-Core-SimpleChanges'
+	#category : #'Ficus-Model-Core-SimpleEffects'
 }
 
 { #category : #testing }

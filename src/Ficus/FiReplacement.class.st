@@ -1,15 +1,15 @@
 Class {
 	#name : #FiReplacement,
-	#superclass : #FiChange,
+	#superclass : #FiEffect,
 	#instVars : [
 		'oldValue',
 		'newValue'
 	],
-	#category : #'Ficus-Model-Core-Changes'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #converting }
-FiReplacement >> asSimpleChangesAt: aBasePath [
+FiReplacement >> asSimpleEffectsAt: aBasePath [
 	
 	^ #() asFiSet
 ]

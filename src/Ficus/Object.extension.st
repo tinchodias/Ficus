@@ -1,10 +1,17 @@
 Extension { #name : #Object }
 
 { #category : #'*Ficus' }
-Object >> changeFrom: other [
+Object >> defaultStep [
+	"Answer a default value, a kind of suggestion to use it as step."
+	
+	^ self asString asSymbol
+]
+
+{ #category : #'*Ficus' }
+Object >> differenceFrom: other [
 
 	^ self = other 
-		ifTrue: [ FiNoChange new ]
+		ifTrue: [ FiNoEffect new ]
 		ifFalse: [ 
 			FiReplacement builder
 				oldValue: other;
@@ -13,31 +20,15 @@ Object >> changeFrom: other [
 ]
 
 { #category : #'*Ficus' }
-Object >> changeOfReplaceBy: newValue [ 
+Object >> editFromSimpleEffect: aSimpleEffect [ 
+	"Convert as edit, assuming the FiSimpleEffect applies to myself."
 	
-	^ FiReplacement builder
-		oldValue: self;
-		newValue: newValue;
-		new
-]
-
-{ #category : #'*Ficus' }
-Object >> defaultStep [
-	"Answer a default value, a kind of suggestion to use it as step."
+	self assert: aSimpleEffect children isEmpty.
 	
-	^ self asString asSymbol
-]
-
-{ #category : #'*Ficus' }
-Object >> editFromSimpleChange: aSimpleChange [ 
-	"Convert as edit, assuming the change applies to myself."
-	
-	self assert: aSimpleChange children isEmpty.
-	
-	aSimpleChange
+	aSimpleEffect
 		ifAdd: [ ] 
 		ifRemove: [ ] 
-		ifUpdate: [ ^ self editReplaceBy: aSimpleChange newValue ].
+		ifUpdate: [ ^ self editReplaceBy: aSimpleEffect newValue ].
 
 	^ self error: 'Should not happen'
 ]
@@ -46,6 +37,15 @@ Object >> editFromSimpleChange: aSimpleChange [
 Object >> editReplaceBy: aValue [
 
 	^ FiEqual value: aValue
+]
+
+{ #category : #'*Ficus' }
+Object >> effectOfReplaceBy: newValue [ 
+	
+	^ FiReplacement builder
+		oldValue: self;
+		newValue: newValue;
+		new
 ]
 
 { #category : #'*Ficus' }

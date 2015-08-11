@@ -1,14 +1,14 @@
 Class {
 	#name : #FiSetAddition,
-	#superclass : #FiSetChange,
+	#superclass : #FiSetEffect,
 	#instVars : [
 		'newValue'
 	],
-	#category : #'Ficus-Model-Core-Changes'
+	#category : #'Ficus-Model-Core-Effects'
 }
 
 { #category : #converting }
-FiSetAddition >> asSimpleChangesAt: aBasePath [
+FiSetAddition >> asSimpleEffectsAt: aBasePath [
 	
 	^ { newValue 
 			ficusDeepCollect: [ :shot :path :collectionFromChildren | 

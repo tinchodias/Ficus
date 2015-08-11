@@ -63,111 +63,13 @@ FiSet >> asDictionary [
 	^ result
 ]
 
-{ #category : #converting }
-FiSet >> asFiSet [
-	
-	^ self
-]
-
-{ #category : #differencing }
-FiSet >> changeFrom: other [
-
-	| changes |	
-	self == other ifTrue: [ ^ FiNoChange new ].
-	self class == other class ifFalse: [ ^ other changeOfReplaceBy: self ].
-
-	changes := Set new.
-	
-	other stepsAndValuesDo: [ :key :otherValue | 
-		self
-			valueAt: key
-			ifPresent: [ :value | 
-				| subDifference |
-				subDifference := value changeFrom: otherValue.
-				
-				subDifference isNoChange ifFalse: [
-					changes add: 
-						(FiSetUpdate builder
-							newValue: value;
-							oldValue: otherValue;
-							child: subDifference;
-							new) ] ]
-			ifAbsent: [ 
-				changes add: 
-					(FiSetRemoval builder
-						oldValue: otherValue;
-						new) ] ].
-
-	self stepsAndValuesDo: [ :key :value |
-		(other steps includes: key) ifFalse: [ 
-			changes add: 
-				(FiSetAddition builder
-					newValue: value;
-					new) ] ].
-	
-	^ FiChange fromAll: changes
-]
-
-{ #category : #changes }
-FiSet >> changeOfExclude: anExclude [ 
-
-	^ self 
-		valueAt: anExclude theValue defaultStep
-		ifPresent: [ :aValue | anExclude changeRemove: aValue ]
-		ifAbsent: [ anExclude changeNothing ]
-]
-
-{ #category : #changes }
-FiSet >> changeOfInclude: anInclude [ 
-
-	^ self 
-		valueAt: anInclude theValue defaultStep
-		ifPresent: [ :aValue | 
-			| difference |
-			difference := anInclude theValue changeFrom: aValue.
-			
-			difference isNoChange
-				ifTrue: [ anInclude changeNothing ]
-				ifFalse: [ 
-					FiSetUpdate builder
-						newValue: anInclude theValue;
-						oldValue: aValue;
-						child: difference;
-						new ] ] 
-		ifAbsent: [ anInclude changeAdd ].
-]
-
 { #category : #enumerating }
 FiSet >> collect: aBlockClosure [ 
 	
-	^ self collect: aBlockClosure as: Set
-]
-
-{ #category : #enumerating }
-FiSet >> collect: aBlockClosure as: aClass [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Collect the resulting values into an instance of aClass. Answer the resulting collection."
-
-	| newCollection |
-	newCollection := aClass new: self size.
-	self valuesDo: [ :each | newCollection add: (aBlockClosure value: each) ].
-	^ newCollection
-]
-
-{ #category : #copying }
-FiSet >> copyWith: anElement [
-
-	^ self resultOf: (FiInclude value: anElement)
-]
-
-{ #category : #copying }
-FiSet >> copyWithAll: elements [
-
-	| edit |
-	edit := FiEdit fromAll: (elements collect: [ :anElement | 
-		FiInclude value: anElement]).
-
-	^ self resultOf: edit
+	| newSet |
+	newSet := Set new: self size.
+	self valuesDo: [ :each | newSet add: (aBlockClosure value: each) ].
+	^ newSet
 ]
 
 { #category : #enumerating }
@@ -175,6 +77,45 @@ FiSet >> detect: aBlockClosure [
 	
 	self do: [ :each | (aBlockClosure value: each) ifTrue: [ ^ each ] ].
 	NotFound signalFor: aBlockClosure.
+]
+
+{ #category : #differencing }
+FiSet >> differenceFrom: other [
+
+	| subEffects |	
+	self == other ifTrue: [ ^ FiNoEffect new ].
+	self class == other class ifFalse: [ ^ other effectOfReplaceBy: self ].
+
+	subEffects := Set new.
+	
+	other stepsAndValuesDo: [ :key :otherValue | 
+		self
+			valueAt: key
+			ifPresent: [ :value | 
+				| subDifference |
+				subDifference := value differenceFrom: otherValue.
+				
+				subDifference isNoEffect ifFalse: [
+					subEffects add: 
+						(FiSetUpdate builder
+							newValue: value;
+							oldValue: otherValue;
+							subEffect: subDifference;
+							new) ] ]
+			ifAbsent: [ 
+				subEffects add: 
+					(FiSetRemoval builder
+						oldValue: otherValue;
+						new) ] ].
+
+	self stepsAndValuesDo: [ :key :value |
+		(other steps includes: key) ifFalse: [ 
+			subEffects add: 
+				(FiSetAddition builder
+					newValue: value;
+					new) ] ].
+	
+	^ FiEffect fromAll: subEffects
 ]
 
 { #category : #enumerating }
@@ -199,28 +140,57 @@ FiSet >> editExclude: aValue [
 ]
 
 { #category : #edits }
-FiSet >> editFromSimpleChange: aSimpleChange [
-	"Convert as edit, assuming the FiSimpleChange applies to myself."
+FiSet >> editFromSimpleEffect: aSimpleEffect [
+	"Convert as edit, assuming the FiSimpleEffect applies to myself."
 	
-	aSimpleChange
-		ifAdd: [ ^ self editInclude: aSimpleChange newValue ] 
-		ifRemove: [ ^ self editExclude: aSimpleChange oldValue ] 
+	aSimpleEffect
+		ifAdd: [ ^ self editInclude: aSimpleEffect newValue ] 
+		ifRemove: [ ^ self editExclude: aSimpleEffect oldValue ] 
 		ifUpdate: [ ].
 	
-	^ aSimpleChange children asArray
-		ifEmpty: [ self editInclude: aSimpleChange newValue ]
+	^ aSimpleEffect children asArray
+		ifEmpty: [ self editInclude: aSimpleEffect newValue ]
 		ifNotEmpty: [ :children | 
 			self 
-				editAtPath: FiPath root / aSimpleChange path step
+				editAtPath: FiPath root / aSimpleEffect path step
 				do: [ :oneStepForward |
 					self editAll: (children collect: [ :each | 
-						oneStepForward editFromSimpleChange: each ]) ]].
+						oneStepForward editFromSimpleEffect: each ]) ]].
 ]
 
 { #category : #edits }
 FiSet >> editInclude: aValue [
 
 	^ FiInclude value: aValue
+]
+
+{ #category : #effects }
+FiSet >> effectOfExclude: anExclude [ 
+
+	^ self 
+		valueAt: anExclude theValue defaultStep
+		ifPresent: [ :aValue | anExclude effectRemove: aValue ]
+		ifAbsent: [ anExclude effectNothing ]
+]
+
+{ #category : #effects }
+FiSet >> effectOfInclude: anInclude [ 
+
+	^ self 
+		valueAt: anInclude theValue defaultStep
+		ifPresent: [ :aValue | 
+			| difference |
+			difference := anInclude theValue differenceFrom: aValue.
+			
+			difference isNoEffect
+				ifTrue: [ anInclude effectNothing ]
+				ifFalse: [ 
+					FiSetUpdate builder
+						newValue: anInclude theValue;
+						oldValue: aValue;
+						subEffect: difference;
+						new ] ] 
+		ifAbsent: [ anInclude effectAdd ].
 ]
 
 { #category : #printing }

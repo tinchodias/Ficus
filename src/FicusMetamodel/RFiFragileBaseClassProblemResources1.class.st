@@ -13,7 +13,7 @@ RFiFragileBaseClassProblemResources1 >> classLog [
 	^ FiClass builder 
 		name: #Log;
 		superclassName: #Object;
-		layout: (FiFixedLayout withInstanceVariableNames: #(msgs));
+		layout: (FiFixedLayout withInstanceVariables: #(msgs));
 		category: self categoryNameLoggersCore;
 		methods: {
 			FiMethod sourceCode: 'messages  ^msgs'. 

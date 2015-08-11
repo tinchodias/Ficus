@@ -13,7 +13,7 @@ RFiFragileBaseClassProblemResources4A >> classFilteredLog [
 	^ FiClass builder 
 		name: #FilteredLog;
 		superclassName: #Log;
-		layout: (FiFixedLayout withInstanceVariableNames: #(filterBlock));
+		layout: (FiFixedLayout withInstanceVariables: #(filterBlock));
 		category: self categoryNameLoggersCore;
 		methods: {
 			FiMethod sourceCode: 'filterBlock  ^filterBlock'.

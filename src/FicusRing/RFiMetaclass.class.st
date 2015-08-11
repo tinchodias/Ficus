@@ -3,7 +3,7 @@ I am polymorphic with Metaclass, fetching everything needed from a Ficus environ
 "
 Class {
 	#name : #RFiMetaclass,
-	#superclass : #RFiAbstractClass,
+	#superclass : #RFiBehavior,
 	#instVars : [
 		'theNonMetaClass'
 	],
@@ -29,15 +29,6 @@ RFiMetaclass >> allClassVarNames [
 RFiMetaclass >> allSharedPools [
 	"Answer an ordered collection  of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
 	^ theNonMetaClass allSharedPools
-]
-
-{ #category : #accessing }
-RFiMetaclass >> asMetamodelSpot [
-	
-	^ FiBehaviorSpot 
-		name: self theNonMetaClass name
-		isMetaSide: true
-		packageName: self package name
 ]
 
 { #category : #converting }
@@ -82,6 +73,12 @@ RFiMetaclass >> ficusClass [
 	^ self theNonMetaClass ficusClass metaclass
 ]
 
+{ #category : #accessing }
+RFiMetaclass >> ficusPathFromEnvironment [
+
+	^ theNonMetaClass ficusPathFromEnvironment / #metaclass
+]
+
 { #category : #comparing }
 RFiMetaclass >> hash [
 
@@ -101,6 +98,13 @@ RFiMetaclass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifN
 				innerLookupVariableNamed: aName 
 				ifFound: presentBlockClosure 
 				ifNotFound: absentBlockClosure ]
+]
+
+{ #category : #polymorphism }
+RFiMetaclass >> instanceVariables [
+
+	self flag: #fix.
+	^ theNonMetaClass ficusClass metaclass layout instanceVariables asArray
 ]
 
 { #category : #polymorphism }

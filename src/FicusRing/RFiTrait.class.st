@@ -1,6 +1,3 @@
-"
-I represent a trait.
-"
 Class {
 	#name : #RFiTrait,
 	#superclass : #RFiAbstractTrait,
@@ -21,13 +18,13 @@ RFiTrait class >> environment: aRFiEnvironment ficusTrait: aFiTrait [
 		yourself
 ]
 
-{ #category : #accessing }
-RFiTrait >> asMetamodelSpot [
-	
-	^ FiBehaviorSpot 
-		name: self name
-		isMetaSide: false
-		packageName: self package name
+{ #category : #polymorphism }
+RFiTrait >> classSide [
+
+	^ cachedClassTrait ifNil: [ 
+		cachedClassTrait := RFiClassTrait new
+			instanceSide: self;
+			yourself ]
 ]
 
 { #category : #polymorphism }
@@ -71,29 +68,19 @@ RFiTrait >> initializeWithEnvironment: aRFiEnvironment ficusTrait: aFiTrait [
 	ficusTrait := aFiTrait.
 ]
 
-{ #category : #testing }
-RFiTrait >> isMeta [
-	
-	^ false
-]
-
 { #category : #accessing }
 RFiTrait >> name [
 
 	^ self ficusTrait name
 ]
 
-{ #category : #polymorphism }
-RFiTrait >> theMetaClass [
+{ #category : #printing }
+RFiTrait >> printOn: aStream [
 
-	^ cachedClassTrait ifNil: [ 
-		cachedClassTrait := RFiClassTrait new
-			instanceSide: self;
-			yourself ]
-]
+	super printOn: aStream.
 
-{ #category : #polymorphism }
-RFiTrait >> theNonMetaClass [
-	
-	^ self
+	aStream 
+		nextPut: $(;
+		nextPutAll: self name;
+		nextPut: $)
 ]

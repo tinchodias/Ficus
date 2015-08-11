@@ -9,7 +9,7 @@ RFiPackageTest >> testDefinedClasses [
 
 	self 
 		assert: (resources ringClassA package definedClasses collect: #name) asSet
-		equals: #(A B C P T1) asSet.
+		equals: #(A B C P) asSet.
 ]
 
 { #category : #tests }

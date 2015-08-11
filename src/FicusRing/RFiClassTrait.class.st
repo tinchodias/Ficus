@@ -1,6 +1,3 @@
-"
-I represent a  class trait.
-"
 Class {
 	#name : #RFiClassTrait,
 	#superclass : #RFiAbstractTrait,
@@ -9,15 +6,6 @@ Class {
 	],
 	#category : #'FicusRing-Core'
 }
-
-{ #category : #accessing }
-RFiClassTrait >> asMetamodelSpot [
-	
-	^ FiBehaviorSpot 
-		name: self theNonMetaClass name
-		isMetaSide: true
-		packageName: self package name
-]
 
 { #category : #polymorphism }
 RFiClassTrait >> definition [
@@ -46,22 +34,4 @@ RFiClassTrait >> ficusTrait [
 RFiClassTrait >> instanceSide: aRFiTrait [
 
 	instanceSide := aRFiTrait
-]
-
-{ #category : #testing }
-RFiClassTrait >> isMeta [
-	
-	^ true
-]
-
-{ #category : #polymorphism }
-RFiClassTrait >> theMetaClass [
-	
-	^ self
-]
-
-{ #category : #polymorphism }
-RFiClassTrait >> theNonMetaClass [
-	
-	^ instanceSide
 ]

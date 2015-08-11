@@ -1,6 +1,6 @@
 Extension { #name : #SmalllintManifestChecker }
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 SmalllintManifestChecker >> runRules: aCompositeRule onPackage: aPackage withoutTestCase: avoidTestCases [
 
 	rule := aCompositeRule.

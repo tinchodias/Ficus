@@ -1,6 +1,6 @@
 Extension { #name : #TBehavior }
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 TBehavior >> dependentClasses [
 	"Return the list of classes used myself"
 	

@@ -7,13 +7,7 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
-{ #category : #accessing }
-RFiObject >> asMetamodelSpot [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #polymorphism }
+{ #category : #'as yet unclassified' }
 RFiObject >> environment [
 
 	^ self subclassResponsibility
@@ -22,21 +16,13 @@ RFiObject >> environment [
 { #category : #accessing }
 RFiObject >> ficusObject [
 
-	^ self asMetamodelSpot resolvedOn: self environment ficusEnvironment
+	^ self ficusPathFromEnvironment resolvedOn: self environment ficusPackages 
 ]
 
-{ #category : #polymorphism }
-RFiObject >> properties [
+{ #category : #accessing }
+RFiObject >> ficusPathFromEnvironment [
 
-	^ nil
-]
-
-{ #category : #caching }
-RFiObject >> resetCaches [
-	
-	self class allInstVarNames 
-		select: [ :each | each beginsWith: 'cached' ] 
-		thenDo: [ :each | self instVarNamed: each put: nil ]
+	^ self subclassResponsibility
 ]
 
 { #category : #printing }
@@ -45,7 +31,7 @@ RFiObject >> shortPrintString [
 	^ self name
 ]
 
-{ #category : #polymorphism }
+{ #category : #'as yet unclassified' }
 RFiObject >> systemNavigation [
 
 	^ SystemNavigation new 

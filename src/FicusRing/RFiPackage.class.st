@@ -30,14 +30,10 @@ RFiPackage >> asRingDefinition [
 
 { #category : #polymorphism }
 RFiPackage >> definedClasses [
-	"Polymorphic with RPackage, answer all defined classes AND traits."
-	
+
 	^ definedClasses ifNil: [ 
-		definedClasses := 
-			(ficusPackage classes 
-				collect: [ :ficusClass | environment ringClassFor: ficusClass ]), 
-			(ficusPackage traits
-				collect: [ :ficusTrait | environment ringTraitFor: ficusTrait ]). ]
+		definedClasses := ficusPackage classes 
+			collect: [ :classShot | environment ringClassFor: classShot ] ]
 ]
 
 { #category : #accessing }

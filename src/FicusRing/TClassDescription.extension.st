@@ -1,6 +1,6 @@
 Extension { #name : #TClassDescription }
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 TClassDescription >> authors [
 	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
 
@@ -9,7 +9,7 @@ TClassDescription >> authors [
 	
 ]
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 TClassDescription >> linesOfCode [ 
 	"An approximate measure of lines of code.
 	Includes comments, but excludes blank lines."
@@ -20,7 +20,7 @@ TClassDescription >> linesOfCode [
 		ifFalse: [lines + self classSide linesOfCode]
 ]
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 TClassDescription >> numberOfMethods [
 	"count all methods that are local (not comming from a trait)"
 	| num |

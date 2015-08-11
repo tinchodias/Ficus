@@ -68,16 +68,6 @@ RFiMethod >> asActiveRingDefinition [
 
 ]
 
-{ #category : #accessing }
-RFiMethod >> asMetamodelSpot [
-
-	^ FiMethodSpot
-		selector: self selector
-		behaviorName: self methodClass theNonMetaClass name
-		isMetaSide: self methodClass isMeta
-		packageName: self package name
-]
-
 { #category : #printing }
 RFiMethod >> asString [
 	"Same as a CompiledMethod"
@@ -110,6 +100,12 @@ RFiMethod >> environment [
 RFiMethod >> ficusMethod [
 	
 	^ ficusMethod
+]
+
+{ #category : #accessing }
+RFiMethod >> ficusPathFromEnvironment [
+
+	^ self environment ficusPathToMethod: self
 ]
 
 { #category : #comparing }

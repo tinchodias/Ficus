@@ -4,11 +4,11 @@ I am polymorphic with Behavior/ClassDescription.
 Class {
 	#name : #RFiBehavior,
 	#superclass : #RFiObject,
-	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:. #zapOrganization. #zapAllMethods})',
+	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:})',
 	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
 	#instVars : [
 		'cachedMethods',
-		'basicLocalSelectors'
+		'cachedInstanceVariables'
 	],
 	#category : #'FicusRing-Core'
 }
@@ -17,7 +17,7 @@ Class {
 RFiBehavior >> allSlots [
 
 	^ self allInstVarNames withIndexCollect: [ :each :index |
-		(InstanceVariableSlot named: each)
+		(InstanceVariableSlot named: each name)
 			index: index;
 			yourself ]
 ]
@@ -32,9 +32,7 @@ RFiBehavior >> allUnsentMessages [
 { #category : #hacks }
 RFiBehavior >> basicLocalSelectors [
 	
-	^ basicLocalSelectors ifNil: [
-		basicLocalSelectors := 
-			(self localMethods collect: #selector as: OrderedCollection) asArray ]
+	^ self localMethods collect: #selector
 ]
 
 { #category : #polymorphism }
@@ -63,19 +61,6 @@ RFiBehavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlo
 		detect: [ :aMethod | aMethod selector = selector ]
 		ifFound: [ :aMethod | anotherBlock cull: aMethod ]
 		ifNone: aBlock
-]
-
-{ #category : #polymorphism }
-RFiBehavior >> critics [
-
-	^ #()
-]
-
-{ #category : #'accessing-properties' }
-RFiBehavior >> ensureProperties [
-
-	^ WeakKeyDictionary new
-		
 ]
 
 { #category : #polymorphism }
@@ -109,14 +94,47 @@ RFiBehavior >> instanceVariablesString [
 
 	^String streamContents: [ :stream |
 		self instVarNames 
-			do: [ :each | stream nextPutAll: each ]
+			do: [ :each | stream nextPutAll: each name ]
 			separatedBy: [ stream space ] ]
+]
+
+{ #category : #polymorphism }
+RFiBehavior >> isBehavior [
+
+	^ true
+]
+
+{ #category : #testing }
+RFiBehavior >> isBits [
+	"Answer whether the receiver contains just bits (not pointers)."
+
+	^ self ficusClass layout isBitsLayout
 ]
 
 { #category : #testing }
 RFiBehavior >> isObsolete [
 
 	^ false
+]
+
+{ #category : #testing }
+RFiBehavior >> isVariable [
+	"Answer whether the receiver has indexable variables."
+
+	^ self ficusClass layout isVariableLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isWeak [
+	"Answer whether the receiver has contains weak references."
+	^ self ficusClass layout isWeakLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isWords [
+	"Answer true if the receiver is made of 32-bit instance variables."
+
+	^ self ficusClass layout isWordsLayout
 ]
 
 { #category : #'testing class hierarchy' }
@@ -188,10 +206,18 @@ RFiBehavior >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #'accessing-properties' }
-RFiBehavior >> properties [
+{ #category : #accessing }
+RFiBehavior >> ringInstanceVariableNamed: aString [
 
-	^ nil
+	^ self ringInstanceVariables detect: [ :each | each name = aString ]
+]
+
+{ #category : #accessing }
+RFiBehavior >> ringInstanceVariables [ 
+
+	^ cachedInstanceVariables ifNil: [
+		cachedInstanceVariables := self instVarNames collect: [ :each |
+			RFiInstanceVariable definingClass: self name: each ] ]
 ]
 
 { #category : #private }
@@ -235,22 +261,18 @@ RFiBehavior >> thoroughWhichSelectorsReferTo: literal special: specialFlag byte:
 RFiBehavior >> traitComposition [
 
 	| traitCompositionAST |
-	traitCompositionAST := RBParser parseExpression: self traitCompositionString.
-	^ (traitCompositionAST acceptVisitor: (RFiTraitCompositionAssembler on: self environment)) asTraitComposition
+	traitCompositionAST := RBParser parseExpression: self ficusClass traitComposition.
+	^ (traitCompositionAST acceptVisitor: (HzTraitCompositionAssembler on: self environment)) asTraitComposition
 ]
 
 { #category : #traits }
 RFiBehavior >> traitCompositionString [
-
-	^ self subclassResponsibility
+	^ self ficusClass traitComposition
 ]
 
 { #category : #polymorphism }
 RFiBehavior >> traitProvidedMethods [
-
 	| providedMethods |
-	self flag: #todo. "Review this method"
-
 	providedMethods := Set new.
 	self traitComposition transformations do: [ :t |
 		t allSelectors do: [ :selector | | methodDescription |

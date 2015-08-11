@@ -3,7 +3,7 @@ I am polymorphic with Class, fetching everything needed from a Ficus environment
 "
 Class {
 	#name : #RFiClass,
-	#superclass : #RFiAbstractClass,
+	#superclass : #RFiBehavior,
 	#instVars : [
 		'environment',
 		'cachedSuperclass',
@@ -103,15 +103,6 @@ RFiClass >> allSuperclassesDo: aBlock [
 	ficusClass hasNullSuperclass ifFalse: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
-]
-
-{ #category : #accessing }
-RFiClass >> asMetamodelSpot [
-	
-	^ FiBehaviorSpot 
-		name: self name
-		isMetaSide: false
-		packageName: self package name
 ]
 
 { #category : #converting }
@@ -246,6 +237,12 @@ RFiClass >> ficusClass [
 	^ ficusClass
 ]
 
+{ #category : #accessing }
+RFiClass >> ficusPathFromEnvironment [
+	
+	^ environment ficusPathToClass: self
+]
+
 { #category : #polymorphism }
 RFiClass >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
@@ -314,6 +311,18 @@ RFiClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFo
 RFiClass >> instVarNames [
 
 	^ self instanceVariables
+]
+
+{ #category : #polymorphism }
+RFiClass >> instanceVariables [
+
+	^ ficusClass layout instanceVariables asArray
+]
+
+{ #category : #testing }
+RFiClass >> isCompiledMethod [
+
+	^ self ficusClass layout isCompiledMethodLayout
 ]
 
 { #category : #polymorphism }

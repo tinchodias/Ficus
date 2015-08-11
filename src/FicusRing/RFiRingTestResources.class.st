@@ -13,7 +13,7 @@ RFiRingTestResources >> classA [
 	^ FiClass builder 
 		name: #A;
 		superclassName: #Object;
-		layout: (FiFixedLayout withInstanceVariableNames: #(#a1 #a2));
+		layout: (FiFixedLayout withInstanceVariables: #(#a1 #a2));
 		classPool: #(SomeClassVariable) asFiSet;
 		sharedPools: #(P) asFiSet;
 		methods: { 
@@ -21,7 +21,7 @@ RFiRingTestResources >> classA [
 			FiMethod sourceCode: 'sum42  ^ self sum + 42'. } asFiSet;
 		metaclass: 
 			(FiMetaclass builder
-				layout: (FiFixedLayout withInstanceVariableNames: #(#a3));
+				layout: (FiFixedLayout withInstanceVariables: #(#a3));
 				methods: {
 					FiMethod sourceCode: 'initialize  SomeSharedPoolVariable := SomeClassVariable := a3 := A new'.  
 				} asFiSet;
@@ -35,7 +35,7 @@ RFiRingTestResources >> classB [
 	^ FiClass builder 
 		name: #B;
 		superclassName: #A;
-		layout: (FiFixedLayout withInstanceVariableNames: #(b1));
+		layout: (FiFixedLayout withInstanceVariables: #(b1));
 		methods: { 
 			FiMethod sourceCode: 'initialize  b1 := 0'.
 			FiMethod sourceCode: 'resetAll  b1 := a1 := a2 := 0'.
@@ -107,7 +107,7 @@ RFiRingTestResources >> extensionMethodsToAclass [
 { #category : #private }
 RFiRingTestResources >> newFicusEnvironment [
 
-	^ FiEnvironment withAll: { self packageKernel. self packageX. self packageY }
+	^ { self packageKernel. self packageX. self packageY. } asFiSet
 ]
 
 { #category : #resources }
@@ -115,7 +115,7 @@ RFiRingTestResources >> packageX [
 	
 	^ FiPackage builder
 		name: #X;
-		contents: { self classA. self classB. self classC. self classP. self traitT1 } asFiSet;
+		contents: { self classA. self classB. self classC. self classP } asFiSet;
 		new
 ]
 
@@ -150,21 +150,4 @@ RFiRingTestResources >> ringClassC [
 RFiRingTestResources >> ringClassP [
 
 	^ self ringEnvironment classNamed: #P
-]
-
-{ #category : #'resources - ring level' }
-RFiRingTestResources >> ringTraitT1 [
-
-	^ self ringEnvironment classNamed: #T1
-]
-
-{ #category : #resources }
-RFiRingTestResources >> traitT1 [
-
-	^ FiTrait builder
-		name: #T1;
-		methods: { 
-			FiMethod sourceCode: 'sum  ^ 123'. } asFiSet;
-		traitComposition: '{}';
-		new
 ]

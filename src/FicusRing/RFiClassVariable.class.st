@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-RFiClassVariable >> asMetamodelSpot [
+RFiClassVariable >> ficusPathFromEnvironment [
 
-	^ definingClass asMetamodelSpot / #classPool / self name
+	^ definingClass environment ficusPathToClassVariable: self
 ]
 
 { #category : #printing }

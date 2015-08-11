@@ -10,7 +10,7 @@ MCWorkingCopy >> ficusDifferenceRelativeToRepository: aRepository [
 	shotA := self ficusPackageWith: snapshotA.	
 	shotB := self ficusPackageWith: snapshotB.	
 
-	^ shotB changeFrom: shotA.
+	^ shotB differenceFrom: shotA.
 
 ]
 

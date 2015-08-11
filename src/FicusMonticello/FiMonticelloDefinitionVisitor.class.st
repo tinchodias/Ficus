@@ -46,7 +46,7 @@ FiMonticelloDefinitionVisitor >> ficusClassPoolFor: aMCClassDefinition [
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusClassTraitFor: aMCTraitDefinition [ 
 
-	^ FiClassTrait builder
+	^ FiTrait builder
 		methods: (self ficusClassTraitMethodsFor: aMCTraitDefinition);
 		traitComposition: aMCTraitDefinition classTraitCompositionString;
 		new

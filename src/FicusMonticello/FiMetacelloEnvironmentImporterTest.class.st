@@ -18,5 +18,5 @@ FiMetacelloEnvironmentImporterTest >> import [
 { #category : #tests }
 FiMetacelloEnvironmentImporterTest >> importVersion: aVersion [
 
-	^ FiMetacelloWriter new written: aVersion.
+	^ MetacelloEnvironmentImporter new import: aVersion.
 ]

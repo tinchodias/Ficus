@@ -7,7 +7,7 @@ Class {
 { #category : #private }
 FiMonticelloReader >> classInstVarNamesFrom: aFiClass [ 
 	
-	^ aFiClass metaclass layout instanceVariableNames
+	^ aFiClass metaclass layout instanceVariables values
 ]
 
 { #category : #private }
@@ -18,8 +18,8 @@ FiMonticelloReader >> classVarNamesFrom: aFiClass [
 
 { #category : #private }
 FiMonticelloReader >> instVarNamesFrom: aFiClass [ 
-
-	^ aFiClass layout instanceVariableNames
+	
+	^ aFiClass layout instanceVariables values
 ]
 
 { #category : #private }

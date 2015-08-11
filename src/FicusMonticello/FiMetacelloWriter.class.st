@@ -38,17 +38,15 @@ FiMetacelloWriter >> recordVersion: aMetacelloVersion [
 FiMetacelloWriter >> written: aMetacelloVersion [
 	
 	| environment record  |
-	environment := Dictionary new.
+	environment := OrderedCollection new.
 	record := self recordVersion: aMetacelloVersion.
 	
-	record loadDirective packageDirectivesDo: [:directive | | repository package |
-		repository := (record repositoryMap 
-			at: directive externalReference packageName
-			ifAbsent: [ record repositoryMap 
-										at: directive externalReference name ]).
-		package := self loadPackage: directive file fromRepository: repository.
-		environment at: package name ifAbsentPut: package.
-	].
+	(self packagesFromRecordedVersion: record)
+		doWithIndex: [ :each :index | 	| package repository |
+			repository := (record repositoryMap values at: index).
+			package := self loadPackage: each fromRepository: repository.
+			environment add: package.
+		].
 	
-	^ environment values asFiSet asRFiEnvironment
+	^ environment asFiSet asRFiEnvironment
 ]

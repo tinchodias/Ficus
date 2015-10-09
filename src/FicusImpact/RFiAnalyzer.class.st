@@ -2,8 +2,7 @@ Class {
 	#name : #RFiAnalyzer,
 	#superclass : #Object,
 	#instVars : [
-		'register',
-		'sourceArray'
+		'register'
 	],
 	#category : #'FicusImpact-Old-Analyzer'
 }
@@ -19,7 +18,7 @@ RFiAnalyzer >> analysisOf: aMethod levels: levels [
 			hostName: aMethod methodClass name;
 			isMeta: aMethod methodClass isMeta;
 			selector: aMethod selector;
-			sourceCode: (self sourceCodeFor: aMethod);
+			sourceCode: aMethod sourceCode;
 			new ].
 	
 	"continue recursion"
@@ -43,7 +42,7 @@ RFiAnalyzer >> analysisOf: aMethod levels: levels [
 		hostName: aMethod methodClass name;
 		isMeta: aMethod methodClass isMeta;
 		selector: aMethod selector;
-		sourceCode: (self sourceCodeFor: aMethod);
+		sourceCode: aMethod sourceCode;
 		dependencies: dependencies asFiSet;
 		impact: impact asFiSet;
 		new
@@ -53,33 +52,12 @@ RFiAnalyzer >> analysisOf: aMethod levels: levels [
 { #category : #accessing }
 RFiAnalyzer >> register [
 
-	^ register ifNil: [ register := SIRegister new fill; yourself ]
+	"Dependency in Camille's SendersImplementors package"
+	^ register ifNil: [ self halt. "register := SIRegister new fill; yourself" ]
 ]
 
 { #category : #accessing }
 RFiAnalyzer >> register: anObject [
 
 	register := anObject
-]
-
-{ #category : #accessing }
-RFiAnalyzer >> sourceArray [
-
-	^ sourceArray ifNil: [ sourceArray := SourceFiles readOnlyCopy ]
-]
-
-{ #category : #accessing }
-RFiAnalyzer >> sourceArray: anObject [
-
-	sourceArray := anObject
-]
-
-{ #category : #analysis }
-RFiAnalyzer >> sourceCodeFor: aMethod [
-
-	"regular way?"
-	aMethod hasSourcePointer ifFalse: [ ^ aMethod sourceCode ].
-	
-	"=> optimize"
-	^ self sourceArray sourceCodeAt: aMethod sourcePointer.
 ]

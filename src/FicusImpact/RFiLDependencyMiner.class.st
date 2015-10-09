@@ -102,7 +102,7 @@ RFiLDependencyMiner >> initialize [
 { #category : #private }
 RFiLDependencyMiner >> newDependencyFrom: sourceEntity to: targetEntity [
 	
-	^ sourceEntity asMetamodelSpot asString -> targetEntity asMetamodelSpot asString
+	^ sourceEntity asMetamodelSpot" asString" -> targetEntity asMetamodelSpot "asString"
 	"RFiLDependency from: sourceEntity to: targetEntity"
 ]
 

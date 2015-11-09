@@ -1,3 +1,6 @@
+"
+I represent a trait.
+"
 Class {
 	#name : #RFiTrait,
 	#superclass : #RFiAbstractTrait,
@@ -68,6 +71,12 @@ RFiTrait >> initializeWithEnvironment: aRFiEnvironment ficusTrait: aFiTrait [
 	ficusTrait := aFiTrait.
 ]
 
+{ #category : #testing }
+RFiTrait >> isMeta [
+	
+	^ false
+]
+
 { #category : #accessing }
 RFiTrait >> name [
 
@@ -83,4 +92,10 @@ RFiTrait >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: self name;
 		nextPut: $)
+]
+
+{ #category : #polymorphism }
+RFiTrait >> theNonMetaClass [
+	
+	^ self
 ]

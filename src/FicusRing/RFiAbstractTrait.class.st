@@ -1,3 +1,6 @@
+"
+I am an abstract superclass between Trait and ClassTrait in RingFicus. I am intended to be polymorphic with normal trait objects in the system.
+"
 Class {
 	#name : #RFiAbstractTrait,
 	#superclass : #RFiObject,
@@ -18,15 +21,33 @@ RFiAbstractTrait >> >> aSelector [
 	^ self methods detect: [ :each | each selector = aSelector ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 RFiAbstractTrait >> addCompositionOnLeft: aTraitComposition [
 	^aTraitComposition add: self.
+]
+
+{ #category : #polymorphism }
+RFiAbstractTrait >> allClassVarNames [
+	
+	^ #()
 ]
 
 { #category : #polymorphism }
 RFiAbstractTrait >> allSelectors [
 
 	^ self methods collect: #selector
+]
+
+{ #category : #polymorphism }
+RFiAbstractTrait >> allSharedPools [
+	
+	^ #()
+]
+
+{ #category : #polymorphism }
+RFiAbstractTrait >> allSlots [
+	
+	^ #()
 ]
 
 { #category : #polymorphism }
@@ -85,6 +106,8 @@ RFiAbstractTrait >> methods [
 		methods := Dictionary new.
 		self traitProvidedMethods
 			do: [ :each | methods at: each selector put: (self ringMethodFor: each) ].
+		(self environment extensionMethodsFor: self)
+			do: [ :each | methods at: each selector put: each ].
 		self localMethods
 			do: [ :each | methods at: each selector put: each ].
 		cachedMethods := methods values ]
@@ -110,7 +133,7 @@ RFiAbstractTrait >> traitComposition [
 
 	| traitCompositionAST |
 	traitCompositionAST := RBParser parseExpression: self ficusTrait traitComposition.
-	^ (traitCompositionAST acceptVisitor: (HzTraitCompositionAssembler on: self environment)) asTraitComposition
+	^ (traitCompositionAST acceptVisitor: (RFiTraitCompositionAssembler on: self environment)) asTraitComposition
 ]
 
 { #category : #polymorphism }

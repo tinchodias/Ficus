@@ -1,3 +1,6 @@
+"
+I represent a  class trait.
+"
 Class {
 	#name : #RFiClassTrait,
 	#superclass : #RFiAbstractTrait,
@@ -34,4 +37,22 @@ RFiClassTrait >> ficusTrait [
 RFiClassTrait >> instanceSide: aRFiTrait [
 
 	instanceSide := aRFiTrait
+]
+
+{ #category : #testing }
+RFiClassTrait >> isMeta [
+	
+	^ true
+]
+
+{ #category : #printing }
+RFiClassTrait >> printOn: aStream [
+
+	aStream nextPutAll: instanceSide name, ' class trait'
+]
+
+{ #category : #polymorphism }
+RFiClassTrait >> theNonMetaClass [
+	
+	^ instanceSide
 ]

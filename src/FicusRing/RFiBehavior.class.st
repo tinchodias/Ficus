@@ -17,7 +17,7 @@ Class {
 RFiBehavior >> allSlots [
 
 	^ self allInstVarNames withIndexCollect: [ :each :index |
-		(InstanceVariableSlot named: each name)
+		(InstanceVariableSlot named: each)
 			index: index;
 			yourself ]
 ]
@@ -86,6 +86,12 @@ RFiBehavior >> instSize [
 	(as opposed to indexed variables) of the receiver."
 	
 	^ self allInstVarNames size
+]
+
+{ #category : #polymorphism }
+RFiBehavior >> instanceVariables [
+
+	^ (self ficusClass layout instanceVariables collect: #name) asArray
 ]
 
 { #category : #printing }
@@ -262,7 +268,7 @@ RFiBehavior >> traitComposition [
 
 	| traitCompositionAST |
 	traitCompositionAST := RBParser parseExpression: self ficusClass traitComposition.
-	^ (traitCompositionAST acceptVisitor: (HzTraitCompositionAssembler on: self environment)) asTraitComposition
+	^ (traitCompositionAST acceptVisitor: (RFiTraitCompositionAssembler on: self environment)) asTraitComposition
 ]
 
 { #category : #traits }

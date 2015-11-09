@@ -313,12 +313,6 @@ RFiClass >> instVarNames [
 	^ self instanceVariables
 ]
 
-{ #category : #polymorphism }
-RFiClass >> instanceVariables [
-
-	^ ficusClass layout instanceVariables asArray
-]
-
 { #category : #testing }
 RFiClass >> isCompiledMethod [
 

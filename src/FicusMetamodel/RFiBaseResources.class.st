@@ -117,7 +117,7 @@ RFiBaseResources >> classLinkedList [
 	^ FiClass builder 
 		name: #LinkedList;
 		superclassName: #Collection;
-		layout: (FiFixedLayout withInstanceVariables: #(firstLink lastLink));
+		layout: (FiFixedLayout withInstanceVariableNames: #(firstLink lastLink));
 		category: self categoryNameCollection;
 		methods: (self methodsFor: { 
 'add: anObject
@@ -216,7 +216,7 @@ RFiBaseResources >> classValueLink [
 	^ FiClass builder 
 		name: #ValueLink;
 		superclassName: #Object;
-		layout: (FiFixedLayout withInstanceVariables: #(value nextLink));
+		layout: (FiFixedLayout withInstanceVariableNames: #(value nextLink));
 		category: self categoryNameCollection;
 		methods: (self methodsFor: { 
 'value: anObject
@@ -247,7 +247,7 @@ RFiBaseResources >> methodsFor: sourceCodes [
 { #category : #private }
 RFiBaseResources >> newFicusEnvironment [
 
-	^ { self packageKernel. self packageCollections. } asFiSet
+	^ FiEnvironment withAll: { self packageKernel. self packageCollections. }
 ]
 
 { #category : #resources }

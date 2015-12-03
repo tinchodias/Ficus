@@ -3,12 +3,10 @@ I represent a trait.
 "
 Class {
 	#name : #FiTrait,
-	#superclass : #FiFixedObject,
+	#superclass : #FiAbstractTrait,
 	#instVars : [
-		'methods',
 		'category',
 		'comment',
-		'traitComposition',
 		'name',
 		'classTrait'
 	],
@@ -47,40 +45,37 @@ FiTrait >> defaultStep [
 	^ name asSymbol
 ]
 
+{ #category : #printing }
+FiTrait >> definition [
+	"Answer a String that defines the receiver"
+
+	^ String
+		streamContents: [ :stream | 
+			stream
+				nextPutAll: 'Trait named: ';
+				store: name.
+			stream
+				cr;
+				tab;
+				nextPutAll: 'uses: ';
+				nextPutAll: traitComposition.
+			stream
+				cr;
+				tab;
+				nextPutAll: 'category: ';
+				store: category ]
+]
+
 { #category : #initialize }
 FiTrait >> initialize [
 
 	super initialize.
 
-	name := nil.
-	category := nil.
+	name := #NoName.
+	category := #NoCategory.
 	comment := ''.
+	classTrait := FiClassTrait new.
 	traitComposition := '{}'.
-	methods := FiSet new.
-]
-
-{ #category : #testing }
-FiTrait >> isFicusClass [
-
-	^ false
-]
-
-{ #category : #testing }
-FiTrait >> isFicusExtensionMethods [
-
-	^ false
-]
-
-{ #category : #testing }
-FiTrait >> isFicusTrait [
-
-	^ true
-]
-
-{ #category : #accessing }
-FiTrait >> methods [
-	
-	^ methods
 ]
 
 { #category : #accessing }
@@ -95,13 +90,7 @@ FiTrait >> printOn: aStream [
 	super printOn: aStream.
 
 	aStream nextPut: $(.
-	name printOn: aStream.
+	self name printOn: aStream.
 	aStream nextPut: $).
 	
-]
-
-{ #category : #accessing }
-FiTrait >> traitComposition [
-	
-	^ traitComposition
 ]

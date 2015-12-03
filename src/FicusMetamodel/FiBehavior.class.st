@@ -23,7 +23,7 @@ FiBehavior >> initialize [
 { #category : #printing }
 FiBehavior >> instanceVariablesString [
 
-	^ Character space join: layout instanceVariableNames
+	^ Character space join: (layout instanceVariableNames collect: #asString)
 ]
 
 { #category : #testing }

@@ -1,3 +1,6 @@
+"
+I represent an instance variable in a class. I have my name and my original index in the class.
+"
 Class {
 	#name : #FiInstanceVariable,
 	#superclass : #FiFixedObject,
@@ -8,14 +11,33 @@ Class {
 	#category : #'FicusMetamodel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+FiInstanceVariable >> defaultStep [
+
+	^ name asSymbol
+]
+
+{ #category : #accessing }
 FiInstanceVariable >> index [
 
 	^ index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiInstanceVariable >> name [
 
 	^ name
+]
+
+{ #category : #printing }
+FiInstanceVariable >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream nextPut: $(.
+	name printOn: aStream.
+	aStream nextPut: $@.
+	index printOn: aStream.
+	aStream nextPut: $).
+
 ]

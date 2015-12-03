@@ -38,7 +38,7 @@ RFiFragileBaseClassProblemResources0 >> classLog [
 { #category : #private }
 RFiFragileBaseClassProblemResources0 >> newFicusEnvironment [
 
-	^ { self packageKernel. self packageCollections. self packageLoggers. } asFiSet
+	^ FiEnvironment withAll: { self packageKernel. self packageCollections. self packageLoggers }
 ]
 
 { #category : #resources }

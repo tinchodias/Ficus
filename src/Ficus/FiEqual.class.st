@@ -16,11 +16,11 @@ FiEqual class >> value: aValue [
 ]
 
 { #category : #effects }
-FiEqual >> effectOn: aValue [ 
+FiEqual >> changeOn: aValue [ 
 
 	^ theValue = aValue
-		ifTrue: [ self effectNothing ]
-		ifFalse: [ aValue effectOfReplaceBy: theValue ]
+		ifTrue: [ self changeNothing ]
+		ifFalse: [ aValue changeOfReplaceBy: theValue ]
 ]
 
 { #category : #printing }

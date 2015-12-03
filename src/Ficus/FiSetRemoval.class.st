@@ -1,14 +1,14 @@
 Class {
 	#name : #FiSetRemoval,
-	#superclass : #FiSetEffect,
+	#superclass : #FiSetChange,
 	#instVars : [
 		'oldValue'
 	],
-	#category : #'Ficus-Model-Core-Effects'
+	#category : #'Ficus-Model-Core-Changes'
 }
 
 { #category : #converting }
-FiSetRemoval >> asSimpleEffectsAt: aBasePath [
+FiSetRemoval >> asSimpleChangesAt: aBasePath [
 	
 	^ { oldValue 
 			ficusDeepCollect: [ :shot :path :collectionFromChildren | 

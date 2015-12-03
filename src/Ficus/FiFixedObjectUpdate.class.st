@@ -1,24 +1,30 @@
 Class {
 	#name : #FiFixedObjectUpdate,
-	#superclass : #FiEffect,
+	#superclass : #FiChange,
 	#instVars : [
 		'slotName',
 		'newValue',
 		'oldValue',
-		'subEffect'
+		'child'
 	],
-	#category : #'Ficus-Model-Core-Effects'
+	#category : #'Ficus-Model-Core-Changes'
 }
 
 { #category : #converting }
-FiFixedObjectUpdate >> asSimpleEffectsAt: aBasePath [
+FiFixedObjectUpdate >> asSimpleChangesAt: aBasePath [
 
 	^ { FiUpdate builder 
 			path: aBasePath / slotName;
 			oldValue: oldValue; 
 			newValue: newValue; 
-			children: (subEffect asSimpleEffectsAt: aBasePath / slotName);
+			children: (child asSimpleChangesAt: aBasePath / slotName);
 			new } asFiSet
+]
+
+{ #category : #accessing }
+FiFixedObjectUpdate >> child [
+
+	^ child
 ]
 
 { #category : #accessing }
@@ -26,7 +32,7 @@ FiFixedObjectUpdate >> edit [
 
 	^ FiFixedObjectAccept 
 		slotName: slotName 
-		edit: subEffect edit
+		edit: child edit
 ]
 
 { #category : #accessing }
@@ -34,7 +40,7 @@ FiFixedObjectUpdate >> inverse [
 
 	^ FiFixedObjectAccept 
 		slotName: slotName 
-		edit: subEffect inverse
+		edit: child inverse
 ]
 
 { #category : #accessing }
@@ -64,10 +70,4 @@ FiFixedObjectUpdate >> printOn: aStream [
 FiFixedObjectUpdate >> slotName [
 
 	^ slotName
-]
-
-{ #category : #accessing }
-FiFixedObjectUpdate >> subEffect [
-
-	^ subEffect
 ]

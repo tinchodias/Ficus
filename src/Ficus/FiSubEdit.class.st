@@ -23,16 +23,16 @@ FiSubEdit class >> path: aPath equal: aValue [
 	^ self path: aPath edit: (FiEqual value: aValue)
 ]
 
+{ #category : #effects }
+FiSubEdit >> changeOn: aValue [
+	
+	^ aValue changeOfSubEdit: self
+]
+
 { #category : #accessing }
 FiSubEdit >> edit [
 
 	^ edit
-]
-
-{ #category : #effects }
-FiSubEdit >> effectOn: aValue [
-	
-	^ aValue effectOfSubEdit: self
 ]
 
 { #category : #accessing }

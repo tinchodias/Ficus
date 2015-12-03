@@ -38,14 +38,14 @@ FiEdit >> affects: aPath [
 	^ true
 ]
 
-{ #category : #effects }
-FiEdit >> effectNothing [
+{ #category : #changes }
+FiEdit >> changeNothing [
 
-	^ FiNoEffect new
+	^ FiNoChange new
 ]
 
-{ #category : #effects }
-FiEdit >> effectOn: anObject [ 
+{ #category : #changes }
+FiEdit >> changeOn: anObject [ 
 
 	^ self subclassResponsibility
 ]

@@ -15,16 +15,16 @@ FiCompositeEdit class >> withAll: aCollectionOfEdits [
 		new
 ]
 
+{ #category : #effects }
+FiCompositeEdit >> changeOn: aValue [
+	
+	^ aValue changeOfCompositeEdit: self
+]
+
 { #category : #accessing }
 FiCompositeEdit >> children [
 
 	^ children
-]
-
-{ #category : #effects }
-FiCompositeEdit >> effectOn: aValue [
-	
-	^ aValue effectOfCompositeEdit: self
 ]
 
 { #category : #printing }

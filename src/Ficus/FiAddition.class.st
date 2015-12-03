@@ -1,10 +1,10 @@
 Class {
 	#name : #FiAddition,
-	#superclass : #FiSimpleEffect,
+	#superclass : #FiSimpleChange,
 	#instVars : [
 		'newValue'
 	],
-	#category : #'Ficus-Model-Core-SimpleEffects'
+	#category : #'Ficus-Model-Core-SimpleChanges'
 }
 
 { #category : #testing }

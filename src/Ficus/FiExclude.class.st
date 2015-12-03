@@ -5,14 +5,14 @@ Class {
 }
 
 { #category : #effects }
-FiExclude >> effectOn: aValue [
+FiExclude >> changeOn: aValue [
 
-	^ aValue effectOfExclude: self
+	^ aValue changeOfExclude: self
 	
 ]
 
 { #category : #effects }
-FiExclude >> effectRemove: oldValue [
+FiExclude >> changeRemove: oldValue [
 
 	^ FiSetRemoval builder
 		oldValue: oldValue;

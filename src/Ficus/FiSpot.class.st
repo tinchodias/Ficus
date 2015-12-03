@@ -23,3 +23,9 @@ FiSpot >> asShortPrintStrings [
 
 	^ self subclassResponsibility
 ]
+
+{ #category : #resolving }
+FiSpot >> resolvedOn: anObject [
+
+	^ (self asPathOn: anObject) resolvedOn: anObject
+]

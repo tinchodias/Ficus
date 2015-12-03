@@ -10,6 +10,15 @@ Class {
 	#category : #'FicusRing-Core'
 }
 
+{ #category : #accessing }
+RFiClassTrait >> asMetamodelSpot [
+	
+	^ FiBehaviorSpot 
+		name: self theNonMetaClass name
+		isMetaSide: true
+		packageName: self package name
+]
+
 { #category : #polymorphism }
 RFiClassTrait >> definition [
 	^String streamContents: [:stream |
@@ -45,10 +54,10 @@ RFiClassTrait >> isMeta [
 	^ true
 ]
 
-{ #category : #printing }
-RFiClassTrait >> printOn: aStream [
-
-	aStream nextPutAll: instanceSide name, ' class trait'
+{ #category : #polymorphism }
+RFiClassTrait >> theMetaClass [
+	
+	^ self
 ]
 
 { #category : #polymorphism }

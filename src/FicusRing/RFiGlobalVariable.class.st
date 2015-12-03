@@ -21,15 +21,15 @@ RFiGlobalVariable class >> newWithEnvironment: anEnvironment name: aName [
 ]
 
 { #category : #accessing }
-RFiGlobalVariable >> environment [
+RFiGlobalVariable >> asMetamodelSpot [
 
-	^ environment
+	^ { #globalVariable. name } asFiPath
 ]
 
 { #category : #accessing }
-RFiGlobalVariable >> ficusPathFromEnvironment [
+RFiGlobalVariable >> environment [
 
-	^ { #globalVariable. name } asFiPath
+	^ environment
 ]
 
 { #category : #initialization }

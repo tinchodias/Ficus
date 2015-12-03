@@ -68,6 +68,16 @@ RFiMethod >> asActiveRingDefinition [
 
 ]
 
+{ #category : #accessing }
+RFiMethod >> asMetamodelSpot [
+
+	^ FiMethodSpot
+		selector: self selector
+		behaviorName: self methodClass theNonMetaClass name
+		isMetaSide: self methodClass isMeta
+		packageName: self package name
+]
+
 { #category : #printing }
 RFiMethod >> asString [
 	"Same as a CompiledMethod"
@@ -102,10 +112,10 @@ RFiMethod >> ficusMethod [
 	^ ficusMethod
 ]
 
-{ #category : #accessing }
-RFiMethod >> ficusPathFromEnvironment [
+{ #category : #polymorphism }
+RFiMethod >> hasLiteral: aLiteral [
 
-	^ self environment ficusPathToMethod: self
+	^ self allLiterals includes: aLiteral
 ]
 
 { #category : #comparing }
@@ -123,6 +133,13 @@ RFiMethod >> initializeWithMethodClass: aRFiClass ficusMethod: aFiMethod [
 
 	methodClass := aRFiClass.
 	ficusMethod := aFiMethod.
+]
+
+{ #category : #polymorphism }
+RFiMethod >> isAbstract [
+	"Answer true if I am abstract"
+	
+	^ self markerOrNil == CompiledMethod abstractMarker
 ]
 
 { #category : #polymorphism }
@@ -268,7 +285,7 @@ RFiMethod >> parseTree [
 
 	cachedAst ifNotNil: [ ^ cachedAst ].
 
-	^(RBExplicitVariableParser 
+	^(RBParser 
 		parseMethod: self sourceCode 
 		onError: [ :msg :pos | ^ nil ]) methodClass: self methodClass.
 

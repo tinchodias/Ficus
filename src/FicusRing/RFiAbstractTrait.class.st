@@ -3,39 +3,16 @@ I am an abstract superclass between Trait and ClassTrait in RingFicus. I am inte
 "
 Class {
 	#name : #RFiAbstractTrait,
-	#superclass : #RFiObject,
-	#instVars : [
-		'cachedMethods'
-	],
+	#superclass : #RFiBehavior,
+	#traits : 'TComposingDescription + TTransformationCompatibility',
+	#classTraits : 'TComposingDescription classTrait + TTransformationCompatibility classTrait',
 	#category : #'FicusRing-Core'
 }
-
-{ #category : #composition }
-RFiAbstractTrait >> + aTraitExpression [
-	^aTraitExpression addCompositionOnLeft: self asTraitComposition.
-]
-
-{ #category : #polymorphism }
-RFiAbstractTrait >> >> aSelector [
-	
-	^ self methods detect: [ :each | each selector = aSelector ]
-]
-
-{ #category : #adding }
-RFiAbstractTrait >> addCompositionOnLeft: aTraitComposition [
-	^aTraitComposition add: self.
-]
 
 { #category : #polymorphism }
 RFiAbstractTrait >> allClassVarNames [
 	
 	^ #()
-]
-
-{ #category : #polymorphism }
-RFiAbstractTrait >> allSelectors [
-
-	^ self methods collect: #selector
 ]
 
 { #category : #polymorphism }
@@ -50,12 +27,6 @@ RFiAbstractTrait >> allSlots [
 	^ #()
 ]
 
-{ #category : #polymorphism }
-RFiAbstractTrait >> asTraitComposition [
-	
-	^ TraitComposition with: self
-]
-
 { #category : #accessing }
 RFiAbstractTrait >> category [
 	
@@ -63,27 +34,21 @@ RFiAbstractTrait >> category [
 ]
 
 { #category : #polymorphism }
-RFiAbstractTrait >> collectMethodsFor: aSelector into: methodDescription [
-	
-	methodDescription addLocatedMethod: (self compiledMethodAt: aSelector)
-]
-
-{ #category : #polymorphism }
-RFiAbstractTrait >> compiledMethodAt: selector [ 
-	
-	^ self methods detect: [ :aMethod | aMethod selector = selector ]
-]
-
-{ #category : #polymorphism }
 RFiAbstractTrait >> ficusTrait [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #polymorphism }
 RFiAbstractTrait >> includesLocalSelector: aString [ 
 	
 	^ self localSelectors includes: aString
+]
+
+{ #category : #testing }
+RFiAbstractTrait >> isTrait [
+
+	^ true
 ]
 
 { #category : #methods }
@@ -99,8 +64,20 @@ RFiAbstractTrait >> localSelectors [
 	^ self localMethods collect: #selector
 ]
 
+{ #category : #lookup }
+RFiAbstractTrait >> lookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
+	"Answer the entity that declares a variable. Note this imitates the behavior of #bindingOf:"
+
+	^ self environment  
+		lookupVariableNamed: aName 
+		ifFound: presentBlockClosure 
+		ifNotFound: absentBlockClosure
+]
+
 { #category : #methods }
 RFiAbstractTrait >> methods [
+	
+	self flag: #todo. "extension methods normally override local methods"
 	
 	^ cachedMethods ifNil: [ | methods |
 		methods := Dictionary new.
@@ -113,50 +90,23 @@ RFiAbstractTrait >> methods [
 		cachedMethods := methods values ]
 ]
 
-{ #category : #private }
-RFiAbstractTrait >> ringMethodFor: ficusMethod [
-	"Not API"
-
-	^ RFiMethod
-		methodClass: self
-		ficusMethod: ficusMethod
-]
-
-{ #category : #polymorphism }
-RFiAbstractTrait >> trait [
+{ #category : #'as yet unclassified' }
+RFiAbstractTrait >> subclasses [
 	
-	^ self
+	^ #()
 ]
 
 { #category : #polymorphism }
-RFiAbstractTrait >> traitComposition [
+RFiAbstractTrait >> superclass [
+	"For compatibility with classes"
 
-	| traitCompositionAST |
-	traitCompositionAST := RBParser parseExpression: self ficusTrait traitComposition.
-	^ (traitCompositionAST acceptVisitor: (RFiTraitCompositionAssembler on: self environment)) asTraitComposition
+	^ nil
 ]
 
 { #category : #polymorphism }
 RFiAbstractTrait >> traitCompositionString [
 
-	^ self ficusTrait traitComposition.
-]
-
-{ #category : #polymorphism }
-RFiAbstractTrait >> traitProvidedMethods [
-	| providedMethods |
-	providedMethods := Set new.
-	self traitComposition transformations do: [ :t |
-		t allSelectors do: [ :selector | | methodDescription |
-			methodDescription := TraitMethodDescription selector: selector.
-			t collectMethodsFor: selector into: methodDescription.
-			methodDescription methodsDo: [ :m |
-				((providedMethods anySatisfy: [ :provided | provided selector = m selector ]) or: [ self includesLocalSelector: m selector])
-					ifFalse: [ providedMethods add: m ].
-			].
-		].
-	].
-	^providedMethods
+	^ self ficusTrait traitComposition
 ]
 
 { #category : #polymorphism }

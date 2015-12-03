@@ -1,19 +1,19 @@
 Extension { #name : #RBMultiEnvironment }
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBMultiEnvironment >> addClass: aClass into: aValue [ 
 	(environmentDictionaries at: aValue ifAbsentPut: [self newSelectorEnvironment]) 
 		addClass: aClass
 ]
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBMultiEnvironment >> addClass: aClass selector: aSymbol into: aValue [ 
 	(environmentDictionaries at: aValue ifAbsentPut: [self newSelectorEnvironment]) 
 		addClass: aClass
 		selector: aSymbol
 ]
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBMultiEnvironment >> asSelectorEnvironment [
 	| s |
 	s := RBSelectorEnvironment onEnvironment: environment.
@@ -31,20 +31,20 @@ RBMultiEnvironment >> newSelectorEnvironment [
 	^ RBSelectorEnvironment onEnvironment: environment rootEnvironment
 ]
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBMultiEnvironment >> removeClass: aClass into: aValue [ 
 	(environmentDictionaries at: aValue ifAbsent: [self newSelectorEnvironment]) 
 		removeClass: aClass
 ]
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBMultiEnvironment >> removeClass: aClass selector: aSelector into: aValue [ 
 	(environmentDictionaries at: aValue ifAbsentPut: [ self newSelectorEnvironment ]) 
 		removeClass: aClass
 		selector: aSelector
 ]
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBMultiEnvironment >> selectEnvironment: aValue [ 
 
 	environment := 

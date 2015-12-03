@@ -211,6 +211,12 @@ RFiClassTest >> testEnvironment [
 ]
 
 { #category : #tests }
+RFiClassTest >> testGetName [
+
+	self assert: resources ringClassA getName equals: 'A'
+]
+
+{ #category : #tests }
 RFiClassTest >> testHasAbstractMethods [
 
 	self deny: (resources ringEnvironment classNamed: #True) hasAbstractMethods.
@@ -251,6 +257,12 @@ RFiClassTest >> testInstanceVariables [
 ]
 
 { #category : #tests }
+RFiClassTest >> testIsAnonymous [
+
+	self deny: resources ringClassA isAnonymous
+]
+
+{ #category : #tests }
 RFiClassTest >> testIsBehavior [
 		
 	self assert: resources ringClassA isBehavior.
@@ -259,10 +271,22 @@ RFiClassTest >> testIsBehavior [
 ]
 
 { #category : #tests }
+RFiClassTest >> testIsClass [
+
+	self assert: resources ringClassA isClass
+]
+
+{ #category : #tests }
 RFiClassTest >> testIsObsolete [
 
 	self deny: resources ringClassA isObsolete.
 
+]
+
+{ #category : #tests }
+RFiClassTest >> testIsTrait [
+
+	self deny: resources ringClassA isTrait
 ]
 
 { #category : #tests }

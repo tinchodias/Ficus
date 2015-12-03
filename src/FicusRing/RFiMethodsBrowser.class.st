@@ -41,7 +41,7 @@ RFiMethodsBrowser >> compose [
 { #category : #private }
 RFiMethodsBrowser >> methodDefinitionIn: a [ 
 
-	a smalltalkCode
+	a pharoMethod
 		smalltalkClass: [ :method | method methodClass ];
 		display: [ :method | method sourceCode ].
 ]

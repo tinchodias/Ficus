@@ -45,6 +45,25 @@ RFiMethodTest >> testEnvironment [
 ]
 
 { #category : #tests }
+RFiMethodTest >> testHasLiteral [
+	
+	{	#string.
+		'a string'.
+		#C -> resources ringClassC } do: [ :each |
+			self assert: ((resources ringClassC >> #string) hasLiteral: each) ].
+		
+	self deny: ((resources ringClassC >> #string) hasLiteral: 'iuuuhuuuu')
+]
+
+{ #category : #tests }
+RFiMethodTest >> testIsAbstract [
+
+	self deny: ((resources ringEnvironment classNamed: #True) >> #ifTrue:) isAbstract.
+	self assert: ((resources ringEnvironment classNamed: #Boolean) >> #ifTrue:) isAbstract.
+
+]
+
+{ #category : #tests }
 RFiMethodTest >> testIsFromTrait [ 
 
 	self flag: #todo. "Support traits"

@@ -21,7 +21,7 @@ RFiMessageReceiverTest >> assertMessageReceiverOf: sourceCodeFragment equals: aM
 { #category : #private }
 RFiMessageReceiverTest >> astOf: sourceCode [
 
-	^ RBExplicitVariableParser parseMethod: sourceCode
+	^ RBParser parseMethod: sourceCode
 ]
 
 { #category : #private }

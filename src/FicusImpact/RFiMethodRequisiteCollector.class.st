@@ -24,7 +24,7 @@ RFiMethodRequisiteCollector >> requisitesFor: aRFiMethod [
 
 	dependencies := OrderedCollection new.
 	
-	aRFiMethod parseTree acceptVisitor: self.
+	aRFiMethod parseTree doSemanticAnalysis acceptVisitor: self.
 	
 	^ dependencies
 ]

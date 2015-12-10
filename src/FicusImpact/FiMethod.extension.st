@@ -3,7 +3,7 @@ Extension { #name : #FiMethod }
 { #category : #'*FicusImpact' }
 FiMethod >> messages [
 
-	^ (RBParser parseMethod: self sourceCode) sentMessages
+	^ (RBParser parseMethod: sourceCode) sentMessages
 ]
 
 { #category : #'*FicusImpact' }

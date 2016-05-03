@@ -27,7 +27,7 @@ RFiTraitCompositionAssembler >> environment: anObject [
 { #category : #visiting }
 RFiTraitCompositionAssembler >> visitArrayNode: aRBArrayNode [ 
 	
-	^ aRBArrayNode value statements collect: [ :stmt | stmt acceptVisitor: self ]
+	^ aRBArrayNode value statements collect: [ :stmt | stmt accept: self ]
 ]
 
 { #category : #visiting }
@@ -39,9 +39,11 @@ RFiTraitCompositionAssembler >> visitLiteralArrayNode: aRBArrayNode [
 { #category : #visiting }
 RFiTraitCompositionAssembler >> visitLiteralNode: aRBLiteralValueNode [ 
 	
-	^ environment 
-		at: aRBLiteralValueNode value 
-		ifAbsent: [ aRBLiteralValueNode value ]
+	(environment hasTraitNamed: aRBLiteralValueNode value) ifTrue: [
+		^(environment traitNamed: aRBLiteralValueNode value).
+	] ifFalse: [
+		^ aRBLiteralValueNode value
+	].
 ]
 
 { #category : #visiting }

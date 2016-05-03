@@ -3,7 +3,7 @@ I am polymorphic with Class, fetching everything needed from a Ficus environment
 "
 Class {
 	#name : #RFiClass,
-	#superclass : #RFiAbstractClass,
+	#superclass : #RFiBehavior,
 	#instVars : [
 		'environment',
 		'cachedSuperclass',
@@ -41,15 +41,6 @@ RFiClass >> allClassVarNames [
 	^ ficusClass hasNullSuperclass
 		ifTrue: [ self classVarNames ]
 		ifFalse: [ self superclass allClassVarNames, self classVarNames ].
-
-]
-
-{ #category : #polymorphism }
-RFiClass >> allInstVarNames [
-
-	^ ficusClass hasNullSuperclass
-		ifTrue: [ self instVarNames ]
-		ifFalse: [ self superclass allInstVarNames, self instVarNames ].
 
 ]
 
@@ -103,15 +94,6 @@ RFiClass >> allSuperclassesDo: aBlock [
 	ficusClass hasNullSuperclass ifFalse: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
-]
-
-{ #category : #accessing }
-RFiClass >> asMetamodelSpot [
-	
-	^ FiBehaviorSpot 
-		name: self name
-		isMetaSide: false
-		packageName: self package name
 ]
 
 { #category : #converting }
@@ -246,10 +228,10 @@ RFiClass >> ficusClass [
 	^ ficusClass
 ]
 
-{ #category : #polymorphism }
-RFiClass >> getName [
+{ #category : #accessing }
+RFiClass >> ficusPathFromEnvironment [
 	
-	^ self name
+	^ environment ficusPathToClass: self
 ]
 
 { #category : #polymorphism }
@@ -317,8 +299,15 @@ RFiClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFo
 ]
 
 { #category : #polymorphism }
-RFiClass >> isAnonymous [
-	^self getName isNil
+RFiClass >> instVarNames [
+
+	^ self instanceVariables
+]
+
+{ #category : #testing }
+RFiClass >> isCompiledMethod [
+
+	^ self ficusClass layout isCompiledMethodLayout
 ]
 
 { #category : #polymorphism }

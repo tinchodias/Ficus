@@ -21,13 +21,13 @@ RFiTrait class >> environment: aRFiEnvironment ficusTrait: aFiTrait [
 		yourself
 ]
 
-{ #category : #accessing }
-RFiTrait >> asMetamodelSpot [
-	
-	^ FiBehaviorSpot 
-		name: self name
-		isMetaSide: false
-		packageName: self package name
+{ #category : #polymorphism }
+RFiTrait >> classSide [
+
+	^ cachedClassTrait ifNil: [ 
+		cachedClassTrait := RFiClassTrait new
+			instanceSide: self;
+			yourself ]
 ]
 
 { #category : #polymorphism }
@@ -62,12 +62,6 @@ RFiTrait >> ficusTrait [
 	^ ficusTrait
 ]
 
-{ #category : #'as yet unclassified' }
-RFiTrait >> getName [
-	
-	^ self name
-]
-
 { #category : #'initialize - release' }
 RFiTrait >> initializeWithEnvironment: aRFiEnvironment ficusTrait: aFiTrait [ 
 	
@@ -89,13 +83,15 @@ RFiTrait >> name [
 	^ self ficusTrait name
 ]
 
-{ #category : #polymorphism }
-RFiTrait >> theMetaClass [
+{ #category : #printing }
+RFiTrait >> printOn: aStream [
 
-	^ cachedClassTrait ifNil: [ 
-		cachedClassTrait := RFiClassTrait new
-			instanceSide: self;
-			yourself ]
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		nextPutAll: self name;
+		nextPut: $)
 ]
 
 { #category : #polymorphism }

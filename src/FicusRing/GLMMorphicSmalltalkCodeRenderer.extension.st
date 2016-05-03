@@ -1,6 +1,6 @@
 Extension { #name : #GLMMorphicSmalltalkCodeRenderer }
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 GLMMorphicSmalltalkCodeRenderer >> textMorphForModel: aTextModel [
 	| morph  |
 	morph := GLMPluggableTextMorph new.

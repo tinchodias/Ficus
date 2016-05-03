@@ -35,6 +35,12 @@ FiMetaclass >> definition [
 			store: self instanceVariablesString]
 ]
 
+{ #category : #'as yet unclassified' }
+FiMetaclass >> hasNullSuperclass [
+
+	^ false
+]
+
 { #category : #initialization }
 FiMetaclass >> initialize [
 

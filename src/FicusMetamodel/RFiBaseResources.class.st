@@ -247,7 +247,7 @@ RFiBaseResources >> methodsFor: sourceCodes [
 { #category : #private }
 RFiBaseResources >> newFicusEnvironment [
 
-	^ FiEnvironment withAll: { self packageKernel. self packageCollections. }
+	^ { self packageKernel. self packageCollections. } asFiSet
 ]
 
 { #category : #resources }

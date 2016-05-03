@@ -28,6 +28,12 @@ FiBitsLayout >> isBytesLayout [
 	^ isWords not
 ]
 
+{ #category : #testing }
+FiBitsLayout >> isVariableLayout [
+
+	^ true
+]
+
 { #category : #accessing }
 FiBitsLayout >> isWords [
 

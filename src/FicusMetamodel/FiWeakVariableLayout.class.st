@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #testing }
+FiWeakVariableLayout >> isVariableLayout [
+
+	^ true
+]
+
+{ #category : #testing }
 FiWeakVariableLayout >> isWeakLayout [
 
 	^ true

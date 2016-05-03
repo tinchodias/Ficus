@@ -15,18 +15,6 @@ FiClassTrait class >> named: aString [
 		
 ]
 
-{ #category : #printing }
-FiClassTrait >> definition [
-
-	^ String
-		streamContents: [ :stream | 
-			stream
-				nextPutAll: 'ClassTrait';
-				crtab;
-				nextPutAll: 'uses: ';
-				nextPutAll: traitComposition ]
-]
-
 { #category : #testing }
 FiClassTrait >> isMeta [
 

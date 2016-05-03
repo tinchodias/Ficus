@@ -26,7 +26,7 @@ FiMetamodelSpot >> = other [
 		self packageName = other packageName ]
 ]
 
-{ #category : #printing }
+{ #category : #'as yet unclassified' }
 FiMetamodelSpot >> asShortPrintStrings [
 
 	^ { self shortPrintString }
@@ -55,7 +55,7 @@ FiMetamodelSpot >> printOn: aStream [
 		nextPut: $).
 ]
 
-{ #category : #printing }
+{ #category : #'as yet unclassified' }
 FiMetamodelSpot >> shortPrintString [
 
 	^ self subclassResponsability

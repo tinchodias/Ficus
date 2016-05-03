@@ -87,6 +87,12 @@ FiMonticelloDefinitionVisitor >> ficusFixedLayoutFor: aMCClassDefinition [
 ]
 
 { #category : #private }
+FiMonticelloDefinitionVisitor >> ficusImmediateLayoutFor: aMCClassDefinition [ 
+	
+	^ FiImmediateLayout new
+]
+
+{ #category : #private }
 FiMonticelloDefinitionVisitor >> ficusInstanceVariableSetFor: aCollection [
 
 	^ ((aCollection collectWithIndex: [ :each :index |
@@ -107,6 +113,7 @@ FiMonticelloDefinitionVisitor >> ficusLayoutFor: aMCClassDefinition [
 	type = #bytes ifTrue: [^ self ficusBytesLayoutFor: aMCClassDefinition ].
 	type = #weak ifTrue: [^ self ficusWeakLayoutFor: aMCClassDefinition ].
 	type = #compiledMethod ifTrue: [^ self ficusCompiledMethodLayoutFor: aMCClassDefinition ].
+	type = #immediate ifTrue: [^ self ficusImmediateLayoutFor: aMCClassDefinition ].
 	Error signal: ('Unrecognized class type: {1}' format: {type})
 ]
 

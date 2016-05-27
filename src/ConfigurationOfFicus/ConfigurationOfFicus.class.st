@@ -367,7 +367,7 @@ ConfigurationOfFicus >> version031: spec [
 			package: #Ficus with: 'Ficus-GuillermoPolito.185';
 			package: #FicusExtras with: #FicusExtras;
 			package: #FicusMetamodel with: 'FicusMetamodel-GuillermoPolito.18';
-			package: #FicusRing with: 'FicusRing-GuillermoPolito.123';
+			package: #FicusRing with: 'FicusRing-GuillermoPolito.124';
 			package: #FicusImpact with: #FicusImpact;
 			package: #FicusStore with: #FicusStore;
 			package: #FicusMonticello with: 'FicusMonticello-GuillermoPolito.65';

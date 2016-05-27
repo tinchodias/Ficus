@@ -134,6 +134,12 @@ RFiMetaclass >> name [
 ]
 
 { #category : #polymorphism }
+RFiMetaclass >> sharedPools [
+	
+	^ theNonMetaClass sharedPools
+]
+
+{ #category : #polymorphism }
 RFiMetaclass >> soleInstance [
 	
 	^ theNonMetaClass

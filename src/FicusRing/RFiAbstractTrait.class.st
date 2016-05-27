@@ -86,6 +86,12 @@ RFiAbstractTrait >> includesLocalSelector: aString [
 	^ self localSelectors includes: aString
 ]
 
+{ #category : #testing }
+RFiAbstractTrait >> isTrait [
+
+	^ true
+]
+
 { #category : #methods }
 RFiAbstractTrait >> localMethods [
 	

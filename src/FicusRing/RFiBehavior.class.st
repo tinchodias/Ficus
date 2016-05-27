@@ -146,6 +146,12 @@ RFiBehavior >> isObsolete [
 ]
 
 { #category : #testing }
+RFiBehavior >> isTrait [
+
+	^ false
+]
+
+{ #category : #testing }
 RFiBehavior >> isVariable [
 	"Answer whether the receiver has indexable variables."
 

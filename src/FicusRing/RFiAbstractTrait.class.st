@@ -62,6 +62,13 @@ RFiAbstractTrait >> category [
 	^ self ficusTrait category
 ]
 
+{ #category : #'as yet unclassified' }
+RFiAbstractTrait >> classVarNames [
+	"Answer a collection of the receiver's class variable names."
+
+	^#()
+]
+
 { #category : #polymorphism }
 RFiAbstractTrait >> collectMethodsFor: aSelector into: methodDescription [
 	
@@ -126,6 +133,18 @@ RFiAbstractTrait >> ringMethodFor: ficusMethod [
 	^ RFiMethod
 		methodClass: self
 		ficusMethod: ficusMethod
+]
+
+{ #category : #'as yet unclassified' }
+RFiAbstractTrait >> sharedPools [
+
+	^#()
+]
+
+{ #category : #'as yet unclassified' }
+RFiAbstractTrait >> superclass [
+	
+	^ nil
 ]
 
 { #category : #polymorphism }

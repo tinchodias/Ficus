@@ -43,6 +43,12 @@ RFiMetaclass >> bindingOf: varName [
 	^ self theNonMetaClass classBindingOf: varName
 ]
 
+{ #category : #accessing }
+RFiMetaclass >> classVarNames [
+
+	^ self theNonMetaClass classVarNames
+]
+
 { #category : #polymorphism }
 RFiMetaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."

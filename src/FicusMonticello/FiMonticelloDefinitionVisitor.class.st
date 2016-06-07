@@ -69,6 +69,12 @@ FiMonticelloDefinitionVisitor >> ficusCompiledMethodLayoutFor: aMCClassDefinitio
 ]
 
 { #category : #private }
+FiMonticelloDefinitionVisitor >> ficusEphemeronLayoutFor: aMCClassDefinition [ 
+	
+	^ FiEphemeronLayout new
+]
+
+{ #category : #private }
 FiMonticelloDefinitionVisitor >> ficusExtensionMethodsForHostName: hostName methods: someMCMethodDefinitions isMetaSide: aBoolean [
 	
 	^ FiExtensionMethods builder
@@ -114,6 +120,7 @@ FiMonticelloDefinitionVisitor >> ficusLayoutFor: aMCClassDefinition [
 	type = #weak ifTrue: [^ self ficusWeakLayoutFor: aMCClassDefinition ].
 	type = #compiledMethod ifTrue: [^ self ficusCompiledMethodLayoutFor: aMCClassDefinition ].
 	type = #immediate ifTrue: [^ self ficusImmediateLayoutFor: aMCClassDefinition ].
+	type = #ephemeron ifTrue: [ ^ self ficusEphemeronLayoutFor: aMCClassDefinition ].
 	Error signal: ('Unrecognized class type: {1}' format: {type})
 ]
 

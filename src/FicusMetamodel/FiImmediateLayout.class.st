@@ -1,5 +1,5 @@
 Class {
 	#name : #FiImmediateLayout,
 	#superclass : #FiLayout,
-	#category : #FicusMetamodel
+	#category : #'FicusMetamodel-Core'
 }

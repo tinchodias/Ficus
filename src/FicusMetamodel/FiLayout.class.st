@@ -38,6 +38,12 @@ FiLayout >> isCompiledMethodLayout [
 ]
 
 { #category : #testing }
+FiLayout >> isEphemeronLayout [
+	
+	^ false
+]
+
+{ #category : #testing }
 FiLayout >> isFixedLayout [
 	
 	^ false

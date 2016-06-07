@@ -140,6 +140,13 @@ RFiBehavior >> isBytes [
 ]
 
 { #category : #testing }
+RFiBehavior >> isEphemeron [
+	"Answer whether the receiver has indexable variables."
+
+	^ self ficusClass layout isEphemeronLayout
+]
+
+{ #category : #testing }
 RFiBehavior >> isObsolete [
 
 	^ false

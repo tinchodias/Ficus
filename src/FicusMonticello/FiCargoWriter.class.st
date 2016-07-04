@@ -21,12 +21,3 @@ FiCargoWriter >> ficusEnvironmentFromMcVersions: aListOfMcVersion [
 	
 	^ environment values asFiSet asRFiEnvironment
 ]
-
-{ #category : #writing }
-FiCargoWriter >> written: aCGOPackageVersionReference [
-	| mcVersions |
-	mcVersions :=  Cargo new 
-		package: aCGOPackageVersionReference;
-		mcVersions.
-	^ self ficusEnvironmentFromMcVersions: mcVersions
-]

@@ -434,6 +434,33 @@ ConfigurationOfFicus >> version033: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfFicus >> version034: spec [
+	<version: '0.3.4' imports: #('0.3-baseline')>
+	spec
+		for: #common
+		do: [ spec blessing: #stable.
+			spec description: 'version 0.3.3 + Cargo writer'.
+			spec author: 'ChristopheDemarey'.
+			spec timestamp: '2016-07-07T15:18:42.140642+02:00'.
+			spec
+				project: #Epicea with: '4.8-baseline';
+				project: #Yrupe with: '0.1-baseline';
+				project: #PharoVersionsMiner with: '0.1-baseline'.
+			spec
+				package: #Hiedra with: #Hiedra;
+				package: #Ficus with: 'Ficus-GuillermoPolito.185';
+				package: #FicusExtras with: #FicusExtras;
+				package: #FicusMetamodel with: 'FicusMetamodel-GuillermoPolito.19';
+				package: #FicusRing with: 'FicusRing-GuillermoPolito.126';
+				package: #FicusImpact with: #FicusImpact;
+				package: #FicusStore with: #FicusStore;
+				package: #FicusMonticello with: 'FicusMonticello-ChristopheDemarey.67';
+				package: #FicusMonticelloStore with: #FicusMonticelloStore;
+				package: #FicusMonticelloYrupe with: #FicusMonticelloYrupe;
+				package: #FicusEpicea with: #FicusEpicea ]
+]
+
+{ #category : #versions }
 ConfigurationOfFicus >> version03: spec [
 	<version: '0.3' imports: #('0.3-baseline' )>
 

@@ -159,8 +159,8 @@ FiClass >> name [
 
 { #category : #accessing }
 FiClass >> name: a [
-	
-	self
+	name := a.
+
 ]
 
 { #category : #printing }

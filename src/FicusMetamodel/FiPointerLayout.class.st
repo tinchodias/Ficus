@@ -10,6 +10,29 @@ Class {
 	#category : #'FicusMetamodel-Core'
 }
 
+{ #category : #'instance creation' }
+FiPointerLayout class >> withInstanceVariableNames: names [
+
+	| ficusInstanceVariables |
+	ficusInstanceVariables := names collectWithIndex: [ :each :index |
+		FiInstanceVariable builder
+				index: index;
+				name: each;
+				new ].
+
+	^ FiFixedLayout builder
+		instanceVariables: ficusInstanceVariables asFiSet;
+		new
+]
+
+{ #category : #'instance creation' }
+FiPointerLayout class >> withInstanceVariables: names [
+
+	^ FiFixedLayout builder
+		instanceVariables: names asFiSet;
+		new
+]
+
 { #category : #initialization }
 FiPointerLayout >> initialize [
 

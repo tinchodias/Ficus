@@ -6,19 +6,69 @@ Class {
 	#superclass : #FiFixedObject,
 	#instVars : [
 		'index',
-		'name'
+		'name',
+		'slotType',
+		'slotDefinition'
 	],
 	#category : #'FicusMetamodel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+FiInstanceVariable >> defaultStep [
+
+	^ name asSymbol
+]
+
+{ #category : #accessing }
 FiInstanceVariable >> index [
 
 	^ index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FiInstanceVariable >> name [
 
 	^ name
+]
+
+{ #category : #printing }
+FiInstanceVariable >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream nextPut: $(.
+	name printOn: aStream.
+	aStream nextPut: $@.
+	index printOn: aStream.
+	aStream nextPut: $).
+
+]
+
+{ #category : #accessing }
+FiInstanceVariable >> slotDefinition [
+	^ slotDefinition
+]
+
+{ #category : #accessing }
+FiInstanceVariable >> slotDefinition: def [
+	(self usesSpecialSlots: def)
+		ifTrue: [ | slot |
+			slot := Smalltalk compiler evaluate: def.
+			name := slot name.
+			slotType := slot class name.
+			slotDefinition := def ]
+		ifFalse: [ name := def asSymbol.
+			slotType := #InstanceVariableSlot.
+			slotDefinition := def ]
+]
+
+{ #category : #accessing }
+FiInstanceVariable >> slotType [
+	^ slotType
+]
+
+{ #category : #accessing }
+FiInstanceVariable >> usesSpecialSlots: def [
+	^ (def name beginsWith:'#') or: [ def name includes: Character space ]
+	
 ]

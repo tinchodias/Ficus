@@ -38,7 +38,7 @@ FiEnvironment >> packages [
 	^ packages
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #paths }
 FiEnvironment >> pathOfBehaviorSpot: aFiBehaviorSpot [ 
 
 	| path |
@@ -52,7 +52,7 @@ FiEnvironment >> pathOfBehaviorSpot: aFiBehaviorSpot [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #paths }
 FiEnvironment >> pathOfMethodSpot: aFiMethodSpot [ 
 
 	| path |
@@ -68,10 +68,22 @@ FiEnvironment >> pathOfMethodSpot: aFiMethodSpot [
 	^ path / aFiMethodSpot selector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #paths }
 FiEnvironment >> pathOfPackageSpot: aFiPackageSpot [ 
 
 	^ FiPath root / #packages / aFiPackageSpot packageName
+]
+
+{ #category : #printing }
+FiEnvironment >> printOn: aStream [
+
+	super printOn: aStream.
+
+	aStream 
+		nextPut: $(;
+		print: packages size;
+		nextPut: $).
+	
 ]
 
 { #category : #results }

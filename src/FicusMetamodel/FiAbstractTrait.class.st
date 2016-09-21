@@ -11,7 +11,13 @@ Class {
 	#category : #'FicusMetamodel-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
+FiAbstractTrait >> definition [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
 FiAbstractTrait >> initialize [
 
 	super initialize.

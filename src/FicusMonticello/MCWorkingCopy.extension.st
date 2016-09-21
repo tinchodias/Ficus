@@ -11,7 +11,6 @@ MCWorkingCopy >> ficusDifferenceRelativeToRepository: aRepository [
 	shotB := self ficusPackageWith: snapshotB.	
 
 	^ shotB differenceFrom: shotA.
-
 ]
 
 { #category : #'*FicusMonticello' }

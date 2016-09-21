@@ -121,14 +121,17 @@ FiFixedObject >> gtInspectorItemsIn: composite [
 
 { #category : #initialization }
 FiFixedObject >> initializeFromStepsAndValues: aDictionary [
-
+	| selector |
 	self initialize.
-	
-	aDictionary keysAndValuesDo: [ :slotName :value |
-		[ self instVarNamed: slotName put: value ]
-			on: Error 
-			do: [ :e | 
-				self error: slotName asString, ' not found in ', self asString ] ]
+	aDictionary
+		keysAndValuesDo: [ :slotName :value | 
+			selector := (slotName , ':') asSymbol.
+			
+			(self respondsTo: selector)
+				ifTrue: [ self perform: selector with: value ]
+				ifFalse: [ [ self instVarNamed: slotName put: value ]
+						on: Error
+						do: [ :e | self error: slotName asString , ' not found in ' , self asString ] ] ]
 ]
 
 { #category : #results }

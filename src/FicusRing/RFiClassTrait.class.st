@@ -46,6 +46,12 @@ RFiClassTrait >> isMeta [
 ]
 
 { #category : #polymorphism }
+RFiClassTrait >> name [
+
+	^ instanceSide name, ' classTrait'
+]
+
+{ #category : #polymorphism }
 RFiClassTrait >> theNonMetaClass [
 	
 	^ instanceSide

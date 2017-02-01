@@ -154,6 +154,53 @@ ConfigurationOfFicus >> baseline01: spec [
 ]
 
 { #category : #baselines }
+ConfigurationOfFicus >> baseline036: spec [
+	<version: '0.3.6-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main/'.
+		spec project: #Yrupe with: [
+			spec
+				className: #ConfigurationOfYrupe;
+				versionString: #'bleedingEdge';
+				repository: 'http://smalltalkhub.com/mc/MartinDias/Yrupe/main/' ].
+		spec project: #PharoVersionsMiner with: [
+			spec
+				className: #ConfigurationOfPharoMiner;
+				versionString: #'bleedingEdge';
+				repository: 'http://smalltalkhub.com/mc/MartinDias/PharoMiner/main/';
+				loads: #(core) ].
+		spec
+			package: #Hiedra with: [ 
+				spec repository: 'http://smalltalkhub.com/mc/MartinDias/Epicea/main/' ];
+			package: #Ficus;
+			package: #FicusExtras with: [
+				spec requires: #(#Ficus) ];
+			package: #FicusMetamodel with: [
+				spec requires: #(#Ficus) ];
+			package: #FicusRing with: [
+				spec requires: #(#FicusMetamodel) ];
+			package: #FicusImpact with: [
+				spec requires: #(#FicusRing #FicusStore) ];
+			package: #FicusStore with: [
+				spec requires: #(#FicusMetamodel #Hiedra) ];
+			package: #FicusMonticello with: [
+				spec requires: #(#FicusMetamodel) ];
+			package: #FicusMonticelloStore with: [
+				spec requires: #(#FicusMonticello #FicusStore) ];
+			package: #FicusMonticelloYrupe with: [
+				spec requires: #(#FicusMonticello #Yrupe #FicusExtras #PharoVersionsMiner) ]; 
+					"FicusExtras: only because of FiDictionary, which is used in tests."
+			package: #FicusEpicea with: [
+				spec requires: #(#FicusMetamodel #FicusMonticelloStore) ].
+		spec
+			group: 'default' with: #('Ficus' 'FicusEpicea' 'FicusStore' 'FicusImpact' 'FicusMonticelloYrupe');
+			group: 'mini' with: #('FicusRing' 'FicusMonticello') ].
+
+]
+
+{ #category : #baselines }
 ConfigurationOfFicus >> baseline03: spec [
 	<version: '0.3-baseline'>
 
@@ -489,11 +536,11 @@ ConfigurationOfFicus >> version035: spec [
 
 { #category : #versions }
 ConfigurationOfFicus >> version036: spec [
-	<version: '0.3.6' imports: #('0.3-baseline')>
+	<version: '0.3.6' imports: #('0.3.6-baseline')>
 	spec
 		for: #common
 		do: [ spec blessing: #stable.
-			spec description: 'version 0.3.5'.
+			spec description: 'version 0.3.6'.
 			spec author: 'Guillermo Polito'.
 			spec timestamp: '2016-12-08T14:46:35.710095+01:00'.
 			spec

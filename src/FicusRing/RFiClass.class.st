@@ -173,9 +173,9 @@ RFiClass >> classPool [
 	^ ficusClass classPool 
 		inject: Dictionary new
 		into: [ :dictionary :each |
-			dictionary 
-				at: each put: nil;
-				yourself ]
+			(dictionary at: each put: nil).
+			(dictionary associationAt: each) primitiveChangeClassTo: ClassVariable new.
+			dictionary ]
 ]
 
 { #category : #polymorphism }

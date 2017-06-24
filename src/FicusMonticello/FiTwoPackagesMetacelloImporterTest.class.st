@@ -30,7 +30,7 @@ FiTwoPackagesMetacelloImporterTest >> testLoadedClassesHaveExtensionMethods [
 	result := self import.
 
 	"the data of the extension method is there"
-	self assert: (result ficusPackages anyOne extensionMethods anySatisfy: [ :each | each hostName =  #Fraction and: [ each isMetaSide ] ]).
+	self assert: ((result ficusPackages asArray flatCollect: #extensionMethods) anySatisfy: [ :each | each hostName =  #Fraction and: [ each isMetaSide ] ]).
 	
 	"Ring ficus will normalize and give us only the closure"
 	self assert: result extensionMethodsByBehaviorName isEmpty.

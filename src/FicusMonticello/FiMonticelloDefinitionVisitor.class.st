@@ -71,9 +71,7 @@ FiMonticelloDefinitionVisitor >> ficusCompiledMethodLayoutFor: aMCClassDefinitio
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusEphemeronLayoutFor: aMCClassDefinition [ 
 	
-	^ FiEphemeronLayout builder
-		instanceVariables: (self ficusInstanceVariableSetFor: aMCClassDefinition instVarNames);
-		new
+	^ FiEphemeronLayout new
 ]
 
 { #category : #private }
@@ -102,11 +100,10 @@ FiMonticelloDefinitionVisitor >> ficusImmediateLayoutFor: aMCClassDefinition [
 
 { #category : #private }
 FiMonticelloDefinitionVisitor >> ficusInstanceVariableSetFor: aCollection [
-
 	^ ((aCollection collectWithIndex: [ :each :index |
 			FiInstanceVariable builder
 				index: index;
-				name: each asSymbol;
+				slotDefinition: each;
 				new ]) as: Set) asFiSet
 ]
 

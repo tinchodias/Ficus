@@ -47,6 +47,15 @@ RFiMetaclassTest >> testHasAbstractMethods [
 ]
 
 { #category : #tests }
+RFiMetaclassTest >> testInstVarNames [
+		
+	self 
+		assert: resources ringClassA theMetaClass instVarNames
+		equals: #(a3)
+
+]
+
+{ #category : #tests }
 RFiMetaclassTest >> testInstanceVariables [
 
 	self 

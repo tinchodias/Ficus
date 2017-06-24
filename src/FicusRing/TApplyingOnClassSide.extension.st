@@ -1,6 +1,6 @@
 Extension { #name : #TApplyingOnClassSide }
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 TApplyingOnClassSide >> obsoleteSubclasses [
 	"Answer the receiver's subclasses."
 	self theNonMetaClass == nil ifTrue:[^#()].
@@ -12,7 +12,7 @@ TApplyingOnClassSide >> obsoleteSubclasses [
 		[:m | Compiler evaluate: 'subclasses:=nil' for: m logged: false]"
 ]
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 TApplyingOnClassSide >> subclasses [
 	"Answer the receiver's subclasses."
 	self theNonMetaClass == nil ifTrue:[^#()].
@@ -24,7 +24,7 @@ TApplyingOnClassSide >> subclasses [
 		[:m | Compiler evaluate: 'subclasses:=nil' for: m logged: false]"
 ]
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 TApplyingOnClassSide >> subclassesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's immediate subclasses."
 	self theNonMetaClass subclassesDo:[:aSubclass|

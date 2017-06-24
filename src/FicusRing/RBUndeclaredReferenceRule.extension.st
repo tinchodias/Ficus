@@ -1,6 +1,6 @@
 Extension { #name : #RBUndeclaredReferenceRule }
 
-{ #category : #'*FicusRing' }
+{ #category : #'*FicusRing-override' }
 RBUndeclaredReferenceRule >> checkMethod: aMethod [ 
 
 	aMethod ast allChildren 

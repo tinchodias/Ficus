@@ -47,8 +47,8 @@ RFiMethodRequisiteCollector >> visitMessageNode: aMessageNode [
 { #category : #visitor }
 RFiMethodRequisiteCollector >> visitVariableNode: aVariableNode [
 
-	"This means that it is not any an argument, nor temporaty, nor self, nor super, etc."
-	aVariableNode class == RBVariableNode ifTrue: [
+	"This means that it is not any an argument, nor temporary, nor self, nor super, etc."
+	(aVariableNode isInstance or: aVariableNode isGlobal) ifTrue: [
 		dependencies add: 
 			(RFiVariableAccess builder
 				variableName: aVariableNode name;

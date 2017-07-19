@@ -69,6 +69,6 @@ FiInstanceVariable >> slotType [
 
 { #category : #accessing }
 FiInstanceVariable >> usesSpecialSlots: def [
-	^ (def name beginsWith:'#') or: [ def name includes: Character space ]
+	^ (def beginsWith:'#') or: [ def includes: Character space ]
 	
 ]

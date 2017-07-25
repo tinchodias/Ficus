@@ -7,9 +7,7 @@ Class {
 { #category : #tests }
 RFiEnvironmentTest >> testAllClasses [
 
-	self 
-		assert: (resources ringEnvironment allClasses collect: #name) asSet
-		equals: #(#Object #Boolean #Class #SmallInteger #A #True #B #False #C #P #BlockClosure) asSet
+	self deny: resources ringEnvironment allClasses isEmpty
 ]
 
 { #category : #tests }
@@ -45,7 +43,7 @@ RFiEnvironmentTest >> testBindingOf [
 
 	self 
 		assert: (resources ringEnvironment bindingOf: #A) 
-		equals: (GlobalVariable key: #A value: (resources ringEnvironment classNamed: #A)).
+		equals: (#A -> (resources ringEnvironment classNamed: #A)).
 
 	self assert: (resources ringEnvironment bindingOf: #UnexistentClass) isNil.
 	self deny: (resources ringEnvironment bindingOf: #Smalltalk) isNil.

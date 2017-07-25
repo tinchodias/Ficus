@@ -12,24 +12,17 @@ Class {
 		'globalByName',
 		'cachedImplementorsBySelector',
 		'cachedPackages',
-		'allTraits',
-		'ficusEnvironment'
+		'allTraits'
 	],
 	#category : #'FicusRing-Core'
 }
 
 { #category : #'instance creation' }
-RFiEnvironment class >> ficusEnvironment: aFiEnvironment [
-
-	^ self basicNew
-		initializeWithFicusEnvironment: aFiEnvironment;
-		yourself
-]
-
-{ #category : #'instance creation' }
 RFiEnvironment class >> ficusPackages: aFiSet [
 
-	^ self ficusEnvironment: (FiEnvironment withAll: aFiSet)
+	^ self basicNew
+		initializeWithFicusPackages: aFiSet;
+		yourself
 ]
 
 { #category : #comparing }
@@ -46,7 +39,7 @@ RFiEnvironment >> allClasses [
 
 	^ allClasses ifNil: [ 
 		allClasses := self packages 
-			flatCollect: [ :package | package definedClasses reject: #isTrait ] ]
+			flatCollect: [ :package | package definedClasses ] ]
 ]
 
 { #category : #polymorphism }
@@ -95,7 +88,7 @@ RFiEnvironment >> associationAt: key ifAbsent: aBlock [
 	^ (self 
 		at: key 
 		ifAbsent: [ ^ aBlock value ])
-		in: [ :found | GlobalVariable key: key value: found ]
+		in: [ :found | key -> found ]
 ]
 
 { #category : #polymorphism }
@@ -116,15 +109,6 @@ RFiEnvironment >> at: aName ifPresent: presentBlock ifAbsent: absentBlock [
 		ifAbsent: absentBlock
 ]
 
-{ #category : #polymorphism }
-RFiEnvironment >> bindingOf: aName [
-	
-	^ self 
-		at: aName
-		ifPresent: [ :value | GlobalVariable key: aName value: value ]
-		ifAbsent: [ nil ]
-]
-
 { #category : #ui }
 RFiEnvironment >> browse [
 
@@ -138,12 +122,6 @@ RFiEnvironment >> classNamed: aName [
 	^ self at: aName ifAbsent: [ NotFound signalFor: aName in: self ]
 ]
 
-{ #category : #polymorphism }
-RFiEnvironment >> environment [
-	
-	^ self
-]
-
 { #category : #lookup }
 RFiEnvironment >> extensionMethodsByBehaviorName [
 	
@@ -152,7 +130,7 @@ RFiEnvironment >> extensionMethodsByBehaviorName [
 	extensionMethodsByBehaviorName ifNil: [
 		extensionMethodsByBehaviorName := Dictionary new.
 
-		self ficusPackages do: [ :aPackageShot |
+		ficusPackages do: [ :aPackageShot |
 			aPackageShot extensionMethods do: [ :anExtensionMethodsShot |
 				anExtensionMethodsShot methods collect: [ :aMethodShot | 
 					self 
@@ -183,15 +161,57 @@ RFiEnvironment >> extensionMethodsFor: aBehavior [
 ]
 
 { #category : #accessing }
-RFiEnvironment >> ficusEnvironment [
+RFiEnvironment >> ficusPackages [
 	
-	^ ficusEnvironment
+	^ ficusPackages
 ]
 
 { #category : #accessing }
-RFiEnvironment >> ficusPackages [
+RFiEnvironment >> ficusPathToClass: aRFiClass [ 
 	
-	^ ficusEnvironment packages
+	^ {aRFiClass package name. #contents. aRFiClass name} asFiPath
+]
+
+{ #category : #accessing }
+RFiEnvironment >> ficusPathToClassVariable: aRFiClassVariable [ 
+	
+	^ aRFiClassVariable definingClass ficusPathFromEnvironment / 
+		#classPool / aRFiClassVariable name
+]
+
+{ #category : #accessing }
+RFiEnvironment >> ficusPathToInstanceVariable: aRFiInstanceVariable [ 
+
+	^ aRFiInstanceVariable definingClass ficusPathFromEnvironment / 
+		#layout / #instanceVariables / aRFiInstanceVariable name
+]
+
+{ #category : #accessing }
+RFiEnvironment >> ficusPathToMethod: aRFiMethod [ 
+
+	^ aRFiMethod origin ficusPathFromEnvironment / #methods / aRFiMethod selector
+]
+
+{ #category : #accessing }
+RFiEnvironment >> ficusRGObjectFromPath: aFiPath [
+	
+	| steps |
+	self flag: #todo. "FIX..."
+	
+	steps := aFiPath steps.
+	
+	steps size < 4 ifTrue: [ self notYetImplemented  ].
+	
+	steps fourth = #methods ifTrue: [ 
+		^ (self classNamed: steps third) >> steps fifth ].
+
+	steps fourth = #layout ifTrue: [ 
+		^ self classNamed: steps third ].
+
+	steps fourth = #metaclass ifTrue: [ 
+		^ (self classNamed: steps third) theMetaClass ].
+	
+	self notYetImplemented 
 ]
 
 { #category : #accessing }
@@ -293,17 +313,17 @@ RFiEnvironment >> includesClassNamed: aName [
 ]
 
 { #category : #initialization }
-RFiEnvironment >> initializeWithFicusEnvironment: anEnvironment [
+RFiEnvironment >> initializeWithFicusPackages: aFiSet [
 
 	self initialize.
 	
-	ficusEnvironment := anEnvironment
+	ficusPackages := aFiSet.
 ]
 
 { #category : #testing }
 RFiEnvironment >> isEmpty [
 	
-	^ self ficusPackages isEmpty
+	^ ficusPackages isEmpty
 ]
 
 { #category : #accessing }
@@ -384,14 +404,7 @@ RFiEnvironment >> packageOfClassNamed: aName [
 RFiEnvironment >> packages [
 	
 	^ cachedPackages ifNil: [
-		cachedPackages := self ficusPackages collect: [ :each | self ringPackageFor: each ] ]
-]
-
-{ #category : #accessing }
-RFiEnvironment >> resetCaches [
-
-	#(allClasses packageByClassName extensionMethodsByBehaviorName globalByName cachedImplementorsBySelector cachedPackages allTraits) 
-	do: [ :each | self instVarNamed: each put: nil ]
+		cachedPackages := ficusPackages collect: [ :each | self ringPackageFor: each ] ]
 ]
 
 { #category : #private }

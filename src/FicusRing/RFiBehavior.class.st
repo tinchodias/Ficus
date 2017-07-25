@@ -4,14 +4,23 @@ I am polymorphic with Behavior/ClassDescription.
 Class {
 	#name : #RFiBehavior,
 	#superclass : #RFiObject,
-	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:. #zapOrganization. #zapAllMethods})',
+	#traits : 'TClassDescription + (TBehavior - {#addSelector:withMethod:notifying:. #addSelectorSilently:withMethod:. #allSharedPools. #applyChangesOfNewTraitCompositionReplacing:. #compile:notifying:. #instVarNames. #isMeta. #notifyUsersOfChangedSelectors:. #obsolete. #subclassesDo:})',
 	#classTraits : 'TClassDescription classTrait + TBehavior classTrait',
 	#instVars : [
 		'cachedMethods',
-		'basicLocalSelectors'
+		'cachedInstanceVariables'
 	],
 	#category : #'FicusRing-Core'
 }
+
+{ #category : #polymorphism }
+RFiBehavior >> allInstVarNames [
+
+	^ self ficusClass hasNullSuperclass
+		ifTrue: [ self instVarNames ]
+		ifFalse: [ self superclass allInstVarNames, self instVarNames ].
+
+]
 
 { #category : #ambiguous }
 RFiBehavior >> allSlots [
@@ -32,9 +41,7 @@ RFiBehavior >> allUnsentMessages [
 { #category : #hacks }
 RFiBehavior >> basicLocalSelectors [
 	
-	^ basicLocalSelectors ifNil: [
-		basicLocalSelectors := 
-			(self localMethods collect: #selector as: OrderedCollection) asArray ]
+	^ self localMethods collect: #selector
 ]
 
 { #category : #polymorphism }
@@ -66,19 +73,6 @@ RFiBehavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlo
 ]
 
 { #category : #polymorphism }
-RFiBehavior >> critics [
-
-	^ #()
-]
-
-{ #category : #'accessing-properties' }
-RFiBehavior >> ensureProperties [
-
-	^ WeakKeyDictionary new
-		
-]
-
-{ #category : #polymorphism }
 RFiBehavior >> includesSelector: aSymbol [ 
 	"Answer whether the message whose selector is the argument is in the 
 	method dictionary of the receiver's class."
@@ -103,6 +97,19 @@ RFiBehavior >> instSize [
 	^ self allInstVarNames size
 ]
 
+{ #category : #'instance variables' }
+RFiBehavior >> instVarNames [
+	"Answer an Array of the receiver's instance variable names."
+
+	^ self instanceVariables
+]
+
+{ #category : #polymorphism }
+RFiBehavior >> instanceVariables [
+
+	^ (self ficusClass layout instanceVariables collect: #name) asArray
+]
+
 { #category : #printing }
 RFiBehavior >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
@@ -113,10 +120,62 @@ RFiBehavior >> instanceVariablesString [
 			separatedBy: [ stream space ] ]
 ]
 
+{ #category : #polymorphism }
+RFiBehavior >> isBehavior [
+
+	^ true
+]
+
+{ #category : #testing }
+RFiBehavior >> isBits [
+	"Answer whether the receiver contains just bits (not pointers)."
+
+	^ self ficusClass layout isBitsLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isBytes [
+
+	^ self ficusClass layout isBytesLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isEphemeron [
+	"Answer whether the receiver has indexable variables."
+
+	^ self ficusClass layout isEphemeronLayout
+]
+
 { #category : #testing }
 RFiBehavior >> isObsolete [
 
 	^ false
+]
+
+{ #category : #testing }
+RFiBehavior >> isTrait [
+
+	^ false
+]
+
+{ #category : #testing }
+RFiBehavior >> isVariable [
+	"Answer whether the receiver has indexable variables."
+
+	^ self ficusClass layout isVariableLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isWeak [
+	"Answer whether the receiver has contains weak references."
+	^ self ficusClass layout isWeakLayout
+]
+
+{ #category : #testing }
+RFiBehavior >> isWords [
+	"Answer true if the receiver is made of 32-bit instance variables."
+
+	^ self ficusClass layout isWordsLayout
 ]
 
 { #category : #'testing class hierarchy' }
@@ -188,10 +247,18 @@ RFiBehavior >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #'accessing-properties' }
-RFiBehavior >> properties [
+{ #category : #accessing }
+RFiBehavior >> ringInstanceVariableNamed: aString [
 
-	^ nil
+	^ self ringInstanceVariables detect: [ :each | each name = aString ]
+]
+
+{ #category : #accessing }
+RFiBehavior >> ringInstanceVariables [ 
+
+	^ cachedInstanceVariables ifNil: [
+		cachedInstanceVariables := self instVarNames collect: [ :each |
+			RFiInstanceVariable definingClass: self name: each ] ]
 ]
 
 { #category : #private }
@@ -235,22 +302,18 @@ RFiBehavior >> thoroughWhichSelectorsReferTo: literal special: specialFlag byte:
 RFiBehavior >> traitComposition [
 
 	| traitCompositionAST |
-	traitCompositionAST := RBParser parseExpression: self traitCompositionString.
+	traitCompositionAST := RBParser parseExpression: self ficusClass traitComposition.
 	^ (traitCompositionAST acceptVisitor: (RFiTraitCompositionAssembler on: self environment)) asTraitComposition
 ]
 
 { #category : #traits }
 RFiBehavior >> traitCompositionString [
-
-	^ self subclassResponsibility
+	^ self ficusClass traitComposition
 ]
 
 { #category : #polymorphism }
 RFiBehavior >> traitProvidedMethods [
-
 	| providedMethods |
-	self flag: #todo. "Review this method"
-
 	providedMethods := Set new.
 	self traitComposition transformations do: [ :t |
 		t allSelectors do: [ :selector | | methodDescription |

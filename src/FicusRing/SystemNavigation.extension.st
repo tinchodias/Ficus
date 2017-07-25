@@ -1,22 +1,22 @@
 Extension { #name : #SystemNavigation }
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 SystemNavigation >> allBehaviorsDo: aBlock [ 
 	"Execute a block on each class, metaclass, trait and trait class"
 	
 	self environment allClassesDo: [ :aClass | 
-		aBlock 
-			value: aClass; 
-			value: aClass classSide ].
+		aBlock value: aClass ; 
+			value: aClass classSide
+	].
 	
 	self environment allTraitsDo: [ :aTrait |
-		aBlock 
-			value: aTrait;
-			value: aTrait classTrait ].
+		aBlock value:  aTrait ;
+			value: aTrait classTrait
+	]
 
 ]
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 SystemNavigation >> allClassesAndTraits [
 	"Answer all the classes and traits present in the image"
 	"Note that metaclasses are not part of the answer"
@@ -26,7 +26,7 @@ SystemNavigation >> allClassesAndTraits [
 	
 ]
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 SystemNavigation >> allClassesInPackageNamed: packageName [
 	"Returns the list of classes that belongs to a Monticello package."
 	
@@ -39,7 +39,7 @@ SystemNavigation >> allClassesInPackageNamed: packageName [
 	^classes asArray
 ]
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 SystemNavigation >> browseClassCommentsWithString: aString matchCase: caseSensitive [
 	"Smalltalk browseClassCommentsWithString: 'my instances' "
 	"Launch a message list browser on all class comments containing aString as a substring."
@@ -63,7 +63,7 @@ SystemNavigation >> browseClassCommentsWithString: aString matchCase: caseSensit
 		autoSelect: aString
 ]
 
-{ #category : #'*FicusRing-override' }
+{ #category : #'*FicusRing' }
 SystemNavigation >> removeAllButPackages: packagesList [
   "Remove all classes and methods that do not belong to some of listed packages. Skip #unload. Do not use this method if you can use Monticello! This method is used by some low-level shrinking process. Do not use it. This is quite hackish"
 

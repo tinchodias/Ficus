@@ -54,7 +54,7 @@ RFiEnvironmentBrowser >> browseImplementorsOf: aRFiMethod [
 { #category : #private }
 RFiEnvironmentBrowser >> classDefinitionIn: a [ 
 
-	a pharoMethod
+	a smalltalkCode
 		variableBindings: [ :class | 
 			{ class name -> class. class superclass name -> class superclass } 
 			"For syntax highlighting" ];
@@ -150,7 +150,7 @@ RFiEnvironmentBrowser >> instanceSideMethodsIn: a [
 { #category : #private }
 RFiEnvironmentBrowser >> methodDefinitionIn: a [ 
 
-	a pharoMethod
+	a smalltalkCode
 		smalltalkClass: [ :method | method methodClass ];
 		display: [ :method  | method sourceCode ].
 ]

@@ -3,7 +3,7 @@ I am polymorphic with Class, fetching everything needed from a Ficus environment
 "
 Class {
 	#name : #RFiClass,
-	#superclass : #RFiAbstractClass,
+	#superclass : #RFiBehavior,
 	#instVars : [
 		'environment',
 		'cachedSuperclass',
@@ -41,15 +41,6 @@ RFiClass >> allClassVarNames [
 	^ ficusClass hasNullSuperclass
 		ifTrue: [ self classVarNames ]
 		ifFalse: [ self superclass allClassVarNames, self classVarNames ].
-
-]
-
-{ #category : #polymorphism }
-RFiClass >> allInstVarNames [
-
-	^ ficusClass hasNullSuperclass
-		ifTrue: [ self instVarNames ]
-		ifFalse: [ self superclass allInstVarNames, self instVarNames ].
 
 ]
 
@@ -103,15 +94,6 @@ RFiClass >> allSuperclassesDo: aBlock [
 	ficusClass hasNullSuperclass ifFalse: [
 		aBlock value: self superclass.
 		self superclass allSuperclassesDo: aBlock ]
-]
-
-{ #category : #accessing }
-RFiClass >> asMetamodelSpot [
-	
-	^ FiBehaviorSpot 
-		name: self name
-		isMetaSide: false
-		packageName: self package name
 ]
 
 { #category : #converting }
@@ -173,9 +155,9 @@ RFiClass >> classPool [
 	^ ficusClass classPool 
 		inject: Dictionary new
 		into: [ :dictionary :each |
-			(dictionary at: each put: nil).
-			(dictionary associationAt: each) primitiveChangeClassTo: ClassVariable new.
-			dictionary ]
+			dictionary 
+				at: each put: nil;
+				yourself ]
 ]
 
 { #category : #polymorphism }
@@ -246,10 +228,10 @@ RFiClass >> ficusClass [
 	^ ficusClass
 ]
 
-{ #category : #polymorphism }
-RFiClass >> getName [
+{ #category : #accessing }
+RFiClass >> ficusPathFromEnvironment [
 	
-	^ self name
+	^ environment ficusPathToClass: self
 ]
 
 { #category : #polymorphism }
@@ -284,20 +266,6 @@ RFiClass >> initializeWithEnvironment: aRFiEnvironment ficusClass: aFiClass [
 	ficusClass := aFiClass.
 ]
 
-{ #category : #polymorphism }
-RFiClass >> innerBindingOf: aSymbol [
-	"Answer the binding of some variable resolved in the scope of the receiver, or one of its superclass
-	but do not look up binding in receiver's environment.
-	Use #bindingOf: for looking up the variable binding in a full scope, including receiver's environment"
-
-	"First look in classVar dictionary."
-	(self classPool bindingOf: aSymbol) ifNotNil: [:binding | ^binding].
-	"Next look in shared pools."
-	self sharedPools do: [:pool | (pool bindingOf: aSymbol) ifNotNil: [:binding | ^binding]].
-	self superclass ifNotNil: [:supercl | ^ supercl innerBindingOf: aSymbol].	
-	^ nil
-]
-
 { #category : #lookup }
 RFiClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFound: absentBlockClosure [
 
@@ -317,8 +285,15 @@ RFiClass >> innerLookupVariableNamed: aName ifFound: presentBlockClosure ifNotFo
 ]
 
 { #category : #polymorphism }
-RFiClass >> isAnonymous [
-	^self getName isNil
+RFiClass >> instVarNames [
+
+	^ self instanceVariables
+]
+
+{ #category : #testing }
+RFiClass >> isCompiledMethod [
+
+	^ self ficusClass layout isCompiledMethodLayout
 ]
 
 { #category : #polymorphism }

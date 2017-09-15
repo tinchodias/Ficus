@@ -587,6 +587,32 @@ ConfigurationOfFicus >> version037: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfFicus >> version038: spec [
+	<version: '0.3.8' imports: #('0.3.6-baseline')>
+	spec
+		for: #common
+		do: [ spec blessing: #stable.
+			spec description: 'version 0.3.8'.
+			spec author: 'Pablo Tesone'.
+			spec timestamp: '2017-09-15T11:00:00.000000+01:00'.
+			spec
+				project: #Yrupe with: '0.1-baseline';
+				project: #PharoVersionsMiner with: '0.1-baseline'.
+			spec
+				package: #Hiedra with: #Hiedra;
+				package: #Ficus with: 'Ficus-GuillermoPolito.185';
+				package: #FicusExtras with: #FicusExtras;
+				package: #FicusMetamodel with: 'FicusMetamodel-GuillermoPolito.19';
+				package: #FicusRing with: 'FicusRing-PabloTesone.129';
+				package: #FicusImpact with: #FicusImpact;
+				package: #FicusStore with: #FicusStore;
+				package: #FicusMonticello with: 'FicusMonticello-GuillermoPolito.68';
+				package: #FicusMonticelloStore with: #FicusMonticelloStore;
+				package: #FicusMonticelloYrupe with: #FicusMonticelloYrupe;
+				package: #FicusEpicea with: #FicusEpicea ]
+]
+
+{ #category : #versions }
 ConfigurationOfFicus >> version03: spec [
 	<version: '0.3' imports: #('0.3-baseline' )>
 

@@ -242,6 +242,11 @@ RFiEnvironment >> hasBindingThatBeginsWith: aString [
 			anySatisfy: [ :each | each beginsWith: aString ]]
 ]
 
+{ #category : #'as yet unclassified' }
+RFiEnvironment >> hasTraitNamed: aString [ 
+	^ self allTraits anySatisfy: [ :aTrait | aTrait name = aString] 
+]
+
 { #category : #comparing }
 RFiEnvironment >> hash [
 

@@ -27,13 +27,13 @@ RFiTraitCompositionAssembler >> environment: anObject [
 { #category : #visiting }
 RFiTraitCompositionAssembler >> visitArrayNode: aRBArrayNode [ 
 	
-	^ aRBArrayNode value statements collect: [ :stmt | stmt accept: self ]
+	^ aRBArrayNode value statements collect: [ :stmt | stmt acceptVisitor: self ]
 ]
 
 { #category : #visiting }
 RFiTraitCompositionAssembler >> visitLiteralArrayNode: aRBArrayNode [ 
 	"If it is an empty trait composition"
-	^aRBArrayNode value collect: [ :stmt | stmt accept: self ]
+	^aRBArrayNode value collect: [ :stmt | stmt acceptVisitor: self ]
 ]
 
 { #category : #visiting }

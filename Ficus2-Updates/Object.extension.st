@@ -49,6 +49,23 @@ Object >> editReplaceBy: aValue [
 ]
 
 { #category : #'*Ficus2-Updates' }
+Object >> ficusDeepCollect: aBlock basePath: aPath [
+
+	^ aBlock 
+		value: self 
+		value: aPath 
+		value: #()
+]
+
+{ #category : #'*Ficus2-Updates' }
+Object >> ficusDeepDo: aBlock basePath: aPath [
+
+	^ aBlock 
+		value: self 
+		value: aPath
+]
+
+{ #category : #'*Ficus2-Updates' }
 Object >> resultOf: anEdit [ 
 
 	^ anEdit resultOn: self

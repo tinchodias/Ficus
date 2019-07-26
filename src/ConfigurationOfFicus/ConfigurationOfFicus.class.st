@@ -304,6 +304,51 @@ ConfigurationOfFicus >> baseline04: spec [
 
 ]
 
+{ #category : #baselines }
+ConfigurationOfFicus >> baseline05: spec [
+	<version: '0.5-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main/'.
+		spec project: #Yrupe with: [
+			spec
+				className: #ConfigurationOfYrupe;
+				versionString: #development;
+				repository: 'http://smalltalkhub.com/mc/MartinDias/Yrupe/main/' ].
+		spec project: #PharoVersionsMiner with: [
+			spec
+				className: #ConfigurationOfPharoMiner;
+				versionString: #development;
+				repository: 'http://smalltalkhub.com/mc/MartinDias/PharoMiner/main/';
+				loads: #(core) ].
+		spec
+			package: #Ficus;
+			package: #FicusExtras with: [
+				spec requires: #(#Ficus) ];
+			package: #FicusMetamodel with: [
+				spec requires: #(#Ficus) ];
+			package: #FicusRing with: [
+				spec requires: #(#FicusMetamodel) ];
+			package: #FicusImpact with: [
+				spec requires: #(#FicusRing #FicusStore) ];
+			package: #FicusStore with: [
+				spec requires: #(#FicusMetamodel) ];
+			package: #FicusMonticello with: [
+				spec requires: #(#FicusMetamodel) ];
+			package: #FicusMonticelloStore with: [
+				spec requires: #(#FicusMonticello #FicusStore) ];
+			package: #FicusMonticelloYrupe with: [
+				spec requires: #(#FicusMonticello #Yrupe #FicusExtras #PharoVersionsMiner) ]; 
+					"FicusExtras: only because of FiDictionary, which is used in tests."
+			package: #FicusEpicea with: [
+				spec requires: #(#FicusMetamodel #FicusMonticelloStore) ].
+		spec
+			group: 'default' with: #('Ficus' 'FicusEpicea' 'FicusStore' 'FicusImpact' 'FicusMonticelloYrupe');
+			group: 'mini' with: #('FicusRing' 'FicusMonticello') ].
+
+]
+
 { #category : #accessing }
 ConfigurationOfFicus >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -317,7 +362,7 @@ ConfigurationOfFicus >> development: spec [
 	<symbolicVersion: #'development'>
 
 	spec for: #'common' version: '0.4-baseline'.
-
+	spec for: #'pharo7.x' version: '0.5-baseline'.
 ]
 
 { #category : #accessing }

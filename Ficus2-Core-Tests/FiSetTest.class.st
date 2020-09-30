@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #tests }
-FiSetTest >> testInstanciation [
+FiSetTest >> testInstantiation [
 	self assert: #() asFiSet equals: #() asFiSet.
 	self assert: #(1) asFiSet equals: #(1) asFiSet.
 	self assert: #(1) asFiSet equals: #(1) asSet asFiSet
@@ -16,7 +16,7 @@ FiSetTest >> testInstanciation [
 ]
 
 { #category : #tests }
-FiSetTest >> testInstanciationWithStepsAndValues [
+FiSetTest >> testInstantiationWithStepsAndValues [
 
 	| shot |
 	self assert: (FiSet newFromStepsAndValues: Dictionary new) stepCount equals: 0.

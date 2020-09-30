@@ -89,6 +89,17 @@ FiObject >> ficusDeepDo: aBlock basePath: aPath [
 ]
 
 { #category : #'*Ficus2-Updates' }
+FiObject >> flattened [
+	
+	^ (Array streamContents: [ :stream |
+		self 
+			ficusDeepDo: [ :value :path | stream nextPut: path -> value ]
+			basePath: FiPath root ])
+		reversed
+
+]
+
+{ #category : #'*Ficus2-Updates' }
 FiObject >> resultOfCompositeEdit: aCompositeEdit [ 
 
 	^ aCompositeEdit children values

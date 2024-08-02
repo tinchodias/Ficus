@@ -1,10 +1,8 @@
 # Ficus
 
-⚠️ Outdated code, recovered from smalltalkhub ⚠️
+This (outdated) codebase contains prototypes developed during my Ph.D (~2015):
 
-This repository contains a family of experiments:
-
-Ficus provides a framework for defining tree-like immutable objects. It support first-class edits, which represent operations that can be applied to Ficus objects. It also supports first-class changes, which represent the change after applying an edit to a Ficus object.
+Ficus provides a framework for defining tree-like immutable objects in Pharo. It support first-class edits, which represent operations that can be applied to Ficus objects. It also supports first-class changes, which represent the change after applying an edit to a Ficus object.
 
 FicusMetamodel defines a Ficus model (i.e. tree-like immutable objects) to represent Pharo metalevel objects.
 
@@ -29,7 +27,6 @@ environment := RFiFragileBaseClassProblemResources5A new ringEnvironment.
 environment allClasses.
 environment browse.
 ```
-
 
 ## History
 

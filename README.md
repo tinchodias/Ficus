@@ -10,11 +10,11 @@ FicusMetamodel defines a Ficus model (i.e. tree-like immutable objects) to repre
 
 RingFicus defines wrappers for FicusMetamodel which are polymorphic to real Pharo metalevel objects. In a nutshell, it's like the original Ring but with more isolation and more lightweight.
 
-Also check Yrupe project, a serializer for Ficus objects.
+Also check [Yrupe project](https://github.com/tinchodias/Yrupe), a serializer for Ficus objects.
 
-## Loading in Pharo 5 or 6
+## Loading in Pharo 6
 
-```
+```smalltalk
 Metacello new
     smalltalkhubUser: 'MartinDias' project: 'Ficus';
     configuration: #Ficus; 
@@ -24,7 +24,7 @@ Metacello new
 
 ## Example of RingFicus
 
-```
+```smalltalk
 environment := RFiFragileBaseClassProblemResources5A new ringEnvironment.
 environment allClasses.
 environment browse.

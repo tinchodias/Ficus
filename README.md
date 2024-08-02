@@ -33,11 +33,8 @@ environment browse.
 
 ## History
 
-This repsitory was migrated from SmalltalkHub with an semi-automatic tool.
-* Source repository: http://smalltalkhub.com/MartinDias/Ficus/
-* Migration tool: https://github.com/pharo-contributions/git-migration
+This repository was migrated from [this SmalltalkHub repo](http://smalltalkhub.com/MartinDias/Ficus/) with an [semi-automatic tool](https://github.com/pharo-contributions/git-migration) in a Pharo 9 with:
 
-Script:
 ```smalltalk
 migration := GitMigration on: 'MartinDias/Ficus'.
 migration onEmptyMessage: [ :info | 'empty commit message' ].

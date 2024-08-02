@@ -30,3 +30,34 @@ environment allClasses.
 environment browse.
 ```
 
+
+## History
+
+This repsitory was migrated from SmalltalkHub with an semi-automatic tool.
+* Source repository: http://smalltalkhub.com/MartinDias/Ficus/
+* Migration tool: https://github.com/pharo-contributions/git-migration
+
+Script:
+```smalltalk
+migration := GitMigration on: 'MartinDias/Ficus'.
+migration onEmptyMessage: [ :info | 'empty commit message' ].
+migration downloadAllVersions.
+migration populateCaches.
+migration allAuthors. "#('Anonymous' 'CamilleTeruel' 'ChristopheDemarey' 'GuillermoPolito' 'MartinDIas' 'MartinDias' 'PabloTesone' 'SkipLentz' 'YuriyTymchuk' 'md')"
+migration authors: {
+	'MartinDias' -> #('Martín Dias' '<tinchodias@gmail.com>').
+	'MartinDIas' -> #('Martín Dias' '<tinchodias@gmail.com>').
+	'md' -> #('Martín Dias' '<tinchodias@gmail.com>').
+	'Anonymous' -> #('Martín Dias' '<tinchodias@gmail.com>').
+	'CamilleTeruel' -> #('Camille Teruel' '<camille.teruel@gmail.com>').
+	'SkipLentz' -> #('Balletie' '<skip_meesie@hotmail.com>').
+	'GuillermoPolito' -> #('Guille Polito' '<guillermopolito@gmail.com>').
+	'PabloTesone' -> #('Pablo Tesone' '<tesonep@gmail.com>').
+	'ChristopheDemarey' -> #('Christophe Demarey' '<christophe.demarey@inria.fr>').
+	'YuriyTymchuk' -> #('Yuriy Tymchuk' '<uko@unikernel.net>')
+ }.
+migration
+	fastImportCodeToDirectory: 'src'
+	initialCommit: '93e8f1e1983ab81d8fe3440daca9b64bfee340b5'
+	to: 'ficusImport.txt'
+```

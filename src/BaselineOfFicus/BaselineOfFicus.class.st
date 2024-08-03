@@ -11,7 +11,7 @@ BaselineOfFicus >> baseline: spec [
 	spec for: #'common' do: [
 		spec baseline: #Yrupe with: [
 			spec repository: 'github://tinchodias/Yrupe:master/src' ].
-		spec project: #PharoMiner with: [
+		spec baseline: #PharoMiner with: [
 			spec
 				repository: 'github://tinchodias/PharoMiner:master/src';
 				loads: #(core) ].

@@ -1,10 +1,11 @@
 Class {
-	#name : #FiSetEditsTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiSetEditsTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetEditsTest >> testAddition [
 
 	| edit source result shot |
@@ -20,7 +21,7 @@ FiSetEditsTest >> testAddition [
 	self assert: result stepsAndValues equals: { shot defaultStep -> shot } asSet.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetEditsTest >> testRemoval [
 
 	| edit source result shot intermediate |
@@ -39,7 +40,7 @@ FiSetEditsTest >> testRemoval [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetEditsTest >> testUpdate [
 
 	| shot otherShot edit source result intermediate |

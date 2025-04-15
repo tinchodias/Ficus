@@ -1,10 +1,11 @@
 Class {
-	#name : #FiSetDifferencesTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiSetDifferencesTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetDifferencesTest >> testAddition [
 
 	|   edit  result source  |
@@ -19,7 +20,7 @@ FiSetDifferencesTest >> testAddition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetDifferencesTest >> testRemoval [
 
 	| edit preSource source result shot |
@@ -38,7 +39,7 @@ FiSetDifferencesTest >> testRemoval [
 	self assert: (source changeFrom: result) equals: (result changeOf: (result editInclude: shot)).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetDifferencesTest >> testReplacement [
 
 	| source result |
@@ -51,7 +52,7 @@ FiSetDifferencesTest >> testReplacement [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetDifferencesTest >> testUpdate [
 
 	| shot otherShot edit preSource result source expectedDifference |

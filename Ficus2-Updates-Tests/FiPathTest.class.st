@@ -13,22 +13,23 @@ place
 
 "
 Class {
-	#name : #FiPathTest,
-	#superclass : #TestCase,
+	#name : 'FiPathTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'path',
 		'shot'
 	],
-	#category : #'Ficus2-Updates-Tests'
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FiPathTest >> assertStoreStringRoundTripOf: aPath [
 
-	self assert: (self class evaluate: aPath storeString) equals: aPath.
+	self assert: (self class compiler evaluate: aPath storeString) equals: aPath.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FiPathTest >> sampleShot [
 	
 	| aSet aShot |
@@ -38,7 +39,7 @@ FiPathTest >> sampleShot [
 	^ aSet resultOf: (aSet editInclude: aShot)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testAsFiPath [
 
 	| pathA pathB |
@@ -49,7 +50,7 @@ FiPathTest >> testAsFiPath [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testBeginsWith [
 
 	| pathA pathB |
@@ -60,7 +61,7 @@ FiPathTest >> testBeginsWith [
 	self deny: (pathB beginsWith: pathA).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testCanBeResolvedOn [
 
 	shot := self sampleShot.
@@ -70,7 +71,7 @@ FiPathTest >> testCanBeResolvedOn [
 	self deny: (FiPath root / #B canBeResolvedOn: shot).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testEquals [
 
 	| pathA pathB |
@@ -81,7 +82,7 @@ FiPathTest >> testEquals [
 	self assert: pathB equals: pathA.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testFlattened [
 
 	| aSet aShot |
@@ -98,7 +99,7 @@ FiPathTest >> testFlattened [
 			}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testFromStream [
 
 	| pathA pathB |
@@ -109,7 +110,7 @@ FiPathTest >> testFromStream [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testNotEquals [
 
 	| pathA pathB |
@@ -120,7 +121,7 @@ FiPathTest >> testNotEquals [
 	self deny: pathB = pathA.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testResolvedOn [
 
 	shot := self sampleShot.
@@ -131,7 +132,7 @@ FiPathTest >> testResolvedOn [
 		equals: shot asArray first admiredChefs.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testResolvedOnIfAbsent [
 
 	shot := self sampleShot.
@@ -153,7 +154,7 @@ FiPathTest >> testResolvedOnIfAbsent [
 	self assert: path equals: FiPath root / #A
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testResolvedOnIfPresentIfAbsent [
 
 	shot := self sampleShot.
@@ -179,7 +180,7 @@ FiPathTest >> testResolvedOnIfPresentIfAbsent [
 	self assert: path equals: FiPath root / #A
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testSteps [
 
 	path := FiPath root / #A / #admiredChefs / #X.
@@ -187,7 +188,7 @@ FiPathTest >> testSteps [
 	self assert: path steps equals: #(A admiredChefs X).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiPathTest >> testStoreString [
 
 	self assertStoreStringRoundTripOf: FiPath root.

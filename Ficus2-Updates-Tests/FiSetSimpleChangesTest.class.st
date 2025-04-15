@@ -1,10 +1,11 @@
 Class {
-	#name : #FiSetSimpleChangesTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiSetSimpleChangesTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetSimpleChangesTest >> testAddition [
 
 	| shot edit source change simpleChanges |
@@ -51,7 +52,7 @@ FiSetSimpleChangesTest >> testAddition [
 			})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetSimpleChangesTest >> testNoChange [
 
 	| shot edit source intermediate change simpleChanges |
@@ -71,7 +72,7 @@ FiSetSimpleChangesTest >> testNoChange [
 		equals: change edit.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetSimpleChangesTest >> testRemoval [
 
 	| edit source shot intermediate change simpleChanges |
@@ -121,7 +122,7 @@ FiSetSimpleChangesTest >> testRemoval [
 			}).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetSimpleChangesTest >> testUpdate [
 	<expectedFailure>
 	| shot otherShot edit source intermediate change simpleChanges |

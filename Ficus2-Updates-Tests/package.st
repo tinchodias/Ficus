@@ -1,1 +1,1 @@
-Package { #name : #'Ficus2-Updates-Tests' }
+Package { #name : 'Ficus2-Updates-Tests' }

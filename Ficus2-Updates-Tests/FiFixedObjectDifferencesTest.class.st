@@ -1,10 +1,11 @@
 Class {
-	#name : #FiFixedObjectDifferencesTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiFixedObjectDifferencesTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectDifferencesTest >> testReplacement [
 
 	| source result |
@@ -17,7 +18,7 @@ FiFixedObjectDifferencesTest >> testReplacement [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectDifferencesTest >> testReplacement2 [
 
 	| source result |
@@ -30,7 +31,7 @@ FiFixedObjectDifferencesTest >> testReplacement2 [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectDifferencesTest >> testSubAddition [
 	"Test difference with a sub edit."
 
@@ -53,7 +54,7 @@ FiFixedObjectDifferencesTest >> testSubAddition [
 	self assert: (source changeFrom: result) equals: inverseChange.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectDifferencesTest >> testUpdateAndSubAddition [
 
 	| edit inverseEdit source result |

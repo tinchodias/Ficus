@@ -1,10 +1,11 @@
 Class {
-	#name : #FiFixedObjectSimpleChangesTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiFixedObjectSimpleChangesTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectSimpleChangesTest >> testHasChangeAt [
 
 	| source editAdmiredChefs change simpleChanges |
@@ -22,7 +23,7 @@ FiFixedObjectSimpleChangesTest >> testHasChangeAt [
 	self deny: (simpleChanges asArray first hasChangeAt: FiPath root / #admiredChefs / #Y).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectSimpleChangesTest >> testNoChange [
 
 	| edit change source |
@@ -37,7 +38,7 @@ FiFixedObjectSimpleChangesTest >> testNoChange [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectSimpleChangesTest >> testUpdate [
 
 	| edit change source simpleChanges |
@@ -64,7 +65,7 @@ FiFixedObjectSimpleChangesTest >> testUpdate [
 			
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectSimpleChangesTest >> testUpdateAndSubAddition [
 
 	| source editAdmiredChefs editShortBio edit change result simpleChanges |

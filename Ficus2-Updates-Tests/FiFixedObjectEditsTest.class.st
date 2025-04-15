@@ -1,10 +1,11 @@
 Class {
-	#name : #FiFixedObjectEditsTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiFixedObjectEditsTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectEditsTest >> testSubAddition [
 
 	| edit source result |
@@ -21,7 +22,7 @@ FiFixedObjectEditsTest >> testSubAddition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectEditsTest >> testSubAddition2 [
 
 	| edit source item result |
@@ -39,7 +40,7 @@ FiFixedObjectEditsTest >> testSubAddition2 [
 	self assert: result recipes stepsAndValues asSet equals: { item title -> item } asSet.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectEditsTest >> testSubAdditionAndUpdate [
 
 	| edit source result |
@@ -63,7 +64,7 @@ FiFixedObjectEditsTest >> testSubAdditionAndUpdate [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectEditsTest >> testSubRemoval [
 
 	| edit preSource source result |
@@ -86,7 +87,7 @@ FiFixedObjectEditsTest >> testSubRemoval [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectEditsTest >> testUpdate [
 
 	| edit source result |

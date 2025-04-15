@@ -1,10 +1,11 @@
 Class {
-	#name : #FiSetChangesTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiSetChangesTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetChangesTest >> testAddition [
 
 	| shot edit source result change |
@@ -23,7 +24,7 @@ FiSetChangesTest >> testAddition [
 	self assert: (result resultOf: change inverse) values isEmpty.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetChangesTest >> testNoChange [
 
 	| shot edit source result intermediate change reverted |
@@ -48,7 +49,7 @@ FiSetChangesTest >> testNoChange [
 	self assert: reverted values asSet equals: { shot } asSet.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetChangesTest >> testRemoval [
 
 	| edit source result shot intermediate reverted change |
@@ -73,7 +74,7 @@ FiSetChangesTest >> testRemoval [
 	self assert: reverted values asSet equals: { shot } asSet.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetChangesTest >> testUpdate [
 
 	| shot otherShot edit source result intermediate change reverted |
@@ -99,7 +100,7 @@ FiSetChangesTest >> testUpdate [
 	self assert: reverted values asSet equals: { shot } asSet.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiSetChangesTest >> testUpdateWithSubEdit [
 
 	| edit source result |

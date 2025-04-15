@@ -1,10 +1,11 @@
 Class {
-	#name : #FiFixedObjectChangesTest,
-	#superclass : #TestCase,
-	#category : #'Ficus2-Updates-Tests'
+	#name : 'FiFixedObjectChangesTest',
+	#superclass : 'TestCase',
+	#category : 'Ficus2-Updates-Tests',
+	#package : 'Ficus2-Updates-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectChangesTest >> testNoChange [
 
 	| edit change source result |
@@ -18,7 +19,7 @@ FiFixedObjectChangesTest >> testNoChange [
 	self assert: change inverse equals: FiNoEdit new.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectChangesTest >> testUpdate [
 
 	| edit change source result |
@@ -33,7 +34,7 @@ FiFixedObjectChangesTest >> testUpdate [
 	self assert: change inverse equals: (result editAt: #shortBio equal: '').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FiFixedObjectChangesTest >> testUpdateAndSubAddition [
 
 	| source editAdmiredChefs editShortBio edit change result |

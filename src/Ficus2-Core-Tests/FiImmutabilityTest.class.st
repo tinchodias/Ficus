@@ -36,7 +36,7 @@ FiImmutabilityTest >> assertHasNotSetters: shotClass instanceVariableName: insta
 
 	| setters |
 	setters := 
-		(shotClass whichSelectorsStoreInto: instanceVariableName) 
+		(shotClass whichSelectorsWrite: instanceVariableName) 
 			reject: [ :selector | selector beginsWith: #init ].
 
 	self 

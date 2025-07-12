@@ -9,7 +9,7 @@ It also supports first-class changes, which represent the change after applying 
 
 ## History
 
-This is a subset of the original project (from 2015) is in master branch.
+This is a subset of the original project (from 2015) is in [master](https://github.com/tinchodias/Ficus/tree/master) branch.
 
 
 ## Install

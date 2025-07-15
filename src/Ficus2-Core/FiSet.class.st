@@ -99,15 +99,6 @@ FiSet >> do: aBlockClosure [
 	^ self valuesDo: aBlockClosure
 ]
 
-{ #category : #printing }
-FiSet >> gtInspectorItemsIn: composite [
-	<gtInspectorPresentationOrder: 30>
-	^ (composite list)
-		title: [ :anObject | anObject size asString, ' values' ];
-		display: [ :aFiSet | self asArray asSet ];
-		showOnly: 50.
-]
-
 { #category : #private }
 FiSet >> indexOf: step ifPresent: presentBlock ifAbsent: absentBlock [
 
@@ -139,6 +130,13 @@ FiSet >> initializeWithValues: aCollection [
 FiSet >> inject: thisValue into: binaryBlock [ 
 	
 	^ self values inject: thisValue into: binaryBlock 
+]
+
+{ #category : #'new-tools' }
+FiSet >> inspectionTree: aBuilder [
+	<inspectorPresentationOrder: 1 title: 'Values'>
+
+	^ self asArray inspectionItems: aBuilder
 ]
 
 { #category : #testing }

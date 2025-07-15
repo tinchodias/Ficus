@@ -40,17 +40,6 @@ FiFixedObject >> = another [
 
 ]
 
-{ #category : #printing }
-FiFixedObject >> gtInspectorItemsIn: composite [
-	<gtInspectorPresentationOrder: 30>  
-	^ composite table
-		title: [ :anObject | anObject stepCount asString, ' steps' ];
-		display: [ :each | each stepsAndValues ];
-		column: 'Step' evaluated: #key width: 120;
-		column: 'Value' evaluated: #value;
-		send: #value.
-]
-
 { #category : #initialization }
 FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 	| selector |
@@ -64,6 +53,17 @@ FiFixedObject >> initializeFromStepsAndValues: aDictionary [
 				ifFalse: [ [ self instVarNamed: slotName put: value ]
 						on: Error
 						do: [ :e | self error: slotName asString , ' not found in ' , self asString ] ] ]
+]
+
+{ #category : #'new-tools' }
+FiFixedObject >> inspectionTree: aBuilder [
+	<inspectorPresentationOrder: 1 title: 'Steps and Values'>
+
+	^ aBuilder newTable
+		  items: self stepsAndValues asArray sorted;
+		  addColumn: (SpStringTableColumn title: 'Step' evaluated: #key);
+		  addColumn: (SpStringTableColumn title: 'Value' evaluated: #value);
+		  yourself
 ]
 
 { #category : #accessing }

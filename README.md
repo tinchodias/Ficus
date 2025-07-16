@@ -18,10 +18,12 @@ The following script installs Ficus in [Pharo](https://pharo.org/download):
 
 ```smalltalk
 Metacello new
-	baseline: 'Ficus2';
+	baseline: 'Ficus';
 	repository: 'github://tinchodias/Ficus:mini/src';
 	load
 ```
+
+Browse all tests as examples.
 
 ## License
 

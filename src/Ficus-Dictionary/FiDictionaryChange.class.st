@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'key'
 	],
-	#category : #'Ficus2-Dictionary-Changes'
+	#category : #'Ficus-Dictionary-Changes'
 }
 
 { #category : #printing }

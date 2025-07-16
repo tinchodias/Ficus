@@ -13,9 +13,15 @@ BaselineOfFicus >> baseline: spec [
 			spec
 				package: 'Ficus-Core';
 				package: 'Ficus-Core-Tests' with: [ spec requires: #('Ficus-Core') ];
+
 				package: 'Ficus-Updates' with: [ spec requires: #('Ficus-Core') ];
 				package: 'Ficus-Updates-Tests' with: [ spec requires: #('Ficus-Updates' 'Ficus-Core-Tests') ];
+
 				package: 'Ficus-Editor' with: [ spec requires: #('Ficus-Core') ];
-				package: 'Ficus-Editor-Tests' with: [ spec requires: #('Ficus-Editor' 'Ficus-Core-Tests') ].
+				package: 'Ficus-Editor-Tests' with: [ spec requires: #('Ficus-Editor' 'Ficus-Core-Tests') ];
+
+				package: 'Ficus-Dictionary' with: [ spec requires: #('Ficus-Core-Tests' 'Ficus-Updates') ];
+
+				package: 'Ficus-Merge' with: [ spec requires: #('Ficus-Core-Tests') ].
  ]
 ]

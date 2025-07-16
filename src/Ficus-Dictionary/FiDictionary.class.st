@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'valueByKey'
 	],
-	#category : #'Ficus2-Dictionary-Model'
+	#category : #'Ficus-Dictionary-Model'
 }
 
 { #category : #'instance creation' }

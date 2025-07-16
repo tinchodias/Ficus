@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'edit'
 	],
-	#category : #'Ficus2-Dictionary-Edits'
+	#category : #'Ficus-Dictionary-Edits'
 }
 
 { #category : #'instance creation' }

@@ -1,6 +1,6 @@
 Extension { #name : #Dictionary }
 
-{ #category : #'*Ficus2-Dictionary' }
+{ #category : #'*Ficus-Dictionary' }
 Dictionary >> asFiDictionary [
 	
 	^ FiDictionary newFromStepsAndValues: self

@@ -9,7 +9,7 @@ Class {
 		'target',
 		'ancestor'
 	],
-	#category : #'Ficus2-Merge'
+	#category : #'Ficus-Merge'
 }
 
 { #category : #'instance creation' }

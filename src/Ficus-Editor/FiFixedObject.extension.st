@@ -1,6 +1,6 @@
 Extension { #name : #FiFixedObject }
 
-{ #category : #'*Ficus2-Editor' }
+{ #category : #'*Ficus-Editor' }
 FiFixedObject >> editor [
 	
 	^ FiFixedObjectEditor for: self

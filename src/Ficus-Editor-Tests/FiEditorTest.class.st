@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'aShot'
 	],
-	#category : #'Ficus2-Editor-Tests'
+	#category : #'Ficus-Editor-Tests'
 }
 
 { #category : #tests }

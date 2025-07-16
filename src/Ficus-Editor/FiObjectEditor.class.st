@@ -5,7 +5,7 @@ Class {
 		'base',
 		'result'
 	],
-	#category : #'Ficus2-Editor-Core'
+	#category : #'Ficus-Editor'
 }
 
 { #category : #accessing }

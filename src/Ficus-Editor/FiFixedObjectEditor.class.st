@@ -1,7 +1,7 @@
 Class {
 	#name : #FiFixedObjectEditor,
 	#superclass : #FiObjectEditor,
-	#category : #'Ficus2-Editor-Core'
+	#category : #'Ficus-Editor'
 }
 
 { #category : #'instance creation' }
